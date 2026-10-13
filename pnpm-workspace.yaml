@@ -1,0 +1,6 @@
+minimumReleaseAge: 10080 # 7 days, industry default
+allowBuilds:
+  "@parcel/watcher": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

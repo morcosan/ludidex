@@ -1,0 +1,24 @@
+@import './tailwind/styles.css';
+
+@import './tokens/index.css';
+
+@import './_a11y.css';
+@import './_scrollbar.css';
+
+body {
+  margin: 0 !important;
+  background-color: var(--ds-color-bg-page);
+  padding: 0 !important;
+  width: unset !important;
+  color: var(--ds-color-text-default);
+  font-family: var(--ds-font-family-sans);
+}
+
+[data-color-mode] {
+  color: var(--ds-color-text-default);
+}
+
+hr {
+  border-color: var(--ds-color-border-subtle);
+  width: 100%;
+}

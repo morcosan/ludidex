@@ -1,0 +1,101 @@
+import { CLASS_PREFIX__BLUR, CSS_PREFIX__BLUR, TOKENS__BLUR } from '../../tokens/output/blur.ts'
+import { CLASS_PREFIX__BREAKPOINT, CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from '../../tokens/output/breakpoint.ts'
+import { CLASS_PREFIX__COLOR, CSS_PREFIX__COLOR, TOKENS__COLOR } from '../../tokens/output/color.ts'
+import {
+  CLASS_PREFIX__FONT_FAMILY,
+  CSS_PREFIX__FONT_FAMILY,
+  TOKENS__FONT_FAMILY,
+} from '../../tokens/output/font-family.ts'
+import { CLASS_PREFIX__FONT_SIZE, CSS_PREFIX__FONT_SIZE, TOKENS__FONT_SIZE } from '../../tokens/output/font-size.ts'
+import {
+  CLASS_PREFIX__FONT_WEIGHT,
+  CSS_PREFIX__FONT_WEIGHT,
+  TOKENS__FONT_WEIGHT,
+} from '../../tokens/output/font-weight.ts'
+import {
+  CLASS_PREFIX__LINE_HEIGHT,
+  CSS_PREFIX__LINE_HEIGHT,
+  TOKENS__LINE_HEIGHT,
+} from '../../tokens/output/line-height.ts'
+import { CLASS_PREFIX__MOTION, CSS_PREFIX__MOTION, TOKENS__MOTION } from '../../tokens/output/motion.ts'
+import { CLASS_PREFIX__RADIUS, CSS_PREFIX__RADIUS, TOKENS__RADIUS } from '../../tokens/output/radius.ts'
+import { CLASS_PREFIX__SHADOW, CSS_PREFIX__SHADOW, TOKENS__SHADOW } from '../../tokens/output/shadow.ts'
+import { CLASS_PREFIX__SPACING, CSS_PREFIX__SPACING, TOKENS__SPACING } from '../../tokens/output/spacing.ts'
+import { CLASS_PREFIX__SURFACE, CSS_PREFIX__SURFACE, TOKENS__SURFACE } from '../../tokens/output/surface.ts'
+import { CLASS_PREFIX__Z_INDEX, CSS_PREFIX__Z_INDEX, TOKENS__Z_INDEX } from '../../tokens/output/z-index.ts'
+import {
+  type ColorMode,
+  type Token,
+  type TokenColoredValue,
+  type TokenCompositeValue,
+  type TokenGroup,
+  type TokenScalarValue,
+} from './_types.ts'
+
+const TOKENS = {
+  BLUR: TOKENS__BLUR,
+  BREAKPOINT: TOKENS__BREAKPOINT,
+  COLOR: TOKENS__COLOR,
+  FONT_FAMILY: TOKENS__FONT_FAMILY,
+  FONT_SIZE: TOKENS__FONT_SIZE,
+  FONT_WEIGHT: TOKENS__FONT_WEIGHT,
+  LINE_HEIGHT: TOKENS__LINE_HEIGHT,
+  MOTION: TOKENS__MOTION,
+  RADIUS: TOKENS__RADIUS,
+  SHADOW: TOKENS__SHADOW,
+  SPACING: TOKENS__SPACING,
+  SURFACE: TOKENS__SURFACE,
+  Z_INDEX: TOKENS__Z_INDEX,
+} satisfies Record<string, TokenGroup>
+
+const CSS_PREFIX = {
+  BLUR: CSS_PREFIX__BLUR,
+  BREAKPOINT: CSS_PREFIX__BREAKPOINT,
+  COLOR: CSS_PREFIX__COLOR,
+  FONT_FAMILY: CSS_PREFIX__FONT_FAMILY,
+  FONT_SIZE: CSS_PREFIX__FONT_SIZE,
+  FONT_WEIGHT: CSS_PREFIX__FONT_WEIGHT,
+  LINE_HEIGHT: CSS_PREFIX__LINE_HEIGHT,
+  MOTION: CSS_PREFIX__MOTION,
+  RADIUS: CSS_PREFIX__RADIUS,
+  SHADOW: CSS_PREFIX__SHADOW,
+  SPACING: CSS_PREFIX__SPACING,
+  SURFACE: CSS_PREFIX__SURFACE,
+  Z_INDEX: CSS_PREFIX__Z_INDEX,
+} satisfies Record<string, string>
+
+const CLASS_PREFIX = {
+  BLUR: CLASS_PREFIX__BLUR,
+  BREAKPOINT: CLASS_PREFIX__BREAKPOINT,
+  COLOR: CLASS_PREFIX__COLOR,
+  FONT_FAMILY: CLASS_PREFIX__FONT_FAMILY,
+  FONT_SIZE: CLASS_PREFIX__FONT_SIZE,
+  FONT_WEIGHT: CLASS_PREFIX__FONT_WEIGHT,
+  LINE_HEIGHT: CLASS_PREFIX__LINE_HEIGHT,
+  MOTION: CLASS_PREFIX__MOTION,
+  RADIUS: CLASS_PREFIX__RADIUS,
+  SHADOW: CLASS_PREFIX__SHADOW,
+  SPACING: CLASS_PREFIX__SPACING,
+  SURFACE: CLASS_PREFIX__SURFACE,
+  Z_INDEX: CLASS_PREFIX__Z_INDEX,
+} satisfies Record<string, string>
+
+const getTokenValue = <V = TokenScalarValue | TokenCompositeValue>(token: Token, mode?: ColorMode): V => {
+  if (token.type === 'composite') {
+    const result: Record<string, TokenScalarValue> = {}
+    for (const key in token.value) {
+      result[key] =
+        typeof token.value[key] === 'object' && !Array.isArray(token.value[key])
+          ? (token.value[key] as TokenColoredValue)[mode || 'light']
+          : token.value[key]
+    }
+    return result as V
+  }
+
+  return typeof token.value === 'object' && !Array.isArray(token.value)
+    ? ((token.value as TokenColoredValue)[mode || 'light'] as V)
+    : (token.value as V)
+}
+
+export * from './_types.ts'
+export { CLASS_PREFIX, CSS_PREFIX, getTokenValue, TOKENS }

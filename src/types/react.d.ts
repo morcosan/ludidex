@@ -1,0 +1,45 @@
+import type {
+  ChangeEvent,
+  CSSProperties,
+  FocusEvent,
+  JSXElementConstructor,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  Ref,
+} from 'react'
+
+declare module 'react' {
+  interface CSSProperties {
+    [key: string]: string | number | undefined
+  }
+  interface HTMLAttributes {
+    'data-testid'?: string
+  }
+}
+
+export {}
+declare global {
+  type JsxProps<C> = C extends JsxFn<infer P> ? P : unknown
+  type JsxFn<P = ReactProps> = JSXElementConstructor<P>
+
+  type ReactChangeEvent<T = unknown> = ChangeEvent<T>
+  type ReactFocusEvent = FocusEvent
+  type ReactKeyboardEvent = KeyboardEvent
+  type ReactMouseEvent = MouseEvent
+
+  interface ReactProps<T = any> extends HtmlDataProps {
+    ref?: Ref<T>
+    id?: string
+    className?: string
+    style?: CSSProperties
+    children?: ReactNode
+    onFocus?: (event: ReactFocusEvent) => void
+    onBlur?: (event: ReactFocusEvent) => void
+  }
+
+  interface HtmlDataProps {
+    'data-testid'?: string
+    [key: `data-${string}`]: string | number | boolean | undefined
+  }
+}

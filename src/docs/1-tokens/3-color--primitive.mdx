@@ -1,0 +1,83 @@
+import {
+  CSS_PREFIX,
+  DocsCanvas,
+  DocsColorSwatch,
+  DocsToken,
+  DocsTokenCodeGrid,
+  getTokenValue,
+  Meta,
+  oklchToHex,
+  TOKENS,
+} from '@src-storybook'
+
+export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => !token.ref)
+export const blues = Object.keys(TOKENS.COLOR).filter((name) => /^blue-\d+$/.test(name))
+export const yellows = Object.keys(TOKENS.COLOR).filter((name) => /^yellow-\d+$/.test(name))
+export const reds = Object.keys(TOKENS.COLOR).filter((name) => /^red-\d+$/.test(name))
+export const greens = Object.keys(TOKENS.COLOR).filter((name) => /^green-\d+$/.test(name))
+export const greys = Object.keys(TOKENS.COLOR).filter((name) => /^grey-\d+$/.test(name))
+export const redAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^red-alpha-\d+$/.test(name))
+export const blackAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^black-alpha-\d+$/.test(name))
+export const whiteAlphas = Object.keys(TOKENS.COLOR).filter((name) => /^white-alpha-\d+$/.test(name))
+
+export const ColorSwatches = ({ colors }) => (
+  <div className="flex flex-wrap gap-px">
+    { colors.map((color) => (
+      <DocsColorSwatch key={ color } color={ color } />
+    )) }
+  </div>
+)
+
+{/* ---------------------------------------------------------------------------------------------------------------- */}
+
+<Meta title="Design System / Tokens / Color (primitive)" />
+
+# Primitive color tokens
+
+<DocsCanvas className="gap-xs-6 p-xs-9 mb-sm-3 flex flex-col">
+  <ColorSwatches colors={ blues } />
+  <ColorSwatches colors={ yellows } />
+  <ColorSwatches colors={ reds } />
+  <ColorSwatches colors={ greens } />
+  <ColorSwatches colors={ greys } />
+  <ColorSwatches colors={ redAlphas } />
+  <ColorSwatches colors={ blackAlphas } />
+  <ColorSwatches colors={ whiteAlphas } />
+</DocsCanvas>
+
+<table className="docs">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Value</th>
+      <th className="w-full">Value (hex)</th>
+      <th>Coding</th>
+    </tr>
+  </thead>
+  <tbody>
+    { tokens.map(([name]) => (
+      <tr key={ name }>
+        <td>
+          <pre>{ name }</pre>
+        </td>
+        <td className="pr-0!">
+          <DocsToken value={ getTokenValue(TOKENS.COLOR[name]) } type="color" />
+        </td>
+        <td>
+          <DocsToken value={ oklchToHex(getTokenValue(TOKENS.COLOR[name])) } type="color" />
+        </td>
+        <td>
+          <DocsTokenCodeGrid
+            tsVar={ `tokens.color['${ name }']` }
+            twVars={ [`bg-color-${ name }`, `text-color-${ name }`] }
+            cssVar={ `${ CSS_PREFIX.COLOR }${ name }` }
+            tsSize="w-lg-1"
+            twSize="w-lg-1"
+            cssSize="w-lg-1"
+            delay={ 1000 }
+          />
+        </td>
+      </tr>
+    )) }
+  </tbody>
+</table>

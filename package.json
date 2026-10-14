@@ -4,30 +4,64 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prepare": "husky",
+    "dev-app": "vite",
+    "build-app": "tsc -b && vite build",
+    "preview-app": "vite preview",
+    "dev-storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build",
+    "build-tokens": "tsx scripts/design-tokens/builder.ts src/ds/tokens/tokens.js src/ds/tokens/output",
+    "lint-codebase": "oxlint && tsc -b --noEmit",
     "lint-commit": "commitlint --edit",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
+    "prepare": "husky"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@mantine/core": "^9.7.0",
+    "clsx": "^2.1.1",
+    "lodash-es": "^4.18.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^21.2.3",
+    "@faker-js/faker": "^10.6.0",
+    "@mdx-js/react": "^3.1.1",
+    "@storybook/addon-a11y": "10.6.1",
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/addon-vitest": "10.6.1",
+    "@storybook/react-vite": "10.6.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/estree": "^1.0.9",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/browser-playwright": "latest",
+    "@vitest/coverage-v8": "latest",
     "commitlint": "^21.2.3",
     "husky": "^9.1.7",
     "oxlint": "^1.81.0",
+    "playwright": "latest",
+    "postcss-url": "^10.1.4",
     "prettier": "^3.9.9",
     "prettier-plugin-css-order": "^2.2.0",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "remark-gfm": "^4.0.1",
+    "storybook": "10.6.1",
+    "style-dictionary": "^5.6.0",
+    "tsx": "^4.23.15",
     "typescript": "~6.0.2",
-    "vite": "^8.3.0"
+    "vite": "^8.3.0",
+    "vite-plugin-svgr": "^5.2.0",
+    "vitest": "latest"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

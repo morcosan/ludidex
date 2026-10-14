@@ -1,0 +1,139 @@
+import { DocsContainer } from '@storybook/addon-docs/blocks'
+import { type ComponentType } from 'react'
+import { fn } from 'storybook/test'
+import { type HOC, HocComposer } from '../../src/ds'
+import { DocsCodeBlock, DocsPage } from '../shared'
+import { fixBrokenCSS } from './_preview-css-fix'
+import {
+  computeServices,
+  type DocsComponentProps,
+  type DocsContainerProps,
+  type GlobalConfig,
+  type GlobalDefaults,
+  type GlobalTypes,
+  type PreviewDocs,
+  type PreviewStory,
+  type PreviewToolbar,
+  type StoryContext,
+} from './_preview-utils'
+
+type ArgType = {
+  type?: {
+    name?: string
+    value?: { name: string; value?: string }[]
+  }
+  control?: { type: string }
+}
+const argTypesEnhancers = [
+  ({ argTypes }: StoryContext<any, ArgType>) => {
+    // Force all props of type string to be displayed as single line textarea
+    Object.keys(argTypes).forEach((key: string) => {
+      const type = argTypes[key].type
+      if (type?.name === 'union' && type.value?.some((t: any) => t.name === 'string')) {
+        argTypes[key].control = { type: 'text' }
+      }
+    })
+    return argTypes
+  },
+]
+
+const toolbarConfig = {
+  globalTypes: {
+    colorMode: {
+      description: 'Change color mode',
+      toolbar: {
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' as any },
+          { value: 'dark', title: 'Dark', icon: 'moon' as any },
+        ],
+      },
+    },
+    canvasBg: {
+      description: 'Change canvas background',
+      toolbar: {
+        items: [
+          { value: 'grid', title: 'Grid', icon: 'photo' as any },
+          { value: 'tiles', title: 'Tiles', icon: 'photo' as any },
+          { value: 'blank', title: 'Blank', icon: 'photo' as any },
+          { value: 'page', title: 'Page', icon: 'photo' as any },
+        ],
+      },
+    },
+  },
+  initialGlobals: {
+    colorMode: 'light',
+    canvasBg: 'grid',
+  },
+} satisfies PreviewToolbar
+
+const getStoryConfig = (providers: HOC[]) => {
+  return {
+    decorators: [
+      (Story: ComponentType, { globals, tags, viewMode, parameters }: StoryContext) => {
+        return (
+          <HocComposer hocs={computeServices(providers, globals)}>
+            {tags.includes('autodocs') || tags.includes('controls') ? (
+              <DocsPage type={viewMode === 'docs' ? 'autodocs' : 'component'} shortcuts={parameters.shortcuts}>
+                <Story />
+              </DocsPage>
+            ) : (
+              <Story />
+            )}
+          </HocComposer>
+        )
+      },
+    ],
+  } satisfies PreviewStory
+}
+
+const getDocsConfig = (providers: HOC[]) => {
+  return {
+    components: {
+      pre: ({ children: childrenProp, className: classNameProp }: DocsComponentProps) => {
+        let children, className
+
+        if (typeof childrenProp === 'string') {
+          children = childrenProp
+          className = classNameProp
+        } else {
+          children = childrenProp?.props.children
+          className = childrenProp?.props.className
+        }
+
+        return <DocsCodeBlock code={String(children)} language={className?.replace('language-', '') as any} />
+      },
+    },
+
+    // oxlint-disable-next-line react/only-export-components
+    container: function Story(props: DocsContainerProps) {
+      const { children, context } = props
+      const isAutodocs = context.attachedCSFFiles?.size > 0
+
+      fixBrokenCSS()
+
+      return isAutodocs ? (
+        <DocsContainer {...(props as any)} />
+      ) : (
+        <HocComposer hocs={computeServices(providers, context.store.userGlobals.globals)}>
+          <DocsContainer {...(props as any)}>
+            <DocsPage type="mdx">{children}</DocsPage>
+          </DocsContainer>
+        </HocComposer>
+      )
+    },
+  } satisfies PreviewDocs
+}
+
+const mockNavigateFn = fn().mockName('navigate')
+const mockNavigate = (...args: any[]) => {
+  mockNavigateFn(...args)
+  window.dispatchEvent(new CustomEvent('sb:navigate', { detail: args }))
+}
+
+const TRANSLATIONS: Record<string, string> = {
+  'ds.action.close': 'Close',
+}
+const mockTranslate = (key: string) => TRANSLATIONS[key] || key
+
+export { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig }
+export type { GlobalConfig, GlobalDefaults, GlobalTypes, StoryContext }

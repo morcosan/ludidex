@@ -1,0 +1,107 @@
+import { Button, defineMeta, DocsPage, loremLongText, Modal, type ModalProps } from '@src-storybook'
+import { type Meta, type StoryObj } from '@storybook/react-vite'
+import { useEffect, useMemo, useState } from 'react'
+
+const meta: Meta = {
+  title: 'Design System / Components / Modal',
+  ...defineMeta(Modal, {
+    slots: {
+      title: 'Modal title',
+      children: loremLongText(20),
+      actions: '<button class="p-xs-3 bg-color-blue-9 text-color-text-inverse rounded-md">Submit</button>',
+      extras: 'Extra content',
+    },
+    props: {
+      opened: false,
+      width: 'md',
+      height: 'fit',
+      noDismiss: false,
+      noClose: false,
+      noFooter: false,
+      'data-prop': '',
+    },
+    events: ['onOpened', 'onClose', 'onClosed'],
+    inlineRadios: ['width', 'height'],
+  }),
+}
+
+const Default: StoryObj<typeof Modal> = {
+  tags: ['autodocs', 'controls'],
+
+  render: (props: ModalProps) => {
+    const { actions, opened: openedProp, onClose } = props
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [opened, setOpened] = useState(false)
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      setOpened(openedProp)
+    }, [openedProp])
+
+    return (
+      <>
+        <Button variant="default" onClick={() => setOpened(true)}>
+          Open modal
+        </Button>
+
+        <Modal
+          {...props}
+          opened={opened}
+          actions={<div dangerouslySetInnerHTML={{ __html: String(actions) }} />}
+          onClose={() => {
+            setOpened(false)
+            onClose?.()
+          }}
+        />
+      </>
+    )
+  },
+}
+
+const Nesting: StoryObj<typeof Modal> = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [opened1, setOpened1] = useState(false)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [opened2, setOpened2] = useState(false)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [opened3, setOpened3] = useState(false)
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const slotTriggers = useMemo(
+      () => (
+        <div className="gap-xs-5 flex">
+          <Button variant="default" onClick={() => setOpened1(true)}>
+            Open modal #1
+          </Button>
+          <Button variant="default" onClick={() => setOpened2(true)}>
+            Open modal #2
+          </Button>
+          <Button variant="default" onClick={() => setOpened3(true)}>
+            Open modal #3
+          </Button>
+        </div>
+      ),
+      [],
+    )
+
+    return (
+      <DocsPage type="component">
+        <div className="flex-center py-sm-2">{slotTriggers}</div>
+
+        <Modal opened={opened1} title="Modal #1" width="sm" onClose={() => setOpened1(false)}>
+          {slotTriggers}
+        </Modal>
+        <Modal opened={opened2} title="Modal #2" width="md" onClose={() => setOpened2(false)}>
+          {slotTriggers}
+        </Modal>
+        <Modal opened={opened3} title="Modal #3" width="lg" onClose={() => setOpened3(false)}>
+          {slotTriggers}
+        </Modal>
+      </DocsPage>
+    )
+  },
+}
+
+export default meta
+export { Default, Nesting }

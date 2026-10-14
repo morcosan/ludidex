@@ -1,0 +1,31 @@
+@import '../../tokens/output/blur.css';
+@import '../../tokens/output/breakpoint.css';
+@import '../../tokens/output/color.css';
+@import '../../tokens/output/font-family.css';
+@import '../../tokens/output/font-size.css';
+@import '../../tokens/output/font-weight.css';
+@import '../../tokens/output/line-height.css';
+@import '../../tokens/output/motion.css';
+@import '../../tokens/output/radius.css';
+@import '../../tokens/output/shadow.css';
+@import '../../tokens/output/spacing.css';
+@import '../../tokens/output/surface.css';
+@import '../../tokens/output/z-index.css';
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: extra-condensed normal;
+  src: url('../../assets/fonts/geist-variable.woff2') format('woff2-variations');
+  font-family: 'Geist';
+  font-display: swap;
+}
+
+@font-face {
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: extra-condensed normal;
+  src: url('../../assets/fonts/geist-mono-variable.woff2') format('woff2-variations');
+  font-family: 'Geist Mono';
+  font-display: swap;
+}

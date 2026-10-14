@@ -1,0 +1,95 @@
+import { type ReactElement } from 'react'
+import { type ArgTypes, type InputType } from 'storybook/internal/types'
+import { fn } from 'storybook/test'
+
+// Keep for later: Storybook v10 cannot load JSDoc for methods
+// type RefInstance<C> = JsxProps<C> extends { ref?: Ref<infer R> } ? NonNullable<R> : never
+// type MethodKeys<C> = Array<keyof RefInstance<C>>
+
+interface StoryShortcut {
+  keys: string[]
+  label: string
+  fn: () => void
+}
+
+type PropKeys<C> = Array<keyof JsxProps<C>>
+type ControlType =
+  | 'object'
+  | 'boolean'
+  | 'check'
+  | 'inline-check'
+  | 'radio'
+  | 'inline-radio'
+  | 'select'
+  | 'multi-select'
+  | 'number'
+  | 'range'
+  | 'file'
+  | 'color'
+  | 'date'
+  | 'text'
+  | Array<string | number>
+  | false
+
+type Defaults<C> = Partial<JsxProps<C>>
+type ArgsConfig<C> = {
+  slots?: Defaults<C>
+  props?: Defaults<C>
+  events?: PropKeys<C>
+  inlineRadios?: PropKeys<C>
+  clearDefaults?: PropKeys<C>
+  hasMethods?: boolean
+  shortcuts?: StoryShortcut[]
+  render?: (props: any) => ReactElement
+}
+
+type ControlParam = {
+  header: string
+  control?: ControlType
+  value?: unknown
+}
+
+const defineArgDefault = (value: unknown): string => (typeof value === 'string' ? `'${value}'` : String(value))
+const defineArgType = ({ control, header, value }: ControlParam): InputType => ({
+  control,
+  table: {
+    category: header,
+    defaultValue: value ? { summary: defineArgDefault(value) } : undefined,
+  },
+})
+
+const defineArgs = <C>(args: ArgsConfig<C>) => {
+  const { slots, props, events, hasMethods, clearDefaults, inlineRadios, shortcuts, render } = args
+  const argTypes: ArgTypes = {}
+  const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'style']
+
+  Object.keys(slots || {}).forEach(
+    (key: string) => (argTypes[key] = defineArgType({ header: 'Slots', control: 'text' })),
+  )
+  Object.entries(props || {}).forEach(([key, value]: [string, unknown]) => {
+    const cKey = key as keyof JsxProps<C>
+    const isText = typeof value === 'string'
+    argTypes[key] = defineArgType({
+      header: 'Props',
+      control: inlineRadios?.includes(cKey) ? 'inline-radio' : isText ? 'text' : undefined,
+      value: clearDefaultsKeys.includes(cKey) ? undefined : value,
+    })
+  })
+  events?.forEach((key: keyof JsxProps<C>) => (argTypes[key as string] = defineArgType({ header: 'Events' })))
+  hasMethods && (argTypes['ref'] = defineArgType({ header: 'Methods', control: false }))
+
+  return {
+    argTypes,
+    args: {
+      ...(slots || {}),
+      ...(props || {}),
+      ...events?.reduce((acc, event) => ({ ...acc, [event]: fn() }), {}),
+    },
+    parameters: { shortcuts },
+    render,
+  }
+}
+
+const defineMeta = <C>(component: C, config: ArgsConfig<C>) => ({ component, ...defineArgs(config) })
+
+export { defineMeta, type StoryShortcut }

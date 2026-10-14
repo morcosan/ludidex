@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+/* Disable defaults in v4 */
+@theme {
+  --blur-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --color-*: initial;
+  --font-family-*: initial;
+  --font-size-*: initial;
+  --font-weight-*: initial;
+  --leading-*: initial;
+  --breakpoint-*: initial;
+  --spacing-*: initial;
+  --z-index-*: initial;
+}
+
+@utility flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@utility absolute-center {
+  --tw-translate-x: -50%;
+  --tw-translate-y: -50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+}
+
+@utility absolute-center-x {
+  --tw-translate-x: -50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+}
+
+@utility absolute-center-y {
+  --tw-translate-y: -50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+}
+
+@utility absolute-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@utility fixed-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

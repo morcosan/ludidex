@@ -27,5 +27,4 @@ export * from './services/viewport-service'
  */
 export * from './utilities/color-utils'
 export * from './utilities/react-utils'
-export * from './utilities/use-hover-effect'
 export * from './utilities/various-utils'

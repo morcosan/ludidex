@@ -16,7 +16,11 @@ export const DocsCanvas = (props: Props) => {
   const input1Ref = useRef<HTMLInputElement>(null)
   const input2Ref = useRef<HTMLInputElement>(null)
 
-  const rootClass = cx('ds-surface-region rounded-md border', canvasBgClass, className)
+  const rootClass = cx(
+    'bg-color-bg-region border-color-border-inset shadow-inset-sm rounded-md border',
+    canvasBgClass,
+    className,
+  )
   const focusClass = cx(
     'w-md-3 bg-color-transparent py-xs-0 absolute right-0',
     'text-size-xs text-color-text-subtle text-center',

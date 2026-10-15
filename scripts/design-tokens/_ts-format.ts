@@ -1,25 +1,12 @@
-import { camelCase } from 'lodash-es'
 import prettier from 'prettier'
 import StyleDictionary, { type TransformedToken } from 'style-dictionary'
 import { type Format, type FormatFnArguments } from 'style-dictionary/types'
 import { isColoredArray, isColoredValue, NOTICE, prettierConfig } from './_utils.ts'
-import type {
-  TokenAtomicValue,
-  TokenColoredValue,
-  TokenColorMode,
-  TokenCompositeValue,
-  TokenScalar,
-  TokenScalarValue,
-} from './schema.ts'
+import type { TokenColoredValue, TokenColorMode, TokenScalar, TokenScalarValue, TokenValue } from './schema.ts'
 
-type AtomicOutput = {
+type Output = {
   value: TokenScalarValue | ColoredOutput
   ref?: string | string[] | ColoredRefOutput
-}
-type CompositeOutput = {
-  type: 'composite'
-  ref: Record<string, string | string[] | ColoredRefOutput>
-  value: Record<string, TokenScalarValue | ColoredOutput>
 }
 type ColoredOutput = {
   light: TokenScalarValue
@@ -43,7 +30,7 @@ const BROKEN_VALUE = '[object Object]'
 const isBrokenValue = (value: TokenScalarValue) => {
   return typeof value === 'string' ? value.includes(BROKEN_VALUE) : Array.isArray(value) && value.some(isBrokenValue)
 }
-const isBrokenToken = (value: TokenAtomicValue): boolean => {
+const isBrokenToken = (value: TokenValue): boolean => {
   return isColoredValue(value) ? Object.values(value).some(isBrokenValue) : isBrokenValue(value as TokenScalarValue)
 }
 
@@ -64,7 +51,7 @@ const resolveScalar = (value: TokenScalar, mode: TokenColorMode, seen = new Set<
     return resolveScalar(resolved, mode, new Set([...seen, path])) as string
   })
 }
-const resolveOriginal = (original: TokenAtomicValue, mode: TokenColorMode): TokenScalarValue => {
+const resolveOriginal = (original: TokenValue, mode: TokenColorMode): TokenScalarValue => {
   if (typeof original === 'number') return original
   if (typeof original === 'string') return resolveScalar(original, mode)
   if (Array.isArray(original)) return original.map((value) => resolveScalar(value, mode))
@@ -80,8 +67,8 @@ const resolveOriginal = (original: TokenAtomicValue, mode: TokenColorMode): Toke
   return ''
 }
 
-const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValue): AtomicOutput => {
-  const result: AtomicOutput = {} as AtomicOutput
+const renderAtomicToken = (original: TokenValue, resolved: TokenValue): Output => {
+  const result: Output = {} as Output
 
   // Compute result.ref
   if (isColoredValue(original)) {
@@ -108,28 +95,12 @@ const renderAtomicToken = (original: TokenAtomicValue, resolved: TokenAtomicValu
   return result
 }
 
-const renderCompositeToken = (original: TokenCompositeValue, resolved: TokenCompositeValue): CompositeOutput => {
-  const result: CompositeOutput = { type: 'composite', ref: {}, value: {} }
-
-  Object.keys(original).forEach((key) => {
-    const camelKey = key.startsWith('--') ? key : camelCase(key)
-    const output = renderAtomicToken(original[key], resolved[key])
-    if (output.ref) result.ref[camelKey] = output.ref
-    if (output.value) result.value[camelKey] = output.value
-  })
-
-  return result
-}
-
 const renderTokens = (tokens: TransformedToken[]) => {
-  const result = {} as Record<string, AtomicOutput | CompositeOutput>
+  const result = {} as Record<string, Output>
 
   for (const token of tokens) {
     const [leaf] = token.path.slice(1)
-    result[leaf] =
-      token.original?.$type === 'composite'
-        ? renderCompositeToken(token.original?.$value, token.$value)
-        : renderAtomicToken(token.original?.$value, token.$value)
+    result[leaf] = renderAtomicToken(token.original?.$value, token.$value)
   }
 
   return result
@@ -148,7 +119,6 @@ const createTsFormat = (sd: StyleDictionary): Format => {
       const json = JSON.stringify(varCode, null, 2).replaceAll('\n', '')
       const output =
         NOTICE +
-        `\nexport const CLASS_PREFIX__${varName} = 'ds-${namespace}-'\n` +
         `\nexport const CSS_PREFIX__${varName} = '--ds-${namespace}-'\n` +
         `\nexport const TOKENS__${varName} = ${json} as const\n`
 

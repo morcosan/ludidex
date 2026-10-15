@@ -102,6 +102,6 @@ pre.prismjs {
     background: var(--ds-color-bg-card) !important;
   }
   & tr[title]:hover > td {
-    background: var(--ds-color-secondary-hover-default) !important;
+    background: var(--ds-color-hover-button-default) !important;
   }
 }

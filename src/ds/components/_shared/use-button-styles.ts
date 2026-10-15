@@ -8,9 +8,14 @@ interface Props {
   variant: BaseButtonVariant
 }
 
+const stripes = (color: string) => `repeating-linear-gradient(150deg, ${color} 0% 50%, transparent 50% 100%)`
+
 export const useButtonStyles = ({ state, size, variant }: Props) => {
   const { tokens } = useThemeService()
+  const { color, shadow } = tokens
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
+  const isDefault = variant === 'default' || variant === 'menu-default'
+  const isCaution = variant === 'caution' || variant === 'menu-caution'
 
   const height = (() => {
     if (size === 'xs') return tokens.spacing['button-h-xs']
@@ -43,40 +48,138 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
   })()
   const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 
+  const hoverCss: CSSObject = { boxShadow: shadow['sm'], transform: 'translateY(-1px)' }
+  const pressCss: CSSObject = { boxShadow: shadow['inset-sm'] }
+
   const surfaceDefault = ((): CSSObject => {
-    if (state === 'selected') return tokens.surface['button-selection']
-    if (variant === 'primary') return tokens.surface['button-primary']
-    if (variant === 'secondary') return tokens.surface['button-secondary']
-    if (variant === 'default') return tokens.surface['button-default']
-    if (variant === 'optional') return tokens.surface['button-optional']
-    if (variant === 'danger') return tokens.surface['button-danger']
-    if (variant === 'caution') return tokens.surface['button-caution']
-    if (variant === 'menu-default') return tokens.surface['button-default']
-    if (variant === 'menu-caution') return tokens.surface['button-caution']
+    if (state === 'selected') {
+      return {
+        color: color['text-selection'],
+        backgroundColor: color['bg-selection'],
+        border: `1px solid ${color['border-selection']}`,
+      }
+    }
+    if (variant === 'primary') {
+      return {
+        color: color['button-primary-text'],
+        backgroundColor: color['button-primary-bg'],
+        backgroundImage: stripes(color['button-primary-stripe']),
+      }
+    }
+    if (variant === 'secondary') {
+      return {
+        color: color['button-secondary-text'],
+        backgroundColor: color['button-secondary-bg'],
+        backgroundImage: stripes(color['button-secondary-stripe']),
+        border: `1px solid ${color['button-secondary-border']}`,
+      }
+    }
+    if (isDefault) return { color: color['text-default'] }
+    if (variant === 'optional') return { color: color['text-subtle'] }
+    if (variant === 'danger') {
+      return {
+        color: color['button-danger-text'],
+        backgroundColor: color['button-danger-bg'],
+        backgroundImage: stripes(color['button-danger-stripe']),
+      }
+    }
+    if (isCaution) return { color: color['button-caution-text'] }
     return {}
   })()
   const surfaceHover = ((): CSSObject => {
-    if (state === 'selected') return tokens.surface['button-selection-hover']
-    if (variant === 'primary') return tokens.surface['button-primary-hover']
-    if (variant === 'secondary') return tokens.surface['button-secondary-hover']
-    if (variant === 'default') return tokens.surface['button-default-hover']
-    if (variant === 'optional') return tokens.surface['button-optional-hover']
-    if (variant === 'danger') return tokens.surface['button-danger-hover']
-    if (variant === 'caution') return tokens.surface['button-caution-hover']
-    if (variant === 'menu-default') return tokens.surface['button-default-hover']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-hover']
+    if (state === 'selected') {
+      return {
+        color: color['text-selection-hover'],
+        backgroundColor: color['bg-selection-hover'],
+        border: `1px solid ${color['border-selection-hover']}`,
+      }
+    }
+    if (variant === 'primary') {
+      return {
+        ...hoverCss,
+        color: color['button-primary-text-hover'],
+        backgroundColor: color['button-primary-bg-hover'],
+        backgroundImage: stripes(color['button-primary-stripe-hover']),
+      }
+    }
+    if (variant === 'secondary') {
+      return {
+        ...hoverCss,
+        color: color['button-secondary-text-hover'],
+        backgroundColor: color['button-secondary-bg-hover'],
+        backgroundImage: stripes(color['button-secondary-stripe-hover']),
+        border: `1px solid ${color['button-secondary-border-hover']}`,
+      }
+    }
+    if (isDefault) {
+      return { ...hoverCss, color: color['text-default'], backgroundColor: color['button-default-bg-hover'] }
+    }
+    if (variant === 'optional') {
+      return { ...hoverCss, color: color['text-default'], backgroundColor: color['button-optional-bg-hover'] }
+    }
+    if (variant === 'danger') {
+      return {
+        ...hoverCss,
+        color: color['button-danger-text-hover'],
+        backgroundColor: color['button-danger-bg-hover'],
+        backgroundImage: stripes(color['button-danger-stripe-hover']),
+      }
+    }
+    if (isCaution) {
+      return {
+        ...hoverCss,
+        color: color['button-caution-text-hover'],
+        backgroundColor: color['button-caution-bg-hover'],
+      }
+    }
     return {}
   })()
   const surfacePress = ((): CSSObject => {
-    if (state === 'selected') return tokens.surface['button-selection-press']
-    if (variant === 'primary') return tokens.surface['button-primary-press']
-    if (variant === 'secondary') return tokens.surface['button-secondary-press']
-    if (variant === 'default') return tokens.surface['button-default-press']
-    if (variant === 'optional') return tokens.surface['button-optional-press']
-    if (variant === 'danger') return tokens.surface['button-danger-press']
-    if (variant === 'caution') return tokens.surface['button-caution-press']
-    if (variant === 'menu-default') return tokens.surface['button-default-press']
-    if (variant === 'menu-caution') return tokens.surface['button-caution-press']
+    if (state === 'selected') {
+      return {
+        color: color['text-selection-press'],
+        backgroundColor: color['bg-selection-press'],
+        border: `1px solid ${color['border-selection-press']}`,
+      }
+    }
+    if (variant === 'primary') {
+      return {
+        ...pressCss,
+        color: color['button-primary-text-press'],
+        backgroundColor: color['button-primary-bg-press'],
+        backgroundImage: stripes(color['button-primary-stripe-press']),
+      }
+    }
+    if (variant === 'secondary') {
+      return {
+        ...pressCss,
+        color: color['button-secondary-text-press'],
+        backgroundColor: color['button-secondary-bg-press'],
+        backgroundImage: stripes(color['button-secondary-stripe-press']),
+        border: `1px solid ${color['button-secondary-border-press']}`,
+      }
+    }
+    if (isDefault) {
+      return { ...pressCss, color: color['text-default'], backgroundColor: color['button-default-bg-press'] }
+    }
+    if (variant === 'optional') {
+      return { ...pressCss, color: color['text-default'], backgroundColor: color['button-optional-bg-press'] }
+    }
+    if (variant === 'danger') {
+      return {
+        ...pressCss,
+        color: color['button-danger-text-press'],
+        backgroundColor: color['button-danger-bg-press'],
+        backgroundImage: stripes(color['button-danger-stripe-press']),
+      }
+    }
+    if (isCaution) {
+      return {
+        ...pressCss,
+        color: color['button-caution-text-press'],
+        backgroundColor: color['button-caution-bg-press'],
+      }
+    }
     return {}
   })()
 

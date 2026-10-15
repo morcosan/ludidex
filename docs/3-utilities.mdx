@@ -24,7 +24,7 @@ Component for composing multiple Higher-Order Components (HOCs) in a declarative
 This utility simplifies nesting multiple providers or HOCs by allowing you to define them as an array, avoiding deeply nested JSX.
 
 ```
-import { HocComposer } from '@ds/core'
+import { HocComposer } from '@ds'
 //
 const App = ({ children }) => (
   <HocComposer
@@ -70,7 +70,7 @@ Promise-based delay utility for async operations. <br/>
 This function creates a promise that resolves after a specified time, useful for implementing delays, debouncing, or testing async behavior.
 
 ```
-import { wait } from '@ds/core'
+import { wait } from '@ds'
 //
 // Simple delay
 wait(1000).then(() => console.log('Executed after 1 second'))
@@ -103,7 +103,7 @@ Comprehensive keyboard key constants for event handling. <br/>
 This object provides type-safe constants for keyboard keys, making event handling more readable and less error-prone.
 
 ```
-import { Keyboard } from '@ds/core'
+import { Keyboard } from '@ds'
 //
 // Keyboard event handling
 const handleKeyDown = (event: KeyboardEvent) => {

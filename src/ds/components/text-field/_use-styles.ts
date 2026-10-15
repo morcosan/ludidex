@@ -49,12 +49,12 @@ export const useStyles = (props: Props) => {
       return ''
     })(),
     borderColor: invalid
-      ? tokens.color['danger-page-text']
+      ? tokens.color['border-danger']
       : readonly
         ? tokens.color['border-subtle']
         : tokens.color['border-default'],
-    borderColorHover: invalid ? tokens.color['danger-page-text'] : tokens.color['border-hover'],
-    borderColorActive: invalid ? tokens.color['danger-page-text'] : tokens.color['border-active'],
+    borderColorHover: invalid ? tokens.color['border-danger'] : tokens.color['border-hover'],
+    borderColorActive: invalid ? tokens.color['border-danger'] : tokens.color['border-active'],
   }
 
   const rootCss: CSSObject = {

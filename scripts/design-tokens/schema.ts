@@ -3,12 +3,8 @@ import { z } from 'zod'
 const ScalarSchema = z.union([z.string(), z.number()])
 const ScalarValueSchema = z.union([ScalarSchema, z.array(ScalarSchema)])
 const ColoredValueSchema = z.object({ $light: ScalarValueSchema, $dark: ScalarValueSchema }).strict()
-const AtomicValueSchema = z.union([ScalarValueSchema, ColoredValueSchema])
-const CompositeValueSchema = z.record(z.string(), z.union([ScalarValueSchema, ColoredValueSchema]))
-const TokenSchema = z.union([
-  z.object({ $value: AtomicValueSchema }).strict(),
-  z.object({ $value: CompositeValueSchema, $type: z.literal('composite') }).strict(),
-])
+const TokenValueSchema = z.union([ScalarValueSchema, ColoredValueSchema])
+const TokenSchema = z.object({ $value: TokenValueSchema }).strict()
 const TokensJsonSchema = z
   .object({
     blur: z.record(z.string(), TokenSchema),
@@ -23,7 +19,6 @@ const TokensJsonSchema = z
     shadow: z.record(z.string(), TokenSchema),
     spacing: z.record(z.string(), TokenSchema),
     'z-index': z.record(z.string(), TokenSchema),
-    surface: z.record(z.string(), TokenSchema),
   })
   .strict()
 
@@ -33,17 +28,7 @@ type TokenColorMode = '$light' | '$dark'
 type TokenScalar = z.infer<typeof ScalarSchema>
 type TokenScalarValue = z.infer<typeof ScalarValueSchema>
 type TokenColoredValue = z.infer<typeof ColoredValueSchema>
-type TokenAtomicValue = z.infer<typeof AtomicValueSchema>
-type TokenCompositeValue = z.infer<typeof CompositeValueSchema>
+type TokenValue = z.infer<typeof TokenValueSchema>
 
 export { TokensJsonSchema }
-export type {
-  Token,
-  TokenAtomicValue,
-  TokenColoredValue,
-  TokenColorMode,
-  TokenCompositeValue,
-  TokenScalar,
-  TokenScalarValue,
-  TokensJson,
-}
+export type { Token, TokenColoredValue, TokenColorMode, TokenScalar, TokenScalarValue, TokensJson, TokenValue }

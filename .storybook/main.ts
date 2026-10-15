@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm'
 
 const config: StorybookConfig = {
   previewAnnotations: (entry = []) => [...entry, path.resolve(import.meta.dirname, './preview/preview.tsx')],
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-vitest',
     '@storybook/addon-a11y',

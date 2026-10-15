@@ -4,7 +4,6 @@ import { type CSSObject } from '@emotion/react'
 import { Loader } from '@mantine/core'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
-import { useHoverEffect } from '../../utilities/use-hover-effect'
 import { type BaseButtonState } from '../_shared/types'
 import { useClickable } from '../_shared/use-clickable'
 import { type CardProps } from './_types'
@@ -29,7 +28,6 @@ export const Card = (props: CardProps) => {
   const buttonState: BaseButtonState = state === 'static' ? 'disabled' : state
   const { bindings, isNoop, isPressed, pressing } = useClickable({ ...props, linkType, state: buttonState })
   const dataProps = useDataProps(props)
-  const hoverEffect = useHoverEffect({})
   const isStatic = state === 'static'
 
   const spinnerCss: CSSObject = {
@@ -46,9 +44,52 @@ export const Card = (props: CardProps) => {
     '--loader-color': `${tokens.color['text-subtle']} !important`,
   }
 
-  const surfaceDefault = state === 'selected' ? tokens.surface['card-selection'] : tokens.surface['card']
-  const surfaceHover = state === 'selected' ? tokens.surface['card-selection-hover'] : tokens.surface['card-hover']
-  const surfacePress = state === 'selected' ? tokens.surface['card-selection-press'] : tokens.surface['card-press']
+  const isSelected = state === 'selected'
+  const cardRadius = tokens.radius['md']
+  const cardBorder = `1px solid ${tokens.color['border-surface']}`
+  const surfaceDefault: CSSObject = isSelected
+    ? {
+        color: tokens.color['text-selection'],
+        backgroundColor: tokens.color['bg-selection'],
+        border: `1px solid ${tokens.color['border-selection']}`,
+        borderRadius: cardRadius,
+      }
+    : {
+        color: tokens.color['text-default'],
+        backgroundColor: tokens.color['bg-card'],
+        border: cardBorder,
+        borderRadius: cardRadius,
+        boxShadow: tokens.shadow['xs'],
+      }
+  const surfaceHover: CSSObject = isSelected
+    ? {
+        color: tokens.color['text-selection-hover'],
+        backgroundColor: tokens.color['bg-selection-hover'],
+        border: `1px solid ${tokens.color['border-selection-hover']}`,
+        borderRadius: cardRadius,
+      }
+    : {
+        color: tokens.color['text-default'],
+        backgroundColor: tokens.color['bg-card'],
+        border: cardBorder,
+        borderRadius: cardRadius,
+        boxShadow: tokens.shadow['sm'],
+        transform: 'translateY(-1px)',
+      }
+  const surfacePress: CSSObject = isSelected
+    ? {
+        color: tokens.color['text-selection-press'],
+        backgroundColor: tokens.color['bg-selection-press'],
+        border: `1px solid ${tokens.color['border-selection-press']}`,
+        borderRadius: cardRadius,
+      }
+    : {
+        color: tokens.color['text-default'],
+        backgroundColor: tokens.color['bg-card'],
+        border: cardBorder,
+        borderRadius: cardRadius,
+        boxShadow: tokens.shadow['inset-sm'],
+      }
   const surfaceCss: CSSObject = {
     ...(isPressed ? surfacePress : surfaceDefault),
     display: 'grid',
@@ -68,7 +109,7 @@ export const Card = (props: CardProps) => {
       inset: '-1px',
       content: '""',
       border: `1px solid ${tokens.color['border-inset']}`,
-      borderRadius: surfaceDefault.borderRadius,
+      borderRadius: cardRadius,
       opacity: isPressed ? 1 : 0,
       transition: `all ${tokens.motion['duration-sm']} ease`,
     },
@@ -91,14 +132,7 @@ export const Card = (props: CardProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isStatic ? 'unset' : isNoop ? 0.4 : 1,
     cursor: isStatic ? 'unset' : isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop
-      ? {}
-      : pressing
-        ? { '& > span:nth-of-type(1)': hoverEffect.pressCss }
-        : {
-            '& > span:nth-of-type(1)': hoverEffect.hoverCss,
-            '& > span:nth-of-type(2)': surfaceHover,
-          },
+    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': surfaceHover },
   }
   const cardBindings = {
     ...bindings,
@@ -111,17 +145,14 @@ export const Card = (props: CardProps) => {
   }
 
   const content = (
-    <>
-      {hoverEffect.html}
-      <span css={surfaceCss}>
-        <span css={childrenCss}>{children}</span>
-        {state === 'loading' && (
-          <span css={spinnerCss}>
-            <Loader css={spinnerIconCss} />
-          </span>
-        )}
-      </span>
-    </>
+    <span css={surfaceCss}>
+      <span css={childrenCss}>{children}</span>
+      {state === 'loading' && (
+        <span css={spinnerCss}>
+          <Loader css={spinnerIconCss} />
+        </span>
+      )}
+    </span>
   )
 
   return isStatic ? (

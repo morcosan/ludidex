@@ -4,7 +4,6 @@ import '@mantine/core/styles/Loader.css'
 import { type CSSProperties, type ReactNode } from 'react'
 import { useThemeService } from '../../services/theme-service'
 import { useDataProps } from '../../utilities/react-utils'
-import { useHoverEffect } from '../../utilities/use-hover-effect'
 import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant, type LinkType } from './types'
 import { useButtonStyles } from './use-button-styles'
 import { useClickable } from './use-clickable'
@@ -36,7 +35,6 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
-  const hoverEffect = useHoverEffect({ small: size === 'xs', rounded: !isMenuItem })
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
@@ -111,14 +109,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop
-      ? {}
-      : pressing
-        ? { '& > span:nth-of-type(1)': hoverEffect.pressCss }
-        : {
-            '& > span:nth-of-type(1)': hoverEffect.hoverCss,
-            '& > span:nth-of-type(2)': surfaceHoverCss,
-          },
+    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': surfaceHoverCss },
   }
 
   const bindings = {
@@ -132,17 +123,14 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
 
   const content = (
-    <>
-      {hoverEffect.html}
-      <span css={surfaceCss}>
-        <span css={childrenCss}>{children}</span>
-        {state === 'loading' && (
-          <span css={spinnerCss}>
-            <Loader css={spinnerIconCss} />
-          </span>
-        )}
-      </span>
-    </>
+    <span css={surfaceCss}>
+      <span css={childrenCss}>{children}</span>
+      {state === 'loading' && (
+        <span css={spinnerCss}>
+          <Loader css={spinnerIconCss} />
+        </span>
+      )}
+    </span>
   )
 
   return {

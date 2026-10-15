@@ -1,4 +1,4 @@
-import { Card, defineMeta, DocsPage, loremLongText, type CardState } from '@src-storybook'
+import { Card, type CardState, defineMeta, DocsPage, loremLongText } from '@src-storybook'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 
 const meta: Meta = {

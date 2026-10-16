@@ -1,0 +1,41 @@
+{
+  "ds": {
+    "action": {
+      "close": "Close"
+    }
+  },
+  "general": {
+    "action": {
+      "back": "Back",
+      "clearSearch": "Clear search",
+      "clearSelection": "Clear selection",
+      "sort": "Sort"
+    },
+    "label": {
+      "appTitle": "LudiDex",
+      "colorMode": "Color mode",
+      "currentGame": "Current game",
+      "modeDark": "Dark",
+      "modeLight": "Light",
+      "settings": "Settings"
+    },
+    "placeholder": {
+      "search": "Search..."
+    },
+    "status": {
+      "loading": "Loading..."
+    }
+  },
+  "nav": {
+    "label": {
+      "dashboard": "Dashboard",
+      "characters": "Characters",
+      "teams": "Teams"
+    }
+  },
+  "game": {
+    "label": {
+      "genshin": "Genshin Impact"
+    }
+  }
+}

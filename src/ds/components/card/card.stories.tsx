@@ -15,6 +15,7 @@ const meta: Meta = {
       linkHref: '',
       linkType: 'internal',
       className: '',
+      bodyClassName: '',
       style: { maxWidth: '300px' },
       'data-prop': '',
     },

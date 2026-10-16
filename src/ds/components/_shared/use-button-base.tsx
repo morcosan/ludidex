@@ -35,6 +35,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
+  const surfaceSelector = '& > span'
 
   const noopProps = ((): CSSObject => {
     const noopColor = tokens.color['text-subtle']
@@ -59,12 +60,11 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
 
   const surfaceCss: CSSObject = {
-    ...(isPressed ? styles.surfacePress : styles.surfaceDefault),
-    ...(isNoop ? noopProps : {}),
     display: 'flex',
     width: '100%',
     height: '100%',
     padding: isIcon ? 0 : `0 ${styles.paddingX}`,
+    border: '1px solid transparent',
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
     transition: [
       `all ${tokens.motion['duration-sm']} ease`,
@@ -73,15 +73,22 @@ export const useButtonBase = (props: BaseButtonProps) => {
     ].join(','),
     pointerEvents: 'none',
     userSelect: 'none',
-    '&::before': {
+    '&::before, &::after': {
       position: 'absolute',
       inset: '-1px',
       content: '""',
-      border: `1px solid ${tokens.color['border-inset']}`,
       borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
       opacity: isPressed ? 1 : 0,
       transition: `all ${tokens.motion['duration-sm']} ease`,
     },
+    '&::before': {
+      border: `1px solid ${tokens.color['border-inset']}`,
+    },
+    '&::after': {
+      boxShadow: tokens.shadow['inset-sm'],
+    },
+    ...(isPressed ? styles.surfacePress : styles.surfaceDefault),
+    ...(isNoop ? noopProps : {}),
   }
   const surfaceHoverCss: CSSObject = {
     ...styles.surfaceHover,
@@ -109,7 +116,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isNoop ? 0.4 : 1,
     cursor: isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': surfaceHoverCss },
+    '&:hover, &:focus': isNoop || pressing ? {} : { [surfaceSelector]: surfaceHoverCss },
   }
 
   const bindings = {

@@ -132,6 +132,7 @@ export default {
     'white-alpha-8': { $value: 'oklch(1 0 0 / 0.4)' },
     'white-alpha-9': { $value: 'oklch(1 0 0 / 0.48)' },
     'white-alpha-10': { $value: 'oklch(1 0 0 / 0.56)' },
+    'bg-app': { $value: { $light: '{color.grey-3}', $dark: '{color.grey-18}' } },
     'bg-page': { $value: { $light: '{color.grey-1}', $dark: '{color.grey-17}' } },
     'bg-region': { $value: { $light: '{color.black-alpha-1}', $dark: '{color.black-alpha-3}' } },
     'bg-card': { $value: { $light: '{color.white}', $dark: '{color.grey-16}' } },

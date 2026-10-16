@@ -2,20 +2,20 @@ import { type CSSObject } from '@emotion/react'
 import { useThemeService } from '../../services/theme-service'
 import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant } from './types'
 
+type SurfaceCssKey = 'selected' | BaseButtonVariant
+type SurfaceCss = Record<SurfaceCssKey, CSSObject>
+
 interface Props {
   state: BaseButtonState
   size: BaseButtonSize
   variant: BaseButtonVariant
 }
 
-const stripes = (color: string) => `repeating-linear-gradient(150deg, ${color} 0% 50%, transparent 50% 100%)`
-
 export const useButtonStyles = ({ state, size, variant }: Props) => {
   const { tokens } = useThemeService()
   const { color, shadow } = tokens
   const isMenuItem = variant === 'menu-default' || variant === 'menu-caution'
-  const isDefault = variant === 'default' || variant === 'menu-default'
-  const isCaution = variant === 'caution' || variant === 'menu-caution'
+  const getBgImage = (color: string) => `repeating-linear-gradient(150deg, ${color} 0% 50%, transparent 50% 100%)`
 
   const height = (() => {
     if (size === 'xs') return tokens.spacing['button-h-xs']
@@ -48,140 +48,126 @@ export const useButtonStyles = ({ state, size, variant }: Props) => {
   })()
   const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 
-  const hoverCss: CSSObject = { boxShadow: shadow['sm'], transform: 'translateY(-1px)' }
-  const pressCss: CSSObject = { boxShadow: shadow['inset-sm'] }
+  const hoverCss: CSSObject = {
+    boxShadow: shadow['sm'],
+    transform: 'translateY(-1px)',
+    '&::before, &::after': { opacity: 0 },
+  }
 
-  const surfaceDefault = ((): CSSObject => {
-    if (state === 'selected') {
-      return {
-        color: color['text-selection'],
-        backgroundColor: color['bg-selection'],
-        border: `1px solid ${color['border-selection']}`,
-      }
-    }
-    if (variant === 'primary') {
-      return {
-        color: color['button-primary-text'],
-        backgroundColor: color['button-primary-bg'],
-        backgroundImage: stripes(color['button-primary-stripe']),
-      }
-    }
-    if (variant === 'secondary') {
-      return {
-        color: color['button-secondary-text'],
-        backgroundColor: color['button-secondary-bg'],
-        backgroundImage: stripes(color['button-secondary-stripe']),
-        border: `1px solid ${color['button-secondary-border']}`,
-      }
-    }
-    if (isDefault) return { color: color['text-default'] }
-    if (variant === 'optional') return { color: color['text-subtle'] }
-    if (variant === 'danger') {
-      return {
-        color: color['button-danger-text'],
-        backgroundColor: color['button-danger-bg'],
-        backgroundImage: stripes(color['button-danger-stripe']),
-      }
-    }
-    if (isCaution) return { color: color['button-caution-text'] }
-    return {}
-  })()
-  const surfaceHover = ((): CSSObject => {
-    if (state === 'selected') {
-      return {
-        color: color['text-selection-hover'],
-        backgroundColor: color['bg-selection-hover'],
-        border: `1px solid ${color['border-selection-hover']}`,
-      }
-    }
-    if (variant === 'primary') {
-      return {
-        ...hoverCss,
-        color: color['button-primary-text-hover'],
-        backgroundColor: color['button-primary-bg-hover'],
-        backgroundImage: stripes(color['button-primary-stripe-hover']),
-      }
-    }
-    if (variant === 'secondary') {
-      return {
-        ...hoverCss,
-        color: color['button-secondary-text-hover'],
-        backgroundColor: color['button-secondary-bg-hover'],
-        backgroundImage: stripes(color['button-secondary-stripe-hover']),
-        border: `1px solid ${color['button-secondary-border-hover']}`,
-      }
-    }
-    if (isDefault) {
-      return { ...hoverCss, color: color['text-default'], backgroundColor: color['button-default-bg-hover'] }
-    }
-    if (variant === 'optional') {
-      return { ...hoverCss, color: color['text-default'], backgroundColor: color['button-optional-bg-hover'] }
-    }
-    if (variant === 'danger') {
-      return {
-        ...hoverCss,
-        color: color['button-danger-text-hover'],
-        backgroundColor: color['button-danger-bg-hover'],
-        backgroundImage: stripes(color['button-danger-stripe-hover']),
-      }
-    }
-    if (isCaution) {
-      return {
-        ...hoverCss,
-        color: color['button-caution-text-hover'],
-        backgroundColor: color['button-caution-bg-hover'],
-      }
-    }
-    return {}
-  })()
-  const surfacePress = ((): CSSObject => {
-    if (state === 'selected') {
-      return {
-        color: color['text-selection-press'],
-        backgroundColor: color['bg-selection-press'],
-        border: `1px solid ${color['border-selection-press']}`,
-      }
-    }
-    if (variant === 'primary') {
-      return {
-        ...pressCss,
-        color: color['button-primary-text-press'],
-        backgroundColor: color['button-primary-bg-press'],
-        backgroundImage: stripes(color['button-primary-stripe-press']),
-      }
-    }
-    if (variant === 'secondary') {
-      return {
-        ...pressCss,
-        color: color['button-secondary-text-press'],
-        backgroundColor: color['button-secondary-bg-press'],
-        backgroundImage: stripes(color['button-secondary-stripe-press']),
-        border: `1px solid ${color['button-secondary-border-press']}`,
-      }
-    }
-    if (isDefault) {
-      return { ...pressCss, color: color['text-default'], backgroundColor: color['button-default-bg-press'] }
-    }
-    if (variant === 'optional') {
-      return { ...pressCss, color: color['text-default'], backgroundColor: color['button-optional-bg-press'] }
-    }
-    if (variant === 'danger') {
-      return {
-        ...pressCss,
-        color: color['button-danger-text-press'],
-        backgroundColor: color['button-danger-bg-press'],
-        backgroundImage: stripes(color['button-danger-stripe-press']),
-      }
-    }
-    if (isCaution) {
-      return {
-        ...pressCss,
-        color: color['button-caution-text-press'],
-        backgroundColor: color['button-caution-bg-press'],
-      }
-    }
-    return {}
-  })()
+  const pressCss: CSSObject = { borderColor: 'transparent' }
+
+  const surfaceDefaultCss: SurfaceCss = {
+    selected: {
+      color: color['text-selection'],
+      backgroundColor: color['bg-selection'],
+      borderColor: color['border-selection'],
+    },
+    primary: {
+      color: color['button-primary-text'],
+      backgroundColor: color['button-primary-bg'],
+      backgroundImage: getBgImage(color['button-primary-stripe']),
+    },
+    secondary: {
+      color: color['button-secondary-text'],
+      backgroundColor: color['button-secondary-bg'],
+      backgroundImage: getBgImage(color['button-secondary-stripe']),
+      borderColor: color['button-secondary-border'],
+    },
+    danger: {
+      color: color['button-danger-text'],
+      backgroundColor: color['button-danger-bg'],
+      backgroundImage: getBgImage(color['button-danger-stripe']),
+    },
+    default: { color: color['text-default'] },
+    optional: { color: color['text-subtle'] },
+    caution: { color: color['button-caution-text'] },
+    'menu-default': { color: color['text-default'] },
+    'menu-caution': { color: color['button-caution-text'] },
+  }
+
+  const surfaceHoverCss: SurfaceCss = {
+    selected: {
+      color: color['text-selection-hover'],
+      backgroundColor: color['bg-selection-hover'],
+      borderColor: color['border-selection-hover'],
+    },
+    primary: {
+      ...hoverCss,
+      color: color['button-primary-text-hover'],
+      backgroundColor: color['button-primary-bg-hover'],
+      backgroundImage: getBgImage(color['button-primary-stripe-hover']),
+    },
+    secondary: {
+      ...hoverCss,
+      color: color['button-secondary-text-hover'],
+      backgroundColor: color['button-secondary-bg-hover'],
+      backgroundImage: getBgImage(color['button-secondary-stripe-hover']),
+      borderColor: color['button-secondary-border-hover'],
+    },
+    danger: {
+      ...hoverCss,
+      color: color['button-danger-text-hover'],
+      backgroundColor: color['button-danger-bg-hover'],
+      backgroundImage: getBgImage(color['button-danger-stripe-hover']),
+    },
+    default: { ...hoverCss, color: color['text-default'], backgroundColor: color['button-default-bg-hover'] },
+    optional: { ...hoverCss, color: color['text-default'], backgroundColor: color['button-optional-bg-hover'] },
+    caution: {
+      ...hoverCss,
+      color: color['button-caution-text-hover'],
+      backgroundColor: color['button-caution-bg-hover'],
+    },
+    'menu-default': { ...hoverCss, color: color['text-default'], backgroundColor: color['button-default-bg-hover'] },
+    'menu-caution': {
+      ...hoverCss,
+      color: color['button-caution-text-hover'],
+      backgroundColor: color['button-caution-bg-hover'],
+    },
+  }
+
+  const surfacePressCss: SurfaceCss = {
+    selected: {
+      color: color['text-selection-press'],
+      backgroundColor: color['bg-selection-press'],
+      borderColor: color['border-selection-press'],
+    },
+    primary: {
+      ...pressCss,
+      color: color['button-primary-text-press'],
+      backgroundColor: color['button-primary-bg-press'],
+      backgroundImage: getBgImage(color['button-primary-stripe-press']),
+    },
+    secondary: {
+      ...pressCss,
+      color: color['button-secondary-text-press'],
+      backgroundColor: color['button-secondary-bg-press'],
+      backgroundImage: getBgImage(color['button-secondary-stripe-press']),
+      borderColor: color['button-secondary-border-press'],
+    },
+    danger: {
+      ...pressCss,
+      color: color['button-danger-text-press'],
+      backgroundColor: color['button-danger-bg-press'],
+      backgroundImage: getBgImage(color['button-danger-stripe-press']),
+    },
+    default: { ...pressCss, color: color['text-default'], backgroundColor: color['button-default-bg-press'] },
+    optional: { ...pressCss, color: color['text-default'], backgroundColor: color['button-optional-bg-press'] },
+    caution: {
+      ...pressCss,
+      color: color['button-caution-text-press'],
+      backgroundColor: color['button-caution-bg-press'],
+    },
+    'menu-default': { ...pressCss, color: color['text-default'], backgroundColor: color['button-default-bg-press'] },
+    'menu-caution': {
+      ...pressCss,
+      color: color['button-caution-text-press'],
+      backgroundColor: color['button-caution-bg-press'],
+    },
+  }
+
+  const surfaceDefault = surfaceDefaultCss[state === 'selected' ? state : variant]
+  const surfaceHover = surfaceHoverCss[state === 'selected' ? state : variant]
+  const surfacePress = surfacePressCss[state === 'selected' ? state : variant]
 
   return {
     fontSize,

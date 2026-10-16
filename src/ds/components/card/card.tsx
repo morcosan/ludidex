@@ -17,6 +17,7 @@ export const Card = (props: CardProps) => {
     ariaDescription,
     children,
     className,
+    bodyClassName,
     style,
     tooltip,
     linkHref,
@@ -29,6 +30,8 @@ export const Card = (props: CardProps) => {
   const { bindings, isNoop, isPressed, pressing } = useClickable({ ...props, linkType, state: buttonState })
   const dataProps = useDataProps(props)
   const isStatic = state === 'static'
+  const isSelected = state === 'selected'
+  const surfaceSelector = '& > span'
 
   const spinnerCss: CSSObject = {
     position: 'absolute',
@@ -43,55 +46,36 @@ export const Card = (props: CardProps) => {
     '--loader-size': `${tokens.spacing['sm-0']} !important`,
     '--loader-color': `${tokens.color['text-subtle']} !important`,
   }
-
-  const isSelected = state === 'selected'
-  const cardRadius = tokens.radius['md']
-  const cardBorder = `1px solid ${tokens.color['border-surface']}`
   const surfaceDefault: CSSObject = isSelected
     ? {
         color: tokens.color['text-selection'],
         backgroundColor: tokens.color['bg-selection'],
-        border: `1px solid ${tokens.color['border-selection']}`,
-        borderRadius: cardRadius,
+        borderColor: tokens.color['border-selection'],
       }
     : {
-        color: tokens.color['text-default'],
-        backgroundColor: tokens.color['bg-card'],
-        border: cardBorder,
-        borderRadius: cardRadius,
         boxShadow: tokens.shadow['xs'],
       }
   const surfaceHover: CSSObject = isSelected
     ? {
         color: tokens.color['text-selection-hover'],
         backgroundColor: tokens.color['bg-selection-hover'],
-        border: `1px solid ${tokens.color['border-selection-hover']}`,
-        borderRadius: cardRadius,
+        borderColor: tokens.color['border-selection-hover'],
       }
     : {
-        color: tokens.color['text-default'],
-        backgroundColor: tokens.color['bg-card'],
-        border: cardBorder,
-        borderRadius: cardRadius,
         boxShadow: tokens.shadow['sm'],
         transform: 'translateY(-1px)',
+        '&::before, &::after': { opacity: 0 },
       }
   const surfacePress: CSSObject = isSelected
     ? {
         color: tokens.color['text-selection-press'],
         backgroundColor: tokens.color['bg-selection-press'],
-        border: `1px solid ${tokens.color['border-selection-press']}`,
-        borderRadius: cardRadius,
+        borderColor: tokens.color['border-selection-press'],
       }
     : {
-        color: tokens.color['text-default'],
-        backgroundColor: tokens.color['bg-card'],
-        border: cardBorder,
-        borderRadius: cardRadius,
-        boxShadow: tokens.shadow['inset-sm'],
+        borderColor: 'transparent',
       }
   const surfaceCss: CSSObject = {
-    ...(isPressed ? surfacePress : surfaceDefault),
     display: 'grid',
     width: '100%',
     height: '100%',
@@ -102,17 +86,27 @@ export const Card = (props: CardProps) => {
       if (size === 'xl') return `${tokens.spacing['card-py-xl']} ${tokens.spacing['card-px-xl']}`
       return ''
     })(),
+    border: `1px solid ${tokens.color['border-surface']}`,
+    borderRadius: tokens.radius['md'],
+    backgroundColor: tokens.color['bg-card'],
+    color: tokens.color['text-default'],
     transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
     pointerEvents: 'none',
-    '&::before': {
+    '&::before, &::after': {
       position: 'absolute',
       inset: '-1px',
       content: '""',
-      border: `1px solid ${tokens.color['border-inset']}`,
-      borderRadius: cardRadius,
+      borderRadius: tokens.radius['md'],
       opacity: isPressed ? 1 : 0,
       transition: `all ${tokens.motion['duration-sm']} ease`,
     },
+    '&::before': {
+      border: `1px solid ${tokens.color['border-inset']}`,
+    },
+    '&::after': {
+      boxShadow: tokens.shadow['inset-sm'],
+    },
+    ...(isPressed ? surfacePress : surfaceDefault),
   }
   const childrenCss: CSSObject = {
     display: 'flex',
@@ -132,7 +126,7 @@ export const Card = (props: CardProps) => {
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isStatic ? 'unset' : isNoop ? 0.4 : 1,
     cursor: isStatic ? 'unset' : isNoop ? 'not-allowed' : 'pointer',
-    '&:hover, &:focus': isNoop || pressing ? {} : { '& > span': surfaceHover },
+    '&:hover, &:focus': isNoop || pressing ? {} : { [surfaceSelector]: surfaceHover },
   }
   const cardBindings = {
     ...bindings,
@@ -145,7 +139,7 @@ export const Card = (props: CardProps) => {
   }
 
   const content = (
-    <span css={surfaceCss}>
+    <span css={surfaceCss} className={bodyClassName}>
       <span css={childrenCss}>{children}</span>
       {state === 'loading' && (
         <span css={spinnerCss}>

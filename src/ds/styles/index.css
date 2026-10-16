@@ -7,7 +7,7 @@
 
 body {
   margin: 0 !important;
-  background-color: var(--ds-color-bg-page);
+  background-color: var(--ds-color-bg-app);
   padding: 0 !important;
   width: unset !important;
   color: var(--ds-color-text-default);

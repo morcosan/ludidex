@@ -9,6 +9,7 @@ export * from './styles/tokens'
 export * from './components/button/button'
 export * from './components/card/card'
 export * from './components/icon-button/icon-button'
+export * from './components/loading-screen/loading-screen'
 export * from './components/modal/modal'
 export * from './components/text-field/text-field'
 

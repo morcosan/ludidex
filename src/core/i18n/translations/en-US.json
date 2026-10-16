@@ -7,6 +7,8 @@
   "general": {
     "action": {
       "back": "Back",
+      "clear": "Clear",
+      "clearFilters": "Clear filters",
       "clearSearch": "Clear search",
       "clearSelection": "Clear selection",
       "sort": "Sort"
@@ -35,7 +37,13 @@
   },
   "game": {
     "label": {
-      "genshin": "Genshin Impact"
+      "element": "Element",
+      "genshin": "Genshin Impact",
+      "nation": "Nation",
+      "weapon": "Weapon"
+    },
+    "status": {
+      "empty": "No characters match the selected filters"
     }
   }
 }

@@ -48,12 +48,12 @@ export default function Layout({ routes }: LayoutProps) {
         <div
           className={cx(
             'm-xs-6 ml-0! min-w-0 flex-1',
-            'p-xs-9 flex',
+            'py-xs-9 flex',
             'bg-color-bg-page border-color-border-surface shadow-below-sm rounded-xl border',
           )}
         >
           {/* SIDE NAV */}
-          <nav className="w-md-7 gap-xs-2 mr-xs-9 flex flex-col">
+          <nav className="w-md-7 gap-xs-2 mx-xs-9 flex flex-col">
             {routes.map(({ to, labelKey }) => (
               <Button
                 key={to}

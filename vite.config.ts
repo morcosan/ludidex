@@ -13,7 +13,6 @@ export default defineConfig({
   root: 'src',
   publicDir: 'public',
   build: {
-    outDir: '../dist',
     emptyOutDir: true,
   },
   resolve: {
@@ -21,10 +20,6 @@ export default defineConfig({
       '@src-ds': path.resolve(import.meta.dirname, 'src/ds/index.ts'),
       '@src-storybook': path.resolve(import.meta.dirname, '.storybook/shared/index.ts'),
     },
-  },
-
-  server: {
-    port: 8080,
   },
 
   test: {

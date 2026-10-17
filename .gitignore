@@ -22,12 +22,9 @@ lerna-debug.log*
 node_modules
 
 # Output
-dist
-dist-ssr
+dist-app
+dist-docs
 
 # Environment
 *.local
 
-# Storybook
-*storybook.log
-storybook-static

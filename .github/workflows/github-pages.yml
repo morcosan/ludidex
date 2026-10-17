@@ -1,0 +1,74 @@
+name: GitHub Pages
+
+on:
+  # GitHub Pages require environment permissions per branch
+  # On merge, GitHub Actions can only run from source branches
+  # The only option is to run the workflow manually
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Lint code
+        run: pnpm lint-code
+
+  build:
+    name: Building
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Build docs
+        run: pnpm docs--build
+
+      - name: Build app
+        run: pnpm app--build
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p PAGES
+          cp -r dist-app/* PAGES/
+          mkdir -p PAGES/dev/storybook
+          cp -r dist-docs/* PAGES/dev/storybook/
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: "PAGES"
+
+  deploy:
+    name: Deploying
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

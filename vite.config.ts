@@ -6,9 +6,13 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 
+const isCI = process.env.GITHUB_ACTIONS === 'true'
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react({ jsxImportSource: '@emotion/react' }), svgr()],
+
+  base: isCI ? '/ludidex/' : '/', // GitHub Pages path
 
   root: 'src',
   publicDir: 'public',

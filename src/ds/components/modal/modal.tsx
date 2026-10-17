@@ -1,7 +1,8 @@
 'use client'
 
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useId } from 'react'
-import CloseSvg from '../../assets/close.svg?react'
 import { useI18nService } from '../../services/i18n-service'
 import { useDataProps } from '../../utilities/react-utils'
 import { Button } from '../button/button'
@@ -51,7 +52,7 @@ export const Modal = (props: ModalProps) => {
             css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
             onClick={onClose}
           >
-            <CloseSvg className="h-xs-7" />
+            <FontAwesomeIcon icon={faXmark} aria-hidden className="mt-xs-0" />
           </IconButton>
         )}
 

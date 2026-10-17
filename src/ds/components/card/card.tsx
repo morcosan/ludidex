@@ -91,14 +91,14 @@ export const Card = (props: CardProps) => {
     backgroundColor: tokens.color['bg-card'],
     color: tokens.color['text-default'],
     transition: ['all 0.2s ease', 'background-size 0s step-start', 'background-position 0s step-start'].join(','),
-    pointerEvents: 'none',
     '&::before, &::after': {
       position: 'absolute',
       inset: '-1px',
       content: '""',
       borderRadius: tokens.radius['md'],
       opacity: isPressed ? 1 : 0,
-      transition: `all ${tokens.motion['duration-sm']} ease`,
+      pointerEvents: 'none',
+      transition: `all ${tokens.duration['sm']} ease`,
     },
     '&::before': {
       border: `1px solid ${tokens.color['border-inset']}`,

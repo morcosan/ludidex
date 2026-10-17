@@ -6,6 +6,7 @@ export interface GenshinCharacter {
   element: GenshinElement
   weapon: GenshinWeapon
   nation: GenshinNation
+  bonusStat: string
   iconUrls: string[]
   cardUrls: string[]
   bannerUrls: string[]
@@ -18,12 +19,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Claymore',
     nation: 'Nod-Krai',
+    bonusStat: '+96 EM',
     iconUrls: [
+      'https://i.gachabase.net/ZddK4PxqGi1gLepzTYvK9bZOjI9DCg9iixIerRpMPBE/q:50/f:webp/plain/gi/assets/23fbc9f5ed9b64b97ec208d8abc4dcc5.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/a/a3/Aino_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Aino.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/sjV3nbHBnm9hqAvDfHcEAutfT4SVI4XNgY6qFrDY6qc/q:50/f:webp/plain/gi/assets/3a6031eb8b0fd05795bc57d0784c4a4d.png',
+    ],
   },
   {
     id: 'albedo',
@@ -31,12 +36,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+28.8% Geo DMG',
     iconUrls: [
+      'https://i.gachabase.net/U25xonucfAOREfbhqjN8OvSWMXE3RzaUeVi4it4ahZA/q:50/f:webp/plain/gi/assets/d67b89365634517a3e32c44dac17c043.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/30/Albedo_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Albedo.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/0dazQ0gNB3Ugbqwp5fUM5zktdaOKoZjNaRP7nHHkrC8/q:50/f:webp/plain/gi/assets/27859b1d35b1fdd2207d74f76274aa21.png',
+    ],
   },
   {
     id: 'alhaitham',
@@ -44,25 +53,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Sword',
     nation: 'Sumeru',
+    bonusStat: '+28.8% Dendro DMG',
     iconUrls: [
+      'https://i.gachabase.net/iy2dRrQICPriVIcJgRIxAROkU_rYbxx1Svqj4nD2ns8/q:50/f:webp/plain/gi/assets/83e3d45026f7dd2006bb668a2620323d.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/2/2c/Alhaitham_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Alhaitham.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
-  },
-  {
-    id: 'aloy',
-    name: 'Aloy',
-    element: 'Cryo',
-    weapon: 'Bow',
-    nation: 'None',
-    iconUrls: [
-      'https://static.wikia.nocookie.net/gensin-impact/images/e/e5/Aloy_Icon.png',
-      'https://sunderarmor.com/GENSHIN/Characters/1/Aloy.png',
+    bannerUrls: [
+      'https://i.gachabase.net/lt6GIspfEYF6mYJKJwY6xrqMfPNaCTP5Cw_SPTlEKfQ/q:50/f:webp/plain/gi/assets/38dac33ce3e94a5206d6f4d834ae0069.png',
     ],
-    cardUrls: [],
-    bannerUrls: [],
   },
   {
     id: 'alyosha',
@@ -70,12 +70,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Snezhnaya',
+    bonusStat: '+26.7% ER',
     iconUrls: [
+      'https://i.gachabase.net/QfjhDc2IxNrJmSyZx3t2wWwA1jA83KqD4VPwVVqkn4A/q:50/f:webp/plain/gi/assets/be039888aebc701ab7a5a67c3a72757d.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/1/1d/Alyosha_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Alyosha.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/B1cOsfp4Q8I3KzzPcdxoDWXZMcmg_SwYjRT3YXvA18A/q:50/f:webp/plain/gi/assets/3a8a6294f85adae4047290b84a5bfd74.png',
+    ],
   },
   {
     id: 'amber',
@@ -83,12 +87,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Bow',
     nation: 'Mondstadt',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/fP1dPeckEFYI7gauwno5DdIj2GYCWFDi3BS6xJoKZP0/q:50/f:webp/plain/gi/assets/de25155a508d2f76c1dbba4ae1b41552.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/7/75/Amber_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Amber.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/Prlszfizo6gBUv80kCOoCsizCU9UJNp6MIKeUMOTbiE/q:50/f:webp/plain/gi/assets/345cd49a7c0e6b71852aaba35824f3d3.png',
+    ],
   },
   {
     id: 'arlecchino',
@@ -96,12 +104,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Polearm',
     nation: 'Snezhnaya',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/lH3YwCWy_jKkg7KR2EUcAQm3BLNsqiO7k7FCJgYHQWo/q:50/f:webp/plain/gi/assets/68c77b6d44140544693b593303a1e024.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Arlecchino_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Arlecchino.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/y3yP5We_dzzDv3-VfPYvPlExf3ev33B6j0k5KWbt6kc/q:50/f:webp/plain/gi/assets/47d35be0eb4a3e7d90b04afa1e69fc56.png',
+    ],
   },
   {
     id: 'ayaka',
@@ -109,12 +121,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/nlbXz83jJwPp3GVIAskk0K1fE_jOdZ_HS1X9sw2G8gI/q:50/f:webp/plain/gi/assets/c1c0e6911e89adb206708bf871fc3ecd.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/5/51/Kamisato_Ayaka_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ayaka.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/YcRc7f5goVsnOBiCPuJDkr6Xi0kKS443tJE4yJxwYv0/q:50/f:webp/plain/gi/assets/58a02afe700774cea202142b121884e5.png',
+    ],
   },
   {
     id: 'ayato',
@@ -122,12 +138,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/RmDJo78LmNDM16uKxZTGvbe3z2YLuuDBbWrysAadl_8/q:50/f:webp/plain/gi/assets/5a44d3835ea1bb7c2bf419675ab0225f.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/2/27/Kamisato_Ayato_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ayato.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/HkwzpHShl8O9Ot6kBSrUKySvavTQk_OJC5uPLDqKkl0/q:50/f:webp/plain/gi/assets/37b723ccbfc75f5d8adf0cae87bc2b03.png',
+    ],
   },
   {
     id: 'baizhu',
@@ -135,12 +155,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Catalyst',
     nation: 'Liyue',
+    bonusStat: '+28.8% HP',
     iconUrls: [
+      'https://i.gachabase.net/3NfrSoAEmv0KdUe82O01vGX-kSpbjIGhJ8uyltNccwk/q:50/f:webp/plain/gi/assets/6a916d859aebcee669155531121fb7b1.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/c/cb/Baizhu_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Baizhu.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/Hsa5VOqZgFST3sPUb-vUVkWr92h7e2ISWkwBLoP4YQk/q:50/f:webp/plain/gi/assets/0cd9ff1556dc066998a605ed81ea4e25.png',
+    ],
   },
   {
     id: 'barbara',
@@ -148,12 +172,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Mondstadt',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/NUrCT0p0bUike_54ancs8rMNO0ktiWhhd8UVqZa8YuU/q:50/f:webp/plain/gi/assets/42db7fcb2d4d4ca875eb463657821d9d.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/6/6a/Barbara_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Barbara.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/HRiFmxC_QHBIbJkjeRebKMrkUnkKBta_PBgk8ktQStc/q:50/f:webp/plain/gi/assets/1c26cc9184e4777f26d66dbd0f10ec49.png',
+    ],
   },
   {
     id: 'beidou',
@@ -161,12 +189,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Claymore',
     nation: 'Liyue',
+    bonusStat: '+24% Electro DMG',
     iconUrls: [
+      'https://i.gachabase.net/OaPO48XITzW-sxNB3MCKLBphwNvRgHezcNM_r4YhyB0/q:50/f:webp/plain/gi/assets/217f737498f780c60332a9c8bd759dca.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e1/Beidou_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Beidou.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/6LyRc5o08xpPQ-s8eDKJzjjb-O7n766vRbHzCgTZ-ww/q:50/f:webp/plain/gi/assets/37b9078041a22f92856330d7cd7b322a.png',
+    ],
   },
   {
     id: 'bennett',
@@ -174,12 +206,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+26.8% ER',
     iconUrls: [
+      'https://i.gachabase.net/1QJfyp77DAbnFZF31-abN97Nmn09mVYGpQy6i7FwDus/q:50/f:webp/plain/gi/assets/62129df9b3b30972d26d0bfac473231c.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/7/79/Bennett_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Bennett.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/zUQqOpHbOnrQK2gS4hQTdQQw4zKZ_csgSaN0x6Hzr_g/q:50/f:webp/plain/gi/assets/7deb9a2465fe0b3bdb1da98cdab906cc.png',
+    ],
   },
   {
     id: 'candace',
@@ -187,12 +223,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Polearm',
     nation: 'Sumeru',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/0gyhYj-3rS0QPn3atxPG5ye_IjXRM0BSUxyMgyEHlos/q:50/f:webp/plain/gi/assets/65626a40e35da2bd74c74616116b7550.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Candace_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Candace.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/DFIdrdl3wYHVJPgjj5WclM5UdUZgWvU9zqBu9j3O8u4/q:50/f:webp/plain/gi/assets/b284a1f21aba37397724f09b7d07f0c9.png',
+    ],
   },
   {
     id: 'charlotte',
@@ -200,12 +240,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Catalyst',
     nation: 'Fontaine',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/eJG7pOZRIhtk6TMaURT4QuWnz1KIWB99FWW1RysvCeY/q:50/f:webp/plain/gi/assets/307781d165ce09bd422112dcf3061869.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/d/d2/Charlotte_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Charlotte.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/sCmDVdfeXcqoSk1fhDBcH-0c5zO-IK7qkoCe98r5eCw/q:50/f:webp/plain/gi/assets/c51835401117738f828ecfebea112574.png',
+    ],
   },
   {
     id: 'chasca',
@@ -213,12 +257,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Bow',
     nation: 'Natlan',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/cIAD8u_Xu6Mb1TyY9Voqzc2x7IojkxdKkDKa_aY0SWA/q:50/f:webp/plain/gi/assets/3e32ff0166be01f8cfcbd8f7e8297922.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/0/03/Chasca_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Chasca.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/NyQ9ah5FiFMoxBS4VNDwvU5SHgNgc-lzn9yjshBV9rk/q:50/f:webp/plain/gi/assets/40f4b3bf738987839458e5fdada83186.png',
+    ],
   },
   {
     id: 'chevreuse',
@@ -226,25 +274,33 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Polearm',
     nation: 'Fontaine',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/d8zjedlDeR19Eoul7fAWkre_Gf180lTJ0VJjJxKx_IA/q:50/f:webp/plain/gi/assets/51a510f785d9f8d928194a721368e844.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/8/8a/Chevreuse_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Chevreuse.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/1ETGU1fL6sKUpjdr2Xs---N9nPLSmQkrCfeVH1qQzvw/q:50/f:webp/plain/gi/assets/8f69c7e59cb566fe6d0187531314dd5c.png',
+    ],
   },
   {
-    id: 'childe',
-    name: 'Childe',
+    id: 'tartaglia',
+    name: 'Tartaglia',
     element: 'Hydro',
     weapon: 'Bow',
     nation: 'Snezhnaya',
+    bonusStat: '+28.8% Hydro DMG',
     iconUrls: [
+      'https://i.gachabase.net/ZONMKNzUTpHj4Kygf-o5rrMioVX8wnChy74rUimk9y0/q:50/f:webp/plain/gi/assets/f336a7762947f9a31807942fd9c89793.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/8/85/Tartaglia_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Childe.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/ExUCR9svquAMa6v4_Iv-Vcd6tisH-00mpm_NBdHRpHM/q:50/f:webp/plain/gi/assets/fcd022733e283c56dc3b3fe62258603e.png',
+    ],
   },
   {
     id: 'chiori',
@@ -252,12 +308,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/ha4fCOrQPSq8kiDCyVTLn5igQnBKMRi030Bn3MRGuC8/q:50/f:webp/plain/gi/assets/dbbd853fc804a154869b971b8b419c81.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/8/88/Chiori_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Chiori.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/1TGOqX3xWI4GZ9P9P57jBDDBpKmoIAirIqL43sfk2pM/q:50/f:webp/plain/gi/assets/f64bd3247a92079ff67f1b3fa11ad347.png',
+    ],
   },
   {
     id: 'chongyun',
@@ -265,12 +325,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Claymore',
     nation: 'Liyue',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/q9h45w6g5U5eUqeTqxBZoAL-XhZPRcCTfD7lP_S9kPw/q:50/f:webp/plain/gi/assets/a79dc489040ae486945d0a57298e4be2.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/35/Chongyun_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Chongyun.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/h6zwFw5sVkZo9jr-slyJ7VAkZxDhaEqjRRaHaYqm2p4/q:50/f:webp/plain/gi/assets/4ff681faa459936339a0ee75cee6eb25.png',
+    ],
   },
   {
     id: 'citlali',
@@ -278,12 +342,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Catalyst',
     nation: 'Natlan',
+    bonusStat: '+115 EM',
     iconUrls: [
+      'https://i.gachabase.net/pB4h8vyUvq3x0P1zqmSN31jJj-8-x7nVUVKkRqvm1nw/q:50/f:webp/plain/gi/assets/a563cd8a81666aa75669b795c70f05cd.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Citlali_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Citlali.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/mv26pa04bJh196xZVkpzGCpRQ_JqNp4y17FWyNx1JM8/q:50/f:webp/plain/gi/assets/1504229099443d55e901cf2cd331923e.png',
+    ],
   },
   {
     id: 'clorinde',
@@ -291,12 +359,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Sword',
     nation: 'Fontaine',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/VvYLPo4OhuT_A4PBC2gCaXD46bq4Bv8KRmI5KSuDY28/q:50/f:webp/plain/gi/assets/73cdfdebc1ca87a163c725fe44bacae7.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Clorinde_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Clorinde.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/drn1munEMuTocM4rqDXPumQzxNVRdC6C7rUp5BstTAc/q:50/f:webp/plain/gi/assets/df593e7599c656a2d121d82f1e284a5f.png',
+    ],
   },
   {
     id: 'collei',
@@ -304,12 +376,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Bow',
     nation: 'Sumeru',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/HHGt60R0uIHJ-dSUFFYzzx0bjqsONPW7W3aqgmFYp60/q:50/f:webp/plain/gi/assets/149d8953864216516f73b00ec6fada25.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/a/a2/Collei_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Collei.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/lHbhfFJj8k8pdJlP8z96R6mW9vBvhn3T3hCbO3J8bSo/q:50/f:webp/plain/gi/assets/ac986173366f9c7082a993a6dad3a536.png',
+    ],
   },
   {
     id: 'columbina',
@@ -317,12 +393,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Nod-Krai',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/O5YZ7FLSeSqehS--87isvrOE5SDCMYnrS3oYrQezyY8/q:50/f:webp/plain/gi/assets/85e5b02caea884fbe0f60af463c17d68.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/35/Columbina_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Columbina.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/7AyjkC9qtMeSJjoSkj2Rq5Bkx9aQuNBFIY5wlO1DPyE/q:50/f:webp/plain/gi/assets/7f9fab27cbc98d4fa3032683e4919afd.png',
+    ],
   },
   {
     id: 'cyno',
@@ -330,12 +410,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Sumeru',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/K9iZAXLRiIfez950A4HOKJ6W4lgQy7RyYK7-SGaOc64/q:50/f:webp/plain/gi/assets/34dd7031de49c5bedc971258f3c1ac3e.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/31/Cyno_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Cyno.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/JFHTBxyKQzj58AaPnx0TeCznHPiBf2KOD99-wyFVeog/q:50/f:webp/plain/gi/assets/cc061bb09a666eee2bb617e6304ac370.png',
+    ],
   },
   {
     id: 'dahlia',
@@ -343,12 +427,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/ia3eV0JGgSRONj27bcG7d6x109I7Z0EmxpMwSYfUypM/q:50/f:webp/plain/gi/assets/832e5b44b4409a6509f377350fa18737.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/6/6d/Dahlia_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Dahlia.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/8Hg5qH34zi-OC9v7AXxteYzca9CQ-JvZxIGf9OUDXtY/q:50/f:webp/plain/gi/assets/c772d05f75b08b73092a3be2fca9f08c.png',
+    ],
   },
   {
     id: 'dehya',
@@ -356,12 +444,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Claymore',
     nation: 'Sumeru',
+    bonusStat: '+28.8% HP',
     iconUrls: [
+      'https://i.gachabase.net/4rEKD1yqMIhEhXhz3SW6DVHJ56jBCDyswPyVIBVYbWo/q:50/f:webp/plain/gi/assets/b75298018afb184cd6f222416383da8f.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/3f/Dehya_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Dehya.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/MpkgLoX8hBXilbawgvHQpUOVAvCtAOq7-zDhGFCzVYc/q:50/f:webp/plain/gi/assets/6be2c124ec8b509d6770a70f021f4a9f.png',
+    ],
   },
   {
     id: 'diluc',
@@ -369,12 +461,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Claymore',
     nation: 'Mondstadt',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/H60LKnUy3KWZhcUnBp_rs1Ky5bDPUwFFTTmQQBIoLTg/q:50/f:webp/plain/gi/assets/1f57a9a785d58e11ab44af7a5ef9cfc6.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/3d/Diluc_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Diluc.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/ve8fBO2iU3sjUQoQs7JBCNgLBU7_65M3B94GfZyCr1I/q:50/f:webp/plain/gi/assets/3795bfee3eb077eb7d314a1a35df4e5a.png',
+    ],
   },
   {
     id: 'diona',
@@ -382,12 +478,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Bow',
     nation: 'Mondstadt',
+    bonusStat: '+24% Cryo DMG',
     iconUrls: [
+      'https://i.gachabase.net/0IFTfOa--yKEmeeLfZNqG4Jv1JtalENj5fk_27dhuCk/q:50/f:webp/plain/gi/assets/8ed181274ca55a385aa5f26e0360ca1a.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/4/40/Diona_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Diona.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/lHrTXfG-1RlWIIdrh26QxSKHBlTAn9OlDXQRWimxq_I/q:50/f:webp/plain/gi/assets/4eeafce771e631bcc32a4a218c160389.png',
+    ],
   },
   {
     id: 'dori',
@@ -395,12 +495,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Claymore',
     nation: 'Sumeru',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/PKZyom4Q4PsLs6vtTGTEbZkgxISwxPG72ilwygSoQSg/q:50/f:webp/plain/gi/assets/e2e4afa1c1baf881907456adf3dd07b8.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/5/54/Dori_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Dori.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/srVmpdfiAVEJVolUAGKjsWA2VyFL_KPaqN7YZdbyCV4/q:50/f:webp/plain/gi/assets/55e52593baa1f280bbe0643e5f2665fd.png',
+    ],
   },
   {
     id: 'durin',
@@ -408,12 +512,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/WmjWx-0Erg8yd4pAfAkLcPTxMcc17_2bkHr2jGyoC84/q:50/f:webp/plain/gi/assets/4a9dc0a3325a825c138e32b703e48cb0.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/ba/Durin_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Durin.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/9pC2V-utkysy38-evc0FvaXmTjpqQo3ZGEKaFLDmJ-A/q:50/f:webp/plain/gi/assets/805e80a8d33bde196d4340782495612b.png',
+    ],
   },
   {
     id: 'emilie',
@@ -421,12 +529,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Polearm',
     nation: 'Fontaine',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/es1ap28ViRsXz78uiEi8jJL-M2sqZleUZxJv_I6JJ6g/q:50/f:webp/plain/gi/assets/0c791b8a8ab9c0db54d2843e20e5722f.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/a/aa/Emilie_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Emilie.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/azAjby0xsx8BgWa6f948cifTI8CsPgjPmljPKZTkd7o/q:50/f:webp/plain/gi/assets/fa6e7d36066691236fdb9139c4daa727.png',
+    ],
   },
   {
     id: 'escoffier',
@@ -434,12 +546,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Polearm',
     nation: 'Fontaine',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/9S_nwqALJeLLRzDiu9cnQMsY-hacxOF0ncUogIoYDBc/q:50/f:webp/plain/gi/assets/a5b9c91c56a5c8308b2a39e734a488cf.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/2/2a/Escoffier_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Escoffier.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/B0VuAqdfLWNDaiPTRsKVkdjkOGgQoXX8ZTcZn8bpZSw/q:50/f:webp/plain/gi/assets/a2ac73cb504099222d919df31bfbd057.png',
+    ],
   },
   {
     id: 'eula',
@@ -447,12 +563,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Claymore',
     nation: 'Mondstadt',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/RNfoC4aaB5FiU0ewy8BZ6sWxbzQbE6kCJMhCxbF-G38/q:50/f:webp/plain/gi/assets/c10116e454ee58e6234346223f26f792.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/a/af/Eula_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Eula.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/TLB2ouBz2WZLsAeP3waQUl_sRWm2iNP2QNn4D1RmvVk/q:50/f:webp/plain/gi/assets/1637e4e4701fd8864b89c0a8704daa65.png',
+    ],
   },
   {
     id: 'faruzan',
@@ -460,12 +580,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Bow',
     nation: 'Sumeru',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/BMuyeoQ_hkJ-uF_jRWylESnOVxNKwjplAO0toLXmNhA/q:50/f:webp/plain/gi/assets/f7e3a388939a7868d7fa9665cbdf0f2c.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b2/Faruzan_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Faruzan.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/R8pe2CukZkRCbih02J4Fb66l3dsb4y6bn0aJFk9nxPQ/q:50/f:webp/plain/gi/assets/0878fd563c9f352d26abf72c6bd1e654.png',
+    ],
   },
   {
     id: 'fischl',
@@ -473,12 +597,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Bow',
     nation: 'Mondstadt',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/AJlgSyxNlPkX_jf8xaArOT_i65rLtQPtCymilbkG2AA/q:50/f:webp/plain/gi/assets/eedb938da46e1491c39dc7f410c3cf88.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Fischl_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Fischl.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/7ATm9-THRCn5vVujmJamOIfsPonC7SY3K1e56CoOCi8/q:50/f:webp/plain/gi/assets/daa221be55200aa51428453bf626635e.png',
+    ],
   },
   {
     id: 'flins',
@@ -486,12 +614,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Nod-Krai',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/BVykCCLoEh5y4Mp76OJlak2SoU6zGBTLXuuZBxX-OSs/q:50/f:webp/plain/gi/assets/829d5b5c83772d8fe194c4d37d9dfd86.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/a/af/Flins_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Flins.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/NhkRuX_8f9rvEPfVMREo-KJdYADnZ1Kur54tyX93OiE/q:50/f:webp/plain/gi/assets/1a56157801c6d4ee39697f46acded75a.png',
+    ],
   },
   {
     id: 'freminet',
@@ -499,12 +631,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Claymore',
     nation: 'Fontaine',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/BOzBALMOEKg_nq5XbvvETNeOvgnH-UgpW-zsnxoLXeU/q:50/f:webp/plain/gi/assets/38dd0daac7ec30794899ce99ac1f29c4.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/e/ee/Freminet_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Freminet.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/xa0IsyC4IINtxNrO9ycLbgKZPtd94IytbfC8WlVBBPQ/q:50/f:webp/plain/gi/assets/43d2e2a712102d40e5d846756c43b8f0.png',
+    ],
   },
   {
     id: 'furina',
@@ -512,12 +648,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'Fontaine',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/ekFYjNkYf3F-4SdET6z8hYQfO3uptDB8CsEEjIFqNjY/q:50/f:webp/plain/gi/assets/24da7e7f1f61d412b9d7535c9b150264.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e6/Furina_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Furina.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/iL7rXGKEAZ34eocS9HmTd1xPifBySVFqnCykydbKM5Y/q:50/f:webp/plain/gi/assets/848e6241b6971f100a75d064f315182b.png',
+    ],
   },
   {
     id: 'gaming',
@@ -525,12 +665,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Claymore',
     nation: 'Liyue',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/_zH1xWc-KgvyPukisAKFtr7DgJ8xU_S70v3GZI767lc/q:50/f:webp/plain/gi/assets/948ba31c7dbb04d095b05d58649be7fd.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/7/77/Gaming_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Gaming.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/VWNdtTsUbKjv0ehJxWkghxQXlgp2gAxWIJN5LDWVYMQ/q:50/f:webp/plain/gi/assets/b332a29607561a9ca52bf542f31cd753.png',
+    ],
   },
   {
     id: 'ganyu',
@@ -538,12 +682,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Bow',
     nation: 'Liyue',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/KTx1EjWDNyQR-SxKKwZM0qhn1yf4JZM05yYE1Dcq6UI/q:50/f:webp/plain/gi/assets/d3d392262216d18dde7458b323c01842.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/7/79/Ganyu_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ganyu.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/zMPZEXgVXHU_uCJG0o6EDGij38rG2JBPFw2PD-oKuBI/q:50/f:webp/plain/gi/assets/3b54ff78431e623afbeee8f2aea5b6df.png',
+    ],
   },
   {
     id: 'gorou',
@@ -551,12 +699,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Bow',
     nation: 'Inazuma',
+    bonusStat: '+24% Geo DMG',
     iconUrls: [
+      'https://i.gachabase.net/c1ExAr2s6HJQIAKXjJfnrb-1P8fCUEcMLmCegth1uq4/q:50/f:webp/plain/gi/assets/749d94adac0136ba9754ba68c97a72de.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/f/fe/Gorou_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Gorou.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/ptcwM3_8Efm-ky2JAwiLzQwSIe56euiPwLkXVdAvvPg/q:50/f:webp/plain/gi/assets/9f1678af0735f80ac1d14d9208609a2d.png',
+    ],
   },
   {
     id: 'heizou',
@@ -564,12 +716,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Inazuma',
+    bonusStat: '+24% Anemo DMG',
     iconUrls: [
+      'https://i.gachabase.net/vigrpGCSQFdnxy-jIKngX27cGaux01DqYYrItwXupZA/q:50/f:webp/plain/gi/assets/b7df0300f96417f2cdca5c726dbf60d8.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/2/20/Shikanoin_Heizou_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Heizou.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/l1dct9-LotC9MmwEwxO-LQn29LeHPryVxHwffjVmnUM/q:50/f:webp/plain/gi/assets/4ce438fc763a1a9e5dc46b213d839592.png',
+    ],
   },
   {
     id: 'hu-tao',
@@ -577,12 +733,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/-8s64l35_GlmEnLjqW_riqpc_K1gsqf_Q7xPQgJ6aEc/q:50/f:webp/plain/gi/assets/dfe3cc7f3d99516ba404349cb959a4ad.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e9/Hu_Tao_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Hu%20Tao.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/4pz8R9brgRyUIO2K6pjpf3yp1H__-G_pR2ocx3hfcHk/q:50/f:webp/plain/gi/assets/cf691e6d0df8eb1f65240ac80aed53ed.png',
+    ],
   },
   {
     id: 'iansan',
@@ -590,12 +750,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Natlan',
+    bonusStat: '+24% ATK',
     iconUrls: [
+      'https://i.gachabase.net/PgK3L2p1nkqyznQByWwP15NO02tTtE_6zZCV0b0Zykc/q:50/f:webp/plain/gi/assets/f6bc2b1dff05ec823c98c0d651a458e8.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/38/Iansan_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Iansan.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/AyxW-h3fY1gL5HXAXoWshl8hPQk56s1yaeRAG2VIvbU/q:50/f:webp/plain/gi/assets/2545df497511665af0423acee367146c.png',
+    ],
   },
   {
     id: 'ifa',
@@ -603,12 +767,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Natlan',
+    bonusStat: '+96 EM',
     iconUrls: [
+      'https://i.gachabase.net/6fTg-SMzC4rtVDtSg4IDRipZHaX2fkn-FJiwXdM3wDc/q:50/f:webp/plain/gi/assets/6b1c38827e86395ae38054d6074dbbd1.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/5/5f/Ifa_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ifa.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/3i2S2RFwhteWMV6ZOxCtBBRIGOVZMyJ9qg-NMLvbbEE/q:50/f:webp/plain/gi/assets/b01933a8078d70d15ff6d9b75288af5f.png',
+    ],
   },
   {
     id: 'illuga',
@@ -616,12 +784,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Polearm',
     nation: 'Nod-Krai',
+    bonusStat: '+96 EM',
     iconUrls: [
+      'https://i.gachabase.net/dhvC99DvjRqq-00WSYAkz3u2dhOQdiGU_XtmsNEICxA/q:50/f:webp/plain/gi/assets/a0da206de75d152d2db70e5a27bd6092.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/96/Illuga_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Illuga.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/1Jf97EdIn3D0N2XvMbYtxjR4nnVo0rkHd8O2MuCN9B4/q:50/f:webp/plain/gi/assets/f46656fde85f7c385e0d4f2205485699.png',
+    ],
   },
   {
     id: 'ineffa',
@@ -629,12 +801,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Nod-Krai',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/9MWbcELXGD_b79NJ8tijhATOTeBtAcbnPKvhwL-HExY/q:50/f:webp/plain/gi/assets/a7b75b371b53b77d5df4c0851309317b.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/0/0b/Ineffa_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ineffa.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/Q1cxy_Urd62SCMKfJGq1Ozhmb7cJWV7BZnAofC12LC0/q:50/f:webp/plain/gi/assets/3c469dd9e182568d3add9ed2787d2958.png',
+    ],
   },
   {
     id: 'itto',
@@ -642,12 +818,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Claymore',
     nation: 'Inazuma',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
+      'https://i.gachabase.net/9dDrrRI9ze-TPOuwBzerfZDgpcopW1H3X355pYVd9vw/q:50/f:webp/plain/gi/assets/03889bc2d68dc7949e64dcc0a61e71b9.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/7/7b/Arataki_Itto_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Itto.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/FwkY20976E6zN_NuLhTWJ7RADZ6FJPKBHz0UPKWFmEU/q:50/f:webp/plain/gi/assets/96e8b3cd63061e1ecb1041400026c576.png',
+    ],
   },
   {
     id: 'jahoda',
@@ -655,12 +835,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Bow',
     nation: 'Nod-Krai',
+    bonusStat: '+18.5% Healing',
     iconUrls: [
+      'https://i.gachabase.net/XALRh-7uWM3WrPoZgVUEN-3Mx8uMmib_pyMfWs8ghIU/q:50/f:webp/plain/gi/assets/10475d2682104bee0a03098abfe5c306.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/bf/Jahoda_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Jahoda.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/Z5A1n0rcP0rgPi4eCWi6_kHEu7g2p9RSeKgN_TmHeSI/q:50/f:webp/plain/gi/assets/4f3e7ab82c54808d43e24cf64c8172ca.png',
+    ],
   },
   {
     id: 'jean',
@@ -668,12 +852,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+22.2% Healing',
     iconUrls: [
+      'https://i.gachabase.net/htmo_c-S2SN1ahfp-GToDAD-32p8fuagZyiUqyaQ9Rc/q:50/f:webp/plain/gi/assets/34146c3986e10e282d6965388e18f6b8.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/6/64/Jean_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Jean.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/Qkx925xy3C5e2aK3J28MYLoY0kv0Oi1GBUNfl50M0c0/q:50/f:webp/plain/gi/assets/b50a01e41bf29d007aa8a8149d5fb6f9.png',
+    ],
   },
   {
     id: 'kachina',
@@ -681,12 +869,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Polearm',
     nation: 'Natlan',
+    bonusStat: '+24% Geo DMG',
     iconUrls: [
+      'https://i.gachabase.net/G_jPdVFgZ2Jw5WwppkAx5zOKdA5DBXMsom7xjSrvOJE/q:50/f:webp/plain/gi/assets/c11141708911cd95ffc02cd644531fab.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/1/1a/Kachina_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kachina.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/lcuzzzTT8tDNShlafgByJDUQlOKFI7dIK3EzJ0hCj5Y/q:50/f:webp/plain/gi/assets/676a78868c13af5da8ea5e9760fb6438.png',
+    ],
   },
   {
     id: 'kaeya',
@@ -694,12 +886,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'Mondstadt',
+    bonusStat: '+26.8% ER',
     iconUrls: [
+      'https://i.gachabase.net/42KHhIvRjhWn2uVgFmlq0Yn8B0ZMeVRxkzYI3gctuFU/q:50/f:webp/plain/gi/assets/ac5c5a0cace3e36002ceb5fd1779387a.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b6/Kaeya_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kaeya.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/2j9Amckdy02ZTx4UDj3YdEsyDEmunx2Bpzkk_AKyJ-s/q:50/f:webp/plain/gi/assets/87218dfa6e1ebef54316afccef069c68.png',
+    ],
   },
   {
     id: 'kaveh',
@@ -707,12 +903,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Claymore',
     nation: 'Sumeru',
+    bonusStat: '+96 EM',
     iconUrls: [
+      'https://i.gachabase.net/ghIxPZmqAbm0fzLqWTj-2z32s8CojOO34SeBVDbZYtQ/q:50/f:webp/plain/gi/assets/772ba1dcf97ff4843a34e12c2eb5f26e.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/1/1f/Kaveh_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kaveh.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/NOKWfgXa1YsmpJccU0Ckyd3QuVB1fhBGr2D4uGjWNGE/q:50/f:webp/plain/gi/assets/2fd8c077029c8dd46b5a448d5df634fb.png',
+    ],
   },
   {
     id: 'kazuha',
@@ -720,12 +920,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+115 EM',
     iconUrls: [
+      'https://i.gachabase.net/pL-M7xhRhvWbWCg7eDuDFFMrwHUsN4vxl-Rt7Ov44fc/q:50/f:webp/plain/gi/assets/7a49ef3f9c8ae8bdbcaffb25cb6332e7.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e3/Kaedehara_Kazuha_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kazuha.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/73lNH0RKrHhK6yE2cY1U-qOnX9GDgmOC5khQnZkrgTQ/q:50/f:webp/plain/gi/assets/69559967283d07cc00edd7f8ec1c4e89.png',
+    ],
   },
   {
     id: 'keqing',
@@ -733,12 +937,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Sword',
     nation: 'Liyue',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/ppv5hUrXhlIREBT2S5upmHTkmQL-DCsf6gsHf_-_7o0/q:50/f:webp/plain/gi/assets/fb62feb1e0abb6818dcc21585a251a4a.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/5/52/Keqing_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Keqing.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/nuOv-9DOkVC1WqydE6TPHOa6-ZJYlZIhHiWKfvRWpec/q:50/f:webp/plain/gi/assets/83c2e85eac3f50d99d83b945cec4d82c.png',
+    ],
   },
   {
     id: 'kinich',
@@ -746,12 +954,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Claymore',
     nation: 'Natlan',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
+      'https://i.gachabase.net/x8kGIb6lHMVZG_zAE8cK2pbVehiYczuKD2DWNvWOxVk/q:50/f:webp/plain/gi/assets/7d050035834a62243ce31283d35a51ba.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/9a/Kinich_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kinich.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/r8Jy-j41lU-qupcqIf39fTkuvegjZTo5lKzespKaYZU/q:50/f:webp/plain/gi/assets/1563c3b987c05380816e396916ec26e1.png',
+    ],
   },
   {
     id: 'kirara',
@@ -759,12 +971,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/qOJGMKDfa8z4V5PEAfWa2ruAxsIcRYmeKSdbCjygu9Q/q:50/f:webp/plain/gi/assets/b21ea77155bb73f1e9239450c0d8a69d.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b6/Kirara_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kirara.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/kWaZSmqz1WVMP7I4LNeyujMLjizFE0wHypCzcxix_gs/q:50/f:webp/plain/gi/assets/7bc91ebad88ad9de74329443ba607eb8.png',
+    ],
   },
   {
     id: 'klee',
@@ -772,12 +988,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Catalyst',
     nation: 'Mondstadt',
+    bonusStat: '+28.8% Pyro DMG',
     iconUrls: [
+      'https://i.gachabase.net/jzDYeT-FK4dXkyjjKKFNKwNbQggbNfifUOsHrgYWRwI/q:50/f:webp/plain/gi/assets/df2b99f0f527b07c80dab41165239d4b.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Klee_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Klee.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/kxlZgLnY4frc3lkeTPIh5u6mnjJzZdq3gg9xoqhganQ/q:50/f:webp/plain/gi/assets/d548c172070a03902355b401e8b560e7.png',
+    ],
   },
   {
     id: 'kokomi',
@@ -785,25 +1005,33 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Inazuma',
+    bonusStat: '+28.8% Hydro DMG',
     iconUrls: [
+      'https://i.gachabase.net/Qi7Yx6HsR1gaWxNvdeBEtCeI7YbuQc6qXIO_YBQMxSo/q:50/f:webp/plain/gi/assets/c7df9093bfdcac72aba705e224194bcf.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/f/ff/Sangonomiya_Kokomi_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kokomi.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/_UDtoL3VRJY92Ctv7GzRtdWlq7wlag9PodCjtaK84Kw/q:50/f:webp/plain/gi/assets/b0ea6f78da8321aa138c2e8d7e6054ac.png',
+    ],
   },
   {
-    id: 'kuki-shinobu',
+    id: 'shinobu',
     name: 'Kuki Shinobu',
     element: 'Electro',
     weapon: 'Sword',
     nation: 'Inazuma',
+    bonusStat: '+24% HP',
     iconUrls: [
+      'https://i.gachabase.net/L8NTtYlvT4z870_0kzIzK2sKW_ET_0DykUki4vUAjw8/q:50/f:webp/plain/gi/assets/737b47b194f5696ad6f24c1c4f26d0aa.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b3/Kuki_Shinobu_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Kuki%20Shinobu.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/uvRtXIiVIyY6_UOOkQFB7DyLoLyp80kj0lx6qxjj7TI/q:50/f:webp/plain/gi/assets/c52778e4a774b331b5d4548028db6e45.png',
+    ],
   },
   {
     id: 'lan-yan',
@@ -811,6 +1039,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Liyue',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e6/Lan_Yan_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Lan%20Yan.png',
@@ -824,6 +1053,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Catalyst',
     nation: 'Nod-Krai',
+    bonusStat: '+115 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/27/Lauma_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Lauma.png',
@@ -837,6 +1067,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'Sumeru',
+    bonusStat: '+24% HP',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/1/1a/Layla_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Layla.png',
@@ -850,6 +1081,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Catalyst',
     nation: 'Mondstadt',
+    bonusStat: '+96 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/6/65/Lisa_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Lisa.png',
@@ -863,6 +1095,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Sword',
     nation: 'Fontaine',
+    bonusStat: '+24% Anemo DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/a/ad/Lynette_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Lynette.png',
@@ -876,6 +1109,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Bow',
     nation: 'Fontaine',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b2/Lyney_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Lyney.png',
@@ -889,6 +1123,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Claymore',
     nation: 'Natlan',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/da/Mavuika_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Mavuika.png',
@@ -902,6 +1137,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Polearm',
     nation: 'Mondstadt',
+    bonusStat: '+24% HP',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Mika_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Mika.png',
@@ -915,9 +1151,24 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Sword',
     nation: 'Snezhnaya',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/f/fd/Mitya_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Mitya.png',
+    ],
+    cardUrls: [],
+    bannerUrls: [],
+  },
+  {
+    id: 'mizuki',
+    name: 'Mizuki',
+    element: 'Anemo',
+    weapon: 'Catalyst',
+    nation: 'Inazuma',
+    bonusStat: '+115 EM',
+    iconUrls: [
+      'https://static.wikia.nocookie.net/gensin-impact/images/f/f6/Yumemizuki_Mizuki_Icon.png',
+      'https://sunderarmor.com/GENSHIN/Characters/1/Yumemizuki%20Mizuki.png',
     ],
     cardUrls: [],
     bannerUrls: [],
@@ -928,6 +1179,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Mondstadt',
+    bonusStat: '+32% ER',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/4/41/Mona_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Mona.png',
@@ -941,6 +1193,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Natlan',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/0/0b/Mualani_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Mualani.png',
@@ -954,6 +1207,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Catalyst',
     nation: 'Sumeru',
+    bonusStat: '+115 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/f/f9/Nahida_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Nahida.png',
@@ -967,6 +1221,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Claymore',
     nation: 'Fontaine',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/c/c0/Navia_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Navia.png',
@@ -980,6 +1235,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Catalyst',
     nation: 'Nod-Krai',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Nefer_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Nefer.png',
@@ -993,6 +1249,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Fontaine',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/21/Neuvillette_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Neuvillette.png',
@@ -1006,6 +1263,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'Sumeru',
+    bonusStat: '+28.8% HP',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/58/Nilou_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Nilou.png',
@@ -1019,6 +1277,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Catalyst',
     nation: 'Liyue',
+    bonusStat: '+24% Geo DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/e/e0/Ningguang_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ningguang.png',
@@ -1032,6 +1291,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Claymore',
     nation: 'Mondstadt',
+    bonusStat: '+30% DEF',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/8/8e/Noelle_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Noelle.png',
@@ -1045,6 +1305,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'Snezhnaya',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/8/87/Odette_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Odette.png',
@@ -1058,6 +1319,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Bow',
     nation: 'Natlan',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/5e/Ororon_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Ororon.png',
@@ -1071,6 +1333,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'Liyue',
+    bonusStat: '+22.2% Healing',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b3/Qiqi_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Qiqi.png',
@@ -1084,6 +1347,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Polearm',
     nation: 'Inazuma',
+    bonusStat: '+32% ER',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/24/Raiden_Shogun_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Raiden.png',
@@ -1097,6 +1361,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Claymore',
     nation: 'Mondstadt',
+    bonusStat: '+30% Physical DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/b/b8/Razor_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Razor.png',
@@ -1110,6 +1375,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Polearm',
     nation: 'Mondstadt',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/3/35/Rosaria_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Rosaria.png',
@@ -1123,6 +1389,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Claymore',
     nation: 'Snezhnaya',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/c/c8/Sandrone_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sandrone.png',
@@ -1136,6 +1403,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Bow',
     nation: 'Inazuma',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/df/Kujou_Sara_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sara.png',
@@ -1149,6 +1417,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Claymore',
     nation: 'Inazuma',
+    bonusStat: '+96 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/22/Sayu_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sayu.png',
@@ -1162,6 +1431,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Bow',
     nation: 'Sumeru',
+    bonusStat: '+96 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/9/90/Sethos_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sethos.png',
@@ -1175,6 +1445,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+28.8% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/a/af/Shenhe_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Shenhe.png',
@@ -1188,6 +1459,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Bow',
     nation: 'Fontaine',
+    bonusStat: '+28.8% HP',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/3/37/Sigewinne_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sigewinne.png',
@@ -1201,6 +1473,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/0/03/Skirk_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Skirk.png',
@@ -1214,6 +1487,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Mondstadt',
+    bonusStat: '+24% Anemo DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/0/0e/Sucrose_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Sucrose.png',
@@ -1227,6 +1501,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Polearm',
     nation: 'Inazuma',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/5b/Thoma_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Thoma.png',
@@ -1240,6 +1515,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Bow',
     nation: 'Sumeru',
+    bonusStat: '+28.8% Dendro DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/8/87/Tighnari_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Tighnari.png',
@@ -1253,6 +1529,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Anemo).png',
@@ -1266,6 +1543,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Cryo).png',
@@ -1279,6 +1557,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Dendro).png',
@@ -1292,6 +1571,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Electro).png',
@@ -1305,6 +1585,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Geo).png',
@@ -1318,6 +1599,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Hydro).png',
@@ -1331,6 +1613,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Sword',
     nation: 'None',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/59/Traveler_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Traveler%20(Pyro).png',
@@ -1344,6 +1627,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Sword',
     nation: 'Snezhnaya',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/3/32/Valeriy_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Valeriy.png',
@@ -1357,6 +1641,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Catalyst',
     nation: 'Natlan',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/dd/Varesa_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Varesa.png',
@@ -1370,6 +1655,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Claymore',
     nation: 'Mondstadt',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/9/98/Varka_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Varka.png',
@@ -1383,6 +1669,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Bow',
     nation: 'Mondstadt',
+    bonusStat: '+32% ER',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/f/f1/Venti_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Venti.png',
@@ -1396,6 +1683,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Sword',
     nation: 'Snezhnaya',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/9/95/Vesna_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Vesna.png',
@@ -1409,12 +1697,16 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Catalyst',
     nation: 'Snezhnaya',
+    bonusStat: '+28.8% HP',
     iconUrls: [
+      'https://i.gachabase.net/e-s4_5DuaTYNuWV8eXE9IEgG7V3HEJcPW3m9J29imw0/q:50/f:webp/plain/gi/assets/4ed3905b4bf6e429eb6335002d214fbe.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/9/97/Vodyanitsa_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Vodyanitsa.png',
     ],
     cardUrls: [],
-    bannerUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/5UXIyNdHg77zTZ8RyVDozGDcS5HQV5ywFoIy98OIJSs/q:50/f:webp/plain/gi/assets/7b799a8d28deb15fcf831907f2f5ab1b.png',
+    ],
   },
   {
     id: 'wanderer',
@@ -1422,6 +1714,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Sumeru',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/f/f8/Wanderer_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Wanderer.png',
@@ -1435,6 +1728,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Cryo',
     weapon: 'Catalyst',
     nation: 'Fontaine',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/b/bb/Wriothesley_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Wriothesley.png',
@@ -1448,6 +1742,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+96 EM',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/3/39/Xiangling_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xiangling.png',
@@ -1461,6 +1756,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Catalyst',
     nation: 'Liyue',
+    bonusStat: '+28.8% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/d3/Xianyun_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xianyun.png',
@@ -1474,6 +1770,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Anemo',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/f/fd/Xiao_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xiao.png',
@@ -1487,6 +1784,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Sword',
     nation: 'Natlan',
+    bonusStat: '+36% DEF',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/a/ab/Xilonen_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xilonen.png',
@@ -1500,6 +1798,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Sword',
     nation: 'Liyue',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/d4/Xingqiu_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xingqiu.png',
@@ -1513,6 +1812,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Claymore',
     nation: 'Liyue',
+    bonusStat: '+24% ATK',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/24/Xinyan_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Xinyan.png',
@@ -1526,6 +1826,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Electro',
     weapon: 'Catalyst',
     nation: 'Inazuma',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/b/ba/Yae_Miko_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yae%20Miko.png',
@@ -1539,6 +1840,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Catalyst',
     nation: 'Liyue',
+    bonusStat: '+24% Pyro DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/5/54/Yanfei_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yanfei.png',
@@ -1552,6 +1854,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Dendro',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+24% HP',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/8/83/Yaoyao_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yaoyao.png',
@@ -1565,6 +1868,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Hydro',
     weapon: 'Bow',
     nation: 'Liyue',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/d/d3/Yelan_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yelan.png',
@@ -1578,22 +1882,10 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Pyro',
     weapon: 'Bow',
     nation: 'Inazuma',
+    bonusStat: '+19.2% CRIT Rate',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/8/88/Yoimiya_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yoimiya.png',
-    ],
-    cardUrls: [],
-    bannerUrls: [],
-  },
-  {
-    id: 'yumemizuki-mizuki',
-    name: 'Yumemizuki Mizuki',
-    element: 'Anemo',
-    weapon: 'Catalyst',
-    nation: 'Inazuma',
-    iconUrls: [
-      'https://static.wikia.nocookie.net/gensin-impact/images/f/f6/Yumemizuki_Mizuki_Icon.png',
-      'https://sunderarmor.com/GENSHIN/Characters/1/Yumemizuki%20Mizuki.png',
     ],
     cardUrls: [],
     bannerUrls: [],
@@ -1604,6 +1896,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+26.8% ER',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Yun_Jin_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Yun%20Jin.png',
@@ -1617,6 +1910,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Polearm',
     nation: 'Liyue',
+    bonusStat: '+28.8% Geo DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/a/a6/Zhongli_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Zhongli.png',
@@ -1630,6 +1924,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     element: 'Geo',
     weapon: 'Sword',
     nation: 'Liyue',
+    bonusStat: '+38.4% CRIT DMG',
     iconUrls: [
       'https://static.wikia.nocookie.net/gensin-impact/images/2/22/Zibai_Icon.png',
       'https://sunderarmor.com/GENSHIN/Characters/1/Zibai.png',

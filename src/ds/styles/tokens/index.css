@@ -1,11 +1,11 @@
 @import '../../tokens/output/blur.css';
 @import '../../tokens/output/breakpoint.css';
 @import '../../tokens/output/color.css';
+@import '../../tokens/output/duration.css';
 @import '../../tokens/output/font-family.css';
 @import '../../tokens/output/font-size.css';
 @import '../../tokens/output/font-weight.css';
 @import '../../tokens/output/line-height.css';
-@import '../../tokens/output/motion.css';
 @import '../../tokens/output/radius.css';
 @import '../../tokens/output/shadow.css';
 @import '../../tokens/output/spacing.css';

@@ -235,12 +235,12 @@ export default {
     xl: { $value: 700 },
   },
   'line-height': { 0: { $value: 0 }, 1: { $value: 1 }, sm: { $value: 1.25 }, md: { $value: 1.5 } },
-  motion: {
-    'duration-xs': { $value: '0.1s' },
-    'duration-sm': { $value: '0.2s' },
-    'duration-md': { $value: '0.4s' },
-    'duration-lg': { $value: '0.6s' },
-    'duration-xl': { $value: '1.0s' },
+  duration: {
+    xs: { $value: '0.1s' },
+    sm: { $value: '0.2s' },
+    md: { $value: '0.4s' },
+    lg: { $value: '0.6s' },
+    xl: { $value: '1.0s' },
   },
   radius: {
     xs: { $value: '4px' },
@@ -369,7 +369,7 @@ export default {
     'field-h-md': { $value: '{spacing.sm-4}' },
     'field-h-lg': { $value: '{spacing.sm-6}' },
     'field-h-xl': { $value: '{spacing.sm-8}' },
-    'scrollbar-w': { $value: '{spacing.xs-4}' },
+    'scrollbar-w': { $value: '{spacing.xs-3}' },
     'scrollbar-h': { $value: '{spacing.xs-2}' },
     'a11y-outline': { $value: '{spacing.xs-0}' },
     'a11y-padding': { $value: '{spacing.xs-1}' },

@@ -88,7 +88,7 @@ export const TOKENS__SPACING = {
   'field-h-md': { ref: '{spacing.sm-4}', value: '40px' },
   'field-h-lg': { ref: '{spacing.sm-6}', value: '48px' },
   'field-h-xl': { ref: '{spacing.sm-8}', value: '56px' },
-  'scrollbar-w': { ref: '{spacing.xs-4}', value: '10px' },
+  'scrollbar-w': { ref: '{spacing.xs-3}', value: '8px' },
   'scrollbar-h': { ref: '{spacing.xs-2}', value: '6px' },
   'a11y-outline': { ref: '{spacing.xs-0}', value: '2px' },
   'a11y-padding': { ref: '{spacing.xs-1}', value: '4px' },

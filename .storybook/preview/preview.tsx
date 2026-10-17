@@ -1,18 +1,14 @@
 import { type Preview } from '@storybook/react-vite'
-import { HocComposer, I18nService, RoutingService } from '../../src/ds'
-import {
-  argTypesEnhancers,
-  getDocsConfig,
-  getStoryConfig,
-  mockNavigate,
-  mockTranslate,
-  toolbarConfig,
-} from './_preview-config'
+import { I18nProvider, initClientI18n } from '../../src/core/i18n'
+import { HocComposer, RoutingService } from '../../src/ds'
+import { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from './_preview-config'
 import './styles/index.css'
+
+initClientI18n()
 
 const hoc = HocComposer.hoc
 const providers = [
-  hoc(I18nService, { translate: mockTranslate }),
+  hoc(I18nProvider, {}),
   hoc(RoutingService, { navigate: mockNavigate }),
   //
 ]

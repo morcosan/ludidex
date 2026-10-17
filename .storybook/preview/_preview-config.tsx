@@ -130,10 +130,5 @@ const mockNavigate = (...args: any[]) => {
   window.dispatchEvent(new CustomEvent('sb:navigate', { detail: args }))
 }
 
-const TRANSLATIONS: Record<string, string> = {
-  'ds.action.close': 'Close',
-}
-const mockTranslate = (key: string) => TRANSLATIONS[key] || key
-
-export { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, mockTranslate, toolbarConfig }
+export { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig }
 export type { GlobalConfig, GlobalDefaults, GlobalTypes, StoryContext }

@@ -67,7 +67,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
     border: '1px solid transparent',
     borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
     transition: [
-      `all ${tokens.motion['duration-sm']} ease`,
+      `all ${tokens.duration['sm']} ease`,
       'background-size 0s step-start',
       'background-position 0s step-start',
     ].join(','),
@@ -79,7 +79,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
       content: '""',
       borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
       opacity: isPressed ? 1 : 0,
-      transition: `all ${tokens.motion['duration-sm']} ease`,
+      transition: `all ${tokens.duration['sm']} ease`,
     },
     '&::before': {
       border: `1px solid ${tokens.color['border-inset']}`,

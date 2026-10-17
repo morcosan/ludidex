@@ -38,9 +38,22 @@
   "game": {
     "label": {
       "element": "Element",
+      "feeling": "Feeling",
       "genshin": "Genshin Impact",
       "nation": "Nation",
+      "stats": "Stats",
       "weapon": "Weapon"
+    },
+    "stat": {
+      "atk": "ATK",
+      "critDmg": "Crit DMG",
+      "critRate": "Crit Rate",
+      "def": "DEF",
+      "elemDmgBonus": "{element} DMG Bonus",
+      "em": "EM",
+      "er": "ER",
+      "hp": "HP",
+      "specialBonus": "Special Bonus"
     },
     "status": {
       "empty": "No characters match the selected filters"

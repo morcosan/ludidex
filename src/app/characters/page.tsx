@@ -1,5 +1,5 @@
 import { Card } from '@src-ds'
-import { useState, type TransitionEvent } from 'react'
+import { useState } from 'react'
 import { useTranslation } from '../../core/i18n'
 import { CharPreviewCard } from '../../shared/components/char-preview-card'
 import { CHARACTERS, type GenshinCharacter } from '../../shared/data/genshin/characters'
@@ -34,17 +34,13 @@ export default function Page() {
     setIsPreviewOpen(false)
   }
 
-  const handlePreviewTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
-    if (event.target !== event.currentTarget || !['transform', 'translate'].includes(event.propertyName)) return
-    if (!isPreviewOpen) setPreviewCharacter(null)
-  }
-
   return (
     <div className="flex h-full">
       {/* LEFT SIDE */}
-      <div className="gap-sm-0 flex h-full flex-col">
+      <div className="gap-sm-0 flex h-full flex-1 flex-col">
         <TopFilters value={filters} onChange={setFilters} />
 
+        {/* CHARACTERS */}
         <div className="flex min-h-0 flex-1">
           {/* CHARACTERS */}
           <div className="pr-xs-3 min-h-0 flex-1 overflow-y-auto">
@@ -84,6 +80,7 @@ export default function Page() {
 
       {/* RIGHT SIDE */}
       <div className="min-w-xl-0 mx-xs-7 relative h-full">
+        {/* FILTERS */}
         <div className="h-full overflow-y-auto">More filters</div>
 
         {/* CHARACTER PREVIEW */}
@@ -93,7 +90,6 @@ export default function Page() {
             'duration-md transition-transform ease-in-out',
             isPreviewOpen ? 'translate-x-0' : 'translate-x-[110%]',
           )}
-          onTransitionEnd={handlePreviewTransitionEnd}
         >
           {previewCharacter && <CharPreviewCard character={previewCharacter} onClose={handleClosePreview} />}
         </div>

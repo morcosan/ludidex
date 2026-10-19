@@ -1,7 +1,7 @@
 import { CSS_PREFIX__BLUR, TOKENS__BLUR } from '../../tokens/output/blur.ts'
 import { CSS_PREFIX__BREAKPOINT, TOKENS__BREAKPOINT } from '../../tokens/output/breakpoint.ts'
 import { CSS_PREFIX__COLOR, TOKENS__COLOR } from '../../tokens/output/color.ts'
-import { CSS_PREFIX__DURATION, TOKENS__DURATION } from '../../tokens/output/duration'
+import { CSS_PREFIX__DURATION, TOKENS__DURATION } from '../../tokens/output/duration.ts'
 import { CSS_PREFIX__FONT_FAMILY, TOKENS__FONT_FAMILY } from '../../tokens/output/font-family.ts'
 import { CSS_PREFIX__FONT_SIZE, TOKENS__FONT_SIZE } from '../../tokens/output/font-size.ts'
 import { CSS_PREFIX__FONT_WEIGHT, TOKENS__FONT_WEIGHT } from '../../tokens/output/font-weight.ts'

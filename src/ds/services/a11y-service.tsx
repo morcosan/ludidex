@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Keyboard } from '../utilities/various-utils'
 
@@ -79,12 +77,12 @@ const A11yService = ({ children }: ReactProps) => {
  * Utilities
  */
 // @ts-ignore
-// oxlint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 const isA11yModeDefault = () => {
   return (document.documentElement.getAttribute(ATTR_KEY__A11Y_MODE) as A11yMode) === 'default'
 }
 // @ts-ignore
-// oxlint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 const isA11yModeKeyboard = () => {
   return (document.documentElement.getAttribute(ATTR_KEY__A11Y_MODE) as A11yMode) === 'keyboard'
 }

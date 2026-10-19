@@ -104,7 +104,7 @@ const getDocsConfig = (providers: HOC[]) => {
       },
     },
 
-    // oxlint-disable-next-line react/only-export-components
+    // eslint-disable-next-line react/only-export-components
     container: function Story(props: DocsContainerProps) {
       const { children, context } = props
       const isAutodocs = context.attachedCSFFiles?.size > 0

@@ -1,5 +1,3 @@
-'use client'
-
 import { type CSSObject } from '@emotion/react'
 import { Loader } from '@mantine/core'
 import { useThemeService } from '../../services/theme-service'
@@ -17,7 +15,8 @@ export const Card = (props: CardProps) => {
     ariaDescription,
     children,
     className,
-    bodyClassName,
+    surfaceClassName,
+    contentClassName,
     style,
     tooltip,
     linkHref,
@@ -79,6 +78,7 @@ export const Card = (props: CardProps) => {
     display: 'grid',
     width: '100%',
     height: '100%',
+    minHeight: 0,
     padding: (() => {
       if (size === 'sm') return `${tokens.spacing['card-py-sm']} ${tokens.spacing['card-px-sm']}`
       if (size === 'md') return `${tokens.spacing['card-py-md']} ${tokens.spacing['card-px-md']}`
@@ -108,10 +108,11 @@ export const Card = (props: CardProps) => {
     },
     ...(isPressed ? surfacePress : surfaceDefault),
   }
-  const childrenCss: CSSObject = {
+  const contentCss: CSSObject = {
     display: 'flex',
     width: '100%',
     height: '100%',
+    minHeight: 0,
     opacity: state === 'loading' ? 0 : 1,
     fill: 'currentColor',
     stroke: 'currentColor',
@@ -139,8 +140,10 @@ export const Card = (props: CardProps) => {
   }
 
   const content = (
-    <span css={surfaceCss} className={bodyClassName}>
-      <span css={childrenCss}>{children}</span>
+    <span css={surfaceCss} className={surfaceClassName}>
+      <span css={contentCss} className={contentClassName}>
+        {children}
+      </span>
       {state === 'loading' && (
         <span css={spinnerCss}>
           <Loader css={spinnerIconCss} />

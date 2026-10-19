@@ -13,7 +13,7 @@ export const GENSHIN_NATIONS = [
 ] as const
 
 export type GenshinElement = (typeof GENSHIN_ELEMENTS)[number]
-export type GenshinWeapon = (typeof GENSHIN_WEAPONS)[number]
+export type GenshinWeaponType = (typeof GENSHIN_WEAPONS)[number]
 export type GenshinNation = (typeof GENSHIN_NATIONS)[number]
 
 export const GenshinElementIconUrls: Record<GenshinElement, string[]> = {
@@ -26,7 +26,7 @@ export const GenshinElementIconUrls: Record<GenshinElement, string[]> = {
   Cryo: ['https://img.game8.co/3313079/45778fd49d63ed897695baa2688a6f8c.png/show'],
 }
 
-export const GenshinWeaponIconUrls: Record<GenshinWeapon, string[]> = {
+export const GenshinWeaponIconUrls: Record<GenshinWeaponType, string[]> = {
   Sword: [
     'https://img.game8.co/3289646/704a65e3db73086112f54efe514c1229.png/show',
     'https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Sword.png',

@@ -4,11 +4,11 @@ export interface CharTraitProps {
   iconClass?: string
 }
 
-export const CharTrait = ({ label, icon, iconClass }: CharTraitProps) => {
+export const CharacterTrait = ({ label, icon, iconClass }: CharTraitProps) => {
   return (
     <span className="gap-xs-1 flex items-center">
       {icon && <img src={icon} alt="" className={cx('h-xs-9 w-xs-9', iconClass)} />}
-      <span className="text-size-sm">{label}</span>
+      <span className="text-size-sm mt-px">{label}</span>
     </span>
   )
 }

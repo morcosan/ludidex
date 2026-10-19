@@ -1,5 +1,3 @@
-'use client'
-
 import {
   A11yService,
   ConfigService,
@@ -12,12 +10,14 @@ import {
 import { StrictMode } from 'react'
 import { useNavigate } from 'react-router'
 import LogoIcon from '../shared/assets/logo-icon.svg?react'
+import { useUserDataStore } from '../shared/state/use-user-data'
 import { QueryProvider } from './api'
 import { I18nProvider, initClientI18n } from './i18n'
 
 initClientI18n()
+useUserDataStore.getState().loadUserData()
 
-export const RouterProvider = ({ children }: ReactProps) => {
+const RouterProvider = ({ children }: ReactProps) => {
   const navigate = useNavigate()
   return <RoutingService navigate={navigate}>{children}</RoutingService>
 }
@@ -35,6 +35,8 @@ const providers = [
   hoc(ThemeService, { cookieKeyMode: 'app-color-mode' }),
 ]
 
-export const Providers = ({ children }: ReactProps) => {
+const Providers = ({ children }: ReactProps) => {
   return <HocComposer hocs={providers}>{children}</HocComposer>
 }
+
+export { Providers }

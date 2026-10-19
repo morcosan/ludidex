@@ -1,5 +1,3 @@
-'use client'
-
 import '@mantine/core/styles/Input.css'
 import { useCallback, useEffect, useRef } from 'react'
 import { useDataProps, useRefHandle } from '../../utilities/react-utils'

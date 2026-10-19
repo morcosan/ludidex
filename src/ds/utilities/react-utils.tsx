@@ -1,5 +1,3 @@
-'use client'
-
 import { type ReactNode, type Ref, type RefObject, useImperativeHandle, useMemo } from 'react'
 
 interface HOC<C = any> {
@@ -46,7 +44,7 @@ const useRefHandle = <T,>(ref: Ref<T> | undefined, nodeRef: NodeRef, handle: Par
       )
       return nodeRef.current as T
     },
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     deps || [],
   )
 }

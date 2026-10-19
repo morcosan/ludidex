@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
 export type InputElement = HTMLInputElement & HTMLTextAreaElement
 export type TextFieldVariant = 'default' | 'primary' | 'secondary'
-export type TextFieldSize = 'sm' | 'md' | 'lg' | 'xl'
+export type TextFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface TextFieldProps extends HtmlDataProps {
   /**

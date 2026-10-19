@@ -1,5 +1,3 @@
-'use client'
-
 import { createTheme, MantineProvider } from '@mantine/core'
 import variablesCSS from '@mantine/core/styles/default-css-variables.css?raw'
 import globalCSS from '@mantine/core/styles/global.css?raw'

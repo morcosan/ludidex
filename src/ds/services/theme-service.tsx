@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { type ColorMode } from '../styles/tokens'
 import { darkModeTokens, lightModeTokens, type ThemeTokens } from './_partials/theme-config'
@@ -72,17 +70,17 @@ const ThemeService = (props: Props) => {
     } else {
       changeColorMode(window.matchMedia(MEDIA_QUERY_DARK).matches ? 'dark' : 'light')
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     colorModeProp && changeColorMode(colorModeProp)
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorModeProp])
 
   const store: Store = useMemo(
     () => ({ tokens, colorMode, isDarkMode, isLightMode, changeColorMode }),
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tokens, colorMode, isDarkMode, isLightMode],
   )
 

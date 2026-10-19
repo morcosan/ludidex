@@ -86,7 +86,7 @@ export const useEvents = (props: ModalProps) => {
   useEffect(() => {
     computeStackIndex()
     opened ? handleModalOpen() : handleModalClose()
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened])
 
   return {

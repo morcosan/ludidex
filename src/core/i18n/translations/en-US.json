@@ -7,10 +7,13 @@
   "general": {
     "action": {
       "back": "Back",
+      "cancel": "Cancel",
       "clear": "Clear",
       "clearFilters": "Clear filters",
       "clearSearch": "Clear search",
       "clearSelection": "Clear selection",
+      "edit": "Edit",
+      "save": "Save",
       "sort": "Sort"
     },
     "label": {
@@ -37,22 +40,40 @@
   },
   "game": {
     "label": {
+      "baseStats": "Base stats",
       "element": "Element",
-      "feeling": "Feeling",
       "genshin": "Genshin Impact",
+      "exploration": "Exploration",
+      "level": "Level",
+      "mainDps": "Main DPS",
+      "outfitDesign": "Outfit Design",
+      "subDps": "Sub DPS",
+      "support": "Support",
+      "tierLists": "Tier lists",
       "nation": "Nation",
       "stats": "Stats",
+      "tags": "Tags",
+      "talents": "Talents",
+      "tier": "Tier",
       "weapon": "Weapon"
     },
-    "stat": {
+    "placeholder": {
+      "tags": "Tag, tag..."
+    },
+    "stats": {
       "atk": "ATK",
+      "constellation": "Constellation",
       "critDmg": "Crit DMG",
       "critRate": "Crit Rate",
       "def": "DEF",
-      "elemDmgBonus": "{element} DMG Bonus",
+      "elemBurst": "Elemental Burst",
+      "elemDmg": "{element} DMG",
+      "elemSkill": "Elemental Skill",
       "em": "EM",
       "er": "ER",
       "hp": "HP",
+      "normalAttackDmg": "Normal Attack DMG",
+      "normalAttack": "Normal Attack",
       "specialBonus": "Special Bonus"
     },
     "status": {

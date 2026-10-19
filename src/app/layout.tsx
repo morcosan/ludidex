@@ -1,9 +1,9 @@
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Card, IconButton } from '@src-ds'
+import { Button, Card, IconButton, Image } from '@src-ds'
 import { type ParseKeys } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
-import { useTranslation } from '../core/i18n'
 import { Providers } from '../core/providers'
 import LogoIcon from '../shared/assets/logo-icon.svg?react'
 import { GAMES } from '../shared/data/games'
@@ -31,10 +31,15 @@ export default function Layout({ routes }: LayoutProps) {
 
           <div className="gap-xs-9 flex flex-col">
             {GAMES.map((game) => (
-              <Card key={game.id} state="selected" size="sm" tooltip={t(game.nameKey)} bodyClassName="p-0!">
-                <span className="flex-center h-full w-full">
-                  <img src={game.iconUrls[0]} alt="" className="h-sm-4 w-sm-4 rounded-md" />
-                </span>
+              <Card
+                key={game.id}
+                state="selected"
+                size="sm"
+                tooltip={t(game.nameKey)}
+                surfaceClassName="p-0!"
+                contentClassName="flex-center h-full w-full"
+              >
+                <Image src={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
               </Card>
             ))}
           </div>

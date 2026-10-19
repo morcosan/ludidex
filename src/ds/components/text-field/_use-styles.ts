@@ -14,6 +14,7 @@ export const useStyles = (props: Props) => {
 
   const cssVars = {
     minHeight: (() => {
+      if (size === 'xs') return tokens.spacing['field-h-xs']
       if (size === 'sm') return tokens.spacing['field-h-sm']
       if (size === 'md') return tokens.spacing['field-h-md']
       if (size === 'lg') return tokens.spacing['field-h-lg']
@@ -21,6 +22,7 @@ export const useStyles = (props: Props) => {
       return ''
     })(),
     buttonPadding: (() => {
+      if (size === 'xs') return `calc((${tokens.spacing['field-h-xs']} - ${tokens.spacing['button-h-xs']}) / 2)`
       if (size === 'sm') return `calc((${tokens.spacing['field-h-sm']} - ${tokens.spacing['button-h-xs']}) / 2)`
       if (size === 'md') return `calc((${tokens.spacing['field-h-md']} - ${tokens.spacing['button-h-sm']}) / 2)`
       if (size === 'lg') return `calc((${tokens.spacing['field-h-lg']} - ${tokens.spacing['button-h-sm']}) / 2)`
@@ -28,6 +30,7 @@ export const useStyles = (props: Props) => {
       return ''
     })(),
     textPaddingX: (() => {
+      if (size === 'xs') return tokens.spacing['xs-3']
       if (size === 'sm') return tokens.spacing['xs-4']
       if (size === 'md') return tokens.spacing['xs-5']
       if (size === 'lg') return tokens.spacing['xs-7']
@@ -35,6 +38,7 @@ export const useStyles = (props: Props) => {
       return ''
     })(),
     textPaddingY: (() => {
+      if (size === 'xs') return tokens.spacing['xs-1']
       if (size === 'sm') return tokens.spacing['xs-2']
       if (size === 'md') return tokens.spacing['xs-3']
       if (size === 'lg') return tokens.spacing['xs-5']
@@ -42,10 +46,19 @@ export const useStyles = (props: Props) => {
       return ''
     })(),
     borderRadius: (() => {
+      if (size === 'xs') return tokens.radius['xs']
       if (size === 'sm') return tokens.radius['sm']
       if (size === 'md') return tokens.radius['sm']
       if (size === 'lg') return tokens.radius['md']
       if (size === 'xl') return tokens.radius['md']
+      return ''
+    })(),
+    fontSize: (() => {
+      if (size === 'xs') return tokens.fontSize['xs']
+      if (size === 'sm') return tokens.fontSize['sm']
+      if (size === 'md') return tokens.fontSize['md']
+      if (size === 'lg') return tokens.fontSize['md']
+      if (size === 'xl') return tokens.fontSize['md']
       return ''
     })(),
     borderColor: invalid
@@ -103,7 +116,7 @@ export const useStyles = (props: Props) => {
     background: 'transparent',
     color: tokens.color['text-default'],
     lineHeight: tokens.lineHeight['md'],
-    fontSize: size === 'sm' ? tokens.fontSize['sm'] : tokens.fontSize['md'],
+    fontSize: cssVars.fontSize,
     opacity: disabled ? 0.4 : 1,
     cursor: disabled ? 'not-allowed' : undefined,
     resize: 'none',

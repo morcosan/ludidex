@@ -1,5 +1,3 @@
-'use client'
-
 import { useButtonBase } from '../_shared/use-button-base'
 import { type ButtonProps } from './_types'
 

@@ -82,7 +82,7 @@ const Variants: StoryObj<typeof TextField> = {
         </IconButton>
       )
 
-      const fieldSizes: TextFieldSize[] = ['sm', 'md', 'lg', 'xl']
+      const fieldSizes: TextFieldSize[] = ['xs', 'sm', 'md', 'lg', 'xl']
       const buttonSizes: IconButtonSize[] = ['xs', 'sm', 'sm', 'md']
       const multilines = [false, true]
 

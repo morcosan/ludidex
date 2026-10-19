@@ -1,13 +1,17 @@
-import { Card } from '@src-ds'
+import { Card, Image } from '@src-ds'
 import { useState } from 'react'
-import { useTranslation } from '../../core/i18n'
-import { CharPreviewCard } from '../../shared/components/char-preview-card'
+import { useTranslation } from 'react-i18next'
+import { CharPreviewCard } from '../../shared/components/char-preview-card/char-preview-card'
 import { CHARACTERS, type GenshinCharacter } from '../../shared/data/genshin/characters'
 import { GenshinElementColor } from '../../shared/data/genshin/core'
+import type { GenshinCharacterUserData } from '../../shared/data/genshin/user-data'
+import { useUserDataStore } from '../../shared/state/use-user-data'
 import { TopFilters, type CharacterFilters } from './_partials/top-filters'
 
 export default function Page() {
   const { t } = useTranslation()
+  const userData = useUserDataStore((state) => state.userData)
+  const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
   const [filters, setFilters] = useState<CharacterFilters>({ elements: [], weapons: [], nations: [] })
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -34,6 +38,11 @@ export default function Page() {
     setIsPreviewOpen(false)
   }
 
+  const handleSaveCharacter = (data: GenshinCharacterUserData) => {
+    if (!previewCharacter) return
+    setGenshinCharacter(previewCharacter.id, data)
+  }
+
   return (
     <div className="flex h-full">
       {/* LEFT SIDE */}
@@ -52,22 +61,19 @@ export default function Page() {
                   <li key={character.id}>
                     <Card
                       state={isPreviewOpen && previewCharacter?.id === character.id ? 'selected' : 'active'}
-                      bodyClassName="p-xs-0!"
+                      surfaceClassName="p-xs-0!"
+                      contentClassName="relative flex w-full flex-col"
                       onClick={() => handleCardClick(character)}
                     >
-                      <span className="relative flex w-full flex-col">
-                        <img
-                          src={character.iconUrls[0]}
-                          alt=""
-                          loading="lazy"
-                          className="h-md-5 w-md-5 pointer-events-none rounded-md bg-(--element-color) object-cover"
-                          style={{ '--element-color': GenshinElementColor[character.element] }}
-                        />
-                        <span
-                          className={cx('pt-px', 'text-color-black rounded-b-md', 'text-size-xs truncate text-center')}
-                        >
-                          {character.name}
-                        </span>
+                      <Image
+                        src={character.iconUrls}
+                        alt=""
+                        loading="lazy"
+                        className="h-md-5 w-md-5 pointer-events-none rounded-md bg-(--element-color) object-cover"
+                        style={{ '--element-color': GenshinElementColor[character.element] }}
+                      />
+                      <span className="text-color-black text-size-xs truncate rounded-b-md pt-px text-center">
+                        {character.name}
                       </span>
                     </Card>
                   </li>
@@ -86,12 +92,21 @@ export default function Page() {
         {/* CHARACTER PREVIEW */}
         <div
           className={cx(
-            '-top-xs-2 absolute right-0',
+            '-top-xs-2 -bottom-xs-2 absolute right-0',
             'duration-md transition-transform ease-in-out',
             isPreviewOpen ? 'translate-x-0' : 'translate-x-[110%]',
           )}
         >
-          {previewCharacter && <CharPreviewCard character={previewCharacter} onClose={handleClosePreview} />}
+          {previewCharacter && (
+            <CharPreviewCard
+              character={previewCharacter}
+              userData={userData?.genshin.characters[previewCharacter.id]}
+              isOpen={isPreviewOpen}
+              className="h-full"
+              onSave={handleSaveCharacter}
+              onClose={handleClosePreview}
+            />
+          )}
         </div>
       </div>
     </div>

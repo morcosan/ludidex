@@ -1,5 +1,3 @@
-'use client'
-
 import { I18nService } from '@src-ds'
 import i18n from 'i18next'
 import { useEffect, useState } from 'react'

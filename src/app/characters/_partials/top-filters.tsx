@@ -1,5 +1,5 @@
 import { Button, IconButton } from '@src-ds'
-import { useTranslation } from '../../../core/i18n/index'
+import { useTranslation } from 'react-i18next'
 import {
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
@@ -9,12 +9,12 @@ import {
   GenshinWeaponIconUrls,
   type GenshinElement,
   type GenshinNation,
-  type GenshinWeapon,
+  type GenshinWeaponType,
 } from '../../../shared/data/genshin/core'
 
 interface CharacterFilters {
   elements: GenshinElement[]
-  weapons: GenshinWeapon[]
+  weapons: GenshinWeaponType[]
   nations: GenshinNation[]
 }
 

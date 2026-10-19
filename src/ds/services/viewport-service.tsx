@@ -1,5 +1,3 @@
-'use client'
-
 import { debounce } from 'lodash-es'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { type Token, TOKENS } from '../styles/tokens'
@@ -70,7 +68,7 @@ const ViewportService = ({ children }: ReactProps) => {
     resizeWindow()
     window.addEventListener('resize', handleWindowResize, true)
     return () => window.removeEventListener('resize', handleWindowResize, true)
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const breakpoint = Object.fromEntries(
@@ -123,7 +121,7 @@ const ViewportService = ({ children }: ReactProps) => {
       isViewportXL,
       isViewportXXL,
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewportWidth])
 
   return <Context.Provider value={store}>{children}</Context.Provider>

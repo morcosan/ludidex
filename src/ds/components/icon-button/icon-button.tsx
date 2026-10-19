@@ -1,5 +1,3 @@
-'use client'
-
 import { type CSSObject } from '@emotion/react'
 import { useButtonBase } from '../_shared/use-button-base'
 import { type IconButtonProps } from './_types'

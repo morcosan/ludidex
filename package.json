@@ -25,12 +25,14 @@
     "clsx": "^2.1.1",
     "i18next": "^26.4.2",
     "lodash-es": "^4.18.1",
+    "lucide-react": "^1.55.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-i18next": "^17.0.16",
     "react-router": "^8.4.0",
     "tailwindcss": "^4.3.3",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^21.2.3",

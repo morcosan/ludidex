@@ -17,7 +17,7 @@ const appRoutes: AppRoute[] = [
   { to: '/teams', labelKey: 'nav.label.teams', element: <TeamsPage /> },
 ]
 
-// oxlint-disable-next-line react/only-export-components
+// eslint-disable-next-line react/only-export-components
 export default [
   {
     path: '/',

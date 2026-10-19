@@ -1,5 +1,3 @@
-'use client'
-
 import { type CSSObject } from '@emotion/react'
 import { type ElementType, useEffect, useState } from 'react'
 import { useI18nService } from '../../services/i18n-service'
@@ -38,7 +36,7 @@ export const LoadingScreen = (props: LoadingScreenProps) => {
       clearTimeout(minTimer)
       clearTimeout(maxTimer)
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

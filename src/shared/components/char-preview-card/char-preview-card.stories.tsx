@@ -1,4 +1,4 @@
-import { Button, defineMeta } from '@src-storybook'
+import { Button, defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { CHARACTERS } from '../../data/genshin/characters'
 import { CharPreviewCard } from './char-preview-card'
@@ -36,7 +36,8 @@ const meta: Meta = {
         },
         tags: ['DPS', 'Main'],
       },
-      className: 'bg-color-white w-xl-0',
+      isOpen: false,
+      className: 'bg-color-white w-xl-0 h-xl-8',
     },
     events: ['onClose', 'onSave'],
   }),

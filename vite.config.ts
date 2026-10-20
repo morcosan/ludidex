@@ -41,8 +41,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@src-ds': path.resolve(import.meta.dirname, 'src/ds/index.ts'),
-      '@src-storybook': path.resolve(import.meta.dirname, '.storybook/shared/index.ts'),
+      '@app-shared': path.resolve(import.meta.dirname, 'src/shared'),
+      '@design-system': path.resolve(import.meta.dirname, 'src/design-system/index.ts'),
+      '@storybook-docs': path.resolve(import.meta.dirname, '.storybook/docs/index.ts'),
     },
   },
 

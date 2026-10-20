@@ -1,4 +1,4 @@
-@import '../../../src/ds/styles/index.css';
+@import '../../../src/design-system/styles/index.css';
 @import '_custom.css';
 @import '_overrides.css';
 @config './_tailwind.config.ts';

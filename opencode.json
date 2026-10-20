@@ -14,7 +14,8 @@
       "ls": "allow",
       "ls *": "allow",
       "cat": "allow",
-      "cat *": "allow"
+      "cat *": "allow",
+      "pnpm lint-code": "allow"
     }
   }
 }

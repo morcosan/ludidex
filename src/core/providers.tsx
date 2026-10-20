@@ -6,16 +6,18 @@ import {
   RoutingService,
   ThemeService,
   ViewportService,
-} from '@src-ds'
+} from '@design-system'
 import { StrictMode } from 'react'
 import { useNavigate } from 'react-router'
 import LogoIcon from '../shared/assets/logo-icon.svg?react'
+import { useUserConfigStore } from '../shared/state/use-user-config'
 import { useUserDataStore } from '../shared/state/use-user-data'
 import { QueryProvider } from './api'
 import { I18nProvider, initClientI18n } from './i18n'
 
 initClientI18n()
 useUserDataStore.getState().loadUserData()
+useUserConfigStore.getState().loadUserConfig()
 
 const RouterProvider = ({ children }: ReactProps) => {
   const navigate = useNavigate()

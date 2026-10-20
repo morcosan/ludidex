@@ -1,4 +1,4 @@
-import { Button, defineMeta } from '@src-storybook'
+import { Button, defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Tag } from './tag'
 

@@ -6,11 +6,13 @@ export interface LikeScoreProps extends ReactProps {
   value: number
   editable?: boolean
   disabled?: boolean
+  noLabel?: boolean
+  className?: string
   onChange?: (value: number) => void
 }
 
 export const LikeScore = (props: LikeScoreProps) => {
-  const { value, editable, disabled, className, onChange } = props
+  const { value, editable, disabled, noLabel, className, onChange } = props
   const label = value <= MAX_LIKE_SCORE ? LIKE_SCORE_TEXT[value as keyof typeof LIKE_SCORE_TEXT] : ''
 
   const handleClick = () => onChange?.(value >= MAX_LIKE_SCORE ? MIN_LIKE_SCORE : value + 1)
@@ -28,7 +30,7 @@ export const LikeScore = (props: LikeScoreProps) => {
           className="-translate-y-px"
         />
       )}
-      <span className="ml-xs-0 text-size-sm font-weight-lg translate-y-px">{label}</span>
+      {!noLabel && <span className="ml-xs-0 text-size-sm font-weight-lg translate-y-px">{label}</span>}
     </span>
   )
 

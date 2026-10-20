@@ -9,14 +9,14 @@ import { createTsFormat } from './_ts-format.ts'
 const FORMAT_NAME__CSS = 'css/ds-format'
 const FORMAT_NAME__TS = 'ts/ds-format'
 
-const [, , srcFile, outDir] = process.argv
+const [, , baseDir] = process.argv
 const rootDir = path.resolve(import.meta.dirname, '../..')
-const srcPath = path.resolve(rootDir, srcFile)
-const outPath = path.resolve(rootDir, outDir)
+const srcPath = path.resolve(rootDir, baseDir, 'tokens.js')
+const outPath = path.resolve(rootDir, baseDir, 'output')
 const { default: tokensJson } = await import(pathToFileURL(srcPath).href)
 
 // Clear folder
-rmSync(outDir, { recursive: true, force: true })
+rmSync(outPath, { recursive: true, force: true })
 
 const sd = new StyleDictionary({
   tokens: tokensJson,

@@ -1,8 +1,8 @@
+import { type HOC, HocComposer } from '@design-system'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
 import { type ComponentType } from 'react'
 import { fn } from 'storybook/test'
-import { type HOC, HocComposer } from '../../src/ds'
-import { DocsCodeBlock, DocsPage } from '../shared'
+import { DocsCodeBlock, DocsPage } from '../docs'
 import { fixBrokenCSS } from './_preview-css-fix'
 import {
   computeServices,

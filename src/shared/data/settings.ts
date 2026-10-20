@@ -14,10 +14,10 @@ export const LIKE_SCORE_TEXT = {
 export const TIER_SCORES = ['SS', 'S', 'A', 'B', 'C', 'D'] as const
 
 export const TIER_COLORS = {
-  SS: '#FF3B5C',
-  S: '#FF7F2A',
-  A: '#FFC83D',
-  B: '#7ED957',
-  C: '#3FA7D6',
-  D: '#8E8E9A',
-}
+  SS: '#FF2E63',
+  S: '#FF7A1A',
+  A: '#FFC61A',
+  B: '#4ADE80',
+  C: '#22B8F0',
+  D: '#9B6BFF',
+} as const

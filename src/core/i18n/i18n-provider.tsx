@@ -1,4 +1,4 @@
-import { I18nService } from '@src-ds'
+import { I18nService } from '@design-system'
 import i18n from 'i18next'
 import { useEffect, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'

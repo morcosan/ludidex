@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { GenshinCharacterUserData } from '../data/genshin/user-data'
+import { type GenshinCharacterUserData } from '../data/genshin/user-data'
 
 const STORAGE_KEY = 'app-user-data'
 

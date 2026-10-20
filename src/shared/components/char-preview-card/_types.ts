@@ -5,6 +5,7 @@ export interface CharacterPreviewProps extends ReactProps {
   character: GenshinCharacter
   userData?: GenshinCharacterUserData
   isOpen?: boolean
+  className?: string
   onSave?: (data: GenshinCharacterUserData) => void
   onClose?: () => void
 }

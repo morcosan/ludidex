@@ -1,6 +1,6 @@
+import { Card, IconButton, Image, TextField } from '@design-system'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, IconButton, Image, TextField } from '@src-ds'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -223,13 +223,13 @@ export const CharPreviewCard = (props: CharacterPreviewProps) => {
             <div className="divide-color-border-subtle flex flex-col divide-y">
               {(Object.entries(tierFields) as [keyof GenshinTierScores, string][]).map(([field, label]) => {
                 const index = isEditing ? toNumber(getDraftValue('tierScores', field)) : userData?.tierScores?.[field]
-                const tier = index !== undefined ? TIER_SCORES[index] : isEditing ? TIER_SCORES.at(-1) : undefined
+                const tier = index !== undefined ? TIER_SCORES[index] : undefined
 
                 return (
                   <div key={field} className="gap-xs-2 py-xs-2 flex items-center justify-between">
                     <span className="text-size-sm">{label}</span>
 
-                    {tier !== undefined ? (
+                    {tier !== undefined || isEditing ? (
                       <TierScore
                         value={tier}
                         editable={isEditing}

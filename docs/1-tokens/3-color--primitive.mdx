@@ -8,7 +8,7 @@ import {
   Meta,
   oklchToHex,
   TOKENS,
-} from '@src-storybook'
+} from '@storybook-docs'
 
 export const tokens = Object.entries(TOKENS.COLOR).filter(([, token]) => !token.ref)
 export const blues = Object.keys(TOKENS.COLOR).filter((name) => /^blue-\d+$/.test(name))

@@ -10,7 +10,7 @@
     "docs--dev": "storybook dev -p 6006 --no-open",
     "docs--build": "storybook build -o dist-docs",
     "docs--preview": "vite preview --outDir ../dist-docs --port 6006",
-    "utils--build-tokens": "tsx scripts/design-tokens/builder.ts src/ds/tokens/tokens.js src/ds/tokens/output",
+    "utils--build-tokens": "tsx scripts/design-tokens/builder.ts src/design-system/tokens",
     "lint-code": "oxlint && tsc -b --noEmit",
     "lint-commit": "commitlint --edit",
     "prepare": "husky"

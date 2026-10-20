@@ -1,4 +1,3 @@
-import { type ComponentType, type ReactNode, StrictMode } from 'react'
 import {
   A11yService,
   type ColorMode,
@@ -7,8 +6,9 @@ import {
   HocComposer,
   ThemeService,
   ViewportService,
-} from '../../src/ds/index'
-import { type DocsCanvasBg, DocsCanvasService } from '../shared/services/docs-canvas-service'
+} from '@design-system'
+import { type ComponentType, type ReactNode, StrictMode } from 'react'
+import { type DocsCanvasBg, DocsCanvasService } from '../docs/services/docs-canvas-service'
 
 interface GlobalConfig<T> {
   description: string

@@ -1,6 +1,6 @@
+import { Button, Card, IconButton, Image } from '@design-system'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Card, IconButton, Image } from '@src-ds'
 import { type ParseKeys } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
@@ -60,13 +60,7 @@ export default function Layout({ routes }: LayoutProps) {
           {/* SIDE NAV */}
           <nav className="w-md-7 gap-xs-2 mx-xs-9 flex flex-col">
             {routes.map(({ to, labelKey }) => (
-              <Button
-                key={to}
-                linkHref={to}
-                state={pathname === to ? 'selected' : 'active'}
-                variant="menu-default"
-                className="text-size-sm"
-              >
+              <Button key={to} linkHref={to} state={pathname === to ? 'selected' : 'active'} variant="menu-default">
                 {t(labelKey)}
               </Button>
             ))}

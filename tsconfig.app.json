@@ -16,8 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@src-ds": ["./src/ds/index.ts"],
-      "@src-storybook": ["./.storybook/shared/index.ts"]
+      "@app-shared/*": ["./src/shared/*"],
+      "@design-system": ["./src/design-system/index.ts"],
+      "@storybook-docs": ["./.storybook/docs/index.ts"]
     },
 
     /* Linting */
@@ -26,5 +27,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".storybook/preview/**/*", ".storybook/shared/**/*"]
+  "include": ["src", ".storybook/preview/**/*", ".storybook/docs/**/*"]
 }

@@ -1,10 +1,9 @@
 import { type Config } from 'tailwindcss'
-import { tailwindTheme } from '../ds/styles/tailwind/theme.ts'
+import { tailwindTheme } from '../design-system/styles/tailwind/theme.ts'
 
 const config: Config = {
   content: [
-    '../{src}/**/*.{ts,tsx}', // app
-    '../../ds/{src}/**/*.{ts,tsx}', // ds
+    '../../{src}/**/*.{ts,tsx}', // app
   ],
   theme: tailwindTheme,
 }

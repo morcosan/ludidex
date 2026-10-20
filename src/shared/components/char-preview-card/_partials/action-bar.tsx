@@ -1,4 +1,4 @@
-import { Button } from '@src-ds'
+import { Button } from '@design-system'
 import { useTranslation } from 'react-i18next'
 
 interface Props {

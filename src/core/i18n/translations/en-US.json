@@ -1,7 +1,8 @@
 {
   "ds": {
     "action": {
-      "close": "Close"
+      "close": "Close",
+      "clear": "Clear"
     }
   },
   "general": {
@@ -20,9 +21,19 @@
       "appTitle": "LudiDex",
       "colorMode": "Color mode",
       "currentGame": "Current game",
+      "default": "Default",
+      "displaySize": "Display size",
+      "favorite": "Favorite",
+      "large": "Large",
+      "listing": "Listing",
+      "medium": "Medium",
       "modeDark": "Dark",
       "modeLight": "Light",
-      "settings": "Settings"
+      "none": "None",
+      "settings": "Settings",
+      "small": "Small",
+      "viewMode": "View mode",
+      "viewOptions": "View options"
     },
     "placeholder": {
       "search": "Search..."
@@ -49,6 +60,7 @@
       "outfitDesign": "Outfit Design",
       "subDps": "Sub DPS",
       "support": "Support",
+      "tierList": "Tier list",
       "tierLists": "Tier lists",
       "nation": "Nation",
       "stats": "Stats",

@@ -1,5 +1,3 @@
-import { Button, IconButton } from '@src-ds'
-import { useTranslation } from 'react-i18next'
 import {
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
@@ -10,7 +8,9 @@ import {
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
-} from '../../../shared/data/genshin/core'
+} from '@app-shared/data/genshin/core'
+import { Button, IconButton } from '@design-system'
+import { useTranslation } from 'react-i18next'
 
 interface CharacterFilters {
   elements: GenshinElement[]

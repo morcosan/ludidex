@@ -1,6 +1,6 @@
+import { HocComposer, RoutingService } from '@design-system'
 import { type Preview } from '@storybook/react-vite'
 import { I18nProvider, initClientI18n } from '../../src/core/i18n'
-import { HocComposer, RoutingService } from '../../src/ds'
 import { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from './_preview-config'
 import './styles/index.css'
 

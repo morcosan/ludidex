@@ -9,7 +9,7 @@ const meta: Meta = {
     props: {
       value: 3,
       editable: false,
-      disabled: false,
+      noLabel: false,
       className: '',
     },
     events: ['onChange'],

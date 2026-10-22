@@ -1,3 +1,5 @@
+import { ImageSlideshow } from '@app-shared/components/image-slideshow/image-slideshow'
+import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
 import { Button, Card, IconButton, Image } from '@design-system'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -22,9 +24,16 @@ export default function Layout({ routes }: LayoutProps) {
 
   return (
     <Providers>
-      <div className="flex h-dvh overflow-hidden">
+      <div className="relative flex h-dvh overflow-hidden">
+        <ImageSlideshow
+          srcs={GAMES[0].backgroundUrls}
+          interval={BACKGROUND_SWAP_INTERVAL}
+          duration={BACKGROUND_SWAP_DURATION}
+          className="absolute! inset-0 -z-10"
+        />
+
         {/* SIDEBAR */}
-        <aside className="p-xs-2 py-xs-6 flex flex-col items-center">
+        <aside className="px-xs-3 py-xs-6 flex flex-col items-center">
           <Link to="/" aria-label={t('general.label.appTitle')} className="flex-center mb-sm-2 mt-xs-3">
             <LogoIcon aria-hidden className="h-sm-3 w-sm-3" />
           </Link>
@@ -39,12 +48,12 @@ export default function Layout({ routes }: LayoutProps) {
                 surfaceClassName="p-0!"
                 contentClassName="flex-center h-full w-full"
               >
-                <Image src={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
+                <Image srcs={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
               </Card>
             ))}
           </div>
 
-          <IconButton tooltip={t('general.label.settings')} className="mt-auto">
+          <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
             <FontAwesomeIcon icon={faGear} aria-hidden className="h-sm-0 w-sm-0" />
           </IconButton>
         </aside>
@@ -52,9 +61,8 @@ export default function Layout({ routes }: LayoutProps) {
         {/* PAGE */}
         <div
           className={cx(
-            'm-xs-6 ml-0! min-w-0 flex-1',
-            'py-xs-9 flex',
-            'bg-color-bg-page border-color-border-surface shadow-below-sm rounded-xl border',
+            'm-xs-4 py-xs-5 ml-0! flex min-w-0 flex-1',
+            'bg-color-bg-page border-color-border-inset shadow-below-sm rounded-xl border backdrop-blur-md',
           )}
         >
           {/* SIDE NAV */}

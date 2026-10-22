@@ -6,7 +6,7 @@ const meta: Meta = {
   title: 'Design System / Components / Image',
   ...defineMeta(Image, {
     props: {
-      src: [
+      srcs: [
         'https://broken.com/image.png',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbHyHHJaS1vO3fpZRq9fYpROAQhLeFvAkPR0qCHSKtMg&s=10',
       ],

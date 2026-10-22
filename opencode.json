@@ -15,6 +15,9 @@
       "ls *": "allow",
       "cat": "allow",
       "cat *": "allow",
+      "grep *": "allow",
+      "head": "allow",
+      "head *": "allow",
       "pnpm lint-code": "allow"
     }
   }

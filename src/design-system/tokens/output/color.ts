@@ -145,12 +145,12 @@ export const TOKENS__COLOR = {
     value: { light: 'oklch(0.9474 0.0029 308)', dark: 'oklch(0.3171 0.0092 308)' },
   },
   'bg-page': {
-    ref: { light: '{color.grey-1}', dark: '{color.grey-17}' },
-    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
+    ref: { light: '{color.white-alpha-11}', dark: '{color.grey-17}' },
+    value: { light: 'oklch(1 0 0 / 0.64)', dark: 'oklch(0.346 0.011 308)' },
   },
   'bg-region': {
-    ref: { light: '{color.black-alpha-1}', dark: '{color.black-alpha-3}' },
-    value: { light: 'oklch(0.1068 0.052 317 / 0.03)', dark: 'oklch(0.1068 0.052 317 / 0.09)' },
+    ref: { light: '{color.white-alpha-9}', dark: '{color.black-alpha-3}' },
+    value: { light: 'oklch(1 0 0 / 0.48)', dark: 'oklch(0.1068 0.052 317 / 0.09)' },
   },
   'bg-card': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
@@ -223,6 +223,10 @@ export const TOKENS__COLOR = {
   'border-inset': {
     ref: { light: '{color.white-alpha-6}', dark: '{color.white-alpha-1}' },
     value: { light: 'oklch(1 0 0 / 0.24)', dark: 'oklch(1 0 0 / 0.03)' },
+  },
+  'border-on-glass': {
+    ref: { light: '{color.black-alpha-6}', dark: '{color.white-alpha-1}' },
+    value: { light: 'oklch(0.1068 0.052 317 / 0.24)', dark: 'oklch(1 0 0 / 0.03)' },
   },
   'border-danger': {
     ref: { light: '{color.red-6}', dark: '{color.red-3}' },

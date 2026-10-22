@@ -2,7 +2,7 @@ import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { GenshinElementColor } from '@app-shared/data/genshin/core'
 import { Card, Image } from '@design-system'
 
-interface CharacterCardProps {
+interface CharacterItemProps {
   character: GenshinCharacter
   imageClassName: string
   labelClassName: string
@@ -10,7 +10,7 @@ interface CharacterCardProps {
   onClick?: (character: GenshinCharacter) => void
 }
 
-export const CharacterCard = (props: CharacterCardProps) => {
+export const CharacterItem = (props: CharacterItemProps) => {
   const { character, imageClassName, labelClassName, selected, onClick } = props
 
   return (
@@ -21,7 +21,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
       onClick={() => onClick?.(character)}
     >
       <Image
-        src={character.iconUrls}
+        srcs={character.iconUrls}
         alt=""
         loading="lazy"
         className={cx('pointer-events-none rounded-md bg-(--element-color) object-cover', imageClassName)}

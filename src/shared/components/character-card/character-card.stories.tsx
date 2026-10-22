@@ -1,11 +1,11 @@
 import { Button, defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { CHARACTERS } from '../../data/genshin/characters'
-import { CharPreviewCard } from './char-preview-card'
+import { CharacterCard } from './character-card'
 
 const meta: Meta = {
-  title: 'Components / Character Preview Card',
-  ...defineMeta(CharPreviewCard, {
+  title: 'Components / Character Card',
+  ...defineMeta(CharacterCard, {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
@@ -16,6 +16,7 @@ const meta: Meta = {
           support: 3,
           exploration: 0,
           outfit: 4,
+          personality: 5,
         },
         stats: {
           level: 90,
@@ -36,7 +37,7 @@ const meta: Meta = {
         },
         tags: ['DPS', 'Main'],
       },
-      isOpen: false,
+      isOpen: true,
       className: 'bg-color-white w-xl-0 h-xl-8',
     },
     events: ['onClose', 'onSave'],

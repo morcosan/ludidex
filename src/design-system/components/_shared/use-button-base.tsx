@@ -15,9 +15,10 @@ interface BaseButtonProps extends HtmlDataProps {
   ariaDescription?: string
 
   // Props
-  size: BaseButtonSize
-  variant: BaseButtonVariant
   state: BaseButtonState
+  variant: BaseButtonVariant
+  size: BaseButtonSize
+  floating?: boolean
   linkHref?: string
   linkType?: LinkType
   isIcon?: boolean
@@ -26,11 +27,11 @@ interface BaseButtonProps extends HtmlDataProps {
 }
 
 export const useButtonBase = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, size, style, tooltip, state, variant, isIcon } = props
+  const { ariaDescription, children, className, size, style, tooltip, state, variant, floating, isIcon } = props
   const { tokens } = useThemeService()
   const { bindings: baseBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
-  const styles = useButtonStyles({ state, size, variant })
+  const styles = useButtonStyles({ state, size, variant, floating })
   const isSolid = variant === 'primary' || variant === 'danger'
   const isOutline = variant === 'secondary'
   const isTextOnly = variant === 'default' || variant === 'optional' || variant === 'caution'

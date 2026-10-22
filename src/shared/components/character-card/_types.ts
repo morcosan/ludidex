@@ -1,7 +1,7 @@
 import type { GenshinCharacter } from '../../data/genshin/characters'
 import type { GenshinCharacterUserData } from '../../data/genshin/user-data'
 
-export interface CharacterPreviewProps extends ReactProps {
+export interface CharacterCardProps extends ReactProps {
   character: GenshinCharacter
   userData?: GenshinCharacterUserData
   isOpen?: boolean
@@ -12,7 +12,7 @@ export interface CharacterPreviewProps extends ReactProps {
 
 export interface StatRow {
   label: string
-  value: string
+  value?: string
   field?: string
   percent?: boolean
 }
@@ -23,7 +23,7 @@ export interface StatSection {
   rows: StatRow[]
 }
 
-export interface StatFieldConfig {
+export interface StatField {
   label: string
   percent?: boolean
 }

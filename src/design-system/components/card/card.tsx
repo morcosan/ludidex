@@ -121,8 +121,8 @@ export const Card = (props: CardProps) => {
   const cardCss: CSSObject = {
     position: 'relative',
     display: 'grid',
-    minWidth: tokens.spacing['button-h-lg'],
-    minHeight: tokens.spacing['button-h-lg'],
+    minWidth: tokens.spacing['button-h-md'],
+    minHeight: tokens.spacing['button-h-md'],
     borderRadius: surfaceCss.borderRadius,
     outlineOffset: `calc(1px + ${tokens.spacing['a11y-outline']})`, // CSS bug: outline offset overlaps border width
     opacity: isStatic ? 'unset' : isNoop ? 0.4 : 1,

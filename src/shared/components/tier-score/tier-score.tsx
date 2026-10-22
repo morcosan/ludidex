@@ -1,38 +1,35 @@
 import { useTranslation } from 'react-i18next'
-import { TIER_COLORS, TIER_SCORES } from '../../data/settings'
-
-export type TierScoreValue = (typeof TIER_SCORES)[number]
+import { TIER_SCORE_COLORS, TIER_SCORE_MARKS } from '../../data/settings'
 
 export interface TierScoreProps extends ReactProps {
-  value?: TierScoreValue
+  value: number
   editable?: boolean
-  disabled?: boolean
   noLabel?: boolean
   className?: string
-  onChange?: (value: TierScoreValue) => void
+  onChange?: (value: number) => void
 }
 
 export const TierScore = (props: TierScoreProps) => {
-  const { value, editable, disabled, noLabel, className, onChange } = props
+  const { value, editable, noLabel, className, onChange } = props
   const { t } = useTranslation()
-  const color = (value && TIER_COLORS[value]) || TIER_COLORS.D
+  const mark = TIER_SCORE_MARKS[value as keyof typeof TIER_SCORE_MARKS]
+  const color = TIER_SCORE_COLORS[value as keyof typeof TIER_SCORE_COLORS]
+  const count = Object.keys(TIER_SCORE_MARKS).length
 
   const handleClick = () => {
-    const index = (value && TIER_SCORES.indexOf(value)) || 0
-    onChange?.(TIER_SCORES[(index - 1 + TIER_SCORES.length) % TIER_SCORES.length])
+    onChange?.((value + 1) % count)
   }
 
   const content = (
-    <span className={cx('gap-xs-1 text-size-sm font-weight-lg flex items-center leading-1', !editable && className)}>
-      <span
-        className={cx(
-          'h-xs-8 px-xs-2',
-          'bg-color-grey-9 inline-flex items-center justify-center rounded-xs',
-          'text-color-white -tracking-widest text-shadow-md',
-        )}
-        style={{ backgroundColor: value && color }}
-      >
-        {value || '?'}
+    <span
+      className={cx(
+        'gap-xs-1 text-size-sm font-weight-lg flex items-center leading-1',
+        !editable && className,
+        !noLabel && 'min-w-sm-8',
+      )}
+    >
+      <span className="h-xs-8 w-sm-0 flex-center inline-flex rounded-xs" style={{ backgroundColor: color }}>
+        <span className="text-color-white ml-[-0.15em] tracking-[-0.15em] text-shadow-md">{mark}</span>
       </span>
       {!noLabel && <span>{value ? t('game.label.tier') : '--'}</span>}
     </span>
@@ -47,7 +44,6 @@ export const TierScore = (props: TierScoreProps) => {
         'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
-      disabled={disabled}
       onClick={handleClick}
     >
       {content}

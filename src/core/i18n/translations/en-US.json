@@ -13,8 +13,10 @@
       "clearFilters": "Clear filters",
       "clearSearch": "Clear search",
       "clearSelection": "Clear selection",
+      "discardChanges": "Discard changes",
       "edit": "Edit",
       "save": "Save",
+      "saveChanges": "Save changes",
       "sort": "Sort"
     },
     "label": {
@@ -32,8 +34,10 @@
       "none": "None",
       "settings": "Settings",
       "small": "Small",
-      "viewMode": "View mode",
-      "viewOptions": "View options"
+      "view": "View",
+      "viewSettings": "View settings",
+      "withFilters_one": "with {count} filter",
+      "withFilters_other": "with {count} filters"
     },
     "placeholder": {
       "search": "Search..."
@@ -57,7 +61,8 @@
       "exploration": "Exploration",
       "level": "Level",
       "mainDps": "Main DPS",
-      "outfitDesign": "Outfit Design",
+      "outfit": "Outfit",
+      "personality": "Personality",
       "subDps": "Sub DPS",
       "support": "Support",
       "tierList": "Tier list",

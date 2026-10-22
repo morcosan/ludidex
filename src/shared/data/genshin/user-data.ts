@@ -6,6 +6,7 @@ export interface GenshinCharacterUserData {
     support?: number
     exploration?: number
     outfit?: number
+    personality?: number
   }
   stats?: {
     level?: number

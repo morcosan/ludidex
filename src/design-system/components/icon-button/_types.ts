@@ -25,6 +25,8 @@ export interface IconButtonProps extends HtmlDataProps {
   variant?: IconButtonVariant
   /** Property that determines total height and padding */
   size?: IconButtonSize
+  /** Property that makes the button floating */
+  floating?: boolean
   /** URL path for transforming the button into `<a>` link */
   linkHref?: string
   /**

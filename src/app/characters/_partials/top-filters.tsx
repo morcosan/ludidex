@@ -5,29 +5,24 @@ import {
   GenshinElementIconUrls,
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
-  type GenshinElement,
-  type GenshinNation,
-  type GenshinWeaponType,
 } from '@app-shared/data/genshin/core'
 import { Button, IconButton } from '@design-system'
 import { useTranslation } from 'react-i18next'
+import { type CharacterFilters } from './use-filter-params'
 
-interface CharacterFilters {
-  elements: GenshinElement[]
-  weapons: GenshinWeaponType[]
-  nations: GenshinNation[]
-}
-
-interface TopFiltersProps {
+interface TopFiltersProps extends ReactProps {
   value: CharacterFilters
   onChange: (filters: CharacterFilters) => void
 }
 
-const TopFilters = ({ value, onChange }: TopFiltersProps) => {
+const TopFilters = ({ value, className, onChange }: TopFiltersProps) => {
   const { t } = useTranslation()
   const hasFilters = value.elements.length > 0 || value.weapons.length > 0 || value.nations.length > 0
 
-  const groupClass = cx('gap-xs-1 p-xs-1 flex flex-wrap border', 'border-color-border-subtle rounded-max')
+  const groupClass = cx(
+    'gap-xs-1 py-xs-1 px-xs-2 flex flex-wrap',
+    'border-color-border-inset rounded-max bg-color-bg-region border',
+  )
 
   const toggleFilter = <T,>(values: T[], item: T) => {
     return values.includes(item) ? values.filter((value) => value !== item) : [...values, item]
@@ -38,9 +33,9 @@ const TopFilters = ({ value, onChange }: TopFiltersProps) => {
   }
 
   return (
-    <div className="gap-xs-5 flex flex-wrap items-center">
+    <div className={cx('gap-xs-5 flex flex-wrap items-center', className)}>
       {/* ELEMENTS */}
-      <div className={groupClass} role="group" aria-label={t('game.label.element')}>
+      <div role="group" aria-label={t('game.label.element')} className={groupClass}>
         {GENSHIN_ELEMENTS.map((element) => (
           <IconButton
             key={element}
@@ -96,4 +91,4 @@ const TopFilters = ({ value, onChange }: TopFiltersProps) => {
   )
 }
 
-export { TopFilters, type CharacterFilters }
+export { TopFilters }

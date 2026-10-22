@@ -1,19 +1,18 @@
 import { ThumbsDown } from 'lucide-react'
-import { LIKE_SCORE_TEXT, MAX_LIKE_SCORE, MIN_LIKE_SCORE } from '../../data/settings'
+import { LIKE_SCORE_LABELS, MAX_LIKE_SCORE, MIN_LIKE_SCORE } from '../../data/settings'
 import { FilledHeart } from './_filled-heart'
 
 export interface LikeScoreProps extends ReactProps {
   value: number
   editable?: boolean
-  disabled?: boolean
   noLabel?: boolean
   className?: string
   onChange?: (value: number) => void
 }
 
 export const LikeScore = (props: LikeScoreProps) => {
-  const { value, editable, disabled, noLabel, className, onChange } = props
-  const label = value <= MAX_LIKE_SCORE ? LIKE_SCORE_TEXT[value as keyof typeof LIKE_SCORE_TEXT] : ''
+  const { value, editable, noLabel, className, onChange } = props
+  const label = value <= MAX_LIKE_SCORE ? LIKE_SCORE_LABELS[value as keyof typeof LIKE_SCORE_LABELS] : ''
 
   const handleClick = () => onChange?.(value >= MAX_LIKE_SCORE ? MIN_LIKE_SCORE : value + 1)
 
@@ -43,7 +42,6 @@ export const LikeScore = (props: LikeScoreProps) => {
         'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
-      disabled={disabled}
       onClick={handleClick}
     >
       {content}

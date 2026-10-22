@@ -1,8 +1,8 @@
 import { clamp, isEqual } from 'lodash-es'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { type GenshinCharacterUserData } from '../../../data/genshin/user-data'
 import { MAX_LIKE_SCORE, MIN_LIKE_SCORE } from '../../../data/settings'
-import { type CharacterPreviewProps } from '../_types'
+import { type CharacterCardProps } from '../_types'
 
 type DataDraft = { [key: string]: string | DataDraft }
 
@@ -63,48 +63,57 @@ const buildData = (draft: DataDraft): Record<string, unknown> => {
   return data
 }
 
-const useDataDraft = (props: CharacterPreviewProps) => {
+const useDraft = (props: CharacterCardProps) => {
   const { character, userData, onSave } = props
-  const [dataDraft, setDataDraft] = useState<DataDraft>(() => createUserDraft(userData))
+  const [draft, setDraft] = useState<DataDraft>(() => createUserDraft(userData))
   const [isEditing, setIsEditing] = useState(false)
+  const draftData = useMemo(() => buildData(draft), [draft])
+  const savedData = useMemo(() => buildData(createUserDraft(userData)), [userData])
+  const hasChanges = !isEqual(draftData, savedData)
+
+  const getDraftValue = (path: string | undefined, field: string) => {
+    if (!path) return (draft[field] as string | undefined) ?? ''
+    const section = draft[path]
+    return typeof section === 'object' ? ((section[field] as string | undefined) ?? '') : ''
+  }
 
   const handleDraftChange =
     (...path: string[]) =>
     (value: string) => {
-      setDataDraft((current) => setDraftValue(current, path, value))
+      setDraft((current) => setDraftValue(current, path, value))
     }
 
-  const handleEdit = () => {
-    setDataDraft(createUserDraft(userData))
+  const handleClickEdit = () => {
+    setDraft(createUserDraft(userData))
     setIsEditing(true)
   }
 
-  const handleCancel = () => {
+  const handleClickDiscard = () => {
     setIsEditing(false)
+    setDraft(createUserDraft(userData))
   }
 
-  const handleSave = () => {
+  const handleClickSave = () => {
     setIsEditing(false)
-    const data = buildData(dataDraft)
-    if (isEqual(data, buildData(createUserDraft(userData)))) return
-    onSave?.(data as GenshinCharacterUserData)
+    if (!hasChanges) return
+    onSave?.(draftData as GenshinCharacterUserData)
   }
 
   useEffect(() => {
     setIsEditing(false)
-    setDataDraft(createUserDraft(userData))
+    setDraft(createUserDraft(userData))
   }, [character, userData])
 
   return {
-    dataDraft,
+    draft,
+    hasChanges,
     isEditing,
-    handleCancel,
+    getDraftValue,
+    handleClickDiscard,
+    handleClickEdit,
+    handleClickSave,
     handleDraftChange,
-    handleEdit,
-    handleSave,
-    setDataDraft,
-    setIsEditing,
   }
 }
 
-export { toNumber, useDataDraft }
+export { toNumber, useDraft }

@@ -1,15 +1,14 @@
 import { Button, defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
-import { TierScore, type TierScoreProps, type TierScoreValue } from './tier-score'
+import { TierScore, type TierScoreProps } from './tier-score'
 
 const meta: Meta = {
   title: 'Components / Tier Score',
   ...defineMeta(TierScore, {
     props: {
-      value: 'S',
+      value: 5,
       editable: false,
-      disabled: false,
       noLabel: false,
       className: '',
     },
@@ -17,7 +16,7 @@ const meta: Meta = {
 
     render: (props: TierScoreProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [value, setValue] = useState<TierScoreValue | undefined>(props.value)
+      const [value, setValue] = useState<number>(props.value)
 
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {

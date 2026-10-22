@@ -13,6 +13,7 @@ const meta: Meta = {
       state: 'active',
       variant: 'default',
       size: 'md',
+      floating: false,
       linkHref: '',
       linkType: 'internal',
       className: '',

@@ -1,22 +1,27 @@
-import { CharPreviewCard } from '@app-shared/components/char-preview-card/char-preview-card'
+import { CharacterCard } from '@app-shared/components/character-card/character-card'
 import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { type GenshinCharacterUserData } from '@app-shared/data/genshin/user-data'
-import { useUserConfigStore } from '@app-shared/state/use-user-config'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CharacterListing } from './_partials/character-listing'
-import { SideFilters, type ViewMode } from './_partials/side-filters'
-import { TopFilters, type CharacterFilters } from './_partials/top-filters'
+import { useFilterParams } from './_partials/use-filter-params'
+import { HeaderArrow } from './_partials/header-arrow'
+import { SideFilters } from './_partials/side-filters'
+import { TopFilters } from './_partials/top-filters'
+import { useListView } from './_partials/use-list-view'
 
 export default function Page() {
+  const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData)
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
-  const displaySize = useUserConfigStore((state) => state.userConfig?.displaySize ?? 'medium')
-  const setDisplaySize = useUserConfigStore((state) => state.setDisplaySize)
-  const [viewMode, setViewMode] = useState<ViewMode>('default')
-  const [filters, setFilters] = useState<CharacterFilters>({ elements: [], weapons: [], nations: [] })
+  const displaySize = useUserSettingsStore((state) => state.userSettings?.displaySize ?? 'medium')
+  const setDisplaySize = useUserSettingsStore((state) => state.setDisplaySize)
+  const { filters, handleFiltersChange } = useFilterParams()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const { listView, listViewOptions, listViewLabel, handleListViewChange } = useListView()
 
   const characters = CHARACTERS.filter(({ element, weapon, nation }) => {
     return (
@@ -26,7 +31,9 @@ export default function Page() {
     )
   }).sort((charA, charB) => charA.name.localeCompare(charB.name))
 
-  const handleCardClick = (character: GenshinCharacter) => {
+  const filtersCount = filters.elements.length + filters.weapons.length + filters.nations.length
+
+  const handleClickCharacter = (character: GenshinCharacter) => {
     if (isPreviewOpen && previewCharacter?.id === character.id) {
       setIsPreviewOpen(false)
       return
@@ -47,25 +54,36 @@ export default function Page() {
   return (
     <div className="flex h-full">
       {/* LEFT SIDE */}
-      <div className={cx('flex h-full flex-1 flex-col', viewMode === 'default' ? 'gap-sm-0' : 'gap-xs-8')}>
-        <TopFilters value={filters} onChange={setFilters} />
+      <div className="flex h-full flex-1 flex-col">
+        <TopFilters value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
+
+        <h1 className={cx('flex', listView === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
+          <HeaderArrow>
+            {t('nav.label.characters')} ({characters.length})
+          </HeaderArrow>
+          <HeaderArrow notch>{listViewLabel}</HeaderArrow>
+          {filtersCount > 0 && (
+            <HeaderArrow notch>{t('general.label.withFilters', { count: filtersCount })}</HeaderArrow>
+          )}
+        </h1>
 
         <CharacterListing
           characters={characters}
+          viewType={listView}
           displaySize={displaySize}
-          viewMode={viewMode}
           selectedId={isPreviewOpen ? previewCharacter?.id : undefined}
-          onCardClick={handleCardClick}
+          onClickItem={handleClickCharacter}
         />
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="min-w-xl-0 mx-xs-7 relative h-full">
+      <div className="min-w-xl-0 mx-xs-3 relative h-full">
         <SideFilters
           displaySize={displaySize}
-          onDisplaySizeChange={setDisplaySize}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
+          listView={listView}
+          listViewOptions={listViewOptions}
+          onChangeDisplaySize={setDisplaySize}
+          onChangeListView={handleListViewChange}
         />
 
         {/* CHARACTER PREVIEW */}
@@ -77,7 +95,7 @@ export default function Page() {
           )}
         >
           {previewCharacter && (
-            <CharPreviewCard
+            <CharacterCard
               character={previewCharacter}
               userData={userData?.genshin.characters[previewCharacter.id]}
               isOpen={isPreviewOpen}

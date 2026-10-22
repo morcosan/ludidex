@@ -1,21 +1,12 @@
-import { LikeScore } from '@app-shared/components/like-score/like-score'
-import { TierScore } from '@app-shared/components/tier-score/tier-score'
 import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
-import { MAX_LIKE_SCORE, MIN_LIKE_SCORE, TIER_SCORE_MARKS } from '@app-shared/data/settings'
-import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type DisplaySize } from '@app-shared/state/use-user-settings'
-import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CharacterItem } from './character-item'
-import { type ListView } from './use-list-view'
+import { type View } from './use-view-options'
+import { RankView } from './views/rank-view'
+import { TierView } from './views/tier-view'
 
-interface TierGroup {
-  key: string
-  label: ReactNode
-  characters: GenshinCharacter[]
-}
-
-interface DisplayClass {
+export interface DisplayClass {
   image: string
   list: string
   name: string
@@ -43,58 +34,23 @@ const DISPLAY_CLASSES: Record<DisplaySize, DisplayClass> = {
   },
 }
 
-interface CardListingProps {
+interface CharacterListingProps {
   characters: GenshinCharacter[]
-  viewType: ListView
+  view: View
   displaySize: DisplaySize
-  selectedId?: string
+  selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
-export const CharacterListing = (props: CardListingProps) => {
-  const { characters, viewType, displaySize, selectedId, onClickItem } = props
+export const CharacterListing = (props: CharacterListingProps) => {
+  const { characters, view, displaySize, selectedItemId, onClickItem } = props
   const { t } = useTranslation()
-  const userData = useUserDataStore((state) => state.userData)
 
-  const tierScores = Object.keys(TIER_SCORE_MARKS)
-    .map(Number)
-    .sort((a, b) => b - a)
-
-  const getTierScore = (character: GenshinCharacter) => {
-    const characterUserData = userData?.genshin.characters[character.id]
-    if (viewType === 'tier-favorite') return characterUserData?.likeScore ?? 0
-    if (viewType === 'tier-main-dps') return characterUserData?.tierScores?.mainDps ?? 0
-    if (viewType === 'tier-sub-dps') return characterUserData?.tierScores?.subDps ?? 0
-    if (viewType === 'tier-support') return characterUserData?.tierScores?.support ?? 0
-    if (viewType === 'tier-exploration') return characterUserData?.tierScores?.exploration ?? 0
-    if (viewType === 'tier-outfit') return characterUserData?.tierScores?.outfit ?? 0
-    if (viewType === 'tier-personality') return characterUserData?.tierScores?.personality ?? 0
-    return undefined
-  }
-
-  const tierGroups = ((): TierGroup[] => {
-    if (viewType === 'default') return []
-    if (viewType === 'tier-favorite') {
-      return Array.from({ length: MAX_LIKE_SCORE - MIN_LIKE_SCORE + 1 }, (_, index) => MAX_LIKE_SCORE - index).map(
-        (value): TierGroup => ({
-          key: String(value),
-          label: <LikeScore value={value} />,
-          characters: characters.filter((character) => getTierScore(character) === value),
-        }),
-      )
-    }
-    return tierScores.map((score): TierGroup => ({
-      key: String(score),
-      label: <TierScore value={score} />,
-      characters: characters.filter((character) => getTierScore(character) === score),
-    }))
-  })()
+  const isTierView = view.startsWith('tier-')
+  const isRankView = view.startsWith('rank-')
 
   const displayClass = DISPLAY_CLASSES[displaySize]
-  const tierRowClass = cx('flex items-start items-stretch', displayClass.tierRow)
-  const tierHeaderClass = cx('min-w-md-5 px-xs-2 border-color-border-on-glass flex items-start border-r')
-  const tierLabelClass = cx('flex-center mx-0! flex', displayClass.tierRow, displayClass.list)
-  const tierContentClass = cx('flex h-fit flex-1 flex-wrap', displayClass.list)
+  const contentClass = cx('flex h-fit flex-1 flex-wrap', displayClass.list)
 
   const renderItem = (character: GenshinCharacter) => (
     <li key={character.id}>
@@ -102,7 +58,7 @@ export const CharacterListing = (props: CardListingProps) => {
         character={character}
         imageClassName={displayClass.image}
         labelClassName={displayClass.name}
-        selected={selectedId === character.id}
+        selected={selectedItemId === character.id}
         onClick={onClickItem}
       />
     </li>
@@ -110,22 +66,26 @@ export const CharacterListing = (props: CardListingProps) => {
 
   return (
     <div className="pr-xs-3 flex min-h-0 flex-1 overflow-y-auto">
-      {characters.length === 0 ? (
+      {characters.length === 0 && !isRankView ? (
         <p className="text-size-sm text-color-text-subtle">{t('game.status.empty')}</p>
-      ) : viewType === 'default' ? (
-        <ul className={cx('m-0! p-0!', tierContentClass)}>{characters.map(renderItem)}</ul>
+      ) : isTierView ? (
+        <TierView
+          characters={characters}
+          view={view}
+          displayClass={displayClass}
+          contentClass={contentClass}
+          renderItem={renderItem}
+        />
+      ) : isRankView ? (
+        <RankView
+          characters={characters}
+          view={view}
+          displayClass={displayClass}
+          contentClass={contentClass}
+          renderItem={renderItem}
+        />
       ) : (
-        <div className="divide-color-border-on-glass flex h-fit flex-col divide-y">
-          {/* TIERS */}
-          {tierGroups.map(({ key, label, characters: tierCharacters }) => (
-            <div key={key} className={tierRowClass}>
-              <div className={tierHeaderClass}>
-                <div className={tierLabelClass}>{label}</div>
-              </div>
-              <ul className={tierContentClass}>{tierCharacters.map(renderItem)}</ul>
-            </div>
-          ))}
-        </div>
+        <ul className={cx('m-0! p-0!', contentClass)}>{characters.map(renderItem)}</ul>
       )}
     </div>
   )

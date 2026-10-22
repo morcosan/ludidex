@@ -57,21 +57,22 @@
     "label": {
       "baseStats": "Base stats",
       "element": "Element",
-      "genshin": "Genshin Impact",
       "exploration": "Exploration",
+      "genshin": "Genshin Impact",
       "level": "Level",
       "mainDps": "Main DPS",
+      "nation": "Nation",
       "outfit": "Outfit",
       "personality": "Personality",
+      "ranking": "Ranking",
+      "stats": "Stats",
       "subDps": "Sub DPS",
       "support": "Support",
-      "tierList": "Tier list",
-      "tierLists": "Tier lists",
-      "nation": "Nation",
-      "stats": "Stats",
       "tags": "Tags",
       "talents": "Talents",
       "tier": "Tier",
+      "tierList": "Tier list",
+      "tierLists": "Tier lists",
       "weapon": "Weapon"
     },
     "placeholder": {
@@ -79,6 +80,7 @@
     },
     "stats": {
       "atk": "ATK",
+      "baseAttackLv10": "Base Attack (Lv. 10)",
       "constellation": "Constellation",
       "critDmg": "Crit DMG",
       "critRate": "Crit Rate",
@@ -89,8 +91,8 @@
       "em": "EM",
       "er": "ER",
       "hp": "HP",
-      "normalAttackDmg": "Normal Attack DMG",
       "normalAttack": "Normal Attack",
+      "normalAttackDmg": "Normal Attack DMG",
       "specialBonus": "Special Bonus"
     },
     "status": {

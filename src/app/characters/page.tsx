@@ -6,11 +6,11 @@ import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CharacterListing } from './_partials/character-listing'
-import { useFilterParams } from './_partials/use-filter-params'
 import { HeaderArrow } from './_partials/header-arrow'
 import { SideFilters } from './_partials/side-filters'
 import { TopFilters } from './_partials/top-filters'
-import { useListView } from './_partials/use-list-view'
+import { useFilterParams } from './_partials/use-filter-params'
+import { useViewOptions } from './_partials/use-view-options'
 
 export default function Page() {
   const { t } = useTranslation()
@@ -21,7 +21,7 @@ export default function Page() {
   const { filters, handleFiltersChange } = useFilterParams()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const { listView, listViewOptions, listViewLabel, handleListViewChange } = useListView()
+  const { view, viewOptions, viewLabel, handleViewChange } = useViewOptions()
 
   const characters = CHARACTERS.filter(({ element, weapon, nation }) => {
     return (
@@ -57,11 +57,11 @@ export default function Page() {
       <div className="flex h-full flex-1 flex-col">
         <TopFilters value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
 
-        <h1 className={cx('flex', listView === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
+        <h1 className={cx('flex', view === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
           <HeaderArrow>
             {t('nav.label.characters')} ({characters.length})
           </HeaderArrow>
-          <HeaderArrow notch>{listViewLabel}</HeaderArrow>
+          <HeaderArrow notch>{viewLabel}</HeaderArrow>
           {filtersCount > 0 && (
             <HeaderArrow notch>{t('general.label.withFilters', { count: filtersCount })}</HeaderArrow>
           )}
@@ -69,9 +69,9 @@ export default function Page() {
 
         <CharacterListing
           characters={characters}
-          viewType={listView}
+          view={view}
           displaySize={displaySize}
-          selectedId={isPreviewOpen ? previewCharacter?.id : undefined}
+          selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           onClickItem={handleClickCharacter}
         />
       </div>
@@ -80,10 +80,11 @@ export default function Page() {
       <div className="min-w-xl-0 mx-xs-3 relative h-full">
         <SideFilters
           displaySize={displaySize}
-          listView={listView}
-          listViewOptions={listViewOptions}
+          view={view}
+          viewOptions={viewOptions}
+          className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
           onChangeDisplaySize={setDisplaySize}
-          onChangeListView={handleListViewChange}
+          onChangeView={handleViewChange}
         />
 
         {/* CHARACTER PREVIEW */}

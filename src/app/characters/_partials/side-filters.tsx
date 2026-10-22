@@ -1,18 +1,18 @@
 import { type DisplaySize } from '@app-shared/state/use-user-settings'
 import { Button, SelectField, type SelectOption } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type ListView, type ListViewOption } from './use-list-view'
+import { type View, type ViewOption } from './use-view-options'
 
-interface SideFiltersProps {
-  listView: ListView
-  listViewOptions: ListViewOption[]
+interface SideFiltersProps extends ReactProps {
+  view: View
+  viewOptions: ViewOption[]
   displaySize: DisplaySize
-  onChangeListView: (viewType: ListView) => void
+  onChangeView: (view: View) => void
   onChangeDisplaySize: (size: DisplaySize) => void
 }
 
 export const SideFilters = (props: SideFiltersProps) => {
-  const { displaySize, listView, listViewOptions, onChangeDisplaySize, onChangeListView } = props
+  const { displaySize, view, viewOptions, className, onChangeDisplaySize, onChangeView } = props
   const { t } = useTranslation()
 
   const sectionClass = cx('text-size-xs pb-xs-3 text-color-text-subtle tracking-wider uppercase')
@@ -24,20 +24,20 @@ export const SideFilters = (props: SideFiltersProps) => {
   ]
 
   return (
-    <div className="px-xs-8 py-xs-4 gap-y-sm-5 flex h-full flex-col overflow-y-auto">
+    <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
       {/* VIEW TYPE */}
       <div className="flex flex-col">
         <div className={sectionClass}>{t('general.label.view')}</div>
 
         <div className="gap-xs-0 flex flex-col">
-          {listViewOptions.map(({ value, label, icon }) => (
+          {viewOptions.map(({ value, label, icon }) => (
             <Button
               key={value}
               variant="menu-default"
-              size="lg"
-              state={listView === value ? 'selected' : 'active'}
+              size="md"
+              state={view === value ? 'selected' : 'active'}
               className="w-full"
-              onClick={() => onChangeListView(value)}
+              onClick={() => onChangeView(value)}
             >
               <span className="mr-xs-2 w-sm-0 flex-center flex">{icon}</span>
               {label}
@@ -47,7 +47,7 @@ export const SideFilters = (props: SideFiltersProps) => {
       </div>
 
       {/* VIEW SETTINGS */}
-      <div className="divide-color-border-on-glass flex flex-col divide-y">
+      <div className="divide-color-border-on-glass min-h-md-5 flex flex-col divide-y">
         <div className={sectionClass}>{t('general.label.viewSettings')}</div>
 
         <div className="gap-xs-2 py-xs-3 flex items-center justify-between">

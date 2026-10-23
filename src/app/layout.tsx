@@ -1,8 +1,11 @@
-import { ImageSlideshow } from '@app-shared/components'
+import { ImageSlideshow, type ImageSlideshowHandle } from '@app-shared/components'
 import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
 import { Button, Card, IconButton, Image, Popover } from '@design-system'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ParseKeys } from 'i18next'
-import { Settings } from 'lucide-react'
+import { ImageIcon, SettingsIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
@@ -22,6 +25,7 @@ interface LayoutProps {
 export default function Layout({ routes }: LayoutProps) {
   const { t } = useTranslation()
   const { pathname } = useLocation()
+  const slideshowRef = useRef<ImageSlideshowHandle>(null)
 
   const currentRoute = routes.find(({ to }) => to === pathname)
   const hasSideNav = !currentRoute?.hidden
@@ -30,6 +34,7 @@ export default function Layout({ routes }: LayoutProps) {
     <Providers>
       <div className="relative flex h-dvh overflow-hidden">
         <ImageSlideshow
+          ref={slideshowRef}
           srcs={GAMES[0].backgroundUrls}
           interval={BACKGROUND_SWAP_INTERVAL}
           duration={BACKGROUND_SWAP_DURATION}
@@ -62,15 +67,23 @@ export default function Layout({ routes }: LayoutProps) {
 
           {/* SETTINGS */}
           <Popover
-            position="right"
+            position="right-end"
             trigger={
               <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
-                <Settings strokeWidth={1.5} aria-hidden className="h-sm-0 w-sm-0" />
+                <SettingsIcon strokeWidth={1.5} aria-hidden className="h-sm-0 w-sm-0" />
               </IconButton>
             }
-            className="min-w-lg-2"
+            className="min-w-lg-3"
           >
+            <Button variant="menu-default" size="sm" onClick={() => slideshowRef.current?.next()} className="w-full">
+              <ImageIcon aria-hidden className="w-xs-9 h-xs-8 mr-xs-2" />
+              {t('general.action.changeBackground')}
+            </Button>
+
+            <div className="border-color-border-subtle my-xs-2 border-t" />
+
             <Button variant="menu-default" size="sm" linkHref="/settings" className="w-full">
+              <FontAwesomeIcon icon={faGear} aria-hidden className="w-xs-9! mr-xs-2" />
               {t('nav.label.settings')}
             </Button>
           </Popover>

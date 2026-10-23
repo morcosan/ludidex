@@ -1,15 +1,15 @@
 import { Image } from '@design-system'
+import { useImperativeHandle } from 'react'
+import { type ImageSlideshowProps } from './_types'
 import { useSlideshow } from './_use-slideshow'
 
-export interface ImageSlideshowProps extends ReactProps {
-  srcs: string[]
-  interval: number
-  duration: number
-}
+export type { ImageSlideshowHandle, ImageSlideshowProps } from './_types'
 
 export const ImageSlideshow = (props: ImageSlideshowProps) => {
-  const { srcs, duration, className } = props
-  const { indexes, activeSlot } = useSlideshow(props)
+  const { srcs, duration, className, ref } = props
+  const { indexes, activeSlot, next } = useSlideshow(props)
+
+  useImperativeHandle(ref, () => ({ next }), [next])
 
   return (
     <div className={cx('relative', className)}>

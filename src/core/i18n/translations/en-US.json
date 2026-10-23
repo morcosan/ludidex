@@ -9,6 +9,7 @@
     "action": {
       "back": "Back",
       "cancel": "Cancel",
+      "changeBackground": "Change background",
       "clear": "Clear",
       "clearFilters": "Clear filters",
       "clearSearch": "Clear search",

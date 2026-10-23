@@ -10,8 +10,13 @@ const meta: Meta = {
     },
     props: {
       title: 'Section title',
+      surface: 'page',
+      titleClassName: '',
+      bodyClassName: '',
       className: '',
+      style: {},
     },
+    inlineRadios: ['surface'],
   }),
 }
 

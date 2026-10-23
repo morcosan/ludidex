@@ -68,7 +68,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             <LikeScore
               value={toNumber(draft.likeScore as string) || 0}
               editable={isEditing}
-              className={cx(isEditing && 'my-xs-1')}
+              className={cx(isEditing ? 'my-xs-1' : 'mr-xs-0')}
               onChange={(value) => handleDraftChange('likeScore')(String(value))}
             />
           </div>

@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { type ReactNode } from 'react'
+import { PageSection } from '../../page-section/page-section'
 
 export interface SectionItem {
   label: string
@@ -12,9 +13,13 @@ interface Props extends ReactProps {
 
 export const StatsSection = ({ title, items, children }: Props) => {
   return (
-    <div className={cx('flex flex-col', items?.length && 'divide-color-border-subtle divide-y')}>
-      <div className="text-size-xs pb-xs-2 text-color-text-placeholder tracking-wider uppercase">{title}</div>
-
+    <PageSection
+      surface="card"
+      title={title}
+      titleClassName="pb-xs-2!"
+      bodyClassName="pt-0!"
+      className={cx(!items?.length && 'divide-none!')}
+    >
       {items?.length && (
         <ul className="divide-color-border-subtle flex flex-col divide-y">
           {items.map((item) => (
@@ -25,8 +30,7 @@ export const StatsSection = ({ title, items, children }: Props) => {
           ))}
         </ul>
       )}
-
       {children}
-    </div>
+    </PageSection>
   )
 }

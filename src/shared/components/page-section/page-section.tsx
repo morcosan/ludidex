@@ -4,7 +4,7 @@ export interface PageSectionProps extends ReactProps {
   /**
    * Slots
    */
-  children: ReactNode
+  children?: ReactNode
 
   /**
    * Props

@@ -10,6 +10,7 @@ const meta: Meta = {
     },
     props: {
       first: false,
+      large: false,
       className: '',
       style: {},
     },

@@ -1,4 +1,4 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { ImageSlideshow } from './image-slideshow'
 
@@ -20,7 +20,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof ImageSlideshow> = {
   tags: ['autodocs', 'controls'],
 }
 

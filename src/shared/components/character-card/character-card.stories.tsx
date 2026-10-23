@@ -1,4 +1,4 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { CHARACTERS } from '../../data/genshin/characters'
 import { CharacterCard } from './character-card'
@@ -44,7 +44,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof CharacterCard> = {
   tags: ['autodocs', 'controls'],
 }
 

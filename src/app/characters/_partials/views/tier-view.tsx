@@ -1,5 +1,4 @@
-import { LikeScore } from '@app-shared/components/like-score/like-score'
-import { TierScore } from '@app-shared/components/tier-score/tier-score'
+import { LikeScore, TierScore } from '@app-shared/components'
 import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { MAX_LIKE_SCORE, MIN_LIKE_SCORE, TIER_SCORE_MARKS } from '@app-shared/data/settings'
 import { useUserDataStore } from '@app-shared/state/use-user-data'

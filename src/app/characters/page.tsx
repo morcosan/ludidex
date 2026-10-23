@@ -1,4 +1,4 @@
-import { CharacterCard } from '@app-shared/components/character-card/character-card'
+import { Breadcrumb, CharacterCard } from '@app-shared/components'
 import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { type GenshinCharacterUserData } from '@app-shared/data/genshin/user-data'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
@@ -6,7 +6,6 @@ import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CharacterListing } from './_partials/character-listing'
-import { HeaderArrow } from './_partials/header-arrow'
 import { SideFilters } from './_partials/side-filters'
 import { TopFilters } from './_partials/top-filters'
 import { useFilterParams } from './_partials/use-filter-params'
@@ -58,13 +57,11 @@ export default function Page() {
         <TopFilters value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
 
         <h1 className={cx('flex', view === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
-          <HeaderArrow>
+          <Breadcrumb first>
             {t('nav.label.characters')} ({characters.length})
-          </HeaderArrow>
-          <HeaderArrow notch>{viewLabel}</HeaderArrow>
-          {filtersCount > 0 && (
-            <HeaderArrow notch>{t('general.label.withFilters', { count: filtersCount })}</HeaderArrow>
-          )}
+          </Breadcrumb>
+          <Breadcrumb>{viewLabel}</Breadcrumb>
+          {filtersCount > 0 && <Breadcrumb>{t('general.label.withFilters', { count: filtersCount })}</Breadcrumb>}
         </h1>
 
         <CharacterListing

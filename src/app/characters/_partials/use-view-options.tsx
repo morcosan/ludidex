@@ -1,5 +1,4 @@
-import { LikeScore } from '@app-shared/components/like-score/like-score'
-import { TierScore } from '@app-shared/components/tier-score/tier-score'
+import { LikeScore, TierScore } from '@app-shared/components'
 import { ArrowDownWideNarrow, Grip } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'

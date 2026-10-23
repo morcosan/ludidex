@@ -1,4 +1,4 @@
-import { ImageSlideshow } from '@app-shared/components/image-slideshow/image-slideshow'
+import { ImageSlideshow } from '@app-shared/components'
 import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
 import { Button, Card, IconButton, Image, Popover } from '@design-system'
 import { type ParseKeys } from 'i18next'

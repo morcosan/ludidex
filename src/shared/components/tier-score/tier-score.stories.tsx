@@ -1,4 +1,4 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
 import { TierScore, type TierScoreProps } from './tier-score'
@@ -28,7 +28,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof TierScore> = {
   tags: ['autodocs', 'controls'],
 }
 

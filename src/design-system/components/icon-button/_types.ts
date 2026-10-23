@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode, type Ref } from 'react'
 import { type BaseButtonState, type LinkType } from '../_shared/types'
 
 export type IconButtonState = BaseButtonState
@@ -46,4 +46,12 @@ export interface IconButtonProps extends HtmlDataProps {
    */
   /** Event emitted when button is clicked, tapped or triggered via `Enter` / `Space` keys */
   onClick?: (event: ReactMouseEvent) => void
+
+  /**
+   * Methods
+   */
+  /**
+   * Reference object
+   */
+  ref?: Ref<HTMLButtonElement | HTMLAnchorElement>
 }

@@ -1,6 +1,6 @@
 import { ImageSlideshow } from '@app-shared/components/image-slideshow/image-slideshow'
 import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
-import { Button, Card, IconButton, Image } from '@design-system'
+import { Button, Card, IconButton, Image, Popover } from '@design-system'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ParseKeys } from 'i18next'
@@ -34,10 +34,12 @@ export default function Layout({ routes }: LayoutProps) {
 
         {/* SIDEBAR */}
         <aside className="px-xs-3 py-xs-6 flex flex-col items-center">
+          {/* LOGO */}
           <Link to="/" aria-label={t('general.label.appTitle')} className="flex-center mb-sm-2 mt-xs-3">
             <LogoIcon aria-hidden className="h-sm-3 w-sm-3" />
           </Link>
 
+          {/* GAMES */}
           <div className="gap-xs-9 flex flex-col">
             {GAMES.map((game) => (
               <Card
@@ -53,9 +55,17 @@ export default function Layout({ routes }: LayoutProps) {
             ))}
           </div>
 
-          <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
-            <FontAwesomeIcon icon={faGear} aria-hidden className="h-sm-0 w-sm-0" />
-          </IconButton>
+          {/* SETTINGS */}
+          <Popover
+            position="right-end"
+            trigger={
+              <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
+                <FontAwesomeIcon icon={faGear} aria-hidden className="h-sm-0 w-sm-0" />
+              </IconButton>
+            }
+          >
+            Settings
+          </Popover>
         </aside>
 
         {/* PAGE */}

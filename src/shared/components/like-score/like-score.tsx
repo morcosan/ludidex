@@ -1,4 +1,4 @@
-import { ThumbsDown } from 'lucide-react'
+import { ThumbsDownIcon } from 'lucide-react'
 import { LIKE_SCORE_LABELS, MAX_LIKE_SCORE, MIN_LIKE_SCORE } from '../../data/settings'
 import { FilledHeart } from './_filled-heart'
 
@@ -19,7 +19,7 @@ export const LikeScore = (props: LikeScoreProps) => {
   const content = (
     <span className={cx('gap-xs-1 flex items-center', !editable && className)}>
       {value <= MIN_LIKE_SCORE ? (
-        <ThumbsDown aria-hidden fill="currentColor" className="h-xs-8 w-xs-8 text-color-text-default" />
+        <ThumbsDownIcon aria-hidden fill="currentColor" className="h-xs-8 w-xs-8 text-color-text-default" />
       ) : (
         <FilledHeart
           value={value}

@@ -1,5 +1,5 @@
 import { clamp } from 'lodash-es'
-import { Crown, Heart } from 'lucide-react'
+import { CrownIcon, HeartIcon } from 'lucide-react'
 import { MAX_LIKE_SCORE } from '../../data/settings'
 
 interface HeartProps extends ReactProps {
@@ -16,16 +16,16 @@ export const FilledHeart = ({ value, outlineClass, fillClass, iconClass, classNa
 
   return (
     <span className={cx('relative block', iconClass, className)}>
-      <Heart aria-hidden className={cx('absolute top-0 left-0', iconClass, outlineClass)} />
+      <HeartIcon aria-hidden className={cx('absolute top-0 left-0', iconClass, outlineClass)} />
 
       {height > 0 && (
         <span className="absolute inset-x-0 bottom-0 overflow-hidden" style={{ height: `${height}%` }}>
-          <Heart aria-hidden fill="currentColor" className={cx('absolute bottom-0 left-0', iconClass, fillClass)} />
+          <HeartIcon aria-hidden fill="currentColor" className={cx('absolute bottom-0 left-0', iconClass, fillClass)} />
         </span>
       )}
 
       {value >= MAX_LIKE_SCORE && (
-        <Crown
+        <CrownIcon
           aria-hidden
           fill="currentColor"
           className="-top-xs-1 -left-xs-0 text-color-yellow-8 h-xs-4 w-xs-4 absolute scale-120 rotate-[-20deg]"

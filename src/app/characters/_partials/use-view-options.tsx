@@ -1,5 +1,5 @@
 import { LikeScore, TierScore } from '@app-shared/components'
-import { ArrowDownWideNarrow, Grip } from 'lucide-react'
+import { ArrowDownWideNarrowIcon, GripIcon } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -48,13 +48,13 @@ export const useViewOptions = () => {
   const getRankLabel = (label: string) => `${t('game.label.ranking')}: ${label}`
 
   const tierIcon = <TierScore value={5} noLabel />
-  const rankIcon = <ArrowDownWideNarrow aria-hidden className="h-xs-9 w-xs-9" />
+  const rankIcon = <ArrowDownWideNarrowIcon aria-hidden className="h-xs-9 w-xs-9" />
 
   const viewOptions: ViewOption[] = [
     {
       value: 'default',
       label: `${t('general.label.listing')} (${t('general.label.default')})`,
-      icon: <Grip aria-hidden className="h-xs-8 w-xs-8" />,
+      icon: <GripIcon aria-hidden className="h-xs-8 w-xs-8" />,
     },
     { value: 'tier-favorite', label: getTierLabel(t('general.label.favorite')), icon: <LikeScore value={5} noLabel /> },
     { value: 'tier-main-dps', label: getTierLabel(t('game.label.mainDps')), icon: tierIcon },

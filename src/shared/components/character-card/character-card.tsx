@@ -2,7 +2,7 @@ import { Card, IconButton, Image, TextField } from '@design-system'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CheckCheck } from 'lucide-react'
+import { CheckCheckIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -195,7 +195,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             floating
             onClick={handleClickSave}
           >
-            <CheckCheck aria-hidden className="h-sm-0 w-sm-0" />
+            <CheckCheckIcon aria-hidden className="h-sm-0 w-sm-0" />
           </IconButton>
         ) : (
           <IconButton

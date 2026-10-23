@@ -1,3 +1,3 @@
 export default function Page() {
-  return <div>teams page</div>
+  return <div>settings page</div>
 }

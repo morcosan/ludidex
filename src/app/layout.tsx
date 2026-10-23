@@ -65,7 +65,7 @@ export default function Layout({ routes }: LayoutProps) {
             className="min-w-lg-2"
           >
             <Button variant="menu-default" size="sm" linkHref="/settings" className="w-full">
-              Settings
+              {t('nav.label.settings')}
             </Button>
           </Popover>
         </aside>

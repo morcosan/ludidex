@@ -48,8 +48,9 @@
   },
   "nav": {
     "label": {
-      "dashboard": "Dashboard",
       "characters": "Characters",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
       "teams": "Teams"
     }
   },

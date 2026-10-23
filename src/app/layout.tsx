@@ -9,10 +9,12 @@ import { Providers } from '../core/providers'
 import LogoIcon from '../shared/assets/logo-icon.svg?react'
 import { GAMES } from '../shared/data/games'
 
-interface Route {
+export interface Route {
   to: string
   labelKey: ParseKeys
+  hidden?: boolean
 }
+
 interface LayoutProps {
   routes: Route[]
 }
@@ -20,6 +22,9 @@ interface LayoutProps {
 export default function Layout({ routes }: LayoutProps) {
   const { t } = useTranslation()
   const { pathname } = useLocation()
+
+  const currentRoute = routes.find(({ to }) => to === pathname)
+  const hasSideNav = !currentRoute?.hidden
 
   return (
     <Providers>
@@ -45,6 +50,7 @@ export default function Layout({ routes }: LayoutProps) {
                 key={game.id}
                 state="selected"
                 size="sm"
+                linkHref="/"
                 tooltip={t(game.nameKey)}
                 surfaceClassName="p-0!"
                 contentClassName="flex-center h-full w-full"
@@ -78,13 +84,17 @@ export default function Layout({ routes }: LayoutProps) {
           )}
         >
           {/* SIDE NAV */}
-          <nav className="w-md-7 gap-xs-2 mx-xs-9 flex flex-col">
-            {routes.map(({ to, labelKey }) => (
-              <Button key={to} linkHref={to} state={pathname === to ? 'selected' : 'active'} variant="menu-default">
-                {t(labelKey)}
-              </Button>
-            ))}
-          </nav>
+          {hasSideNav && (
+            <nav className="w-md-7 gap-xs-2 mx-xs-9 flex flex-col">
+              {routes
+                .filter(({ hidden }) => !hidden)
+                .map(({ to, labelKey }) => (
+                  <Button key={to} linkHref={to} state={pathname === to ? 'selected' : 'active'} variant="menu-default">
+                    {t(labelKey)}
+                  </Button>
+                ))}
+            </nav>
+          )}
 
           {/* CONTENT */}
           <main className="min-w-0 flex-1">

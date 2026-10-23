@@ -15,6 +15,7 @@ const meta: Meta = {
       className: 'max-w-md-9 truncate',
       style: {},
     },
+    events: ['onChange'],
     inlineRadios: ['position'],
 
     render(props: PopoverProps) {

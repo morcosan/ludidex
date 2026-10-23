@@ -27,6 +27,7 @@ export default function Layout({ routes }: LayoutProps) {
   const { pathname } = useLocation()
   const bgSlideshowRef = useRef<ImageSlideshowHandle>(null)
   const [isBgLoading, setIsBgLoading] = useState(false)
+  const [isQuickSettingsOpen, setIsQuickSettingsOpen] = useState(false)
 
   const currentRoute = routes.find(({ to }) => to === pathname)
   const hasSideNav = !currentRoute?.hidden
@@ -67,15 +68,22 @@ export default function Layout({ routes }: LayoutProps) {
             ))}
           </div>
 
-          {/* SETTINGS */}
+          {/* QUICK SETTINGS */}
           <Popover
+            opened={isQuickSettingsOpen}
             position="right-end"
+            className="min-w-lg-3"
             trigger={
-              <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
+              <IconButton
+                tooltip={t('general.label.settings')}
+                className="mt-auto"
+                floating
+                onClick={() => setIsQuickSettingsOpen((open) => !open)}
+              >
                 <SettingsIcon strokeWidth={1.5} aria-hidden className="h-sm-0 w-sm-0" />
               </IconButton>
             }
-            className="min-w-lg-3"
+            onChange={setIsQuickSettingsOpen}
           >
             <div className="py-xs-2 pl-button-px-sm flex items-center">
               <ImageIcon aria-hidden className="w-xs-9 h-xs-8 mr-xs-2" />
@@ -92,7 +100,13 @@ export default function Layout({ routes }: LayoutProps) {
 
             <div className="border-color-border-subtle my-xs-2 border-t" />
 
-            <Button variant="menu-default" size="sm" linkHref="/settings" className="w-full">
+            <Button
+              linkHref="/settings"
+              variant="menu-default"
+              size="sm"
+              className="w-full"
+              onClick={() => setIsQuickSettingsOpen(false)}
+            >
               <FontAwesomeIcon icon={faGear} aria-hidden className="w-xs-9! mr-xs-2" />
               {t('nav.label.settings')}
             </Button>

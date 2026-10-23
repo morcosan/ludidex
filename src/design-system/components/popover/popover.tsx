@@ -36,10 +36,16 @@ export interface PopoverProps extends ReactProps {
   className?: string
   /** CSS style attribute for the dropdown element */
   style?: CSSProperties
+
+  /**
+   * Events
+   */
+  /** Event emitted when the popover opens or closes */
+  onChange?: (opened: boolean) => void
 }
 
 export const Popover = (props: PopoverProps) => {
-  const { trigger, children, opened, position = 'top', className, style } = props
+  const { trigger, children, opened, position = 'top', className, style, onChange } = props
   const { tokens } = useThemeService()
 
   const surfaceCss: CSSObject = {
@@ -52,7 +58,7 @@ export const Popover = (props: PopoverProps) => {
   }
 
   return (
-    <MantinePopover position={position} opened={opened} offset={4}>
+    <MantinePopover position={position} opened={opened} offset={4} onChange={onChange}>
       <MantinePopover.Target>{trigger}</MantinePopover.Target>
       <MantinePopover.Dropdown css={surfaceCss} className={className} style={style}>
         {children}

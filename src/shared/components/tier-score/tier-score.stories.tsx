@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { TierScore, type TierScoreProps } from './tier-score'
 
 const meta: Meta = {
-  title: 'Components / Tier Score',
+  title: 'App / Components / Tier Score',
   ...defineMeta(TierScore, {
     props: {
       value: 5,

@@ -3,7 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { ImageSlideshow } from './image-slideshow'
 
 const meta: Meta = {
-  title: 'Components / Image Slideshow',
+  title: 'App / Components / Image Slideshow',
   ...defineMeta(ImageSlideshow, {
     props: {
       srcs: [

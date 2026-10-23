@@ -3,7 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Tag } from './tag'
 
 const meta: Meta = {
-  title: 'Components / Tag',
+  title: 'App / Components / Tag',
   ...defineMeta(Tag, {
     slots: {
       children: 'DPS',

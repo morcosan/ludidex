@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { LikeScore, type LikeScoreProps } from './like-score'
 
 const meta: Meta = {
-  title: 'Components / Like Score',
+  title: 'App / Components / Like Score',
   ...defineMeta(LikeScore, {
     props: {
       value: 3,

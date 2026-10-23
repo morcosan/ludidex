@@ -4,7 +4,7 @@ import { CHARACTERS } from '../../data/genshin/characters'
 import { CharacterCard } from './character-card'
 
 const meta: Meta = {
-  title: 'Components / Character Card',
+  title: 'App / Components / Character Card',
   ...defineMeta(CharacterCard, {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),

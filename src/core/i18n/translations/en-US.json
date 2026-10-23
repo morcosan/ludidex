@@ -9,13 +9,13 @@
     "action": {
       "back": "Back",
       "cancel": "Cancel",
-      "changeBackground": "Change background",
       "clear": "Clear",
       "clearFilters": "Clear filters",
       "clearSearch": "Clear search",
       "clearSelection": "Clear selection",
       "discardChanges": "Discard changes",
       "edit": "Edit",
+      "nextBackground": "Next background",
       "save": "Save",
       "saveChanges": "Save changes",
       "sort": "Sort"

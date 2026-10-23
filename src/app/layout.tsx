@@ -77,7 +77,7 @@ export default function Layout({ routes }: LayoutProps) {
           >
             <Button variant="menu-default" size="sm" onClick={() => slideshowRef.current?.next()} className="w-full">
               <ImageIcon aria-hidden className="w-xs-9 h-xs-8 mr-xs-2" />
-              {t('general.action.changeBackground')}
+              {t('general.action.nextBackground')}
             </Button>
 
             <div className="border-color-border-subtle my-xs-2 border-t" />

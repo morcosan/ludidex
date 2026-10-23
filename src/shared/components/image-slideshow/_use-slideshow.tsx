@@ -28,16 +28,15 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & Image
   const isSwapping = useRef(false)
   const swapInterval = Math.max(interval, duration * 2)
 
-  // Step 1: fade to the other layer
-  // Step 2: once the fade is over, preload a new image into the now-hidden layer
   const next = useCallback(() => {
     if (srcs.length < 2 || isSwapping.current) return
-
     isSwapping.current = true
+
+    // Step 1: fade to the other layer
     setState((state) => ({ ...state, activeSlot: getOtherSlot(state.activeSlot) }))
 
-    clearTimeout(swapTimeout.current)
-    swapTimeout.current = setTimeout(() => {
+    // Step 2: once the fade is over, preload a new image into the now-hidden layer
+    const loadNext = () => {
       setState((state) => {
         const hiddenSlot = getOtherSlot(state.activeSlot)
         const visibleIndex = state.indexes[state.activeSlot]
@@ -46,12 +45,13 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & Image
         return { ...state, indexes }
       })
       isSwapping.current = false
-    }, duration + FADE_END_BUFFER)
+    }
+    clearTimeout(swapTimeout.current)
+    swapTimeout.current = setTimeout(loadNext, duration + FADE_END_BUFFER)
   }, [srcs.length, duration])
 
   useEffect(() => {
     if (srcs.length < 2) return
-
     // Restart the interval whenever the active layer changes so manual swaps reset the timer
     const intervalId = setInterval(next, swapInterval)
     return () => clearInterval(intervalId)

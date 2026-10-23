@@ -19,7 +19,7 @@ const getDifferentIndex = (current: number, length: number) => {
 }
 
 export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & ImageSlideshowHandle => {
-  const { srcs, interval, duration } = props
+  const { srcs, interval, duration, onLoading } = props
   const [state, setState] = useState<SlideshowState>(() => {
     const first = getRandomIndex(srcs.length)
     return { indexes: [first, getDifferentIndex(first, srcs.length)], activeSlot: 0 }
@@ -31,6 +31,7 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & Image
   const next = useCallback(() => {
     if (srcs.length < 2 || isSwapping.current) return
     isSwapping.current = true
+    onLoading?.(true)
 
     // Step 1: fade to the other layer
     setState((state) => ({ ...state, activeSlot: getOtherSlot(state.activeSlot) }))
@@ -45,16 +46,17 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & Image
         return { ...state, indexes }
       })
       isSwapping.current = false
+      onLoading?.(false)
     }
     clearTimeout(swapTimeout.current)
     swapTimeout.current = setTimeout(loadNext, duration + FADE_END_BUFFER)
-  }, [srcs.length, duration])
+  }, [srcs.length, duration, onLoading])
 
   useEffect(() => {
     if (srcs.length < 2) return
-    // Restart the interval whenever the active layer changes so manual swaps reset the timer
-    const intervalId = setInterval(next, swapInterval)
-    return () => clearInterval(intervalId)
+    // Reset the auto swap timer whenever the active layer changes, so manual swaps restart the countdown
+    const timeoutId = setTimeout(next, swapInterval)
+    return () => clearTimeout(timeoutId)
   }, [srcs.length, swapInterval, next, state.activeSlot])
 
   useEffect(() => () => clearTimeout(swapTimeout.current), [])

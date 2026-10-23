@@ -5,7 +5,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ParseKeys } from 'i18next'
 import { ImageIcon, SettingsIcon } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
@@ -25,7 +25,8 @@ interface LayoutProps {
 export default function Layout({ routes }: LayoutProps) {
   const { t } = useTranslation()
   const { pathname } = useLocation()
-  const slideshowRef = useRef<ImageSlideshowHandle>(null)
+  const bgSlideshowRef = useRef<ImageSlideshowHandle>(null)
+  const [isBgLoading, setIsBgLoading] = useState(false)
 
   const currentRoute = routes.find(({ to }) => to === pathname)
   const hasSideNav = !currentRoute?.hidden
@@ -34,10 +35,11 @@ export default function Layout({ routes }: LayoutProps) {
     <Providers>
       <div className="relative flex h-dvh overflow-hidden">
         <ImageSlideshow
-          ref={slideshowRef}
+          ref={bgSlideshowRef}
           srcs={GAMES[0].backgroundUrls}
           interval={BACKGROUND_SWAP_INTERVAL}
           duration={BACKGROUND_SWAP_DURATION}
+          onLoading={setIsBgLoading}
           className="absolute! inset-0 -z-10"
         />
 
@@ -75,10 +77,18 @@ export default function Layout({ routes }: LayoutProps) {
             }
             className="min-w-lg-3"
           >
-            <Button variant="menu-default" size="sm" onClick={() => slideshowRef.current?.next()} className="w-full">
+            <div className="py-xs-2 pl-button-px-sm flex items-center">
               <ImageIcon aria-hidden className="w-xs-9 h-xs-8 mr-xs-2" />
-              {t('general.action.nextBackground')}
-            </Button>
+              <span className="text-size-sm flex-1">{t('general.label.background')}</span>
+              <Button
+                variant="secondary"
+                size="xs"
+                state={isBgLoading ? 'loading' : 'active'}
+                onClick={() => bgSlideshowRef.current?.next()}
+              >
+                {t('general.action.next')}
+              </Button>
+            </div>
 
             <div className="border-color-border-subtle my-xs-2 border-t" />
 

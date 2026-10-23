@@ -15,13 +15,14 @@
       "clearSelection": "Clear selection",
       "discardChanges": "Discard changes",
       "edit": "Edit",
-      "nextBackground": "Next background",
+      "next": "Next",
       "save": "Save",
       "saveChanges": "Save changes",
       "sort": "Sort"
     },
     "label": {
       "appTitle": "LudiDex",
+      "background": "Background",
       "colorMode": "Color mode",
       "currentGame": "Current game",
       "default": "Default",

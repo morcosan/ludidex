@@ -26,10 +26,10 @@ export const SideFilters = (props: SideFiltersProps) => {
   return (
     <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
       {/* VIEW TYPE */}
-      <div className="flex flex-col">
+      <div className="divide-color-border-on-glass flex flex-col divide-y">
         <div className={sectionClass}>{t('general.label.view')}</div>
 
-        <div className="gap-xs-0 flex flex-col">
+        <div className="gap-xs-0 py-xs-3 flex flex-col">
           {viewOptions.map(({ value, label, icon }) => (
             <Button
               key={value}
@@ -51,8 +51,8 @@ export const SideFilters = (props: SideFiltersProps) => {
         <div className={sectionClass}>{t('general.label.viewSettings')}</div>
 
         <div className="gap-xs-2 py-xs-3 flex items-center justify-between">
+          {/* DISPLAY SIZE */}
           <span className="text-size-sm">{t('general.label.displaySize')}</span>
-
           <SelectField
             id="characters-display-size"
             size="sm"

@@ -1,9 +1,8 @@
 import { ImageSlideshow } from '@app-shared/components/image-slideshow/image-slideshow'
 import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
 import { Button, Card, IconButton, Image, Popover } from '@design-system'
-import { faGear } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ParseKeys } from 'i18next'
+import { Settings } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
@@ -57,14 +56,17 @@ export default function Layout({ routes }: LayoutProps) {
 
           {/* SETTINGS */}
           <Popover
-            position="right-end"
+            position="right"
             trigger={
               <IconButton tooltip={t('general.label.settings')} className="mt-auto" floating>
-                <FontAwesomeIcon icon={faGear} aria-hidden className="h-sm-0 w-sm-0" />
+                <Settings strokeWidth={1.5} aria-hidden className="h-sm-0 w-sm-0" />
               </IconButton>
             }
+            className="min-w-lg-2"
           >
-            Settings
+            <Button variant="menu-default" size="sm" linkHref="/settings" className="w-full">
+              Settings
+            </Button>
           </Popover>
         </aside>
 

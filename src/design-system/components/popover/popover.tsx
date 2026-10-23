@@ -43,7 +43,7 @@ export const Popover = (props: PopoverProps) => {
   const { tokens } = useThemeService()
 
   const surfaceCss: CSSObject = {
-    padding: `${tokens.spacing['xs-1']} ${tokens.spacing['xs-3']}`,
+    padding: `${tokens.spacing['xs-2']} ${tokens.spacing['xs-3']}`,
     border: `1px solid ${tokens.color['border-surface']}`,
     borderRadius: tokens.radius['sm'],
     backgroundColor: tokens.color['bg-card'],

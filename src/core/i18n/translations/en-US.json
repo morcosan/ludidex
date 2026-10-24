@@ -52,7 +52,7 @@
       "viewSettings": "View settings",
       "withFilters_one": "with {count} filter",
       "withFilters_other": "with {count} filters",
-      "withSearch": "with search {keyword}"
+      "withSearch": "with \"{keyword}\" search"
     },
     "placeholder": {
       "search": "Search..."

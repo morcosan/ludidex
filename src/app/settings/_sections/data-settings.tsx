@@ -1,6 +1,6 @@
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { Button } from '@design-system'
-import { CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
+import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataImportModal, type UserData } from './_partials/data-import-modal'
@@ -32,16 +32,15 @@ export const DataSettings = () => {
   const loadUserData = useUserDataStore((state) => state.loadUserData)
   const [importData, setImportData] = useState<UserData | null>(null)
   const [currentData, setCurrentData] = useState<UserData>({})
-  const [error, setError] = useState('')
-  const [notice, setNotice] = useState('')
+  const [exportMessage, setExportMessage] = useState<Message | null>(null)
+  const [importMessage, setImportMessage] = useState<Message | null>(null)
 
   const handleClickExport = () => {
-    setError('')
-    setNotice('')
+    setExportMessage(null)
 
     try {
       const data = localStorage.getItem(USER_DATA_STORAGE_KEY)
-      if (!data) throw new Error('No user data to export')
+      if (!data) throw null
       const now = new Date()
       const blob = new Blob([data], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
@@ -50,9 +49,9 @@ export const DataSettings = () => {
       link.download = `ludidex-data-${getDateStamp(now)}-${now.getTime()}.json`
       link.click()
       setTimeout(() => URL.revokeObjectURL(url), 0)
-      setNotice(t('general.status.dataExported'))
+      setExportMessage({ type: 'success', text: t('general.status.dataExported') })
     } catch {
-      setError(t('general.status.dataExportFailed'))
+      setExportMessage({ type: 'error', text: t('general.status.dataExportFailed') })
     }
   }
 
@@ -61,13 +60,12 @@ export const DataSettings = () => {
     event.target.value = ''
     if (!file) return
 
-    setError('')
-    setNotice('')
+    setImportMessage(null)
 
     try {
       const parsed: unknown = JSON.parse(await file.text())
       if (!isUserData(parsed)) {
-        setError(t('general.status.invalidDataFile'))
+        setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
         return
       }
 
@@ -76,7 +74,7 @@ export const DataSettings = () => {
       setCurrentData(isRecord(current) ? current : {})
       setImportData(parsed)
     } catch {
-      setError(t('general.status.invalidDataFile'))
+      setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
     }
   }
 
@@ -88,49 +86,52 @@ export const DataSettings = () => {
       loadUserData()
 
       setImportData(null)
-      setNotice(t('general.status.dataImported'))
-      setError('')
+      setImportMessage({ type: 'success', text: t('general.status.dataImported') })
     } catch {
-      setError(t('general.status.dataImportFailed'))
+      setImportMessage({ type: 'error', text: t('general.status.dataImportFailed') })
     }
+  }
+
+  const renderMessage = (message: Message | null) => {
+    const isError = message?.type === 'error'
+    return (
+      message && (
+        <p
+          role={isError ? 'alert' : 'status'}
+          className={cx(
+            'text-size-sm px-xs-3 py-xs-1 flex items-center rounded-sm',
+            isError
+              ? 'text-color-button-caution-text bg-color-button-caution-bg-press'
+              : 'text-color-success-card-text bg-color-success-card-bg',
+          )}
+        >
+          {isError ? (
+            <CircleXIcon aria-hidden className="h-xs-8 mr-xs-0 -ml-xs-0" />
+          ) : (
+            <CircleCheckIcon aria-hidden className="h-xs-8 mr-xs-0 -ml-xs-0" />
+          )}
+          {message.text}
+        </p>
+      )
+    )
   }
 
   return (
     <div className="gap-xs-3 flex flex-col">
-      <div className="gap-xs-9 flex">
+      <div className="gap-xs-9 flex items-center">
         <Button variant="menu-default" size="lg" className="w-fit" onClick={handleClickExport}>
           <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
           {t('general.action.exportData')}
         </Button>
-
-        {error && (
-          <p role="alert" className="mt-xs-3">
-            {error}
-          </p>
-        )}
-        {notice && (
-          <p role="status" className="mt-xs-3">
-            {notice}
-          </p>
-        )}
+        {renderMessage(exportMessage)}
       </div>
 
-      <div className="gap-xs-9 flex">
+      <div className="gap-xs-9 flex items-center">
         <Button variant="menu-default" size="lg" className="w-fit" onClick={() => fileInputRef.current?.click()}>
           <CloudUploadIcon aria-hidden className="h-xs-9 mr-xs-1" />
           {t('general.action.importData')}
         </Button>
-
-        {error && (
-          <p role="alert" className="mt-xs-3">
-            {error}
-          </p>
-        )}
-        {notice && (
-          <p role="status" className="mt-xs-3">
-            {notice}
-          </p>
-        )}
+        {renderMessage(importMessage)}
       </div>
 
       <input

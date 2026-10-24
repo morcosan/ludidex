@@ -67,7 +67,7 @@ export default function Page() {
         <div className="mt-xs-4 min-h-0 flex-1 overflow-y-auto">
           <div className="max-w-xxl-0 px-xs-1 mx-auto w-full">
             {filteredSections.map(({ id, labelKey, content }) => (
-              <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0">
+              <PageSection key={id} id={id} title={t(labelKey)} bodyClassName="pt-xs-5 min-h-lg-0">
                 {content}
               </PageSection>
             ))}

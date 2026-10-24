@@ -1,9 +1,9 @@
 import { Breadcrumb, PageSection, SearchField } from '@app-shared/components'
 import { Button } from '@design-system'
 import { type ParseKeys } from 'i18next'
-import { type ComponentType, useEffect, useState } from 'react'
+import { type ComponentType, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
+import { useLocation, useSearchParams } from 'react-router'
 import { DataSection } from './_sections/data-section'
 import { type SectionProps } from './_sections/types'
 
@@ -20,7 +20,24 @@ const EmptySection = ({ id, title, className }: SectionProps) => (
 export default function Page() {
   const { t } = useTranslation()
   const { hash } = useLocation()
-  const [keyword, setKeyword] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [keyword, setKeyword] = useState(searchParams.get('search') ?? '')
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setKeyword(value)
+      setSearchParams((params) => {
+        if (value) params.set('search', value)
+        else params.delete('search')
+        return params
+      })
+    },
+    [setSearchParams],
+  )
+
+  useEffect(() => {
+    setKeyword(searchParams.get('search') ?? '')
+  }, [searchParams])
 
   const sections: SettingSection[] = [
     { id: 'preferences', labelKey: 'general.label.preferences', component: EmptySection },
@@ -59,7 +76,7 @@ export default function Page() {
               label={t('general.action.searchSettings')}
               size="sm"
               className="w-full"
-              onChange={setKeyword}
+              onChange={handleSearchChange}
             />
             <h1 className="mb-xs-7 flex">
               <Breadcrumb first>{t('nav.label.settings')}</Breadcrumb>

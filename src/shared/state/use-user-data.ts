@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { type GenshinCharacterUserData } from '../data/genshin/user-data'
 
-const STORAGE_KEY = 'app-user-data'
+const USER_DATA_COOKIE_KEY = 'app-user-data'
 
 interface UserData {
   genshin: {
@@ -20,13 +20,13 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
   userData: null,
 
   loadUserData() {
-    const stored = localStorage.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(USER_DATA_COOKIE_KEY)
     if (!stored) return
 
     try {
       set({ userData: JSON.parse(stored) })
     } catch (error) {
-      console.error(`Failed parsing '${STORAGE_KEY}' from local storage\n`, error)
+      console.error(`Failed parsing '${USER_DATA_COOKIE_KEY}' from local storage\n`, error)
     }
   },
 
@@ -34,7 +34,7 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     const { userData } = get()
     if (!userData) return
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(userData))
+    localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(userData))
   },
 
   setGenshinCharacter(characterId, data) {
@@ -63,4 +63,4 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
   },
 }))
 
-export { useUserDataStore, type UserData }
+export { USER_DATA_COOKIE_KEY, useUserDataStore, type UserData }

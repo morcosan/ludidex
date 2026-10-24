@@ -1,5 +1,6 @@
 import { PageSection } from '@app-shared/components'
-import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { USER_DATA_COOKIE_KEY, useUserDataStore } from '@app-shared/state/use-user-data'
+import { getDateAsYYYYMMDD } from '@app-shared/utils/various'
 import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
@@ -7,15 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { DataImportModal, type UserData } from './_partials/data-import-modal'
 import { type SectionProps } from './types'
 
-const USER_DATA_STORAGE_KEY = 'app-user-data'
-
 interface Message {
   type: 'error' | 'success'
   text: string
 }
-
-const getDateStamp = (date: Date): string =>
-  [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-')
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value)
@@ -44,14 +40,14 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
     setExportMessage(null)
     try {
       await wait(2000) // Fake download delay
-      const data = localStorage.getItem(USER_DATA_STORAGE_KEY)
+      const data = localStorage.getItem(USER_DATA_COOKIE_KEY)
       if (!data) throw null
       const now = new Date()
       const blob = new Blob([data], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `ludidex-data-${getDateStamp(now)}-${now.getTime()}.json`
+      link.download = `ludidex-data-${getDateAsYYYYMMDD(now)}-${now.getTime()}.json`
       link.click()
       setTimeout(() => URL.revokeObjectURL(url), 0)
       setExportMessage({ type: 'success', text: t('general.status.dataExported') })
@@ -62,7 +58,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
     }
   }
 
-  const selectImportFile = async (event: ChangeEvent<HTMLInputElement>) => {
+  const onSelectFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ''
     if (!file) return
@@ -71,14 +67,14 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
     setIsImporting(true)
 
     try {
-      const parsed: unknown = JSON.parse(await file.text())
+      const parsed = JSON.parse(await file.text())
       if (!isUserData(parsed)) {
         setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
         return
       }
 
-      const stored = localStorage.getItem(USER_DATA_STORAGE_KEY)
-      const current: unknown = stored ? JSON.parse(stored) : {}
+      const stored = localStorage.getItem(USER_DATA_COOKIE_KEY)
+      const current = stored ? JSON.parse(stored) : {}
       setCurrentData(isRecord(current) ? current : {})
       setImportData(parsed)
     } catch {
@@ -88,15 +84,13 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
     }
   }
 
-  const confirmImport = async () => {
+  const handleConfirmImport = async () => {
     if (!importData) return
-
     setIsImporting(true)
     try {
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
-      localStorage.setItem(USER_DATA_STORAGE_KEY, JSON.stringify(importData))
+      localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(importData))
       loadUserData()
-
       setImportData(null)
       setImportMessage({ type: 'success', text: t('general.status.dataImported') })
     } catch {
@@ -160,7 +154,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
         accept="application/json,.json"
         className="hidden"
         aria-label={t('general.action.upload')}
-        onChange={selectImportFile}
+        onChange={onSelectFile}
       />
 
       <DataImportModal
@@ -168,7 +162,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
         currentData={currentData}
         loading={isImporting}
         onClose={() => setImportData(null)}
-        onConfirm={confirmImport}
+        onConfirm={handleConfirmImport}
       />
     </PageSection>
   )

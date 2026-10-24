@@ -13,8 +13,9 @@ interface DataSummary {
 interface DataImportModalProps {
   importData: UserData | null
   currentData: UserData
+  isLoading: boolean
   onClose: () => void
-  onConfirm: () => void
+  onConfirm: () => void | Promise<void>
 }
 
 const getDataSummary = (data: UserData): DataSummary => {
@@ -83,6 +84,7 @@ const Summary = ({ summary }: { summary: DataSummary }) => {
 export const DataImportModal = ({
   importData,
   currentData,
+  isLoading,
   onClose,
   onConfirm,
 }: DataImportModalProps) => {
@@ -95,7 +97,7 @@ export const DataImportModal = ({
       width="lg"
       onClose={onClose}
       actions={
-        <Button onClick={onConfirm} state="active">
+        <Button onClick={onConfirm} state={isLoading ? 'loading' : 'active'}>
           {t('general.action.replaceData')}
         </Button>
       }

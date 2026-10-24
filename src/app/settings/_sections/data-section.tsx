@@ -1,9 +1,11 @@
+import { PageSection } from '@app-shared/components'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
-import { Button } from '@design-system'
+import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataImportModal, type UserData } from './_partials/data-import-modal'
+import type { SectionProps } from './types'
 
 const USER_DATA_STORAGE_KEY = 'app-user-data'
 
@@ -26,7 +28,7 @@ const isUserData = (value: unknown): value is UserData => {
   return Object.values(genshin.characters).every(isRecord)
 }
 
-export const DataSettings = () => {
+export const DataSection = ({ id, title, className }: SectionProps) => {
   const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const loadUserData = useUserDataStore((state) => state.loadUserData)
@@ -34,11 +36,15 @@ export const DataSettings = () => {
   const [currentData, setCurrentData] = useState<UserData>({})
   const [exportMessage, setExportMessage] = useState<Message | null>(null)
   const [importMessage, setImportMessage] = useState<Message | null>(null)
+  const [isExporting, setIsExporting] = useState(false)
+  const [isImporting, setIsImporting] = useState(false)
 
-  const handleClickExport = () => {
+  const handleClickExport = async () => {
+    setIsExporting(true)
     setExportMessage(null)
 
     try {
+      await wait(2000) // Fake download delay
       const data = localStorage.getItem(USER_DATA_STORAGE_KEY)
       if (!data) throw null
       const now = new Date()
@@ -52,6 +58,8 @@ export const DataSettings = () => {
       setExportMessage({ type: 'success', text: t('general.status.dataExported') })
     } catch {
       setExportMessage({ type: 'error', text: t('general.status.dataExportFailed') })
+    } finally {
+      setIsExporting(false)
     }
   }
 
@@ -61,6 +69,7 @@ export const DataSettings = () => {
     if (!file) return
 
     setImportMessage(null)
+    setIsImporting(true)
 
     try {
       const parsed: unknown = JSON.parse(await file.text())
@@ -75,13 +84,17 @@ export const DataSettings = () => {
       setImportData(parsed)
     } catch {
       setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
+    } finally {
+      setIsImporting(false)
     }
   }
 
-  const confirmImport = () => {
+  const confirmImport = async () => {
     if (!importData) return
 
+    setIsImporting(true)
     try {
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
       localStorage.setItem(USER_DATA_STORAGE_KEY, JSON.stringify(importData))
       loadUserData()
 
@@ -89,6 +102,8 @@ export const DataSettings = () => {
       setImportMessage({ type: 'success', text: t('general.status.dataImported') })
     } catch {
       setImportMessage({ type: 'error', text: t('general.status.dataImportFailed') })
+    } finally {
+      setIsImporting(false)
     }
   }
 
@@ -117,19 +132,25 @@ export const DataSettings = () => {
   }
 
   return (
-    <div className="gap-xs-3 flex flex-col">
+    <PageSection id={id} title={title} className={className} bodyClassName="pt-xs-5 min-h-lg-0 gap-xs-4 flex flex-col">
       <div className="gap-xs-9 flex items-center">
-        <Button variant="menu-default" size="lg" className="w-fit" onClick={handleClickExport}>
+        <span>{t('general.label.exportData')}</span>
+        <Button className="w-fit" state={isExporting ? 'loading' : 'active'} onClick={handleClickExport}>
           <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
-          {t('general.action.exportData')}
+          {t('general.action.download')}
         </Button>
         {renderMessage(exportMessage)}
       </div>
 
       <div className="gap-xs-9 flex items-center">
-        <Button variant="menu-default" size="lg" className="w-fit" onClick={() => fileInputRef.current?.click()}>
+        <span>{t('general.label.importData')}</span>
+        <Button
+          className="w-fit"
+          state={isImporting ? 'loading' : 'active'}
+          onClick={() => fileInputRef.current?.click()}
+        >
           <CloudUploadIcon aria-hidden className="h-xs-9 mr-xs-1" />
-          {t('general.action.importData')}
+          {t('general.action.upload')}
         </Button>
         {renderMessage(importMessage)}
       </div>
@@ -139,16 +160,17 @@ export const DataSettings = () => {
         type="file"
         accept="application/json,.json"
         className="hidden"
-        aria-label={t('general.action.importData')}
+        aria-label={t('general.action.upload')}
         onChange={selectImportFile}
       />
 
       <DataImportModal
         importData={importData}
         currentData={currentData}
+        isLoading={isImporting}
         onClose={() => setImportData(null)}
         onConfirm={confirmImport}
       />
-    </div>
+    </PageSection>
   )
 }

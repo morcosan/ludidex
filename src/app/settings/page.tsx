@@ -1,16 +1,21 @@
 import { Breadcrumb, PageSection, SearchField } from '@app-shared/components'
 import { Button } from '@design-system'
 import { type ParseKeys } from 'i18next'
-import { type ReactNode, useEffect, useState } from 'react'
+import { type ComponentType, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { DataSettings } from './_sections/data-settings'
+import { DataSection } from './_sections/data-section'
+import { type SectionProps } from './_sections/types'
 
 interface SettingSection {
   id: string
   labelKey: ParseKeys
-  content: ReactNode
+  component: ComponentType<SectionProps>
 }
+
+const EmptySection = ({ id, title, className }: SectionProps) => (
+  <PageSection id={id} title={title} className={className} />
+)
 
 export default function Page() {
   const { t } = useTranslation()
@@ -18,8 +23,8 @@ export default function Page() {
   const [keyword, setKeyword] = useState('')
 
   const sections: SettingSection[] = [
-    { id: 'preferences', labelKey: 'general.label.preferences', content: '' },
-    { id: 'data-export', labelKey: 'general.label.dataExportImport', content: <DataSettings /> },
+    { id: 'preferences', labelKey: 'general.label.preferences', component: EmptySection },
+    { id: 'data-export', labelKey: 'general.label.dataExportImport', component: DataSection },
   ]
   const filteredSections = sections.filter(({ labelKey }) =>
     t(labelKey).toLocaleLowerCase().includes(keyword.trim().toLocaleLowerCase()),
@@ -66,10 +71,8 @@ export default function Page() {
         {/* SECTIONS */}
         <div className="mt-xs-4 min-h-0 flex-1 overflow-y-auto">
           <div className="max-w-xxl-0 px-xs-1 mx-auto w-full">
-            {filteredSections.map(({ id, labelKey, content }) => (
-              <PageSection key={id} id={id} title={t(labelKey)} bodyClassName="pt-xs-5 min-h-lg-0">
-                {content}
-              </PageSection>
+            {filteredSections.map(({ component: Section, id, labelKey }) => (
+              <Section key={id} id={id} title={t(labelKey)} className="min-h-lg-0" />
             ))}
           </div>
         </div>

@@ -33,6 +33,7 @@ export default function Page() {
 
   return (
     <div className="flex h-full">
+      {/* LEFT SIDE */}
       <nav className="w-lg-1 gap-xs-2 mx-xs-9 flex flex-col">
         {filteredSections.map(({ id, labelKey }) => (
           <Button key={id} linkHref={`#${id}`} variant="menu-default">
@@ -41,31 +42,33 @@ export default function Page() {
         ))}
       </nav>
 
-      <div className="gap-y-sm-0 flex h-full flex-1 flex-col">
+      {/* RIGHT SIDE */}
+      <div className="flex h-full min-w-0 flex-1 flex-col">
         {/* HEADER */}
-        <div className="gap-sm-9 pr-sm-0 flex">
-          <h1 className="mb-xs-7 flex">
-            <Breadcrumb first large>
-              {t('nav.label.settings')}
-            </Breadcrumb>
-            {keyword && <Breadcrumb large>{t('general.label.withSearch', { keyword })}</Breadcrumb>}
-          </h1>
-
-          <SearchField
-            id={'settings-search'}
-            value={keyword}
-            label={t('general.action.searchSettings')}
-            size="sm"
-            className="ml-auto w-1/2"
-            onChange={setKeyword}
-          />
+        <div className="max-w-xxl-0 mx-auto w-full">
+          <div className="gap-xs-5 flex flex-col">
+            <SearchField
+              id={'settings-search'}
+              value={keyword}
+              label={t('general.action.searchSettings')}
+              size="sm"
+              className="w-full"
+              onChange={setKeyword}
+            />
+            <h1 className="mb-xs-7 flex">
+              <Breadcrumb first>{t('nav.label.settings')}</Breadcrumb>
+              {keyword && <Breadcrumb>{t('general.label.withSearch', { keyword })}</Breadcrumb>}
+            </h1>
+          </div>
         </div>
 
         {/* SECTIONS */}
-        <div className="pr-sm-0 min-h-0 flex-1 overflow-y-auto">
-          {filteredSections.map(({ id, labelKey }) => (
-            <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0" />
-          ))}
+        <div className="mt-xs-4 min-h-0 flex-1 overflow-y-auto">
+          <div className="max-w-xxl-0 px-xs-1 mx-auto w-full">
+            {filteredSections.map(({ id, labelKey }) => (
+              <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0" />
+            ))}
+          </div>
         </div>
       </div>
     </div>

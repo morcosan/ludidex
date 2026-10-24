@@ -15,7 +15,10 @@
       "clearSelection": "Clear selection",
       "discardChanges": "Discard changes",
       "edit": "Edit",
+      "exportData": "Export data",
+      "importData": "Import data",
       "next": "Next",
+      "replaceData": "Replace data",
       "save": "Save",
       "saveChanges": "Save changes",
       "searchSettings": "Search settings",
@@ -26,7 +29,10 @@
       "background": "Background",
       "colorMode": "Color mode",
       "currentGame": "Current game",
+      "currentData": "Current data",
       "dataExportImport": "Data export / import",
+      "dataKeys": "Number of keys",
+      "dataSize": "Data size",
       "default": "Default",
       "displaySize": "Display size",
       "favorite": "Favorite",
@@ -35,6 +41,9 @@
       "medium": "Medium",
       "modeDark": "Dark",
       "modeLight": "Light",
+      "charactersWithData": "Characters with data",
+      "importData": "Import data",
+      "newData": "New data",
       "none": "None",
       "preferences": "Preferences",
       "settings": "Settings",
@@ -49,6 +58,11 @@
       "search": "Search..."
     },
     "status": {
+      "dataExported": "Data exported",
+      "dataExportFailed": "Data could not be exported",
+      "dataImportFailed": "Data could not be imported",
+      "dataImported": "Data imported",
+      "invalidDataFile": "This file is not a valid LudiDex data export",
       "loading": "Loading..."
     }
   },

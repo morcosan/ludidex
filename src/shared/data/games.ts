@@ -23,7 +23,6 @@ export const GAMES: Game[] = [
       'https://upload-os-bbs.hoyolab.com/upload/2024/08/13/116695987/1807b3e53379527fbcec17c4913109ef_2107583260347604207.png',
       'https://upload-os-bbs.hoyolab.com/upload/2024/11/28/248330833/1a227ec874f24b2a362a480c36e2fcb5_4307714332769226534.webp',
       'https://upload-os-bbs.hoyolab.com/upload/2025/01/08/248330833/d07bb5140755c2c03a7106735d2009d9_7203688208795014650.webp',
-      'https://upload-os-bbs.hoyolab.com/upload/2026/04/09/237481738/be74cc46e8466bde6e1753b57524d0c2_7058514705513793887.webp',
       'https://upload-os-bbs.hoyolab.com/upload/2026/04/21/17138284/8549ba29fd3add9b56aa8daf9aa94311_4296493394681652714.png',
       'https://upload-os-bbs.hoyolab.com/upload/2026/04/21/423764469/68f70e98190246a1ac4177db45baa442_3194025147810994470.jpg',
 

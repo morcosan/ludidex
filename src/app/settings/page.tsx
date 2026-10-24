@@ -4,6 +4,7 @@ import { type ParseKeys } from 'i18next'
 import { type ReactNode, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
+import { DataSettings } from './_sections/data-settings'
 
 interface SettingSection {
   id: string
@@ -18,7 +19,7 @@ export default function Page() {
 
   const sections: SettingSection[] = [
     { id: 'preferences', labelKey: 'general.label.preferences', content: '' },
-    { id: 'data-export', labelKey: 'general.label.dataExportImport', content: '' },
+    { id: 'data-export', labelKey: 'general.label.dataExportImport', content: <DataSettings /> },
   ]
   const filteredSections = sections.filter(({ labelKey }) =>
     t(labelKey).toLocaleLowerCase().includes(keyword.trim().toLocaleLowerCase()),
@@ -65,8 +66,10 @@ export default function Page() {
         {/* SECTIONS */}
         <div className="mt-xs-4 min-h-0 flex-1 overflow-y-auto">
           <div className="max-w-xxl-0 px-xs-1 mx-auto w-full">
-            {filteredSections.map(({ id, labelKey }) => (
-              <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0" />
+            {filteredSections.map(({ id, labelKey, content }) => (
+              <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0">
+                {content}
+              </PageSection>
             ))}
           </div>
         </div>

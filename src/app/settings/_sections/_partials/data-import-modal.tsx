@@ -1,7 +1,8 @@
+import { type UserData } from '@app-shared/state/use-user-data'
 import { Button, Modal } from '@design-system'
 import { useTranslation } from 'react-i18next'
 
-export type UserData = Record<string, unknown>
+export type { UserData } from '@app-shared/state/use-user-data'
 
 interface DataSummary {
   characters: number
@@ -77,11 +78,12 @@ interface DataImportModalProps {
   currentData: UserData
   loading: boolean
   onClose: () => void
+  onClosed: () => void
   onConfirm: () => void | Promise<void>
 }
 
 export const DataImportModal = (props: DataImportModalProps) => {
-  const { importData, currentData, loading, onClose, onConfirm } = props
+  const { importData, currentData, loading, onClose, onConfirm, onClosed } = props
   const { t } = useTranslation()
 
   return (
@@ -89,12 +91,13 @@ export const DataImportModal = (props: DataImportModalProps) => {
       opened={importData !== null}
       title={t('general.label.importData')}
       width="lg"
-      onClose={onClose}
       actions={
-        <Button onClick={onConfirm} state={loading ? 'loading' : 'active'}>
+        <Button variant="danger" state={loading ? 'loading' : 'active'} onClick={onConfirm}>
           {t('general.action.replaceData')}
         </Button>
       }
+      onClose={onClose}
+      onClosed={onClosed}
     >
       {importData && (
         <div className="gap-xs-5 grid grid-cols-1 md:grid-cols-2">

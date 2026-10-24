@@ -1,17 +1,19 @@
 import { PageSection } from '@app-shared/components'
-import { USER_DATA_COOKIE_KEY, useUserDataStore } from '@app-shared/state/use-user-data'
+import { USER_DATA_COOKIE_KEY, type UserData, useUserDataStore } from '@app-shared/state/use-user-data'
 import { getDateAsYYYYMMDD } from '@app-shared/utils/various'
 import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DataImportModal, type UserData } from './_partials/data-import-modal'
+import { DataImportModal } from './_partials/data-import-modal'
 import { type SectionProps } from './types'
 
 interface Message {
   type: 'error' | 'success'
   text: string
 }
+
+const EMPTY_USER_DATA: UserData = { genshin: { characters: {} } }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value)
@@ -21,19 +23,45 @@ const isUserData = (value: unknown): value is UserData => {
 
   const genshin = value.genshin
   if (!isRecord(genshin) || !isRecord(genshin.characters)) return false
-  return Object.values(genshin.characters).every(isRecord)
+
+  const isOptionalNumberRecord = (record: Record<string, unknown>, keys: string[]) =>
+    keys.every((key) => record[key] === undefined || typeof record[key] === 'number')
+
+  const isCharacterUserData = (character: unknown) => {
+    if (!isRecord(character)) return false
+    if (character.likeScore !== undefined && typeof character.likeScore !== 'number') return false
+
+    const numberFields = {
+      tierScores: ['mainDps', 'subDps', 'support', 'exploration', 'outfit', 'personality'],
+      stats: ['level', 'hp', 'atk', 'def', 'critDmg', 'critRate', 'elemDmg', 'em', 'er'],
+      talents: ['conLv', 'attackLv', 'skillLv', 'burstLv'],
+    } as const
+
+    for (const [key, fields] of Object.entries(numberFields)) {
+      const record = character[key]
+      if (record !== undefined && (!isRecord(record) || !isOptionalNumberRecord(record, [...fields]))) return false
+    }
+
+    return (
+      character.tags === undefined ||
+      (Array.isArray(character.tags) && character.tags.every((tag) => typeof tag === 'string'))
+    )
+  }
+
+  return Object.values(genshin.characters).every(isCharacterUserData)
 }
 
 export const DataSection = ({ id, title, className }: SectionProps) => {
   const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const loadUserData = useUserDataStore((state) => state.loadUserData)
+  const replaceUserData = useUserDataStore((state) => state.replaceUserData)
   const [importData, setImportData] = useState<UserData | null>(null)
-  const [currentData, setCurrentData] = useState<UserData>({})
+  const [currentData, setCurrentData] = useState<UserData>(EMPTY_USER_DATA)
   const [exportMessage, setExportMessage] = useState<Message | null>(null)
   const [importMessage, setImportMessage] = useState<Message | null>(null)
   const [isExporting, setIsExporting] = useState(false)
   const [isImporting, setIsImporting] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   const handleClickExport = async () => {
     setIsExporting(true)
@@ -58,7 +86,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
     }
   }
 
-  const onSelectFile = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSelectFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ''
     if (!file) return
@@ -72,32 +100,32 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
         setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
         return
       }
-
       const stored = localStorage.getItem(USER_DATA_COOKIE_KEY)
       const current = stored ? JSON.parse(stored) : {}
-      setCurrentData(isRecord(current) ? current : {})
+      setCurrentData(isUserData(current) ? current : EMPTY_USER_DATA)
       setImportData(parsed)
     } catch {
       setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
-    } finally {
-      setIsImporting(false)
     }
   }
 
   const handleConfirmImport = async () => {
     if (!importData) return
-    setIsImporting(true)
+    setIsProcessing(true)
     try {
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
-      localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(importData))
-      loadUserData()
+      await wait(1000) // Fake processing delay
+      replaceUserData(importData)
       setImportData(null)
       setImportMessage({ type: 'success', text: t('general.status.dataImported') })
     } catch {
       setImportMessage({ type: 'error', text: t('general.status.dataImportFailed') })
-    } finally {
-      setIsImporting(false)
     }
+  }
+
+  const handleCloseModal = () => {
+    setImportData(null)
+    setIsImporting(false)
+    setIsProcessing(false)
   }
 
   const renderMessage = (message: Message | null) => {
@@ -154,14 +182,15 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
         accept="application/json,.json"
         className="hidden"
         aria-label={t('general.action.upload')}
-        onChange={onSelectFile}
+        onChange={handleSelectFile}
       />
 
       <DataImportModal
         importData={importData}
         currentData={currentData}
-        loading={isImporting}
-        onClose={() => setImportData(null)}
+        loading={isProcessing}
+        onClose={handleCloseModal}
+        onClosed={handleCloseModal}
         onConfirm={handleConfirmImport}
       />
     </PageSection>

@@ -3,7 +3,7 @@ import { type GenshinCharacterUserData } from '../data/genshin/user-data'
 
 const USER_DATA_COOKIE_KEY = 'app-user-data'
 
-interface UserData {
+export interface UserData {
   genshin: {
     characters: Record<string, GenshinCharacterUserData>
   }
@@ -13,6 +13,7 @@ interface UserDataStore {
   userData: UserData | null
   loadUserData(): void
   saveUserData(): void
+  replaceUserData(userData: UserData): void
   setGenshinCharacter(characterId: string, data: GenshinCharacterUserData): void
 }
 
@@ -35,6 +36,11 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     if (!userData) return
 
     localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(userData))
+  },
+
+  replaceUserData(userData) {
+    localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(userData))
+    set({ userData })
   },
 
   setGenshinCharacter(characterId, data) {
@@ -63,4 +69,4 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
   },
 }))
 
-export { USER_DATA_COOKIE_KEY, useUserDataStore, type UserData }
+export { USER_DATA_COOKIE_KEY, useUserDataStore }

@@ -18,6 +18,7 @@
       "next": "Next",
       "save": "Save",
       "saveChanges": "Save changes",
+      "searchSettings": "Search settings",
       "sort": "Sort"
     },
     "label": {
@@ -41,7 +42,8 @@
       "view": "View",
       "viewSettings": "View settings",
       "withFilters_one": "with {count} filter",
-      "withFilters_other": "with {count} filters"
+      "withFilters_other": "with {count} filters",
+      "withSearch": "with search {keyword}"
     },
     "placeholder": {
       "search": "Search..."

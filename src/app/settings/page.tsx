@@ -1,4 +1,4 @@
-import { Breadcrumb, PageSection } from '@app-shared/components'
+import { Breadcrumb, PageSection, SearchField } from '@app-shared/components'
 import { Button } from '@design-system'
 import { type ParseKeys } from 'i18next'
 import { type ReactNode, useEffect, useRef } from 'react'
@@ -39,12 +39,25 @@ export default function Page() {
       </nav>
 
       <div ref={contentRef} className="gap-y-sm-0 px-sm-0 flex h-full flex-1 flex-col overflow-y-auto">
-        <h1 className="mb-xs-7 flex">
-          <Breadcrumb first large>
-            {t('nav.label.settings')}
-          </Breadcrumb>
-        </h1>
+        {/* HEADER */}
+        <div className="gap-sm-9 flex">
+          <h1 className="mb-xs-7 flex">
+            <Breadcrumb first large>
+              {t('nav.label.settings')}
+            </Breadcrumb>
+            <Breadcrumb large>{t('general.label.withSearch', { keyword: '' })}</Breadcrumb>
+          </h1>
 
+          <SearchField
+            id={'settings-search'}
+            value={''}
+            label={t('general.action.searchSettings')}
+            size="sm"
+            className="ml-auto w-1/2"
+          />
+        </div>
+
+        {/* SECTIONS */}
         {sections.map(({ id, labelKey }) => (
           <PageSection key={id} id={id} title={t(labelKey)} className="min-h-xxl-2 scroll-mt-sm-0" />
         ))}

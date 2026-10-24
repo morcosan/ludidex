@@ -10,6 +10,7 @@ export interface PageSectionProps extends ReactProps {
    * Props
    */
   title: string
+  id?: string
   surface?: 'page' | 'card'
   titleClassName?: string
   bodyClassName?: string
@@ -18,13 +19,13 @@ export interface PageSectionProps extends ReactProps {
 }
 
 export const PageSection = (props: PageSectionProps) => {
-  const { title, surface = 'page', className, titleClassName, bodyClassName, children } = props
+  const { id, title, surface = 'page', className, titleClassName, bodyClassName, children } = props
 
   const rootClass = cx(surface === 'page' ? 'divide-color-border-on-glass' : 'divide-color-border-subtle')
   const titleClass = cx(surface === 'page' ? 'text-color-text-subtle' : 'text-color-text-placeholder')
 
   return (
-    <div className={cx('flex flex-col divide-y', rootClass, className)}>
+    <div id={id} className={cx('flex flex-col divide-y', rootClass, className)}>
       <div className={cx('text-size-xs pb-xs-3 tracking-wider uppercase', titleClass, titleClassName)}>{title}</div>
       <div className={cx('pt-xs-3 gap-xs-0 flex flex-col', bodyClassName)}>{children}</div>
     </div>

@@ -153,6 +153,7 @@ export default {
     'bg-app': { $value: { $light: '{color.grey-3}', $dark: '{color.grey-18}' } },
     'bg-page': { $value: { $light: '{color.white-alpha-11}', $dark: '{color.grey-17}' } },
     'bg-region': { $value: { $light: '{color.white-alpha-9}', $dark: '{color.black-alpha-3}' } },
+    'bg-sheet': { $value: { $light: '{color.grey-1}', $dark: '{color.grey-17}' } },
     'bg-card': { $value: { $light: '{color.white}', $dark: '{color.grey-16}' } },
     'bg-popup': { $value: { $light: '{color.white}', $dark: '{color.grey-16}' } },
     'bg-coding': { $value: { $light: '{color.black-alpha-2}', $dark: '{color.grey-18}' } },

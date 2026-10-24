@@ -152,6 +152,10 @@ export const TOKENS__COLOR = {
     ref: { light: '{color.white-alpha-9}', dark: '{color.black-alpha-3}' },
     value: { light: 'oklch(1 0 0 / 0.48)', dark: 'oklch(0.1068 0.052 317 / 0.09)' },
   },
+  'bg-sheet': {
+    ref: { light: '{color.grey-1}', dark: '{color.grey-17}' },
+    value: { light: 'oklch(0.9884 0.0013 308)', dark: 'oklch(0.346 0.011 308)' },
+  },
   'bg-card': {
     ref: { light: '{color.white}', dark: '{color.grey-16}' },
     value: { light: 'oklch(1 0 0)', dark: 'oklch(0.3771 0.0124 308)' },

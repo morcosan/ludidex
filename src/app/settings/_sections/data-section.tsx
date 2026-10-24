@@ -5,7 +5,7 @@ import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataImportModal, type UserData } from './_partials/data-import-modal'
-import type { SectionProps } from './types'
+import { type SectionProps } from './types'
 
 const USER_DATA_STORAGE_KEY = 'app-user-data'
 
@@ -42,7 +42,6 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
   const handleClickExport = async () => {
     setIsExporting(true)
     setExportMessage(null)
-
     try {
       await wait(2000) // Fake download delay
       const data = localStorage.getItem(USER_DATA_STORAGE_KEY)
@@ -114,7 +113,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
         <p
           role={isError ? 'alert' : 'status'}
           className={cx(
-            'text-size-sm px-xs-3 py-xs-1 flex items-center rounded-sm',
+            'ml-xs-5 text-size-sm px-xs-3 py-xs-1 flex items-center rounded-sm',
             isError
               ? 'text-color-button-caution-text bg-color-button-caution-bg-press'
               : 'text-color-success-card-text bg-color-success-card-bg',
@@ -133,19 +132,19 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
 
   return (
     <PageSection id={id} title={title} className={className} bodyClassName="pt-xs-5 min-h-lg-0 gap-xs-4 flex flex-col">
-      <div className="gap-xs-9 flex items-center">
-        <span>{t('general.label.exportData')}</span>
-        <Button className="w-fit" state={isExporting ? 'loading' : 'active'} onClick={handleClickExport}>
+      <div className="flex items-center">
+        <span>{t('general.label.exportData')}:</span>
+        <Button className="ml-xs-3" state={isExporting ? 'loading' : 'active'} onClick={handleClickExport}>
           <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
           {t('general.action.download')}
         </Button>
         {renderMessage(exportMessage)}
       </div>
 
-      <div className="gap-xs-9 flex items-center">
-        <span>{t('general.label.importData')}</span>
+      <div className="flex items-center">
+        <span>{t('general.label.importData')}:</span>
         <Button
-          className="w-fit"
+          className="ml-xs-3"
           state={isImporting ? 'loading' : 'active'}
           onClick={() => fileInputRef.current?.click()}
         >
@@ -167,7 +166,7 @@ export const DataSection = ({ id, title, className }: SectionProps) => {
       <DataImportModal
         importData={importData}
         currentData={currentData}
-        isLoading={isImporting}
+        loading={isImporting}
         onClose={() => setImportData(null)}
         onConfirm={confirmImport}
       />

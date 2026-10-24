@@ -9,15 +9,6 @@ interface DataSummary {
   size: number
 }
 
-
-interface DataImportModalProps {
-  importData: UserData | null
-  currentData: UserData
-  isLoading: boolean
-  onClose: () => void
-  onConfirm: () => void | Promise<void>
-}
-
 const getDataSummary = (data: UserData): DataSummary => {
   let keys = 0
   let characters = 0
@@ -65,15 +56,15 @@ const Summary = ({ summary }: { summary: DataSummary }) => {
 
   return (
     <dl className="gap-xs-3 flex flex-col">
-      <div className="flex justify-between gap-xs-3">
+      <div className="gap-xs-3 flex justify-between">
         <dt>{t('general.label.charactersWithData')}</dt>
         <dd>{summary.characters}</dd>
       </div>
-      <div className="flex justify-between gap-xs-3">
+      <div className="gap-xs-3 flex justify-between">
         <dt>{t('general.label.dataKeys')}</dt>
         <dd>{summary.keys}</dd>
       </div>
-      <div className="flex justify-between gap-xs-3">
+      <div className="gap-xs-3 flex justify-between">
         <dt>{t('general.label.dataSize')}</dt>
         <dd>{formatSize(summary.size)}</dd>
       </div>
@@ -81,13 +72,16 @@ const Summary = ({ summary }: { summary: DataSummary }) => {
   )
 }
 
-export const DataImportModal = ({
-  importData,
-  currentData,
-  isLoading,
-  onClose,
-  onConfirm,
-}: DataImportModalProps) => {
+interface DataImportModalProps {
+  importData: UserData | null
+  currentData: UserData
+  loading: boolean
+  onClose: () => void
+  onConfirm: () => void | Promise<void>
+}
+
+export const DataImportModal = (props: DataImportModalProps) => {
+  const { importData, currentData, loading, onClose, onConfirm } = props
   const { t } = useTranslation()
 
   return (
@@ -97,7 +91,7 @@ export const DataImportModal = ({
       width="lg"
       onClose={onClose}
       actions={
-        <Button onClick={onConfirm} state={isLoading ? 'loading' : 'active'}>
+        <Button onClick={onConfirm} state={loading ? 'loading' : 'active'}>
           {t('general.action.replaceData')}
         </Button>
       }

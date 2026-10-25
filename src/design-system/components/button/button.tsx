@@ -6,15 +6,15 @@ export type { ButtonProps, ButtonSize, ButtonState, ButtonVariant } from './_typ
 
 /** Fundamental component for user actions and navigation */
 export const Button = (props: ButtonProps) => {
-  const { linkHref, linkType = 'internal', size = 'md', variant = 'default', state = 'active' } = props
+  const { linkHref, linkType = 'internal', size = 'md', variant = 'default', state = 'active', ref } = props
   const { bindings, content, buttonCss } = useButtonBase({ ...props, linkType, size, state, variant })
 
   return linkHref ? (
-    <a {...bindings} css={buttonCss}>
+    <a ref={ref} {...bindings} css={buttonCss}>
       {content}
     </a>
   ) : (
-    <button type="button" {...bindings} css={buttonCss}>
+    <button ref={ref} type="button" {...bindings} css={buttonCss}>
       {content}
     </button>
   )

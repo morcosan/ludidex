@@ -15,4 +15,7 @@ addons.setConfig({
       return Boolean(story?.tags.includes('controls') && state.viewMode !== 'docs')
     },
   },
+  sidebar: {
+    showRoots: true,
+  },
 })

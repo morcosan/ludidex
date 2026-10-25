@@ -1,5 +1,6 @@
 import { CSS_PREFIX, DocsTokenCodeGrid, Meta, TOKENS } from '@storybook-docs'
 
+export const HTML_FONT_SIZE = 16
 export const SAMPLE_TEXT = `The quick brown fox jumps over the lazy dog 0123456789 !@#$%&*().,;:?'"`
 export const tsSize = 'w-lg-3'
 export const twSize = 'w-lg-0'
@@ -78,7 +79,7 @@ export const cssSize = 'w-lg-3'
           <code>{ token.value }</code>
         </td>
         <td>
-          <code>{ Number(token.value.replace('rem', '')) * 16 }px</code>
+          <code>{ Number(token.value.replace('rem', '')) * HTML_FONT_SIZE }px</code>
         </td>
         <td
           style={ {

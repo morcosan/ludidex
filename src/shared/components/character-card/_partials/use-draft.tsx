@@ -1,10 +1,13 @@
 import { clamp, isEqual } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
 import { type GenshinCharacterUserData } from '../../../data/genshin/user-data'
-import { MAX_LIKE_SCORE, MIN_LIKE_SCORE } from '../../../data/settings'
+import { FAVORITE_MAX_VALUE, FAVORITE_MIN_VALUE } from '../../../data/settings'
 import { type CharacterCardProps } from '../_types'
 
-type DataDraft = { [key: string]: string | DataDraft }
+type GenericDataDraft<T> = {
+  [K in keyof T]?: T[K] extends object ? GenericDataDraft<T[K]> : string
+}
+type DataDraft = GenericDataDraft<GenshinCharacterUserData>
 
 const draftValue = (value: unknown): string | DataDraft => {
   if (Array.isArray(value)) return value.join(', ')
@@ -24,7 +27,7 @@ const setDraftValue = (draft: DataDraft, [key, ...rest]: string[], value: string
   if (!key) return draft
   if (!rest.length) return { ...draft, [key]: value }
 
-  const current = draft[key]
+  const current = (draft as any)[key]
   const child = typeof current === 'object' ? current : {}
   return { ...draft, [key]: setDraftValue(child, rest, value) }
 }
@@ -56,7 +59,10 @@ const buildData = (draft: DataDraft): Record<string, unknown> => {
 
     const number = toNumber(value)
     if (number !== undefined) {
-      data[key] = key === 'likeScore' ? clamp(number, MIN_LIKE_SCORE, MAX_LIKE_SCORE) : number
+      data[key] =
+        key === ('favorite' satisfies keyof GenshinCharacterUserData)
+          ? clamp(number, FAVORITE_MIN_VALUE, FAVORITE_MAX_VALUE)
+          : number
     }
   }
 
@@ -72,8 +78,8 @@ const useDraft = (props: CharacterCardProps) => {
   const hasChanges = !isEqual(draftData, savedData)
 
   const getDraftValue = (path: string | undefined, field: string) => {
-    if (!path) return (draft[field] as string | undefined) ?? ''
-    const section = draft[path]
+    if (!path) return ((draft as any)[field] as string | undefined) ?? ''
+    const section = (draft as any)[path]
     return typeof section === 'object' ? ((section[field] as string | undefined) ?? '') : ''
   }
 

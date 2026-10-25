@@ -1,9 +1,11 @@
 import type { GenshinCharacter } from '../../data/genshin/characters'
 import type { GenshinCharacterUserData } from '../../data/genshin/user-data'
+import type { UserPrefs } from '../../state/_user-data'
 
 export interface CharacterCardProps extends ReactProps {
   character: GenshinCharacter
   userData?: GenshinCharacterUserData
+  userPrefs?: UserPrefs
   isOpen?: boolean
   className?: string
   onSave?: (data: GenshinCharacterUserData) => void
@@ -30,4 +32,4 @@ export interface StatField {
 
 export type GenshinStats = NonNullable<GenshinCharacterUserData['stats']>
 export type GenshinTalents = NonNullable<GenshinCharacterUserData['talents']>
-export type GenshinTierScores = NonNullable<GenshinCharacterUserData['tierScores']>
+export type GenshinTierScores = NonNullable<GenshinCharacterUserData['tierLists']>

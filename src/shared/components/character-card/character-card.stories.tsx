@@ -1,16 +1,16 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { CHARACTERS } from '../../data/genshin/characters'
 import { CharacterCard } from './character-card'
 
 const meta: Meta = {
-  title: 'Components / Character Card',
+  title: 'App / Components / Character Card',
   ...defineMeta(CharacterCard, {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
-        likeScore: 5,
-        tierScores: {
+        favorite: 5,
+        tierLists: {
           mainDps: 1,
           subDps: 2,
           support: 3,
@@ -37,6 +37,9 @@ const meta: Meta = {
         },
         tags: ['DPS', 'Main'],
       },
+      userPrefs: {
+        favoriteLabels: {},
+      },
       isOpen: true,
       className: 'bg-color-white w-xl-0 h-xl-8',
     },
@@ -44,7 +47,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof CharacterCard> = {
   tags: ['autodocs', 'controls'],
 }
 

@@ -1,20 +1,20 @@
 import { useTranslation } from 'react-i18next'
-import { TIER_SCORE_COLORS, TIER_SCORE_MARKS } from '../../data/settings'
+import { TIER_LIST_COLORS, TIER_LIST_MARKS } from '../../data/settings'
 
-export interface TierScoreProps extends ReactProps {
+export interface TierListFieldProps extends ReactProps {
   value: number
-  editable?: boolean
+  readonly?: boolean
   noLabel?: boolean
   className?: string
   onChange?: (value: number) => void
 }
 
-export const TierScore = (props: TierScoreProps) => {
-  const { value, editable, noLabel, className, onChange } = props
+export const TierListField = (props: TierListFieldProps) => {
+  const { value, readonly, noLabel, className, onChange } = props
   const { t } = useTranslation()
-  const mark = TIER_SCORE_MARKS[value as keyof typeof TIER_SCORE_MARKS]
-  const color = TIER_SCORE_COLORS[value as keyof typeof TIER_SCORE_COLORS]
-  const count = Object.keys(TIER_SCORE_MARKS).length
+  const mark = TIER_LIST_MARKS[value as keyof typeof TIER_LIST_MARKS]
+  const color = TIER_LIST_COLORS[value as keyof typeof TIER_LIST_COLORS]
+  const count = Object.keys(TIER_LIST_MARKS).length
 
   const handleClick = () => {
     onChange?.((value + 1) % count)
@@ -24,7 +24,7 @@ export const TierScore = (props: TierScoreProps) => {
     <span
       className={cx(
         'gap-xs-1 text-size-sm font-weight-lg flex items-center leading-1',
-        !editable && className,
+        readonly && className,
         !noLabel && 'min-w-sm-8',
       )}
     >
@@ -35,7 +35,8 @@ export const TierScore = (props: TierScoreProps) => {
     </span>
   )
 
-  return editable ? (
+  if (readonly) return content
+  return (
     <button
       type="button"
       className={cx(
@@ -48,7 +49,5 @@ export const TierScore = (props: TierScoreProps) => {
     >
       {content}
     </button>
-  ) : (
-    content
   )
 }

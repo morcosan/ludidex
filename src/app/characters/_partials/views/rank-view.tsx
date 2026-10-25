@@ -57,7 +57,7 @@ const useRanking = (props: RankingProps): RankAxis => {
   const config = VIEW_CONFIGS[view as RankView]
 
   const rankedChars = CHARACTERS.map((character): RankedCharacter | undefined => {
-    const value = config.getValue(character, userData?.genshin.characters[character.id])
+    const value = config.getValue(character, userData?.genshin?.characters[character.id])
     return value === undefined ? undefined : { character, value }
   })
     .filter((entry): entry is RankedCharacter => entry !== undefined)

@@ -1,7 +1,6 @@
-import { LikeScore } from '@app-shared/components/like-score/like-score'
-import { TierScore } from '@app-shared/components/tier-score/tier-score'
+import { FavoriteField, TierListField } from '@app-shared/components'
 import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
-import { MAX_LIKE_SCORE, MIN_LIKE_SCORE, TIER_SCORE_MARKS } from '@app-shared/data/settings'
+import { FAVORITE_LABELS, FAVORITE_MAX_VALUE, FAVORITE_MIN_VALUE, TIER_LIST_MARKS } from '@app-shared/data/settings'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type ReactNode } from 'react'
 import { type DisplayClass } from '../character-listing'
@@ -24,36 +23,39 @@ interface TierViewProps {
 export const TierView = (props: TierViewProps) => {
   const { characters, view, displayClass, contentClass, renderItem } = props
   const userData = useUserDataStore((state) => state.userData)
+  const preferences = useUserDataStore((state) => state.userData?.preferences)
+  const favoriteLabels = { ...FAVORITE_LABELS, ...preferences?.favoriteLabels }
 
-  const TIER_SCORES = Object.keys(TIER_SCORE_MARKS)
+  const TIER_SCORES = Object.keys(TIER_LIST_MARKS)
     .map(Number)
     .sort((a, b) => b - a)
 
   const getTierScore = (character: GenshinCharacter) => {
-    const characterUserData = userData?.genshin.characters[character.id]
-    if (view === 'tier-favorite') return characterUserData?.likeScore ?? 0
-    if (view === 'tier-main-dps') return characterUserData?.tierScores?.mainDps ?? 0
-    if (view === 'tier-sub-dps') return characterUserData?.tierScores?.subDps ?? 0
-    if (view === 'tier-support') return characterUserData?.tierScores?.support ?? 0
-    if (view === 'tier-exploration') return characterUserData?.tierScores?.exploration ?? 0
-    if (view === 'tier-outfit') return characterUserData?.tierScores?.outfit ?? 0
-    if (view === 'tier-personality') return characterUserData?.tierScores?.personality ?? 0
+    const characterUserData = userData?.genshin?.characters[character.id]
+    if (view === 'tier-favorite') return characterUserData?.favorite ?? 0
+    if (view === 'tier-main-dps') return characterUserData?.tierLists?.mainDps ?? 0
+    if (view === 'tier-sub-dps') return characterUserData?.tierLists?.subDps ?? 0
+    if (view === 'tier-support') return characterUserData?.tierLists?.support ?? 0
+    if (view === 'tier-exploration') return characterUserData?.tierLists?.exploration ?? 0
+    if (view === 'tier-outfit') return characterUserData?.tierLists?.outfit ?? 0
+    if (view === 'tier-personality') return characterUserData?.tierLists?.personality ?? 0
     return undefined
   }
 
   const tierGroups = ((): TierGroup[] => {
     if (view === 'tier-favorite') {
-      return Array.from({ length: MAX_LIKE_SCORE - MIN_LIKE_SCORE + 1 }, (_, index) => MAX_LIKE_SCORE - index).map(
-        (value): TierGroup => ({
-          key: String(value),
-          label: <LikeScore value={value} />,
-          characters: characters.filter((character) => getTierScore(character) === value),
-        }),
-      )
+      return Array.from(
+        { length: FAVORITE_MAX_VALUE - FAVORITE_MIN_VALUE + 1 },
+        (_, index) => FAVORITE_MAX_VALUE - index,
+      ).map((value): TierGroup => ({
+        key: String(value),
+        label: <FavoriteField value={value} labels={favoriteLabels} readonly />,
+        characters: characters.filter((character) => getTierScore(character) === value),
+      }))
     }
     return TIER_SCORES.map((score): TierGroup => ({
       key: String(score),
-      label: <TierScore value={score} />,
+      label: <TierListField value={score} readonly />,
       characters: characters.filter((character) => getTierScore(character) === score),
     }))
   })()
@@ -63,8 +65,8 @@ export const TierView = (props: TierViewProps) => {
       {tierGroups.map(({ key, label, characters: tierCharacters }) => (
         <div key={key} className={cx('flex items-start items-stretch', displayClass.tierRow)}>
           {/* TIER LABEL */}
-          <div className="min-w-md-5 px-xs-2 border-color-border-on-glass flex items-start border-r">
-            <div className={cx('flex-center mx-0! flex', displayClass.tierRow, displayClass.list)}>{label}</div>
+          <div className="w-md-6 px-xs-2 border-color-border-on-glass flex items-start border-r">
+            <div className={cx('mx-0! flex w-full', displayClass.tierRow, displayClass.list)}>{label}</div>
           </div>
           {/* CHARACTERS */}
           <ul className={contentClass}>{tierCharacters.map(renderItem)}</ul>

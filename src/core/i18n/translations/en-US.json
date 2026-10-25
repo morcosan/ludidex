@@ -14,42 +14,68 @@
       "clearSearch": "Clear search",
       "clearSelection": "Clear selection",
       "discardChanges": "Discard changes",
+      "download": "Download",
       "edit": "Edit",
+      "editLabels": "Edit labels",
+      "exportData": "Export data",
+      "importData": "Import data",
+      "next": "Next",
+      "replaceData": "Replace data",
       "save": "Save",
       "saveChanges": "Save changes",
-      "sort": "Sort"
+      "searchSettings": "Search settings",
+      "sort": "Sort",
+      "upload": "Upload"
     },
     "label": {
       "appTitle": "LudiDex",
+      "background": "Background",
+      "characters": "Characters",
       "colorMode": "Color mode",
+      "current": "Current",
       "currentGame": "Current game",
+      "dataExportImport": "Data export / import",
+      "dataSize": "Data size",
+      "dataValues": "Data values",
       "default": "Default",
       "displaySize": "Display size",
+      "exportData": "Export data",
       "favorite": "Favorite",
+      "favoriteLabels": "Favorite labels",
+      "importData": "Import data",
       "large": "Large",
       "listing": "Listing",
       "medium": "Medium",
       "modeDark": "Dark",
       "modeLight": "Light",
       "none": "None",
+      "preferences": "Preferences",
       "settings": "Settings",
       "small": "Small",
+      "uploaded": "Uploaded",
       "view": "View",
       "viewSettings": "View settings",
       "withFilters_one": "with {count} filter",
-      "withFilters_other": "with {count} filters"
+      "withFilters_other": "with {count} filters",
+      "withSearch": "search: \"{keyword}\""
     },
     "placeholder": {
       "search": "Search..."
     },
     "status": {
+      "dataExportFailed": "Data could not be exported",
+      "dataExported": "Data exported",
+      "dataImportFailed": "Data could not be imported",
+      "dataImported": "Data imported",
+      "invalidDataFile": "This file is not a valid LudiDex data export",
       "loading": "Loading..."
     }
   },
   "nav": {
     "label": {
-      "dashboard": "Dashboard",
       "characters": "Characters",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
       "teams": "Teams"
     }
   },

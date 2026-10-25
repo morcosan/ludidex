@@ -1,6 +1,6 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { XIcon } from 'lucide-react'
 import { useId } from 'react'
+import { createPortal } from 'react-dom'
 import { useI18nService } from '../../services/i18n-service'
 import { useDataProps } from '../../utilities/react-utils'
 import { Button } from '../button/button'
@@ -26,7 +26,7 @@ export const Modal = (props: ModalProps) => {
   const dataProps = useDataProps(props)
   const modalId = useId()
 
-  return (
+  return createPortal(
     <div css={rootCss} {...dataProps}>
       {/* OVERLAY */}
       <div css={overlayCss} onClick={() => !noDismiss && onClose?.()} />
@@ -46,11 +46,12 @@ export const Modal = (props: ModalProps) => {
           <IconButton
             tooltip={translate('ds.action.close')}
             variant="optional"
+            size="sm"
             className="absolute!"
             css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
             onClick={onClose}
           >
-            <FontAwesomeIcon icon={faXmark} aria-hidden className="mt-xs-0" />
+            <XIcon aria-hidden className="h-xs-8" />
           </IconButton>
         )}
 
@@ -74,6 +75,7 @@ export const Modal = (props: ModalProps) => {
 
       {/* FOCUS TRAP */}
       <div ref={focusTrap2Ref} tabIndex={0} aria-hidden="true" />
-    </div>
+    </div>,
+    document.body,
   )
 }

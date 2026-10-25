@@ -1,9 +1,9 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { ImageSlideshow } from './image-slideshow'
 
 const meta: Meta = {
-  title: 'Components / Image Slideshow',
+  title: 'App / Components / Image Slideshow',
   ...defineMeta(ImageSlideshow, {
     props: {
       srcs: [
@@ -17,10 +17,12 @@ const meta: Meta = {
       duration: 2000,
       className: 'w-xl-0 h-xl-0',
     },
+    events: ['onLoading'],
+    hasMethods: true,
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof ImageSlideshow> = {
   tags: ['autodocs', 'controls'],
 }
 

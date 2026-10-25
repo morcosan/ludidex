@@ -1,20 +1,21 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
+import { FAVORITE_LABELS } from '../../data/settings'
 import { useEffect, useState } from 'react'
-import { LikeScore, type LikeScoreProps } from './like-score'
+import { FavoriteField, type FavoriteFieldProps } from './favorite-field'
 
 const meta: Meta = {
-  title: 'Components / Like Score',
-  ...defineMeta(LikeScore, {
+  title: 'App / Components / Favorite Field',
+  ...defineMeta(FavoriteField, {
     props: {
-      value: 3,
-      editable: false,
-      noLabel: false,
+      value: 5,
+      labels: FAVORITE_LABELS,
+      readonly: false,
       className: '',
     },
     events: ['onChange'],
 
-    render: (props: LikeScoreProps) => {
+    render: (props: FavoriteFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [value, setValue] = useState<number>(props.value)
 
@@ -23,12 +24,12 @@ const meta: Meta = {
         setValue(props.value)
       }, [props.value])
 
-      return <LikeScore {...props} value={value} onChange={setValue} />
+      return <FavoriteField {...props} value={value} onChange={setValue} />
     },
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof FavoriteField> = {
   tags: ['autodocs', 'controls'],
 }
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { type ImageSlideshowProps } from './_types'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { type ImageSlideshowHandle, type ImageSlideshowProps } from './_types'
 
 type Slot = 0 | 1
 type SlotIndexes = [number, number]
@@ -18,28 +18,26 @@ const getDifferentIndex = (current: number, length: number) => {
   return next >= current ? next + 1 : next
 }
 
-export const useSlideshow = (props: ImageSlideshowProps): SlideshowState => {
-  const { srcs, interval, duration } = props
+export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & ImageSlideshowHandle => {
+  const { srcs, interval, duration, onLoading } = props
   const [state, setState] = useState<SlideshowState>(() => {
     const first = getRandomIndex(srcs.length)
     return { indexes: [first, getDifferentIndex(first, srcs.length)], activeSlot: 0 }
   })
+  const swapTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const isSwapping = useRef(false)
   const swapInterval = Math.max(interval, duration * 2)
 
-  useEffect(() => {
-    if (srcs.length < 2) return
-
-    let reloadTimeout: ReturnType<typeof setTimeout> | undefined
+  const next = useCallback(() => {
+    if (srcs.length < 2 || isSwapping.current) return
+    isSwapping.current = true
+    onLoading?.(true)
 
     // Step 1: fade to the other layer
-    const showNext = () => {
-      setState((state) => ({ ...state, activeSlot: getOtherSlot(state.activeSlot) }))
-      clearTimeout(reloadTimeout)
-      reloadTimeout = setTimeout(loadNextIntoHiddenSlot, duration + FADE_END_BUFFER)
-    }
+    setState((state) => ({ ...state, activeSlot: getOtherSlot(state.activeSlot) }))
 
     // Step 2: once the fade is over, preload a new image into the now-hidden layer
-    const loadNextIntoHiddenSlot = () => {
+    const loadNext = () => {
       setState((state) => {
         const hiddenSlot = getOtherSlot(state.activeSlot)
         const visibleIndex = state.indexes[state.activeSlot]
@@ -47,15 +45,21 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState => {
         indexes[hiddenSlot] = getDifferentIndex(visibleIndex, srcs.length)
         return { ...state, indexes }
       })
+      isSwapping.current = false
+      onLoading?.(false)
     }
+    clearTimeout(swapTimeout.current)
+    swapTimeout.current = setTimeout(loadNext, duration + FADE_END_BUFFER)
+  }, [srcs.length, duration, onLoading])
 
-    const interval = setInterval(showNext, swapInterval)
+  useEffect(() => {
+    if (srcs.length < 2) return
+    // Reset the auto swap timer whenever the active layer changes, so manual swaps restart the countdown
+    const timeoutId = setTimeout(next, swapInterval)
+    return () => clearTimeout(timeoutId)
+  }, [srcs.length, swapInterval, next, state.activeSlot])
 
-    return () => {
-      clearInterval(interval)
-      clearTimeout(reloadTimeout)
-    }
-  }, [srcs.length, duration, swapInterval])
+  useEffect(() => () => clearTimeout(swapTimeout.current), [])
 
-  return state
+  return { ...state, next }
 }

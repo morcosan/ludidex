@@ -1,9 +1,9 @@
-import { Button, defineMeta } from '@storybook-docs'
+import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Tag } from './tag'
 
 const meta: Meta = {
-  title: 'Components / Tag',
+  title: 'App / Components / Tag',
   ...defineMeta(Tag, {
     slots: {
       children: 'DPS',
@@ -14,7 +14,7 @@ const meta: Meta = {
   }),
 }
 
-const Default: StoryObj<typeof Button> = {
+const Default: StoryObj<typeof Tag> = {
   tags: ['autodocs', 'controls'],
 }
 

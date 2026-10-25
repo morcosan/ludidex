@@ -1,17 +1,17 @@
-export const LIKE_SCORE_LABELS = {
+export const FAVORITE_LABELS = {
   '-1': 'Dislike',
   0: '--',
   1: 'Boring',
-  2: 'OK-ish',
-  3: 'Cool',
-  4: 'Love',
+  2: 'Decent',
+  3: 'Good',
+  4: 'Great',
   5: 'Favorite',
 } as const
 
-export const MIN_LIKE_SCORE = Math.min(...Object.keys(LIKE_SCORE_LABELS).map(Number))
-export const MAX_LIKE_SCORE = Math.max(...Object.keys(LIKE_SCORE_LABELS).map(Number))
+export const FAVORITE_MIN_VALUE = Math.min(...Object.keys(FAVORITE_LABELS).map(Number))
+export const FAVORITE_MAX_VALUE = Math.max(...Object.keys(FAVORITE_LABELS).map(Number))
 
-export const TIER_SCORE_MARKS = {
+export const TIER_LIST_MARKS = {
   0: '-',
   1: 'D',
   2: 'C',
@@ -21,7 +21,7 @@ export const TIER_SCORE_MARKS = {
   6: 'SS',
 } as const
 
-export const TIER_SCORE_COLORS = {
+export const TIER_LIST_COLORS = {
   0: '#97919E',
   1: '#9B6BFF',
   2: '#22B8F0',

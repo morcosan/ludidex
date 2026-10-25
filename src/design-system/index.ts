@@ -12,6 +12,7 @@ export * from './components/icon-button/icon-button'
 export * from './components/image/image'
 export * from './components/loading-screen/loading-screen'
 export * from './components/modal/modal'
+export * from './components/popover/popover'
 export * from './components/select-field/select-field'
 export * from './components/text-field/text-field'
 

@@ -11,6 +11,7 @@ body {
   padding: 0 !important;
   width: unset !important;
   color: var(--ds-color-text-default);
+  font-size: var(--ds-font-size-md);
   font-family: var(--ds-font-family-sans);
 }
 

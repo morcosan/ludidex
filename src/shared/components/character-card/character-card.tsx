@@ -2,7 +2,7 @@ import { Card, IconButton, Image, TextField } from '@design-system'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CheckCheck } from 'lucide-react'
+import { CheckCheckIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -11,9 +11,10 @@ import {
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
 } from '../../data/genshin/core'
-import { LikeScore } from '../like-score/like-score'
+import { FAVORITE_LABELS } from '../../data/settings'
+import { FavoriteField } from '../favorite-field/favorite-field'
 import { Tag } from '../tag/tag'
-import { TierScore } from '../tier-score/tier-score'
+import { TierListField } from '../tier-list-field/tier-list-field'
 import { CharacterTrait } from './_partials/character-trait'
 import { StatsSection, type SectionItem } from './_partials/stats-section'
 import { useData } from './_partials/use-data'
@@ -23,8 +24,9 @@ import { type CharacterCardProps } from './_types'
 export { type CharacterCardProps }
 
 export const CharacterCard = (props: CharacterCardProps) => {
-  const { character, userData, isOpen = true, className, onClose } = props
+  const { character, userData, userPrefs, isOpen = true, className, onClose } = props
   const { t } = useTranslation()
+  const favoriteLabels = { ...FAVORITE_LABELS, ...userPrefs?.favoriteLabels }
   const { statSections, tierFields } = useData(props)
   const {
     draft,
@@ -63,14 +65,17 @@ export const CharacterCard = (props: CharacterCardProps) => {
           <Image srcs={character.bannerUrls} alt="" className="pointer-events-none relative aspect-3/2 object-cover" />
           <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
 
-          {/* LIKE SCORE */}
-          <div className="top-xs-0 left-xs-0 bg-color-white px-xs-2 py-xs-0 absolute z-10 flex rounded-md">
-            <LikeScore
-              value={toNumber(draft.likeScore as string) || 0}
-              editable={isEditing}
-              className={cx(isEditing && 'my-xs-1')}
-              onChange={(value) => handleDraftChange('likeScore')(String(value))}
-            />
+          {/* FAVORITE */}
+          <div className="top-xs-0 left-xs-0 right-xs-0 absolute z-10">
+            <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+              <FavoriteField
+                value={toNumber(draft.favorite) || 0}
+                labels={favoriteLabels}
+                readonly={!isEditing}
+                className={cx(isEditing ? 'my-xs-1' : 'mr-xs-0')}
+                onChange={(value) => handleDraftChange('favorite' satisfies keyof typeof draft)(String(value))}
+              />
+            </div>
           </div>
         </div>
 
@@ -105,7 +110,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
                 value={draft.tags as string}
                 placeholder={t('game.placeholder.tags')}
                 multiline
-                onChange={handleDraftChange('tags')}
+                onChange={handleDraftChange('tags' satisfies keyof typeof draft)}
               />
             ) : userData?.tags?.length ? (
               <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
@@ -125,10 +130,12 @@ export const CharacterCard = (props: CharacterCardProps) => {
               return {
                 label,
                 value: (
-                  <TierScore
-                    value={toNumber(getDraftValue('tierScores', field)) || 0}
-                    editable={isEditing}
-                    onChange={(value) => handleDraftChange('tierScores', field)(String(value))}
+                  <TierListField
+                    value={toNumber(getDraftValue('tierLists' satisfies keyof typeof draft, field)) || 0}
+                    readonly={!isEditing}
+                    onChange={(value) =>
+                      handleDraftChange('tierLists' satisfies keyof typeof draft, field)(String(value))
+                    }
                   />
                 ),
               }
@@ -166,7 +173,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             size="md"
             variant="caution"
             tooltip={t('general.action.discardChanges')}
-            className="-top-xs-5 -right-xs-6 absolute! z-10"
+            className="-top-xs-5 -right-xs-6 z-sticky absolute!"
             floating
             onClick={handleClickDiscard}
           >
@@ -177,7 +184,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             size="md"
             variant="default"
             tooltip={t('ds.action.close')}
-            className="-top-xs-5 -right-xs-6 absolute! z-10"
+            className="-top-xs-5 -right-xs-6 z-sticky absolute!"
             floating
             onClick={handleClickClose}
           >
@@ -191,18 +198,18 @@ export const CharacterCard = (props: CharacterCardProps) => {
             size="md"
             variant="primary"
             tooltip={t('general.action.saveChanges')}
-            className="top-sm-5 -right-xs-6 absolute! z-10"
+            className="top-sm-5 -right-xs-6 z-sticky absolute!"
             floating
             onClick={handleClickSave}
           >
-            <CheckCheck aria-hidden className="h-sm-0 w-sm-0" />
+            <CheckCheckIcon aria-hidden className="h-sm-0 w-sm-0" />
           </IconButton>
         ) : (
           <IconButton
             size="md"
             variant="default"
             tooltip={t('general.action.edit')}
-            className="top-sm-5 -right-xs-6 absolute! z-10"
+            className="top-sm-5 -right-xs-6 z-sticky absolute!"
             floating
             onClick={handleClickEdit}
           >

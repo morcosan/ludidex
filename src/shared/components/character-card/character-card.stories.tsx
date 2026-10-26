@@ -9,7 +9,7 @@ const meta: Meta = {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
-        favorite: 5,
+        rating: 5,
         tierLists: {
           mainDps: 1,
           subDps: 2,
@@ -38,7 +38,7 @@ const meta: Meta = {
         tags: ['DPS', 'Main'],
       },
       userPrefs: {
-        favoriteLabels: {},
+        ratingLabels: {},
       },
       isOpen: true,
       className: 'bg-color-white w-xl-0 h-xl-8',

@@ -1,8 +1,4 @@
-import { Card, IconButton, Image, TextField } from '@design-system'
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
-import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CheckCheckIcon } from 'lucide-react'
+import { Card, Image, TextField } from '@design-system'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -11,10 +7,13 @@ import {
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
 } from '../../data/genshin/core'
-import { FAVORITE_LABELS } from '../../data/settings'
-import { FavoriteField } from '../favorite-field/favorite-field'
+import { RATING_LABELS } from '../../data/settings'
+import { type CharacterStatus } from '../../state/types'
+import { RatingField } from '../rating-field/rating-field'
+import { StatusField } from '../status-field/status-field'
 import { Tag } from '../tag/tag'
 import { TierListField } from '../tier-list-field/tier-list-field'
+import { Actions } from './_partials/actions'
 import { CharacterTrait } from './_partials/character-trait'
 import { StatsSection, type SectionItem } from './_partials/stats-section'
 import { useData } from './_partials/use-data'
@@ -26,7 +25,7 @@ export { type CharacterCardProps }
 export const CharacterCard = (props: CharacterCardProps) => {
   const { character, userData, userPrefs, isOpen = true, className, onClose } = props
   const { t } = useTranslation()
-  const favoriteLabels = { ...FAVORITE_LABELS, ...userPrefs?.favoriteLabels }
+  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
   const { statSections, tierFields } = useData(props)
   const {
     draft,
@@ -65,15 +64,25 @@ export const CharacterCard = (props: CharacterCardProps) => {
           <Image srcs={character.bannerUrls} alt="" className="pointer-events-none relative aspect-3/2 object-cover" />
           <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
 
-          {/* FAVORITE */}
-          <div className="top-xs-0 left-xs-0 right-xs-0 absolute z-10">
+          <div className="top-xs-0 left-xs-0 right-xs-0 gap-y-xs-0 absolute z-10 flex flex-col">
+            {/* RATING */}
             <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
-              <FavoriteField
-                value={toNumber(draft.favorite) || 0}
-                labels={favoriteLabels}
+              <RatingField
+                value={toNumber(draft.rating) || 0}
+                labels={ratingLabels}
                 readonly={!isEditing}
-                className={cx(isEditing ? 'my-xs-1' : 'mr-xs-0')}
-                onChange={(value) => handleDraftChange('favorite' satisfies keyof typeof draft)(String(value))}
+                className={cx(isEditing ? 'w-md-6 my-xs-1' : 'mr-xs-0')}
+                onChange={(value) => handleDraftChange('rating' satisfies keyof typeof draft)(String(value))}
+              />
+            </div>
+
+            {/* STATUS */}
+            <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+              <StatusField
+                value={isEditing ? (draft.status as CharacterStatus | undefined) : userData?.status}
+                readonly={!isEditing}
+                className={cx(isEditing ? 'my-xs-1 w-md-6' : 'mr-xs-0')}
+                onChange={(value) => handleDraftChange('status' satisfies keyof typeof draft)(value ?? '')}
               />
             </div>
           </div>
@@ -167,55 +176,14 @@ export const CharacterCard = (props: CharacterCardProps) => {
           ))}
         </div>
 
-        {/* CLOSE / DISCARD BUTTON */}
-        {isEditing && hasChanges ? (
-          <IconButton
-            size="md"
-            variant="caution"
-            tooltip={t('general.action.discardChanges')}
-            className="-top-xs-5 -right-xs-6 z-sticky absolute!"
-            floating
-            onClick={handleClickDiscard}
-          >
-            <FontAwesomeIcon icon={faTrashCan} aria-hidden className="text-size-md text-color-button-caution-text" />
-          </IconButton>
-        ) : (
-          <IconButton
-            size="md"
-            variant="default"
-            tooltip={t('ds.action.close')}
-            className="-top-xs-5 -right-xs-6 z-sticky absolute!"
-            floating
-            onClick={handleClickClose}
-          >
-            <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md mt-xs-0" />
-          </IconButton>
-        )}
-
-        {/* EDIT / SAVE BUTTON */}
-        {isEditing ? (
-          <IconButton
-            size="md"
-            variant="primary"
-            tooltip={t('general.action.saveChanges')}
-            className="top-sm-5 -right-xs-6 z-sticky absolute!"
-            floating
-            onClick={handleClickSave}
-          >
-            <CheckCheckIcon aria-hidden className="h-sm-0 w-sm-0" />
-          </IconButton>
-        ) : (
-          <IconButton
-            size="md"
-            variant="default"
-            tooltip={t('general.action.edit')}
-            className="top-sm-5 -right-xs-6 z-sticky absolute!"
-            floating
-            onClick={handleClickEdit}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} aria-hidden className="text-size-md" />
-          </IconButton>
-        )}
+        <Actions
+          isEditing={isEditing}
+          hasChanges={hasChanges}
+          onDiscard={handleClickDiscard}
+          onClose={handleClickClose}
+          onSave={handleClickSave}
+          onEdit={handleClickEdit}
+        />
       </div>
     </Card>
   )

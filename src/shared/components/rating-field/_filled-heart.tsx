@@ -1,6 +1,6 @@
 import { clamp } from 'lodash-es'
 import { CrownIcon, HeartIcon } from 'lucide-react'
-import { FAVORITE_MAX_VALUE } from '../../data/settings'
+import { RATING_MAX_VALUE } from '../../data/settings'
 
 interface HeartProps extends ReactProps {
   value: number
@@ -11,8 +11,8 @@ interface HeartProps extends ReactProps {
 
 export const FilledHeart = ({ value, outlineClass, fillClass, iconClass, className }: HeartProps) => {
   const FILL_RATIO = [0, 1.5, 2.3, 3, 5, 5]
-  const fill = FILL_RATIO[value] ?? FAVORITE_MAX_VALUE
-  const height = clamp((fill / FAVORITE_MAX_VALUE) * 100, 0, 100)
+  const fill = FILL_RATIO[value] ?? RATING_MAX_VALUE
+  const height = clamp((fill / RATING_MAX_VALUE) * 100, 0, 100)
 
   return (
     <span className={cx('relative block', iconClass, className)}>
@@ -24,7 +24,7 @@ export const FilledHeart = ({ value, outlineClass, fillClass, iconClass, classNa
         </span>
       )}
 
-      {value >= FAVORITE_MAX_VALUE && (
+      {value >= RATING_MAX_VALUE && (
         <CrownIcon
           aria-hidden
           fill="currentColor"

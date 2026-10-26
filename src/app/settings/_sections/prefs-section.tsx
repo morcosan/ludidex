@@ -16,7 +16,7 @@ export const PrefsSection = (props: SectionProps) => {
   return (
     <PageSection id={id} title={title} className={className} bodyClassName="pt-xs-5">
       <div className="flex items-center">
-        <TextHighlight text={t('general.label.favoriteLabels')} keyword={keyword} />:
+        <TextHighlight text={t('general.label.ratingLabels')} keyword={keyword} />:
         <Button
           state={isEditingLabels ? 'loading' : 'active'}
           className="ml-xs-3"

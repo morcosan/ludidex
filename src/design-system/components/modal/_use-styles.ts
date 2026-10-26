@@ -94,7 +94,7 @@ export const useStyles = (props: Props) => {
     visibility: isVisible ? 'visible' : 'hidden',
     padding: cssVars.modalMargin,
     zIndex: cssVars.modalZIndex,
-    transition: isVisible ? 'none' : `visibility ${ANIM_TIME.HIDE}ms ease-in`,
+    transition: isVisible ? 'none' : `visibility ${ANIM_TIME.HIDE}ms`,
   }
   const overlayCss: CSSObject = {
     ...CSS__FIXED_OVERLAY,
@@ -108,7 +108,10 @@ export const useStyles = (props: Props) => {
     ...modalCardCss,
     ...modalContentCss,
     transform: isVisible ? 'translateY(0)' : `translateY(calc(-2 * ${cssVars.modalMargin}))`,
-    transition: `transform ${ANIM_TIME.SHOW}ms ease-out`,
+    opacity: isVisible ? 1 : 0,
+    transition: isVisible
+      ? `transform ${ANIM_TIME.SHOW}ms ease-out, opacity ${ANIM_TIME.SHOW}ms ease-out`
+      : `transform ${ANIM_TIME.HIDE}ms ease-in, opacity ${ANIM_TIME.HIDE}ms ease-in`,
   }
 
   return {

@@ -1,5 +1,5 @@
 import { type ComboboxItem } from '@mantine/core'
-import { type CSSProperties } from 'react'
+import { type CSSProperties, type ReactNode } from 'react'
 
 export type SelectOption = ComboboxItem
 export type SelectValue = string | null
@@ -13,6 +13,7 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
   id: string
   value: SelectValue
   options: SelectOption[]
+  optionFn?: (option: SelectOption) => ReactNode
   /** Property that determines the height and padding for the field */
   size?: SelectFieldSize
   placeholder?: string
@@ -20,6 +21,7 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
   disabled?: boolean
   ariaDescription?: string
   ariaDescribedBy?: string
+  prefix?: ReactNode
   /** CSS class attribute for the wrapper element */
   className?: string
   /** CSS style attribute for the wrapper element */

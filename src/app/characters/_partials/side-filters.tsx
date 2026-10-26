@@ -1,19 +1,19 @@
 import { PageSection } from '@app-shared/components'
-import { type DisplaySize } from '@app-shared/state/use-user-settings'
+import { type DisplaySize } from '@app-shared/state/types'
 import { Button, SelectField, type SelectOption } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type View, type ViewOption } from './use-view-options'
+import { type ViewOption, type ViewType } from './use-view-options'
 
 interface SideFiltersProps extends ReactProps {
-  view: View
+  viewType: ViewType
   viewOptions: ViewOption[]
   displaySize: DisplaySize
-  onChangeView: (view: View) => void
+  onChangeView: (viewType: ViewType) => void
   onChangeDisplaySize: (size: DisplaySize) => void
 }
 
 export const SideFilters = (props: SideFiltersProps) => {
-  const { displaySize, view, viewOptions, className, onChangeDisplaySize, onChangeView } = props
+  const { displaySize, viewType, viewOptions, className, onChangeDisplaySize, onChangeView } = props
   const { t } = useTranslation()
 
   const displaySizeOptions: SelectOption[] = [
@@ -24,14 +24,14 @@ export const SideFilters = (props: SideFiltersProps) => {
 
   return (
     <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
-      {/* VIEW TYPE */}
+      {/* VIEW TYPES */}
       <PageSection title={t('general.label.view')} bodyClassName="gap-xs-0">
         {viewOptions.map(({ value, label, icon }) => (
           <Button
             key={value}
             variant="menu-default"
             size="md"
-            state={view === value ? 'selected' : 'active'}
+            state={viewType === value ? 'selected' : 'active'}
             className="w-full"
             onClick={() => onChangeView(value)}
           >

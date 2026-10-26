@@ -1,8 +1,9 @@
+import { RATING_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 
-const genshinCharacterSchema_v0 = z.object({
-  likeScore: z.number().optional(),
-  tierScores: z
+const GenshinCharacterSchema_v0 = z.object({
+  favorite: z.number().optional(),
+  tierLists: z
     .object({
       mainDps: z.number().optional(),
       subDps: z.number().optional(),
@@ -39,7 +40,14 @@ const genshinCharacterSchema_v0 = z.object({
 const UserDataSchema_v0 = z.object({
   genshin: z
     .object({
-      characters: z.record(z.string(), genshinCharacterSchema_v0),
+      characters: z.record(z.string(), GenshinCharacterSchema_v0),
+    })
+    .optional(),
+  preferences: z
+    .object({
+      ratingLabels: z
+        .object(Object.fromEntries(Object.keys(RATING_LABELS).map((key) => [key, z.string().optional()])))
+        .optional(),
     })
     .optional(),
 })

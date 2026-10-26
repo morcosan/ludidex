@@ -1,7 +1,7 @@
 import { clamp, isEqual } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
-import { type GenshinCharacterUserData } from '../../../data/genshin/user-data'
-import { FAVORITE_MAX_VALUE, FAVORITE_MIN_VALUE } from '../../../data/settings'
+import { RATING_MAX_VALUE, RATING_MIN_VALUE } from '../../../data/settings'
+import { type GenshinCharacterUserData } from '../../../state/types'
 import { type CharacterCardProps } from '../_types'
 
 type GenericDataDraft<T> = {
@@ -48,7 +48,7 @@ const buildData = (draft: DataDraft): Record<string, unknown> => {
       continue
     }
 
-    if (key === 'tags') {
+    if (key === ('tags' satisfies keyof typeof draft)) {
       const tags = value
         .split(/[,\n]/)
         .map((tag) => tag.trim())
@@ -57,12 +57,15 @@ const buildData = (draft: DataDraft): Record<string, unknown> => {
       continue
     }
 
+    if (key === ('status' satisfies keyof typeof draft)) {
+      if (value) data[key] = value
+      continue
+    }
+
     const number = toNumber(value)
     if (number !== undefined) {
       data[key] =
-        key === ('favorite' satisfies keyof GenshinCharacterUserData)
-          ? clamp(number, FAVORITE_MIN_VALUE, FAVORITE_MAX_VALUE)
-          : number
+        key === ('rating' satisfies keyof typeof draft) ? clamp(number, RATING_MIN_VALUE, RATING_MAX_VALUE) : number
     }
   }
 

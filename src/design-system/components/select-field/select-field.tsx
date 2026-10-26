@@ -21,8 +21,10 @@ export const SelectField = (props: SelectFieldProps) => {
     onBlur,
     onChange,
     onFocus,
+    optionFn,
     options,
     placeholder,
+    prefix,
     ref,
     size = 'md',
     style,
@@ -42,8 +44,10 @@ export const SelectField = (props: SelectFieldProps) => {
 
   const getSelectProps = (css: Function): SelectProps => ({
     id: id,
-    data: options,
     value: value,
+    data: options,
+    renderOption: optionFn ? ({ option }) => optionFn(option) : undefined,
+    leftSection: prefix,
     placeholder: placeholder,
     clearable: clearable && !disabled,
     allowDeselect: false,

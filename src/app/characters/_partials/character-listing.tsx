@@ -1,10 +1,11 @@
 import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
-import { type DisplaySize } from '@app-shared/state/use-user-settings'
+import { type DisplaySize } from '@app-shared/state/types'
+import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useTranslation } from 'react-i18next'
 import { CharacterItem } from './character-item'
-import { type View } from './use-view-options'
-import { RankView } from './views/rank-view'
-import { TierView } from './views/tier-view'
+import { type ViewType } from './use-view-options'
+import { SortingView } from './views/sorting-view'
+import { TierListView } from './views/tier-list-view'
 
 export interface DisplayClass {
   image: string
@@ -36,18 +37,19 @@ const DISPLAY_CLASSES: Record<DisplaySize, DisplayClass> = {
 
 interface CharacterListingProps {
   characters: GenshinCharacter[]
-  view: View
+  viewType: ViewType
   displaySize: DisplaySize
   selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, view, displaySize, selectedItemId, onClickItem } = props
+  const { characters, viewType, displaySize, selectedItemId, onClickItem } = props
   const { t } = useTranslation()
+  const userData = useUserDataStore((state) => state.userData?.genshin)
 
-  const isTierView = view.startsWith('tier-')
-  const isRankView = view.startsWith('rank-')
+  const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
+  const isSortingView = viewType.startsWith('sort-')
 
   const displayClass = DISPLAY_CLASSES[displaySize]
   const contentClass = cx('flex h-fit flex-1 flex-wrap', displayClass.list)
@@ -58,6 +60,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
         character={character}
         imageClassName={displayClass.image}
         labelClassName={displayClass.name}
+        status={userData?.characters?.[character.id]?.status}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />
@@ -66,20 +69,20 @@ export const CharacterListing = (props: CharacterListingProps) => {
 
   return (
     <div className="pr-xs-3 flex min-h-0 flex-1 overflow-y-auto">
-      {characters.length === 0 && !isRankView ? (
+      {characters.length === 0 && !isSortingView ? (
         <p className="text-size-sm text-color-text-subtle">{t('game.status.empty')}</p>
-      ) : isTierView ? (
-        <TierView
+      ) : isTierListView ? (
+        <TierListView
           characters={characters}
-          view={view}
+          viewType={viewType}
           displayClass={displayClass}
           contentClass={contentClass}
           renderItem={renderItem}
         />
-      ) : isRankView ? (
-        <RankView
+      ) : isSortingView ? (
+        <SortingView
           characters={characters}
-          view={view}
+          viewType={viewType}
           displayClass={displayClass}
           contentClass={contentClass}
           renderItem={renderItem}

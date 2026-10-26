@@ -1,21 +1,21 @@
 import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { FAVORITE_LABELS } from '../../data/settings'
 import { useEffect, useState } from 'react'
-import { FavoriteField, type FavoriteFieldProps } from './favorite-field'
+import { RATING_LABELS } from '../../data/settings'
+import { RatingField, type RatingFieldProps } from './rating-field'
 
 const meta: Meta = {
-  title: 'App / Components / Favorite Field',
-  ...defineMeta(FavoriteField, {
+  title: 'App / Components / Rating Field',
+  ...defineMeta(RatingField, {
     props: {
       value: 5,
-      labels: FAVORITE_LABELS,
+      labels: RATING_LABELS,
       readonly: false,
       className: '',
     },
     events: ['onChange'],
 
-    render: (props: FavoriteFieldProps) => {
+    render: (props: RatingFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [value, setValue] = useState<number>(props.value)
 
@@ -24,12 +24,12 @@ const meta: Meta = {
         setValue(props.value)
       }, [props.value])
 
-      return <FavoriteField {...props} value={value} onChange={setValue} />
+      return <RatingField {...props} value={value} onChange={setValue} />
     },
   }),
 }
 
-const Default: StoryObj<typeof FavoriteField> = {
+const Default: StoryObj<typeof RatingField> = {
   tags: ['autodocs', 'controls'],
 }
 

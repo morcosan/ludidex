@@ -1,7 +1,7 @@
-import { defineMeta, loremArray, loremFalse, loremFullName } from '@storybook-docs'
+import { defineMeta, loremArray, loremFalse, loremFullName, SelectField } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
-import { SelectField, type SelectFieldProps, type SelectOption } from './select-field'
+import { type SelectFieldProps, type SelectOption } from './select-field'
 
 const meta: Meta = {
   title: 'Design System / Components / Select Field',
@@ -14,12 +14,14 @@ const meta: Meta = {
         label: loremFullName(),
         disabled: loremFalse(),
       })),
+      optionFn: '(option) => option.label' as any,
       size: 'md',
       placeholder: '',
       clearable: false,
       disabled: false,
       ariaDescription: '',
       ariaDescribedBy: '',
+      prefix: '',
       className: '',
       style: {},
     },
@@ -36,7 +38,15 @@ const meta: Meta = {
         setValue(props.value)
       }, [props.value])
 
-      return <SelectField {...props} value={value} onChange={setValue} />
+      return (
+        <SelectField
+          {...props}
+          value={value}
+          // eslint-disable-next-line no-eval
+          optionFn={props.optionFn && eval(props.optionFn as unknown as string)}
+          onChange={setValue}
+        />
+      )
     },
   }),
 }

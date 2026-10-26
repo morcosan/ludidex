@@ -1,7 +1,6 @@
 import { create } from 'zustand'
-import { type GenshinCharacterUserData } from '../data/genshin/user-data'
-import { FAVORITE_LABELS } from '../data/settings'
-import { EMPTY_USER_DATA, type FavoriteLabels, type UserData } from './_user-data'
+import { RATING_LABELS } from '../data/settings'
+import { EMPTY_USER_DATA, type GenshinCharacterUserData, type RatingLabels, type UserData } from './types'
 import { migrate_v0_to_v1 } from './versions/migrate_v0_to_v1'
 import { UserDataSchema_v0 } from './versions/schema_v0'
 import { UserDataSchema_v1 } from './versions/schema_v1'
@@ -13,7 +12,7 @@ interface UserDataStore {
   loadUserData(): void
   saveUserData(): void
   replaceUserData(userData: UserData): void
-  setFavoriteLabels(favoriteLabels: Partial<FavoriteLabels>): void
+  setRatingLabels(ratingLabels: Partial<RatingLabels>): void
   setGenshinCharacter(characterId: string, data: GenshinCharacterUserData): void
 }
 
@@ -24,7 +23,7 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     const stored = localStorage.getItem(USER_DATA_COOKIE_KEY)
     if (!stored) return
     try {
-      set({ userData: parseUserData(JSON.parse(stored)) })
+      get().replaceUserData(parseUserData(JSON.parse(stored)))
     } catch (error) {
       console.error(`Failed parsing '${USER_DATA_COOKIE_KEY}' from local storage\n`, error)
     }
@@ -42,16 +41,16 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     set({ userData: parsed })
   },
 
-  setFavoriteLabels(labels) {
-    const overrides: Partial<FavoriteLabels> = {}
-    for (const key of Object.keys(FAVORITE_LABELS) as (keyof FavoriteLabels)[]) {
+  setRatingLabels(labels) {
+    const overrides: Partial<RatingLabels> = {}
+    for (const key of Object.keys(RATING_LABELS) as (keyof RatingLabels)[]) {
       const label = labels[key]
-      if (label && label !== FAVORITE_LABELS[key]) overrides[key] = label
+      if (label && label !== RATING_LABELS[key]) overrides[key] = label
     }
 
     set((state) => {
       const userData = state.userData ?? EMPTY_USER_DATA
-      return { userData: { ...userData, preferences: { ...userData.preferences, favoriteLabels: overrides } } }
+      return { userData: { ...userData, preferences: { ...userData.preferences, ratingLabels: overrides } } }
     })
     get().saveUserData()
   },
@@ -94,5 +93,4 @@ const parseUserData = (data: unknown): UserData => {
   throw null
 }
 
-export * from './_user-data'
 export { parseUserData, USER_DATA_COOKIE_KEY, useUserDataStore }

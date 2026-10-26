@@ -1,25 +1,25 @@
-import { type FavoriteLabels } from '@app-shared/state/_user-data'
+import { type RatingLabels } from '@app-shared/state/types'
 import { ThumbsDownIcon } from 'lucide-react'
-import { FAVORITE_LABELS, FAVORITE_MAX_VALUE, FAVORITE_MIN_VALUE } from '../../data/settings'
+import { RATING_LABELS, RATING_MAX_VALUE, RATING_MIN_VALUE } from '../../data/settings'
 import { FilledHeart } from './_filled-heart'
 
-export interface FavoriteFieldProps extends ReactProps {
+export interface RatingFieldProps extends ReactProps {
   value: number
-  labels?: FavoriteLabels
+  labels?: RatingLabels
   readonly?: boolean
   className?: string
   onChange?: (value: number) => void
 }
 
-export const FavoriteField = (props: FavoriteFieldProps) => {
+export const RatingField = (props: RatingFieldProps) => {
   const { value, labels, readonly, className, onChange } = props
-  const label = value <= FAVORITE_MAX_VALUE ? labels?.[value as keyof typeof FAVORITE_LABELS] : ''
+  const label = value <= RATING_MAX_VALUE ? labels?.[value as keyof typeof RATING_LABELS] : ''
 
-  const handleClick = () => onChange?.(value >= FAVORITE_MAX_VALUE ? FAVORITE_MIN_VALUE : value + 1)
+  const handleClick = () => onChange?.(value >= RATING_MAX_VALUE ? RATING_MIN_VALUE : value + 1)
 
   const content = (
-    <span className={cx('gap-xs-1 flex max-w-full items-center', readonly && className)}>
-      {value <= FAVORITE_MIN_VALUE ? (
+    <span className={cx('gap-xs-1 flex max-w-full items-center', readonly && className, readonly && 'h-field-h-xs')}>
+      {value <= RATING_MIN_VALUE ? (
         <ThumbsDownIcon aria-hidden fill="currentColor" className="h-xs-8 w-xs-8 min-w-xs-8 text-color-text-default" />
       ) : (
         <FilledHeart
@@ -30,7 +30,7 @@ export const FavoriteField = (props: FavoriteFieldProps) => {
           className="-translate-y-px"
         />
       )}
-      {labels && <span className="ml-xs-0 text-size-sm font-weight-lg translate-y-px truncate">{label}</span>}
+      {labels && <span className="ml-xs-0 text-size-sm font-weight-lg truncate">{label}</span>}
     </span>
   )
 

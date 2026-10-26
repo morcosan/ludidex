@@ -1,5 +1,6 @@
 import { PageSection } from '@app-shared/components'
-import { USER_DATA_COOKIE_KEY, type UserData, useUserDataStore, parseUserData } from '@app-shared/state/use-user-data'
+import { type UserData } from '@app-shared/state/types'
+import { parseUserData, USER_DATA_COOKIE_KEY, useUserDataStore } from '@app-shared/state/use-user-data'
 import { getDateAsYYYYMMDD } from '@app-shared/utils/various'
 import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'

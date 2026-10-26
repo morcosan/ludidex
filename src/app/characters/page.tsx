@@ -1,6 +1,6 @@
 import { Breadcrumb, CharacterCard } from '@app-shared/components'
 import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
-import { type GenshinCharacterUserData } from '@app-shared/data/genshin/user-data'
+import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useState } from 'react'
@@ -21,7 +21,7 @@ export default function Page() {
   const { filters, handleFiltersChange } = useFilterParams()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const { view, viewOptions, viewLabel, handleViewChange } = useViewOptions()
+  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions()
 
   const characters = CHARACTERS.filter(({ element, weapon, nation }) => {
     return (
@@ -57,7 +57,7 @@ export default function Page() {
       <div className="flex h-full flex-1 flex-col">
         <TopFilters value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
 
-        <h1 className={cx('flex', view === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
+        <h1 className={cx('flex', viewType === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
           <Breadcrumb first>
             {t('nav.label.characters')} ({characters.length})
           </Breadcrumb>
@@ -67,7 +67,7 @@ export default function Page() {
 
         <CharacterListing
           characters={characters}
-          view={view}
+          viewType={viewType}
           displaySize={displaySize}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           onClickItem={handleClickCharacter}
@@ -78,7 +78,7 @@ export default function Page() {
       <div className="min-w-xl-0 mx-xs-3 relative h-full">
         <SideFilters
           displaySize={displaySize}
-          view={view}
+          viewType={viewType}
           viewOptions={viewOptions}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
           onChangeDisplaySize={setDisplaySize}

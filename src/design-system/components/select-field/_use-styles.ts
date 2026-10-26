@@ -3,7 +3,7 @@ import { useFieldStyles } from '../_shared/use-field-styles'
 import { type SelectFieldProps } from './_types'
 
 export const useStyles = (props: SelectFieldProps) => {
-  const { size } = props
+  const { size, prefix } = props
   const { cssBaseVars } = useFieldStyles({ size })
 
   const fieldCss = css`
@@ -28,7 +28,7 @@ export const useStyles = (props: SelectFieldProps) => {
       border-radius: ${cssBaseVars.borderRadius};
       background-color: var(--ds-color-bg-field);
       padding-right: var(--ds-spacing-sm-5);
-      padding-left: ${cssBaseVars.textPaddingX};
+      padding-left: ${prefix ? cssBaseVars.minHeight : cssBaseVars.textPaddingX};
       pointer-events: auto;
       color: var(--ds-color-text-default);
       font-size: ${cssBaseVars.fontSize};

@@ -1,7 +1,7 @@
 import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
-import { type CharacterStatus } from '../../state/types'
+import { type CharacterStatus } from '../../data/settings'
 import { StatusField, type StatusFieldProps } from './status-field'
 
 const meta: Meta = {

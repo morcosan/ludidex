@@ -1,9 +1,12 @@
 import type { ParseKeys } from 'i18next'
 
+export type GameId = 'genshin'
+
 export interface Game {
-  id: string
+  id: GameId
   nameKey: ParseKeys
   iconUrls: string[]
+  bannerUrls: string[]
   backgroundUrls: string[]
 }
 
@@ -13,6 +16,32 @@ export const GAMES: Game[] = [
     nameKey: 'game.label.genshin',
     iconUrls: [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd6K1nBJAu2P4JeIGXCRjbZbJMA7GrWqOl0b4J9s35Sg&s=10',
+    ],
+    bannerUrls: [
+      'https://assetsio.gnwcdn.com/Genshin-Impact-Version-7-2-Livestream-Header.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-Livestream-71-Header.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-6.0-Round-Up-Header.jpg',
+      'https://assetsio.gnwcdn.com/genshin-impact-5-7-release-date-banner-events.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-5.5-release-date%2C-5.5-Banners-and-events-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-5.4-release-date%2C-5.4-Banners-and-events-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-5.1-release-date%2C-5.1-Banners-and-events-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.7-release-date%2C-4.7-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.6-release-date%2C-4.6-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.5-release-date%2C-4.5-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.4-release-date%2C-4.4-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.3-release-date%2C-4.3-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.2-release-date%2C-4.2-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.2-release-date%2C-4.2-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.1-release-date%2C-4.1-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-4.0-release-date%2C-4.0-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.8-release-date%2C-3.8-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.7-release-date%2C-3.7-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.6-release-date%2C-3.6-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.5-release-date-and-time%2C-3.5-Banner-and-event-details.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.2-release-date%2C-3.2-Banner-and-event-details-cover.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-3.1-release-date%2C-3.1-Banner-and-event-details-COVER.jpg',
+      'https://assetsio.gnwcdn.com/Genshin-Impact-2.8-release-date%2C-2.8-Banner-and-event-details.jpg',
+      'https://metro.co.uk/wp-content/uploads/2022/04/genshinimpact-5347.jpg',
     ],
     backgroundUrls: [
       // Mondstadt
@@ -90,4 +119,4 @@ export const GAMES: Game[] = [
       // Snezhnaya
     ],
   },
-]
+] as const

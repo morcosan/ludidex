@@ -19,18 +19,18 @@ const getDifferentIndex = (current: number, length: number) => {
 }
 
 export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & ImageSlideshowHandle => {
-  const { srcs, interval, duration, onLoading } = props
+  const { srcs, interval, transition, onLoading } = props
   const [state, setState] = useState<SlideshowState>(() => {
     const first = getRandomIndex(srcs.length)
     return { indexes: [first, getDifferentIndex(first, srcs.length)], activeSlot: 0 }
   })
-  const swapTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
-  const isSwapping = useRef(false)
-  const swapInterval = Math.max(interval, duration * 2)
+  const timeoutId = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const isChanging = useRef(false)
+  const intervalMs = Math.max(interval, transition * 2)
 
   const next = useCallback(() => {
-    if (srcs.length < 2 || isSwapping.current) return
-    isSwapping.current = true
+    if (srcs.length < 2 || isChanging.current) return
+    isChanging.current = true
     onLoading?.(true)
 
     // Step 1: fade to the other layer
@@ -45,21 +45,21 @@ export const useSlideshow = (props: ImageSlideshowProps): SlideshowState & Image
         indexes[hiddenSlot] = getDifferentIndex(visibleIndex, srcs.length)
         return { ...state, indexes }
       })
-      isSwapping.current = false
+      isChanging.current = false
       onLoading?.(false)
     }
-    clearTimeout(swapTimeout.current)
-    swapTimeout.current = setTimeout(loadNext, duration + FADE_END_BUFFER)
-  }, [srcs.length, duration, onLoading])
+    clearTimeout(timeoutId.current)
+    timeoutId.current = setTimeout(loadNext, transition + FADE_END_BUFFER)
+  }, [srcs.length, transition, onLoading])
 
   useEffect(() => {
     if (srcs.length < 2) return
     // Reset the auto swap timer whenever the active layer changes, so manual swaps restart the countdown
-    const timeoutId = setTimeout(next, swapInterval)
+    const timeoutId = setTimeout(next, intervalMs)
     return () => clearTimeout(timeoutId)
-  }, [srcs.length, swapInterval, next, state.activeSlot])
+  }, [srcs.length, intervalMs, next, state.activeSlot])
 
-  useEffect(() => () => clearTimeout(swapTimeout.current), [])
+  useEffect(() => () => clearTimeout(timeoutId.current), [])
 
   return { ...state, next }
 }

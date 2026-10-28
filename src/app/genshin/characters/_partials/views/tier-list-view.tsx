@@ -81,7 +81,7 @@ export const TierListView = (props: TierViewProps) => {
   })()
 
   return (
-    <div className="divide-color-border-on-glass flex h-fit flex-col divide-y">
+    <div className="divide-color-border-on-glass flex h-fit w-full flex-col divide-y">
       {tierGroups.map(({ key, label, characters: tierCharacters }) => (
         <div key={key} className={cx('flex items-start items-stretch', displayClass.tierRow)}>
           {/* TIER LABEL */}

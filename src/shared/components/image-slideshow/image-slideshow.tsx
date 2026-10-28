@@ -6,7 +6,7 @@ import { useSlideshow } from './_use-slideshow'
 export type { ImageSlideshowHandle, ImageSlideshowProps } from './_types'
 
 export const ImageSlideshow = (props: ImageSlideshowProps) => {
-  const { srcs, duration, className, ref } = props
+  const { srcs, transition, className, ref } = props
   const { indexes, activeSlot, next } = useSlideshow(props)
 
   useImperativeHandle(ref, () => ({ next }), [next])
@@ -19,7 +19,7 @@ export const ImageSlideshow = (props: ImageSlideshowProps) => {
           srcs={[srcs[index], ...srcs.filter((_, i) => i !== index)]}
           alt=""
           loading="eager"
-          style={{ transitionDuration: `${duration}ms` }}
+          style={{ transitionDuration: `${transition}ms` }}
           className={cx(
             'absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out',
             slot === activeSlot ? 'opacity-100' : 'opacity-0',

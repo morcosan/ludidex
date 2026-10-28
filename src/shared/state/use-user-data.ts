@@ -84,7 +84,8 @@ const parseUserData = (data: unknown): UserData => {
 
     // Migrate iteratively from one version to the next
     for (let j = i; j > 0 && result.success; j--) {
-      result = versions[j - 1].schema.safeParse(versions[j].migrate(result.data))
+      const migrate = versions[j].migrate as (data: unknown) => unknown
+      result = versions[j - 1].schema.safeParse(migrate(result.data))
     }
 
     if (result.success) return result.data as UserData

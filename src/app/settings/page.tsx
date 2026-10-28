@@ -87,7 +87,7 @@ export default function Page() {
               onChange={handleSearchChange}
             />
             <h1 className="mb-xs-7 flex">
-              <Breadcrumb first>{t('nav.label.settings')}</Breadcrumb>
+              <Breadcrumb first>{t('general.label.settings')}</Breadcrumb>
               {keyword && <Breadcrumb>{t('general.label.withSearch', { keyword })}</Breadcrumb>}
             </h1>
           </div>

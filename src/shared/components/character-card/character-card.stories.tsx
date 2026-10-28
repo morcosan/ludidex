@@ -10,6 +10,7 @@ const meta: Meta = {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
         rating: 5,
+        status: 'active',
         tierLists: {
           mainDps: 1,
           subDps: 2,

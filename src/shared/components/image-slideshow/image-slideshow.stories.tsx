@@ -14,7 +14,7 @@ const meta: Meta = {
         'https://upload-os-bbs.hoyolab.com/upload/2024/11/28/248330833/89ba482aa6f501c3da7eafeda17ace18_6192477514022251569.webp',
       ],
       interval: 5000,
-      duration: 2000,
+      transition: 2000,
       className: 'w-xl-0 h-xl-0',
     },
     events: ['onLoading'],

@@ -1,8 +1,11 @@
 import { RATING_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 
+const CHARACTER_STATUSES_V0 = ['active', 'benched', 'pulling', 'missing', 'skipped'] as const
+
 const GenshinCharacterSchema_v0 = z.object({
-  favorite: z.number().optional(),
+  rating: z.number().optional(),
+  status: z.enum(CHARACTER_STATUSES_V0).optional(),
   tierLists: z
     .object({
       mainDps: z.number().optional(),

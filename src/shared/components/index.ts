@@ -1,4 +1,5 @@
 export * from './breadcrumb/breadcrumb'
+export * from './character-avatar/character-avatar'
 export * from './character-card/character-card'
 export * from './image-slideshow/image-slideshow'
 export * from './page-section/page-section'

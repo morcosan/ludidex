@@ -1,36 +1,34 @@
 import { ImageSlideshow, type ImageSlideshowHandle } from '@app-shared/components'
 import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
+import { isPathUnderSegment } from '@app-shared/utils/various'
 import { Button, Card, IconButton, Image, Popover } from '@design-system'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { type ParseKeys } from 'i18next'
 import { ImageIcon, SettingsIcon } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
+import { appRoutes, gameRouteDefaults } from '../routes'
 import LogoIcon from '../shared/assets/logo-icon.svg?react'
 import { GAMES } from '../shared/data/games'
 
-export interface Route {
-  to: string
-  labelKey: ParseKeys
-  hidden?: boolean
-}
-
-interface LayoutProps {
-  routes: Route[]
-}
-
-export default function Layout({ routes }: LayoutProps) {
+export default function Layout() {
   const { t } = useTranslation()
-  const { pathname } = useLocation()
+  const location = useLocation()
   const bgSlideshowRef = useRef<ImageSlideshowHandle>(null)
   const [isBgLoading, setIsBgLoading] = useState(false)
   const [isQuickSettingsOpen, setIsQuickSettingsOpen] = useState(false)
+  const isCurrentPath = (gameId: string) => isPathUnderSegment(location.pathname, gameId)
+  const currentGame = GAMES.find(({ id }) => isCurrentPath(id))
+  const gameRoutes = currentGame ? appRoutes.filter(({ to }) => to.startsWith(`/${currentGame.id}/`)) : []
+  const currentHref = `${location.pathname}${location.search}${location.hash}`
+  const [lastGameHref, setLastGameHref] = useState(() => (currentGame ? currentHref : ''))
 
-  const currentRoute = routes.find(({ to }) => to === pathname)
-  const hasSideNav = !currentRoute?.hidden
+  useEffect(() => {
+    if (!currentGame) return
+    setLastGameHref(currentHref)
+  }, [currentHref, currentGame])
 
   return (
     <Providers>
@@ -39,7 +37,7 @@ export default function Layout({ routes }: LayoutProps) {
           ref={bgSlideshowRef}
           srcs={GAMES[0].backgroundUrls}
           interval={BACKGROUND_SWAP_INTERVAL}
-          duration={BACKGROUND_SWAP_DURATION}
+          transition={BACKGROUND_SWAP_DURATION}
           onLoading={setIsBgLoading}
           className="absolute! inset-0 -z-10"
         />
@@ -56,11 +54,11 @@ export default function Layout({ routes }: LayoutProps) {
             {GAMES.map((game) => (
               <Card
                 key={game.id}
-                state="selected"
+                state={isCurrentPath(game.id) ? 'selected' : 'active'}
                 size="sm"
-                linkHref="/"
+                linkHref={lastGameHref || gameRouteDefaults[game.id]}
                 tooltip={t(game.nameKey)}
-                surfaceClassName="p-0!"
+                surfaceClassName="p-px!"
                 contentClassName="flex-center h-full w-full"
               >
                 <Image srcs={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
@@ -108,7 +106,7 @@ export default function Layout({ routes }: LayoutProps) {
               onClick={() => setIsQuickSettingsOpen(false)}
             >
               <FontAwesomeIcon icon={faGear} aria-hidden className="w-xs-9! mr-xs-2" />
-              {t('nav.label.settings')}
+              {t('general.label.settings')}
             </Button>
           </Popover>
         </aside>
@@ -121,15 +119,18 @@ export default function Layout({ routes }: LayoutProps) {
           )}
         >
           {/* SIDE NAV */}
-          {hasSideNav && (
+          {gameRoutes.length > 0 && (
             <nav className="w-md-7 gap-xs-2 mx-xs-9 flex flex-col">
-              {routes
-                .filter(({ hidden }) => !hidden)
-                .map(({ to, labelKey }) => (
-                  <Button key={to} linkHref={to} state={pathname === to ? 'selected' : 'active'} variant="menu-default">
-                    {t(labelKey)}
-                  </Button>
-                ))}
+              {gameRoutes.map(({ to, labelKey }) => (
+                <Button
+                  key={to}
+                  linkHref={to}
+                  state={location.pathname === to ? 'selected' : 'active'}
+                  variant="menu-default"
+                >
+                  {t(labelKey)}
+                </Button>
+              ))}
             </nav>
           )}
 

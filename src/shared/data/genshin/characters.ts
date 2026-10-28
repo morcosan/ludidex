@@ -2225,4 +2225,21 @@ export const CHARACTERS: GenshinCharacter[] = [
       'https://i.gachabase.net/rOsFt5jAvvpUmY5SEIJgqKYfgI0i_Evb2qN_myMj1lo/q:50/f:webp/plain/gi/assets/3cf69b74712b00de321e03cf2559398e.png',
     ],
   },
+  {
+    id: 'linnea',
+    name: 'Linnea',
+    element: 'Geo',
+    weapon: 'Bow',
+    nation: 'Nod-Krai',
+    bonusStat: '+19.2% CRIT Rate',
+    na1HitDmg: [59, 116.6],
+    iconUrls: [
+      'https://i.gachabase.net/RmYw2lbz_LCoMCEGYwgGaSAD1YC2lQbZNVz63r4e6jo/q:50/f:webp/plain/gi/assets/26b9f952b3bda837e99c03a691ad1e32.png',
+      'https://static.wikia.nocookie.net/gensin-impact/images/a/a9/Linnea_Icon.png',
+    ],
+    cardUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/V9JGn-Ku1v_klXBoxpd7nLfxptnZ8Rk3bgPGn9h6t6Y/q:50/f:webp/plain/gi/assets/329fd2c566f0ba274f771a501276b4a0.png',
+    ],
+  },
 ]

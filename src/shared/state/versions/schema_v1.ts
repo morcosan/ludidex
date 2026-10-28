@@ -1,11 +1,11 @@
 import { CHARACTER_STATUSES, RATING_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 
-const CharacterStatusSchema_v1 = z.enum(CHARACTER_STATUSES)
+const USER_DATA_VERSION_V1 = 'v1.1'
 
 const GenshinCharacterSchema_v1 = z.object({
   rating: z.number().optional(),
-  status: CharacterStatusSchema_v1.optional(),
+  status: z.enum(CHARACTER_STATUSES).optional(),
   tierLists: z
     .object({
       mainDps: z.number().optional(),
@@ -41,7 +41,7 @@ const GenshinCharacterSchema_v1 = z.object({
 })
 
 const UserDataSchema_v1 = z.object({
-  version: z.literal('v1'),
+  version: z.literal(USER_DATA_VERSION_V1),
   genshin: z
     .object({
       characters: z.record(z.string(), GenshinCharacterSchema_v1),
@@ -58,6 +58,5 @@ const UserDataSchema_v1 = z.object({
 
 type UserData_v1 = z.infer<typeof UserDataSchema_v1>
 type GenshinCharacter_v1 = z.infer<typeof GenshinCharacterSchema_v1>
-type GenshinCharacterStatus_v1 = z.infer<typeof CharacterStatusSchema_v1>
 
-export { UserDataSchema_v1, type GenshinCharacter_v1, type GenshinCharacterStatus_v1, type UserData_v1 }
+export { USER_DATA_VERSION_V1, UserDataSchema_v1, type GenshinCharacter_v1, type UserData_v1 }

@@ -24,7 +24,7 @@ export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onE
           size="md"
           variant="caution"
           tooltip={t('general.action.discardChanges')}
-          className="-top-xs-5 -right-xs-6 z-sticky absolute!"
+          className="-top-xs-5 -right-xs-6 absolute! z-20"
           floating
           onClick={onDiscard}
         >
@@ -35,7 +35,7 @@ export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onE
           size="md"
           variant="default"
           tooltip={t('ds.action.close')}
-          className="-top-xs-5 -right-xs-6 z-sticky absolute!"
+          className="-top-xs-5 -right-xs-6 absolute! z-20"
           floating
           onClick={onClose}
         >
@@ -48,7 +48,7 @@ export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onE
           size="md"
           variant="primary"
           tooltip={t('general.action.saveChanges')}
-          className="top-sm-5 -right-xs-6 z-sticky absolute!"
+          className="top-sm-5 -right-xs-6 absolute! z-20"
           floating
           onClick={onSave}
         >
@@ -59,7 +59,7 @@ export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onE
           size="md"
           variant="default"
           tooltip={t('general.action.edit')}
-          className="top-sm-5 -right-xs-6 z-sticky absolute!"
+          className="top-sm-5 -right-xs-6 absolute! z-20"
           floating
           onClick={onEdit}
         >

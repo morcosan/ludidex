@@ -1,7 +1,7 @@
 import { PageSection } from '@app-shared/components'
 import { type UserData } from '@app-shared/state/types'
 import { parseUserData, USER_DATA_COOKIE_KEY, useUserDataStore } from '@app-shared/state/use-user-data'
-import { getDateAsYYYYMMDD } from '@app-shared/utils/various'
+import { getDateAsYYYYMMDD, getTimeAsHHMMSS } from '@app-shared/utils/various'
 import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
@@ -39,7 +39,7 @@ export const DataSection = (props: SectionProps) => {
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `ludidex-data-${getDateAsYYYYMMDD(now)}-${now.getTime()}.json`
+      link.download = `ludidex-data--${getDateAsYYYYMMDD(now)}--${getTimeAsHHMMSS(now)}.json`
       link.click()
       setTimeout(() => URL.revokeObjectURL(url), 0)
       setExportMessage({ type: 'success', text: t('general.status.dataExported') })

@@ -3,6 +3,7 @@ import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/char
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
+import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CharacterListing } from './_partials/character-listing'
@@ -22,6 +23,15 @@ export default function Page() {
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions()
+
+  useClickOutside({
+    enabled: isPreviewOpen,
+    allowlist: ['[data-character-item]', '[data-preview-drawer]'],
+    callback() {
+      setIsPreviewOpen(false)
+      setPreviewCharacter(null)
+    },
+  })
 
   const characters = CHARACTERS.filter(({ element, weapon, nation }) => {
     return (
@@ -59,7 +69,7 @@ export default function Page() {
 
         <h1 className={cx('flex', viewType === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
           <Breadcrumb first>
-            {t('nav.label.characters')} ({characters.length})
+            {t('general.label.characters')} ({characters.length})
           </Breadcrumb>
           <Breadcrumb>{viewLabel}</Breadcrumb>
           {filtersCount > 0 && <Breadcrumb>{t('general.label.withFilters', { count: filtersCount })}</Breadcrumb>}
@@ -92,6 +102,7 @@ export default function Page() {
             'duration-md transition-transform ease-in-out',
             isPreviewOpen ? 'translate-x-0' : 'translate-x-[110%]',
           )}
+          data-preview-drawer
         >
           {previewCharacter && (
             <CharacterCard

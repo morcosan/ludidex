@@ -6,6 +6,12 @@ const getDateAsYYYYMMDD = (date: Date): string => {
   ].join('-')
 }
 
+const getTimeAsHHMMSS = (date: Date): string => {
+  return [date.getHours(), date.getMinutes(), date.getSeconds()]
+    .map((value) => String(value).padStart(2, '0'))
+    .join('-')
+}
+
 const getDataSize = (data: object): number => {
   return new TextEncoder().encode(JSON.stringify(data)).byteLength
 }
@@ -15,4 +21,8 @@ const formatFileSize = (bytes: number): string => {
   return `${(bytes / 1024).toFixed(1)} KB`
 }
 
-export { formatFileSize, getDataSize, getDateAsYYYYMMDD }
+const isPathUnderSegment = (pathname: string, segment: string): boolean => {
+  return pathname === `/${segment}` || pathname.startsWith(`/${segment}/`)
+}
+
+export { formatFileSize, getDataSize, getDateAsYYYYMMDD, getTimeAsHHMMSS, isPathUnderSegment }

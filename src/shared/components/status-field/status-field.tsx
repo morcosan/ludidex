@@ -1,16 +1,15 @@
-import { CHARACTER_STATUSES } from '@app-shared/data/settings'
+import { CHARACTER_STATUSES, type CharacterStatus } from '@app-shared/data/settings'
 import { SelectField, type SelectOption } from '@design-system'
 import { ArchiveIcon, BadgeCheckIcon, BanIcon, HeartCrackIcon, LoaderIcon } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type CharacterStatus } from '../../state/types'
 
 const STATUS_ICONS: Record<CharacterStatus, ReactNode> = {
   active: <BadgeCheckIcon strokeWidth={2.5} className="w-xs-8 mr-xs-2 text-color-green-9" />,
   benched: <ArchiveIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-text-subtle" />,
   pulling: <LoaderIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-blue-9" />,
   missing: <HeartCrackIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-button-caution-text" />,
-  skipped: <BanIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-text-subtle" />,
+  ignored: <BanIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-text-subtle" />,
 }
 
 export interface StatusFieldProps extends ReactProps {

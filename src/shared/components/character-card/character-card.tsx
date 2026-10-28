@@ -1,5 +1,6 @@
+import { useStickyOnTop } from '@app-shared/utils/use-sticky-on-top'
 import { Card, Image, TextField } from '@design-system'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   GenshinElementColor,
@@ -7,8 +8,8 @@ import {
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
 } from '../../data/genshin/core'
-import { RATING_LABELS } from '../../data/settings'
-import { type CharacterStatus } from '../../state/types'
+import { RATING_LABELS, type CharacterStatus } from '../../data/settings'
+import { CharacterAvatar } from '../character-avatar/character-avatar'
 import { RatingField } from '../rating-field/rating-field'
 import { StatusField } from '../status-field/status-field'
 import { Tag } from '../tag/tag'
@@ -37,6 +38,9 @@ export const CharacterCard = (props: CharacterCardProps) => {
     handleClickEdit,
     handleClickSave,
   } = useDraft(props)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLDivElement>(null)
+  const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
 
   useEffect(() => {
     if (!isOpen && isEditing) handleClickDiscard()
@@ -57,7 +61,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
       contentClassName="flex flex-col"
       style={{ '--element-color': GenshinElementColor[character.element] }}
     >
-      <div className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
+      <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
         <div className="relative">
           <div className={cx('bg-(--element-color)', imageFilterClass)} />
@@ -88,26 +92,35 @@ export const CharacterCard = (props: CharacterCardProps) => {
           </div>
         </div>
 
+        {/* NAME */}
+        <div
+          ref={nameRef}
+          className={cx(
+            'my-xs-2 px-xs-8 py-xs-2 bg-color-bg-card -top-xs-0 sticky z-10 transition-[padding] ease-in-out',
+            isNameSticky && 'border-color-border-subtle shadow-below-sm pl-sm-4!',
+          )}
+        >
+          {isNameSticky && (
+            <CharacterAvatar character={character} className="top-xs-4 left-xs-4 h-sm-0 w-sm-0 absolute" />
+          )}
+          <span className="text-size-xl font-weight-lg">{character.name}</span>
+        </div>
+
         {/* CONTENT */}
-        <div className="px-xs-8 py-xs-4 gap-y-sm-2 flex flex-col">
-          {/* HEADER */}
-          <div className="gap-y-xs-5 flex flex-col">
-            {/* NAME */}
-            <span className="text-size-xl font-weight-lg">{character.name}</span>
-            {/* TRAITS */}
-            <div className="gap-x-xs-5 gap-y-xs-2 flex flex-wrap items-center justify-between">
-              <CharacterTrait label={character.element} icon={GenshinElementIconUrls[character.element][0]} />
-              <CharacterTrait
-                label={character.weapon}
-                icon={GenshinWeaponIconUrls[character.weapon][0]}
-                iconClass="brightness-90"
-              />
-              <CharacterTrait
-                label={character.nation}
-                icon={GenshinNationIconUrls[character.nation][0]}
-                iconClass="brightness-40"
-              />
-            </div>
+        <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex flex-col">
+          {/* TRAITS */}
+          <div className="gap-x-xs-5 gap-y-xs-2 flex flex-wrap items-center justify-between">
+            <CharacterTrait label={character.element} icon={GenshinElementIconUrls[character.element][0]} />
+            <CharacterTrait
+              label={character.weapon}
+              icon={GenshinWeaponIconUrls[character.weapon][0]}
+              iconClass="brightness-90"
+            />
+            <CharacterTrait
+              label={character.nation}
+              icon={GenshinNationIconUrls[character.nation][0]}
+              iconClass="brightness-40"
+            />
           </div>
 
           {/* TAGS */}

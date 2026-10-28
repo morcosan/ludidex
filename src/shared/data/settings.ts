@@ -34,4 +34,6 @@ export const TIER_LIST_COLORS = {
 export const BACKGROUND_SWAP_INTERVAL = 15_000
 export const BACKGROUND_SWAP_DURATION = 3_000
 
-export const CHARACTER_STATUSES = ['active', 'benched', 'pulling', 'missing', 'skipped'] as const
+export type CharacterStatus = 'active' | 'benched' | 'pulling' | 'missing' | 'ignored'
+
+export const CHARACTER_STATUSES: CharacterStatus[] = ['active', 'benched', 'pulling', 'missing', 'ignored'] as const

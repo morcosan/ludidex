@@ -34,12 +34,14 @@
       "colorMode": "Color mode",
       "current": "Current",
       "currentGame": "Current game",
+      "dashboard": "Dashboard",
       "dataExportImport": "Data export / import",
       "dataSize": "Data size",
       "dataValues": "Data values",
       "default": "Default",
       "displaySize": "Display size",
       "exportData": "Export data",
+      "home": "Home",
       "importData": "Import data",
       "large": "Large",
       "listing": "Listing",
@@ -54,6 +56,7 @@
       "small": "Small",
       "sorting": "Sorting",
       "status": "Status",
+      "teams": "Teams",
       "uploaded": "Uploaded",
       "view": "View",
       "viewSettings": "View settings",
@@ -73,14 +76,6 @@
       "loading": "Loading..."
     }
   },
-  "nav": {
-    "label": {
-      "characters": "Characters",
-      "dashboard": "Dashboard",
-      "settings": "Settings",
-      "teams": "Teams"
-    }
-  },
   "game": {
     "label": {
       "active": "Active",
@@ -89,6 +84,7 @@
       "element": "Element",
       "exploration": "Exploration",
       "genshin": "Genshin Impact",
+      "ignored": "Ignored",
       "level": "Level",
       "mainDps": "Main DPS",
       "missing": "Missing",
@@ -96,7 +92,6 @@
       "outfit": "Outfit",
       "personality": "Personality",
       "pulling": "Pulling",
-      "skipped": "Skipped",
       "stats": "Stats",
       "subDps": "Sub DPS",
       "support": "Support",
@@ -130,5 +125,8 @@
     "status": {
       "empty": "No characters match the selected filters"
     }
+  },
+  "marketing": {
+    "organizeData": "Organize your favorite game data"
   }
 }

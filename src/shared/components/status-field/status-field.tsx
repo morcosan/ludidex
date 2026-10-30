@@ -32,12 +32,12 @@ export const StatusField = (props: StatusFieldProps) => {
       id="status-field"
       size="xs"
       value={value ?? ''}
-      prefix={value ? <StatusIcon value={value} className="translate-x-xs-1 mr-xs-1" /> : undefined}
+      prefix={value ? <StatusIcon value={value} /> : undefined}
       options={options}
       optionFn={(option) => {
         const status = CHARACTER_STATUSES.find((status) => status === option.value)
         return (
-          <span className="flex items-center">
+          <span className="px-xs-1 flex items-center">
             {status && <StatusIcon value={status} className="mr-xs-1" />}
             <span className="min-w-xs-9 flex-center flex">{option.label}</span>
           </span>

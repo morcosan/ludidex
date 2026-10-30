@@ -31,12 +31,12 @@ export const RatingField = (props: RatingFieldProps) => {
       id="rating-field"
       size="xs"
       value={value ? String(value) : ''}
-      prefix={value ? <RatingIcon value={value} className="translate-x-xs-1 mr-xs-1" /> : undefined}
+      prefix={value ? <RatingIcon value={value} /> : undefined}
       options={options}
       optionFn={(option) => {
         const rating = RATING_VALUES.find((rating) => String(rating) === option.value)
         return (
-          <span className="flex items-center">
+          <span className="px-xs-1 flex items-center">
             {rating && <RatingIcon value={rating} className="mr-xs-1" />}
             <span className="min-w-xs-9 flex-center flex"> {option.label}</span>
           </span>

@@ -1,8 +1,8 @@
 import { IconButton } from '@design-system'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
-import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CheckCheckIcon } from 'lucide-react'
+import { CheckCheckIcon, Undo2Icon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 interface ActionsProps {
@@ -14,21 +14,21 @@ interface ActionsProps {
   onEdit: () => void
 }
 
-export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onEdit }: ActionsProps) => {
+export const Actions = ({ isEditing, onDiscard, onClose, onSave, onEdit }: ActionsProps) => {
   const { t } = useTranslation()
 
   return (
     <>
-      {isEditing && hasChanges ? (
+      {isEditing ? (
         <IconButton
           size="md"
-          variant="caution"
+          variant="default"
           tooltip={t('general.action.discardChanges')}
           className="-top-xs-5 -right-xs-6 absolute! z-20"
           floating
           onClick={onDiscard}
         >
-          <FontAwesomeIcon icon={faTrashCan} aria-hidden className="text-size-md text-color-button-caution-text" />
+          <Undo2Icon aria-hidden className="h-xs-9 w-xs-9" />
         </IconButton>
       ) : (
         <IconButton
@@ -39,7 +39,7 @@ export const Actions = ({ isEditing, hasChanges, onDiscard, onClose, onSave, onE
           floating
           onClick={onClose}
         >
-          <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md mt-xs-0" />
+          <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md" />
         </IconButton>
       )}
 

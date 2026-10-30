@@ -94,8 +94,8 @@ export default function Page() {
         </div>
 
         {/* SECTIONS */}
-        <div className="mt-xs-4 min-h-0 flex-1 overflow-y-auto">
-          <div className="max-w-xxl-0 px-xs-1 mx-auto w-full">
+        <div className="mt-sm-0 min-h-0 flex-1 overflow-y-auto">
+          <div className="max-w-xxl-0 px-xs-1 gap-sm-0 mx-auto flex w-full flex-col">
             {activeSections.map(({ component: Section, id, labelKey }) => (
               <Section
                 key={id}

@@ -25,9 +25,9 @@ export const useClickOutside = (props: ClickOutsideProps) => {
       handleOutsideClick()
     }
 
-    document.addEventListener('click', handleDocumentClick)
+    document.addEventListener('click', handleDocumentClick, true)
     return () => {
-      document.removeEventListener('click', handleDocumentClick)
+      document.removeEventListener('click', handleDocumentClick, true)
     }
   }, [enabled, allowSelector])
 }

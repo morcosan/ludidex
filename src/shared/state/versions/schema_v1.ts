@@ -1,19 +1,19 @@
-import { CHARACTER_STATUSES, RATING_LABELS } from '@app-shared/data/settings'
+import { CHARACTER_STATUSES, RATING_LABELS, TIER_LIST_LABELS, TIER_LIST_VALUES } from '@app-shared/data/settings'
 import { z } from 'zod'
 
-const USER_DATA_VERSION_V1 = 'v1.1'
+const USER_DATA_VERSION_V1 = 'v1.2'
 
 const GenshinCharacterSchema_v1 = z.object({
   rating: z.number().optional(),
   status: z.enum(CHARACTER_STATUSES).optional(),
   tierLists: z
     .object({
-      mainDps: z.number().optional(),
-      subDps: z.number().optional(),
-      support: z.number().optional(),
-      exploration: z.number().optional(),
-      outfit: z.number().optional(),
-      personality: z.number().optional(),
+      mainDps: z.enum(TIER_LIST_VALUES).optional(),
+      subDps: z.enum(TIER_LIST_VALUES).optional(),
+      support: z.enum(TIER_LIST_VALUES).optional(),
+      exploration: z.enum(TIER_LIST_VALUES).optional(),
+      outfit: z.enum(TIER_LIST_VALUES).optional(),
+      personality: z.enum(TIER_LIST_VALUES).optional(),
     })
     .optional(),
   stats: z
@@ -51,6 +51,9 @@ const UserDataSchema_v1 = z.object({
     .object({
       ratingLabels: z
         .object(Object.fromEntries(Object.keys(RATING_LABELS).map((key) => [key, z.string().optional()])))
+        .optional(),
+      tierListLabels: z
+        .object(Object.fromEntries(Object.keys(TIER_LIST_LABELS).map((key) => [key, z.string().optional()])))
         .optional(),
     })
     .optional(),

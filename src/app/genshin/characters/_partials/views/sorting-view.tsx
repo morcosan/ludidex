@@ -116,7 +116,7 @@ export const SortingView = (props: SortingViewProps) => {
 
       {sortGroups.map(({ key, characters: chars }, index) => (
         <Fragment key={key}>
-          <div className={cx('flex items-start items-stretch', displayClass.tierRow)}>
+          <div className={cx('flex items-start items-stretch', displayClass.row)}>
             <div className="w-md-2 border-color-border-on-glass shrink-0 border-r" />
             <ul className={contentClass}>{chars.map(renderItem)}</ul>
           </div>

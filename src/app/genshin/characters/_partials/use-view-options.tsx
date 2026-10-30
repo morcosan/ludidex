@@ -1,5 +1,5 @@
-import { RatingField, TierListField } from '@app-shared/components'
-import { ArrowDownWideNarrowIcon, BadgeCheckIcon, GripIcon } from 'lucide-react'
+import { RatingIcon, StatusIcon, TierListIcon } from '@app-shared/components'
+import { ArrowDownWideNarrowIcon, GripIcon } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -48,7 +48,7 @@ export const useViewOptions = () => {
   const getTierLabel = (label: string) => `${t('game.label.tierList')}: ${label}`
   const getSortLabel = (label: string) => `${t('general.label.sorting')}: ${label}`
 
-  const tierIcon = <TierListField value={5} readonly noLabel />
+  const tierIcon = <TierListIcon value="S" />
   const sortIcon = <ArrowDownWideNarrowIcon aria-hidden className="h-xs-9 w-xs-9" />
 
   const viewOptions: ViewOption[] = [
@@ -60,12 +60,12 @@ export const useViewOptions = () => {
     {
       value: 'rating',
       label: t('general.label.rating'),
-      icon: <RatingField value={5} readonly />,
+      icon: <RatingIcon value={10} />,
     },
     {
       value: 'status',
       label: t('general.label.status'),
-      icon: <BadgeCheckIcon strokeWidth={2} className="w-xs-9 text-color-green-9" />,
+      icon: <StatusIcon value="main" />,
     },
     { value: 'tier-main-dps', label: getTierLabel(t('game.label.mainDps')), icon: tierIcon },
     { value: 'tier-sub-dps', label: getTierLabel(t('game.label.subDps')), icon: tierIcon },

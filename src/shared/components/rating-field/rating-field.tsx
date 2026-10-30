@@ -1,36 +1,33 @@
 import { type RatingLabels } from '@app-shared/state/types'
-import { ThumbsDownIcon } from 'lucide-react'
-import { RATING_LABELS, RATING_MAX_VALUE, RATING_MIN_VALUE } from '../../data/settings'
-import { FilledHeart } from './_filled-heart'
+import { RATING_LABELS, RATING_VALUES, type RatingValue } from '../../data/settings'
+import { RatingIcon } from '../rating-icon/rating-icon'
 
 export interface RatingFieldProps extends ReactProps {
-  value: number
-  labels?: RatingLabels
+  value?: RatingValue
+  labels: RatingLabels
   readonly?: boolean
   className?: string
-  onChange?: (value: number) => void
+  onChange?: (value: RatingValue | undefined) => void
 }
 
 export const RatingField = (props: RatingFieldProps) => {
   const { value, labels, readonly, className, onChange } = props
-  const label = value <= RATING_MAX_VALUE ? labels?.[value as keyof typeof RATING_LABELS] : ''
+  const label = value === undefined ? undefined : labels[value as keyof typeof RATING_LABELS]
 
-  const handleClick = () => onChange?.(value >= RATING_MAX_VALUE ? RATING_MIN_VALUE : value + 1)
+  const handleClick = () => {
+    if (value === undefined) onChange?.(1)
+    else if (value === 10) onChange?.(undefined)
+    else onChange?.(RATING_VALUES.find((rating) => rating === value + 1))
+  }
 
   const content = (
-    <span className={cx('gap-xs-1 flex max-w-full items-center', readonly && className, readonly && 'h-field-h-xs')}>
-      {value <= RATING_MIN_VALUE ? (
-        <ThumbsDownIcon aria-hidden fill="currentColor" className="h-xs-8 w-xs-8 min-w-xs-8 text-color-text-default" />
+    <span className={cx('gap-xs-0 flex max-w-full items-center', readonly && className, readonly && 'h-field-h-xs')}>
+      {value !== undefined ? (
+        <RatingIcon value={value} className="-mt-px" />
       ) : (
-        <FilledHeart
-          value={value}
-          outlineClass="text-color-black-alpha-6"
-          fillClass="text-color-red-11"
-          iconClass="h-xs-9 w-xs-9 min-w-xs-9"
-          className="-translate-y-px"
-        />
+        <span className="w-xs-9 flex-center text-size-sm font-weight-lg flex">--</span>
       )}
-      {labels && <span className="ml-xs-0 text-size-sm font-weight-lg truncate">{label}</span>}
+      {value !== undefined && <span className="ml-xs-0 text-size-sm font-weight-lg truncate">{label}</span>}
     </span>
   )
 
@@ -39,7 +36,7 @@ export const RatingField = (props: RatingFieldProps) => {
     <button
       type="button"
       className={cx(
-        'h-field-h-xs px-xs-1 min-w-md-5 py-px',
+        'h-field-h-xs px-xs-1 min-w-md-3 py-px',
         'bg-color-bg-field border-color-border-default rounded-xs border',
         'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
         className,

@@ -1,7 +1,8 @@
-import { RATING_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 
-const CHARACTER_STATUSES_V0 = ['active', 'benched', 'pulling', 'missing', 'skipped'] as const
+const USER_DATA_VERSION_V0 = 'v1.1'
+const CHARACTER_STATUSES_V0 = ['active', 'benched', 'pulling', 'missing', 'ignored'] as const
+const RATING_LABEL_KEYS_V0 = ['-1', '0', '1', '2', '3', '4', '5'] as const
 
 const GenshinCharacterSchema_v0 = z.object({
   rating: z.number().optional(),
@@ -41,6 +42,7 @@ const GenshinCharacterSchema_v0 = z.object({
 })
 
 const UserDataSchema_v0 = z.object({
+  version: z.literal(USER_DATA_VERSION_V0),
   genshin: z
     .object({
       characters: z.record(z.string(), GenshinCharacterSchema_v0),
@@ -49,7 +51,7 @@ const UserDataSchema_v0 = z.object({
   preferences: z
     .object({
       ratingLabels: z
-        .object(Object.fromEntries(Object.keys(RATING_LABELS).map((key) => [key, z.string().optional()])))
+        .object(Object.fromEntries(RATING_LABEL_KEYS_V0.map((key) => [key, z.string().optional()])))
         .optional(),
     })
     .optional(),

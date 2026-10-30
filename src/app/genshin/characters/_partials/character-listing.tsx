@@ -8,30 +8,26 @@ import { SortingView } from './views/sorting-view'
 import { TierListView } from './views/tier-list-view'
 
 export interface DisplayClass {
-  image: string
+  size: string
   list: string
-  name: string
-  tierRow: string
+  row: string
 }
 
 const DISPLAY_CLASSES: Record<DisplaySize, DisplayClass> = {
   small: {
-    image: 'h-md-2 w-md-2',
-    list: 'gap-xs-5 m-xs-5',
-    name: 'w-md-2 text-size-xs',
-    tierRow: 'min-h-md-5',
+    size: 'w-md-1',
+    list: 'gap-xs-3 m-xs-3',
+    row: 'min-h-md-1',
   },
   medium: {
-    image: 'h-md-4 w-md-4',
-    list: 'gap-xs-7 m-xs-6',
-    name: 'w-md-4 text-size-xs',
-    tierRow: 'min-h-md-7',
+    size: 'w-md-2',
+    list: 'gap-xs-4 m-xs-4',
+    row: 'min-h-md-5',
   },
   large: {
-    image: 'h-md-7 w-md-7',
-    list: 'gap-xs-9 m-xs-8',
-    name: 'w-md-7 text-size-sm',
-    tierRow: 'min-h-lg-0',
+    size: 'w-md-4',
+    list: 'gap-xs-6 m-xs-6',
+    row: 'min-h-md-7',
   },
 }
 
@@ -58,10 +54,10 @@ export const CharacterListing = (props: CharacterListingProps) => {
     <li key={character.id}>
       <CharacterItem
         character={character}
-        imageClassName={displayClass.image}
-        labelClassName={displayClass.name}
+        sizeClass={displayClass.size}
         status={userData?.characters?.[character.id]?.status}
         selected={selectedItemId === character.id}
+        noLabel={displaySize === 'small'}
         onClick={onClickItem}
       />
     </li>

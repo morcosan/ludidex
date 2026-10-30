@@ -8,7 +8,13 @@ import {
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
 } from '../../data/genshin/core'
-import { RATING_LABELS, type CharacterStatus } from '../../data/settings'
+import {
+  RATING_LABELS,
+  RATING_VALUES,
+  TIER_LIST_LABELS,
+  TIER_LIST_VALUES,
+  type CharacterStatus,
+} from '../../data/settings'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 import { RatingField } from '../rating-field/rating-field'
 import { StatusField } from '../status-field/status-field'
@@ -27,6 +33,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
   const { character, userData, userPrefs, isOpen = true, className, onClose } = props
   const { t } = useTranslation()
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
+  const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
   const { statSections, tierFields } = useData(props)
   const {
     draft,
@@ -72,7 +79,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             {/* RATING */}
             <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
               <RatingField
-                value={toNumber(draft.rating) || 0}
+                value={RATING_VALUES.find((rating) => rating === toNumber(draft.rating))}
                 labels={ratingLabels}
                 readonly={!isEditing}
                 className={cx(isEditing ? 'w-md-6 my-xs-1' : 'mr-xs-0')}
@@ -101,7 +108,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
           )}
         >
           {isNameSticky && (
-            <CharacterAvatar character={character} className="top-xs-4 left-xs-4 h-sm-0 w-sm-0 absolute" />
+            <CharacterAvatar character={character} className="top-xs-4 left-xs-4 h-sm-0 w-sm-0 absolute!" />
           )}
           <span className="text-size-xl font-weight-lg">{character.name}</span>
         </div>
@@ -153,10 +160,15 @@ export const CharacterCard = (props: CharacterCardProps) => {
                 label,
                 value: (
                   <TierListField
-                    value={toNumber(getDraftValue('tierLists' satisfies keyof typeof draft, field)) || 0}
+                    value={TIER_LIST_VALUES.find(
+                      (tier) => tier === getDraftValue('tierLists' satisfies keyof typeof draft, field),
+                    )}
+                    labels={tierListLabels}
                     readonly={!isEditing}
+                    iconPos="right"
+                    className="w-md-3"
                     onChange={(value) =>
-                      handleDraftChange('tierLists' satisfies keyof typeof draft, field)(String(value))
+                      handleDraftChange('tierLists' satisfies keyof typeof draft, field)(value ?? '')
                     }
                   />
                 ),

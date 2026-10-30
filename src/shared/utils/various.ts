@@ -25,4 +25,6 @@ const isPathUnderSegment = (pathname: string, segment: string): boolean => {
   return pathname === `/${segment}` || pathname.startsWith(`/${segment}/`)
 }
 
-export { formatFileSize, getDataSize, getDateAsYYYYMMDD, getTimeAsHHMMSS, isPathUnderSegment }
+const withAlpha = (color: string, opacity: number) => `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`
+
+export { formatFileSize, getDataSize, getDateAsYYYYMMDD, getTimeAsHHMMSS, isPathUnderSegment, withAlpha }

@@ -24,6 +24,7 @@ export const DataSection = (props: SectionProps) => {
   const [exportMessage, setExportMessage] = useState<Message | null>(null)
   const [importMessage, setImportMessage] = useState<Message | null>(null)
   const [isExporting, setIsExporting] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [isImporting, setIsImporting] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -62,7 +63,11 @@ export const DataSection = (props: SectionProps) => {
       const data = JSON.parse(await file.text())
       const parsed = parseUserData(data)
       setImportData(parsed)
+      setIsModalOpen(true)
     } catch {
+      await wait(1000) // Fake processing delay
+      setImportData(null)
+      setIsImporting(false)
       setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
     }
   }
@@ -73,7 +78,7 @@ export const DataSection = (props: SectionProps) => {
     try {
       await wait(1000) // Fake processing delay
       replaceUserData(importData)
-      setIsImporting(false)
+      setIsModalOpen(false)
       setImportMessage({ type: 'success', text: t('general.status.dataImported') })
     } catch {
       setImportMessage({ type: 'error', text: t('general.status.dataImportFailed') })
@@ -81,12 +86,14 @@ export const DataSection = (props: SectionProps) => {
   }
 
   const handleCloseModal = () => {
+    setIsModalOpen(false)
     setIsImporting(false)
     setIsProcessing(false)
   }
 
   const handleClosedModal = () => {
     setImportData(null)
+    setIsModalOpen(false)
     setIsImporting(false)
     setIsProcessing(false)
   }
@@ -149,7 +156,7 @@ export const DataSection = (props: SectionProps) => {
       />
 
       <ImportModal
-        opened={isImporting}
+        opened={isModalOpen}
         loading={isProcessing}
         importData={importData}
         onClose={handleCloseModal}

@@ -27,10 +27,7 @@ export default function Page() {
   useClickOutside({
     enabled: isPreviewOpen,
     allowlist: ['[data-character-item]', '[data-preview-drawer]'],
-    callback() {
-      setIsPreviewOpen(false)
-      setPreviewCharacter(null)
-    },
+    callback: () => setIsPreviewOpen(false),
   })
 
   const characters = CHARACTERS.filter(({ element, weapon, nation }) => {

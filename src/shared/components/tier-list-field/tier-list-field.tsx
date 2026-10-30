@@ -1,37 +1,40 @@
-import { useTranslation } from 'react-i18next'
-import { TIER_LIST_COLORS, TIER_LIST_MARKS } from '../../data/settings'
+import { type TierListLabels } from '@app-shared/state/types'
+import { TIER_LIST_VALUES, type TierListValue } from '../../data/settings'
+import { TierListIcon } from '../tier-list-icon/tier-list-icon'
 
 export interface TierListFieldProps extends ReactProps {
-  value: number
+  value?: TierListValue
+  labels: TierListLabels
   readonly?: boolean
-  noLabel?: boolean
+  iconPos?: 'left' | 'right'
   className?: string
-  onChange?: (value: number) => void
+  onChange?: (value: TierListValue | undefined) => void
 }
 
 export const TierListField = (props: TierListFieldProps) => {
-  const { value, readonly, noLabel, className, onChange } = props
-  const { t } = useTranslation()
-  const mark = TIER_LIST_MARKS[value as keyof typeof TIER_LIST_MARKS]
-  const color = TIER_LIST_COLORS[value as keyof typeof TIER_LIST_COLORS]
-  const count = Object.keys(TIER_LIST_MARKS).length
+  const { value, labels, iconPos = 'left', readonly, className, onChange } = props
+  const tierIcon = value ? (
+    <TierListIcon value={value} />
+  ) : (
+    <span className="w-sm-0 flex-center text-size-sm font-weight-lg flex">--</span>
+  )
 
   const handleClick = () => {
-    onChange?.((value + 1) % count)
+    const index = value ? TIER_LIST_VALUES.indexOf(value) : -1
+    onChange?.(TIER_LIST_VALUES[index + 1])
   }
 
   const content = (
     <span
       className={cx(
-        'gap-xs-1 text-size-sm font-weight-lg flex items-center leading-1',
+        'gap-xs-1 min-w-sm-8 flex w-full items-center',
+        iconPos === 'right' && 'justify-end',
         readonly && className,
-        !noLabel && 'min-w-sm-8',
       )}
     >
-      <span className="h-xs-8 w-sm-0 flex-center inline-flex rounded-xs" style={{ backgroundColor: color }}>
-        <span className="text-color-white ml-[-0.15em] tracking-[-0.15em] text-shadow-md">{mark}</span>
-      </span>
-      {!noLabel && <span>{value ? t('game.label.tier') : '--'}</span>}
+      {iconPos === 'left' && tierIcon}
+      {value && <span className="font-weight-lg text-size-sm truncate leading-1">{labels[value]}</span>}
+      {iconPos === 'right' && tierIcon}
     </span>
   )
 

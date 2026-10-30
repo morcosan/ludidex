@@ -9,15 +9,14 @@ const meta: Meta = {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
-        rating: 5,
-        status: 'active',
+        rating: 10,
+        status: 'main',
         tierLists: {
-          mainDps: 1,
-          subDps: 2,
-          support: 3,
-          exploration: 0,
-          outfit: 4,
-          personality: 5,
+          mainDps: 'F',
+          subDps: 'D',
+          support: 'C',
+          outfit: 'B',
+          personality: 'A',
         },
         stats: {
           level: 90,

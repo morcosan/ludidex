@@ -1,6 +1,6 @@
-import { clamp, isEqual } from 'lodash-es'
+import { isEqual } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
-import { RATING_MAX_VALUE, RATING_MIN_VALUE } from '../../../data/settings'
+import { RATING_VALUES } from '../../../data/settings'
 import { type GenshinCharacterUserData } from '../../../state/types'
 import { type CharacterCardProps } from '../_types'
 
@@ -38,13 +38,18 @@ const toNumber = (value?: string) => {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
-const buildData = (draft: DataDraft): Record<string, unknown> => {
+const buildData = (draft: DataDraft, parentKey?: string): Record<string, unknown> => {
   const data: Record<string, unknown> = {}
 
   for (const [key, value] of Object.entries(draft)) {
     if (typeof value === 'object') {
-      const nested = buildData(value)
+      const nested = buildData(value, key)
       if (Object.keys(nested).length) data[key] = nested
+      continue
+    }
+
+    if (parentKey === ('tierLists' satisfies keyof typeof draft)) {
+      if (value) data[key] = value
       continue
     }
 
@@ -64,8 +69,12 @@ const buildData = (draft: DataDraft): Record<string, unknown> => {
 
     const number = toNumber(value)
     if (number !== undefined) {
-      data[key] =
-        key === ('rating' satisfies keyof typeof draft) ? clamp(number, RATING_MIN_VALUE, RATING_MAX_VALUE) : number
+      if (key === ('rating' satisfies keyof typeof draft)) {
+        const rating = RATING_VALUES.find((ratingValue) => ratingValue === number)
+        if (rating !== undefined) data[key] = rating
+      } else {
+        data[key] = number
+      }
     }
   }
 

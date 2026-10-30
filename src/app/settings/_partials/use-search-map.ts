@@ -6,6 +6,7 @@ const SECTION_TRANSLATION_KEYS: Record<string, ParseKeys[]> = {
     //
     'general.action.editLabels',
     'general.label.ratingLabels',
+    'general.label.tierListLabels',
     'general.label.preferences',
   ],
   data: [

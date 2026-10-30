@@ -1,16 +1,7 @@
 import { CHARACTER_STATUSES, type CharacterStatus } from '@app-shared/data/settings'
 import { SelectField, type SelectOption } from '@design-system'
-import { ArchiveIcon, BadgeCheckIcon, BanIcon, HeartCrackIcon, LoaderIcon } from 'lucide-react'
-import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-
-const STATUS_ICONS: Record<CharacterStatus, ReactNode> = {
-  active: <BadgeCheckIcon strokeWidth={2.5} className="w-xs-8 mr-xs-2 text-color-green-9" />,
-  benched: <ArchiveIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-text-subtle" />,
-  pulling: <LoaderIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-blue-9" />,
-  missing: <HeartCrackIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-button-caution-text" />,
-  ignored: <BanIcon strokeWidth={2.5} className="w-xs-7 mr-xs-2 text-color-text-subtle" />,
-}
+import { StatusIcon } from '../status-icon/status-icon'
 
 export interface StatusFieldProps extends ReactProps {
   value?: CharacterStatus
@@ -30,8 +21,8 @@ export const StatusField = (props: StatusFieldProps) => {
 
   if (readonly) {
     return (
-      <div className={cx('text-size-sm h-field-h-xs flex-center font-weight-lg px-xs-0 flex', className)}>
-        {value && STATUS_ICONS[value]} {label}
+      <div className={cx('text-size-sm h-field-h-xs font-weight-lg px-xs-0 flex items-center', className)}>
+        {value && <StatusIcon value={value} className="mr-xs-1" />} {label}
       </div>
     )
   }
@@ -40,12 +31,12 @@ export const StatusField = (props: StatusFieldProps) => {
       id="status-field"
       value={value ?? ''}
       options={options}
-      prefix={value ? <span className="translate-x-xs-1">{STATUS_ICONS[value]}</span> : undefined}
+      prefix={value ? <StatusIcon value={value} className="translate-x-xs-1 mr-xs-1" /> : undefined}
       optionFn={(option) => {
         const status = CHARACTER_STATUSES.find((status) => status === option.value)
         return (
           <span className="flex items-center">
-            {status && STATUS_ICONS[status]}
+            {status && <StatusIcon value={status} className="mr-xs-1" />}
             {option.label}
           </span>
         )

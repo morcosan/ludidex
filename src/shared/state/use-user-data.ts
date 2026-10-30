@@ -1,6 +1,13 @@
+import { z } from 'zod'
 import { create } from 'zustand'
-import { RATING_LABELS } from '../data/settings'
-import { EMPTY_USER_DATA, type GenshinCharacterUserData, type RatingLabels, type UserData } from './types'
+import { RATING_LABELS, TIER_LIST_LABELS } from '../data/settings'
+import {
+  EMPTY_USER_DATA,
+  type GenshinCharacterUserData,
+  type RatingLabels,
+  type TierListLabels,
+  type UserData,
+} from './types'
 import { migrate_v0_to_v1 } from './versions/migrate_v0_to_v1'
 import { UserDataSchema_v0 } from './versions/schema_v0'
 import { UserDataSchema_v1 } from './versions/schema_v1'
@@ -13,6 +20,7 @@ interface UserDataStore {
   saveUserData(): void
   replaceUserData(userData: UserData): void
   setRatingLabels(ratingLabels: Partial<RatingLabels>): void
+  setTierListLabels(tierListLabels: Partial<TierListLabels>): void
   setGenshinCharacter(characterId: string, data: GenshinCharacterUserData): void
 }
 
@@ -42,15 +50,27 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
   },
 
   setRatingLabels(labels) {
-    const overrides: Partial<RatingLabels> = {}
-    for (const key of Object.keys(RATING_LABELS) as (keyof RatingLabels)[]) {
-      const label = labels[key]
-      if (label && label !== RATING_LABELS[key]) overrides[key] = label
-    }
-
     set((state) => {
       const userData = state.userData ?? EMPTY_USER_DATA
-      return { userData: { ...userData, preferences: { ...userData.preferences, ratingLabels: overrides } } }
+      return {
+        userData: {
+          ...userData,
+          preferences: { ...userData.preferences, ratingLabels: getLabelOverrides(labels, RATING_LABELS) },
+        },
+      }
+    })
+    get().saveUserData()
+  },
+
+  setTierListLabels(labels) {
+    set((state) => {
+      const userData = state.userData ?? EMPTY_USER_DATA
+      return {
+        userData: {
+          ...userData,
+          preferences: { ...userData.preferences, tierListLabels: getLabelOverrides(labels, TIER_LIST_LABELS) },
+        },
+      }
     })
     get().saveUserData()
   },
@@ -72,14 +92,25 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
   },
 }))
 
-const parseUserData = (data: unknown): UserData => {
+const getLabelOverrides = <K extends PropertyKey>(labels: Partial<Record<K, string>>, defaults: Record<K, string>) => {
+  const overrides: Partial<Record<K, string>> = {}
+  for (const key of Object.keys(defaults) as K[]) {
+    const label = labels[key]
+    if (label && label !== defaults[key]) overrides[key] = label
+  }
+  return overrides
+}
+
+const parseUserData = (data: unknown): UserData | never => {
   const versions = [
     { schema: UserDataSchema_v1, migrate: (v: unknown) => v },
     { schema: UserDataSchema_v0, migrate: migrate_v0_to_v1 },
   ]
 
+  let result
+
   for (let i = 0; i < versions.length; i++) {
-    let result = versions[i].schema.safeParse(data)
+    result = versions[i].schema.safeParse(data)
     if (!result.success) continue
 
     // Migrate iteratively from one version to the next
@@ -91,7 +122,7 @@ const parseUserData = (data: unknown): UserData => {
     if (result.success) return result.data as UserData
   }
 
-  throw null
+  throw result ? new Error(z.prettifyError(result.error)) : null
 }
 
 export { parseUserData, USER_DATA_COOKIE_KEY, useUserDataStore }

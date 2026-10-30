@@ -8,7 +8,7 @@ const meta: Meta = {
   ...defineMeta(CharacterAvatar, {
     props: {
       character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
-      status: 'active',
+      status: 'main',
       className: 'h-md-4 w-md-4',
     },
     clearDefaults: ['character'],

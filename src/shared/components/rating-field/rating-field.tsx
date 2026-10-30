@@ -22,7 +22,7 @@ export const RatingField = (props: RatingFieldProps) => {
   if (readonly)
     return (
       <span className={cx('h-field-h-xs flex max-w-full items-center', className)}>
-        {value && <RatingIcon value={value} className="mr-xs-0 -mt-px" />}
+        {value && <RatingIcon value={value} className="mr-xs-0" />}
         <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm flex">{label}</span>
       </span>
     )

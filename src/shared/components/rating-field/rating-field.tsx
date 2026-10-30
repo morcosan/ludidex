@@ -38,7 +38,7 @@ export const RatingField = (props: RatingFieldProps) => {
         return (
           <span className="px-xs-1 flex items-center">
             {rating && <RatingIcon value={rating} className="mr-xs-1" />}
-            <span className="min-w-xs-9 flex-center flex"> {option.label}</span>
+            <span className="min-w-xs-9 flex-center flex leading-1"> {option.label}</span>
           </span>
         )
       }}

@@ -39,7 +39,7 @@ export const StatusField = (props: StatusFieldProps) => {
         return (
           <span className="px-xs-1 flex items-center">
             {status && <StatusIcon value={status} className="mr-xs-1" />}
-            <span className="min-w-xs-9 flex-center flex">{option.label}</span>
+            <span className="min-w-xs-9 flex-center flex leading-1">{option.label}</span>
           </span>
         )
       }}

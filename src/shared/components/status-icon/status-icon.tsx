@@ -43,7 +43,7 @@ export const StatusIcon = (props: StatusIconProps) => {
   }
 
   return (
-    <span className={cx(large ? 'w-sm-3 p-xs-1' : 'w-xs-8', className)} style={{ color: STATUS_COLORS[value] }}>
+    <span className={cx(large ? 'w-sm-3 p-xs-1' : 'w-xs-9', className)} style={{ color: STATUS_COLORS[value] }}>
       {icons[value]}
     </span>
   )

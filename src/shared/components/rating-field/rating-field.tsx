@@ -1,4 +1,5 @@
 import { type RatingLabels } from '@app-shared/state/types'
+import { SelectField, type SelectOption } from '@design-system'
 import { RATING_LABELS, RATING_VALUES, type RatingValue } from '../../data/settings'
 import { RatingIcon } from '../rating-icon/rating-icon'
 
@@ -12,38 +13,37 @@ export interface RatingFieldProps extends ReactProps {
 
 export const RatingField = (props: RatingFieldProps) => {
   const { value, labels, readonly, className, onChange } = props
-  const label = value === undefined ? undefined : labels[value as keyof typeof RATING_LABELS]
+  const options: SelectOption[] = [
+    ...RATING_VALUES.map((rating) => ({ value: String(rating), label: labels[rating] })),
+    { value: '', label: '--' },
+  ]
+  const label = value ? labels[value as keyof typeof RATING_LABELS] : '--'
 
-  const handleClick = () => {
-    if (value === undefined) onChange?.(1)
-    else if (value === 10) onChange?.(undefined)
-    else onChange?.(RATING_VALUES.find((rating) => rating === value + 1))
-  }
-
-  const content = (
-    <span className={cx('gap-xs-0 flex max-w-full items-center', readonly && className, readonly && 'h-field-h-xs')}>
-      {value !== undefined ? (
-        <RatingIcon value={value} className="-mt-px" />
-      ) : (
-        <span className="w-xs-9 flex-center text-size-sm font-weight-lg flex">--</span>
-      )}
-      {value !== undefined && <span className="ml-xs-0 text-size-sm font-weight-lg truncate">{label}</span>}
-    </span>
-  )
-
-  if (readonly) return content
+  if (readonly)
+    return (
+      <span className={cx('h-field-h-xs flex max-w-full items-center', className)}>
+        {value && <RatingIcon value={value} className="mr-xs-0 -mt-px" />}
+        <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm inline-flex">{label}</span>
+      </span>
+    )
   return (
-    <button
-      type="button"
-      className={cx(
-        'h-field-h-xs px-xs-1 min-w-md-3 py-px',
-        'bg-color-bg-field border-color-border-default rounded-xs border',
-        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-        className,
-      )}
-      onClick={handleClick}
-    >
-      {content}
-    </button>
+    <SelectField
+      id="rating-field"
+      size="xs"
+      value={value ? String(value) : ''}
+      prefix={value ? <RatingIcon value={value} className="translate-x-xs-1 mr-xs-1" /> : undefined}
+      options={options}
+      optionFn={(option) => {
+        const rating = RATING_VALUES.find((rating) => String(rating) === option.value)
+        return (
+          <span className="flex items-center">
+            {rating && <RatingIcon value={rating} className="mr-xs-1" />}
+            <span className="min-w-xs-8 flex-center inline-flex"> {option.label}</span>
+          </span>
+        )
+      }}
+      className={className}
+      onChange={(selected) => onChange?.(RATING_VALUES.find((rating) => String(rating) === selected))}
+    />
   )
 }

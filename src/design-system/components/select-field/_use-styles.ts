@@ -84,7 +84,7 @@ export const useStyles = (props: SelectFieldProps) => {
         background: var(--ds-color-bg-highlight) !important;
       }
 
-      & svg {
+      & > svg {
         opacity: 1 !important;
         margin-top: -2px !important;
       }

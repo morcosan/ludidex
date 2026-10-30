@@ -22,6 +22,7 @@ export const SelectField = (props: SelectFieldProps) => {
     onChange,
     onFocus,
     optionFn,
+    optionClass,
     options,
     placeholder,
     prefix,
@@ -73,6 +74,7 @@ export const SelectField = (props: SelectFieldProps) => {
       dropdown: css`
         ${dropdownCss.styles}
       `,
+      option: optionClass,
     },
     clearButtonProps: { title: t('ds.action.clear') },
     onChange: onChange,

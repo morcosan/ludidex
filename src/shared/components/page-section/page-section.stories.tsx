@@ -11,8 +11,8 @@ const meta: Meta = {
     props: {
       title: 'Section title',
       surface: 'page',
-      titleClassName: '',
-      bodyClassName: '',
+      titleClass: '',
+      bodyClass: '',
       className: '',
       style: {},
     },

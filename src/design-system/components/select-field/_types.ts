@@ -23,8 +23,10 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
   ariaDescribedBy?: string
   prefix?: ReactNode
   /** CSS class attribute for the wrapper element */
-  className?: string
+  optionClass?: string
   /** CSS style attribute for the wrapper element */
+  className?: string
+  /** CSS class attribute for dropdown options */
   style?: CSSProperties
 
   /**

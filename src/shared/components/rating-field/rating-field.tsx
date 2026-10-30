@@ -42,6 +42,7 @@ export const RatingField = (props: RatingFieldProps) => {
           </span>
         )
       }}
+      optionClass="px-0!"
       className={className}
       onChange={(selected) => onChange?.(RATING_VALUES.find((rating) => String(rating) === selected))}
     />

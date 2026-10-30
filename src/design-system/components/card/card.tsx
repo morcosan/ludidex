@@ -15,8 +15,8 @@ export const Card = (props: CardProps) => {
     ariaDescription,
     children,
     className,
-    surfaceClassName,
-    contentClassName,
+    surfaceClass,
+    contentClass,
     style,
     tooltip,
     linkHref,
@@ -140,8 +140,8 @@ export const Card = (props: CardProps) => {
   }
 
   const content = (
-    <span css={surfaceCss} className={surfaceClassName}>
-      <span css={contentCss} className={contentClassName}>
+    <span css={surfaceCss} className={surfaceClass}>
+      <span css={contentCss} className={contentClass}>
         {children}
       </span>
       {state === 'loading' && (

@@ -22,6 +22,7 @@ const meta: Meta = {
       ariaDescription: '',
       ariaDescribedBy: '',
       prefix: '',
+      optionClass: '',
       className: '',
       style: {},
     },

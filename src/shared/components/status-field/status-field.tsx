@@ -43,6 +43,7 @@ export const StatusField = (props: StatusFieldProps) => {
           </span>
         )
       }}
+      optionClass="px-0!"
       className={className}
       onChange={(status) => onChange?.(CHARACTER_STATUSES.find((value) => value === status))}
     />

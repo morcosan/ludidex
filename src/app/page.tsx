@@ -23,8 +23,8 @@ export default function Page() {
             state="active"
             linkHref={gameRouteDefaults[game.id]}
             className="h-lg-9"
-            surfaceClassName="p-xs-1!"
-            contentClassName="relative overflow-hidden rounded-sm"
+            surfaceClass="p-xs-1!"
+            contentClass="relative overflow-hidden rounded-sm"
           >
             <ImageSlideshow
               srcs={game.bannerUrls}

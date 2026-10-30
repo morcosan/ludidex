@@ -64,8 +64,8 @@ export const CharacterCard = (props: CharacterCardProps) => {
   return (
     <Card
       className={cx('w-xl-0', className)}
-      surfaceClassName="p-0!"
-      contentClassName="flex flex-col"
+      surfaceClass="p-0!"
+      contentClass="flex flex-col"
       style={{ '--element-color': GenshinElementColor[character.element] }}
     >
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">

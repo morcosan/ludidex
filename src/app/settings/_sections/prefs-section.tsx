@@ -15,7 +15,7 @@ export const PrefsSection = (props: SectionProps) => {
   const [isEditingTierList, setIsEditingTierList] = useState(false)
 
   return (
-    <PageSection id={id} title={title} className={className} bodyClassName="pt-xs-5 gap-y-xs-3 flex flex-col">
+    <PageSection id={id} title={title} className={className} bodyClass="pt-xs-5 gap-y-xs-3 flex flex-col">
       <div className="flex items-center">
         <TextHighlight text={t('general.label.ratingLabels')} keyword={keyword} />:
         <Button

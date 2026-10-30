@@ -58,8 +58,8 @@ export default function Layout() {
                 size="sm"
                 linkHref={lastGameHref || gameRouteDefaults[game.id]}
                 tooltip={t(game.nameKey)}
-                surfaceClassName="p-px!"
-                contentClassName="flex-center h-full w-full"
+                surfaceClass="p-px!"
+                contentClass="flex-center h-full w-full"
               >
                 <Image srcs={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
               </Card>

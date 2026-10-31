@@ -1,4 +1,5 @@
 import { type TierListLabels } from '@app-shared/state/types'
+import { SelectField, type SelectOption } from '@design-system'
 import { TIER_LIST_VALUES, type TierListValue } from '../../data/settings'
 import { TierListIcon } from '../tier-list-icon/tier-list-icon'
 
@@ -13,44 +14,40 @@ export interface TierListFieldProps extends ReactProps {
 
 export const TierListField = (props: TierListFieldProps) => {
   const { value, labels, iconPos = 'left', readonly, className, onChange } = props
-  const tierIcon = value ? (
-    <TierListIcon value={value} />
-  ) : (
-    <span className="w-sm-0 flex-center text-size-sm font-weight-lg flex">--</span>
-  )
+  const options: SelectOption[] = [
+    ...TIER_LIST_VALUES.map((tier) => ({ value: tier, label: labels[tier] })),
+    { value: '', label: '--' },
+  ]
+  const label = value ? labels[value] : '--'
 
-  const handleClick = () => {
-    const index = value ? TIER_LIST_VALUES.indexOf(value) : -1
-    onChange?.(TIER_LIST_VALUES[index + 1])
+  if (readonly) {
+    return (
+      <div className={cx('h-field-h-xs flex max-w-full items-center', iconPos === 'right' && 'justify-end', className)}>
+        {value && iconPos === 'left' && <TierListIcon value={value} className="mr-xs-1" />}
+        <span className="min-w-sm-0 flex-center font-weight-lg text-size-sm flex leading-1">{label}</span>
+        {value && iconPos === 'right' && <TierListIcon value={value} className="ml-xs-1" />}
+      </div>
+    )
   }
-
-  const content = (
-    <span
-      className={cx(
-        'gap-xs-1 min-w-sm-8 flex w-full items-center',
-        iconPos === 'right' && 'justify-end',
-        readonly && className,
-      )}
-    >
-      {iconPos === 'left' && tierIcon}
-      {value && <span className="font-weight-lg text-size-sm truncate leading-1">{labels[value]}</span>}
-      {iconPos === 'right' && tierIcon}
-    </span>
-  )
-
-  if (readonly) return content
   return (
-    <button
-      type="button"
-      className={cx(
-        'h-field-h-xs px-xs-1 min-w-md-3',
-        'bg-color-bg-field border-color-border-default rounded-xs border',
-        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-        className,
-      )}
-      onClick={handleClick}
-    >
-      {content}
-    </button>
+    <SelectField
+      id="tier-list-field"
+      size="xs"
+      value={value ?? ''}
+      prefix={value ? <TierListIcon value={value} /> : undefined}
+      options={options}
+      optionFn={(option) => {
+        const tier = TIER_LIST_VALUES.find((tier) => tier === option.value)
+        return (
+          <span className="px-xs-1 flex items-center">
+            {tier && <TierListIcon value={tier} className="mr-xs-1" />}
+            <span className="min-w-sm-0 flex-center text-size-sm flex leading-1">{option.label}</span>
+          </span>
+        )
+      }}
+      optionClass="px-0!"
+      className={cx('min-w-md-3', className)}
+      onChange={(selected) => onChange?.(TIER_LIST_VALUES.find((tier) => tier === selected))}
+    />
   )
 }

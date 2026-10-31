@@ -166,7 +166,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
                     labels={tierListLabels}
                     readonly={!isEditing}
                     iconPos="right"
-                    className="w-md-3"
+                    className="w-md-5"
                     onChange={(value) =>
                       handleDraftChange('tierLists' satisfies keyof typeof draft, field)(value ?? '')
                     }

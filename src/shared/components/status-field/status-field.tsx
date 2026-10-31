@@ -23,7 +23,7 @@ export const StatusField = (props: StatusFieldProps) => {
     return (
       <div className={cx('h-field-h-xs flex max-w-full items-center', className)}>
         {value && <StatusIcon value={value} className="mr-xs-0" />}{' '}
-        <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm flex">{label}</span>
+        <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm flex leading-1">{label}</span>
       </div>
     )
   }
@@ -39,7 +39,7 @@ export const StatusField = (props: StatusFieldProps) => {
         return (
           <span className="px-xs-1 flex items-center">
             {status && <StatusIcon value={status} className="mr-xs-1" />}
-            <span className="min-w-xs-9 flex-center flex leading-1">{option.label}</span>
+            <span className="min-w-xs-9 flex-center text-size-sm flex leading-1">{option.label}</span>
           </span>
         )
       }}

@@ -23,7 +23,7 @@ export const RatingField = (props: RatingFieldProps) => {
     return (
       <span className={cx('h-field-h-xs flex max-w-full items-center', className)}>
         {value && <RatingIcon value={value} className="mr-xs-0" />}
-        <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm flex">{label}</span>
+        <span className="min-w-xs-9 flex-center font-weight-lg text-size-sm flex leading-1">{label}</span>
       </span>
     )
   return (
@@ -38,7 +38,7 @@ export const RatingField = (props: RatingFieldProps) => {
         return (
           <span className="px-xs-1 flex items-center">
             {rating && <RatingIcon value={rating} className="mr-xs-1" />}
-            <span className="min-w-xs-9 flex-center flex leading-1"> {option.label}</span>
+            <span className="min-w-xs-9 flex-center text-size-sm flex leading-1"> {option.label}</span>
           </span>
         )
       }}

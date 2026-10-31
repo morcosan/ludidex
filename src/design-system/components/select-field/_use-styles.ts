@@ -86,13 +86,13 @@ export const useStyles = (props: SelectFieldProps) => {
   }
 
   const dropdownCss: CSSObject = {
-    zIndex: `${tokens.zIndex['dropdown']} !important`,
-    padding: `${tokens.spacing['xs-1']} !important`,
+    zIndex: tokens.zIndex['dropdown'],
+    padding: tokens.spacing['xs-1'],
     overflow: 'auto',
-    border: `1px solid ${tokens.color['border-subtle']} !important`,
+    border: `1px solid ${tokens.color['border-subtle']}`,
     borderRadius: tokens.radius['sm'],
-    backgroundColor: `${tokens.color['bg-popup']} !important`,
-    boxShadow: `${tokens.shadow['md']} !important`,
+    backgroundColor: tokens.color['bg-popup'],
+    boxShadow: tokens.shadow['md'],
   }
 
   const optionCss: CSSObject = {

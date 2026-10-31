@@ -71,16 +71,21 @@ export const CharacterListing = (props: CharacterListingProps) => {
         <TierListView
           characters={characters}
           viewType={viewType}
-          displayClass={displayClass}
-          contentClass={contentClass}
+          classNames={{
+            row: displayClass.row,
+            list: displayClass.list,
+            content: contentClass,
+          }}
           renderItem={renderItem}
         />
       ) : isSortingView ? (
         <SortingView
           characters={characters}
           viewType={viewType}
-          displayClass={displayClass}
-          contentClass={contentClass}
+          classNames={{
+            row: displayClass.row,
+            content: contentClass,
+          }}
           renderItem={renderItem}
         />
       ) : (

@@ -5,15 +5,18 @@ import { Card } from '@design-system'
 
 interface CharacterItemProps {
   character: GenshinCharacter
-  sizeClass: string
   status?: CharacterStatus
   selected?: boolean
   noLabel?: boolean
+  classNames: {
+    avatar: string
+    label: string
+  }
   onClick?: (character: GenshinCharacter) => void
 }
 
 export const CharacterItem = (props: CharacterItemProps) => {
-  const { character, sizeClass, status, selected, noLabel, onClick } = props
+  const { character, classNames, status, selected, noLabel, onClick } = props
 
   return (
     <Card
@@ -25,9 +28,9 @@ export const CharacterItem = (props: CharacterItemProps) => {
       data-character-item
       onClick={() => onClick?.(character)}
     >
-      <CharacterAvatar character={character} status={status} className={sizeClass} />
+      <CharacterAvatar character={character} status={status} className={classNames.avatar} />
       {!noLabel && (
-        <div className={cx('translate-y-xs-0 text-size-xs truncate rounded-b-md text-center', sizeClass)}>
+        <div className={cx('translate-y-xs-0 text-size-xs truncate rounded-b-md text-center', classNames.label)}>
           {character.name}
         </div>
       )}

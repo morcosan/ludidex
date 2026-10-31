@@ -54,10 +54,10 @@ export const CharacterListing = (props: CharacterListingProps) => {
     <li key={character.id}>
       <CharacterItem
         character={character}
-        sizeClass={displayClass.size}
         status={userData?.characters?.[character.id]?.status}
         selected={selectedItemId === character.id}
         noLabel={displaySize === 'small'}
+        classNames={{ avatar: displayClass.size, label: displayClass.size }}
         onClick={onClickItem}
       />
     </li>

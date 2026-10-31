@@ -31,6 +31,8 @@ export const SelectField = (props: SelectFieldProps) => {
   const { dropdownCss, fieldCss, optionCss } = useStyles({ ...props, size })
   const {
     activeIndex,
+    innerRef,
+    opened,
     handleClear,
     handleClearMouseDown,
     handleFieldClick,
@@ -40,9 +42,7 @@ export const SelectField = (props: SelectFieldProps) => {
     handleOptionClick,
     handleOptionMouseDown,
     handleOptionMouseEnter,
-    innerRef,
-    opened,
-    onPopoverChange,
+    handlePopoverChange,
   } = useEvents(props)
   const selectedOption = options.find((option) => option.value === value)
   const canClear = clearable && !disabled && value !== null
@@ -61,7 +61,7 @@ export const SelectField = (props: SelectFieldProps) => {
         },
       }}
       opened={opened}
-      onChange={onPopoverChange}
+      onChange={handlePopoverChange}
       closeOnClickOutside
       closeOnEscape
       withRoles={false}
@@ -85,6 +85,8 @@ export const SelectField = (props: SelectFieldProps) => {
             id={id}
             type="text"
             role="combobox"
+            value={selectedOption?.label ?? ''}
+            placeholder={placeholder}
             aria-haspopup="listbox"
             aria-expanded={opened}
             aria-controls={`${id}-options`}
@@ -95,8 +97,6 @@ export const SelectField = (props: SelectFieldProps) => {
             autoComplete="off"
             disabled={disabled}
             readOnly
-            value={selectedOption?.label ?? ''}
-            placeholder={placeholder}
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyDown={handleKeyDown}
@@ -139,7 +139,11 @@ export const SelectField = (props: SelectFieldProps) => {
                 onClick={() => handleOptionClick(index)}
               >
                 {optionFn ? optionFn(option) : option.label}
-                {isSelected && <span aria-hidden className="select-field-option-check">✓</span>}
+                {isSelected && (
+                  <span aria-hidden className="select-field-option-check">
+                    ✓
+                  </span>
+                )}
               </div>
             )
           })}

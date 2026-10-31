@@ -33,7 +33,7 @@ export const useEvents = (props: SelectFieldProps) => {
     setActiveIndex(selectedIndex >= 0 ? selectedIndex : getNextEnabledIndex(-1, 1))
   }
 
-  const selectOption = (index: number) => {
+  const handleOptionClick = (index: number) => {
     const option = options[index]
     if (!option || option.disabled) return
     onChange?.(option.value)
@@ -86,20 +86,52 @@ export const useEvents = (props: SelectFieldProps) => {
     onChange?.(null)
   }
 
+  const handleClearMouseDown = (event: ReactMouseEvent) => {
+    event.preventDefault()
+  }
+
+  const handleFieldClick = () => {
+    if (opened) {
+      setOpened(false)
+    } else {
+      open()
+    }
+  }
+
+  const handleFieldClickCapture = (event: ReactMouseEvent) => {
+    if (disabled) event.stopPropagation()
+  }
+
+  const handleFieldKeyDownCapture = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (disabled) event.stopPropagation()
+  }
+
+  const handleOptionMouseDown = (event: ReactMouseEvent) => {
+    event.preventDefault()
+  }
+
+  const handleOptionMouseEnter = (index: number) => {
+    if (!options[index].disabled) setActiveIndex(index)
+  }
+
+  const handlePopoverChange = (isOpened: boolean) => {
+    setOpened(isOpened)
+  }
+
   return {
     activeIndex,
     innerRef,
     opened,
     handleClear,
-    handleClearMouseDown: (event: ReactMouseEvent) => event.preventDefault(),
-    handleFieldClick: () => (opened ? setOpened(false) : open()),
-    handleFieldClickCapture: (event: ReactMouseEvent) => disabled && event.stopPropagation(),
-    handleFieldKeyDownCapture: (event: KeyboardEvent<HTMLDivElement>) => disabled && event.stopPropagation(),
+    handleClearMouseDown,
+    handleFieldClick,
+    handleFieldClickCapture,
+    handleFieldKeyDownCapture,
     handleKeyDown,
-    handleOptionClick: selectOption,
-    handleOptionMouseDown: (event: ReactMouseEvent) => event.preventDefault(),
-    handleOptionMouseEnter: (index: number) => !options[index].disabled && setActiveIndex(index),
-    onPopoverChange: setOpened,
+    handleOptionClick,
+    handleOptionMouseDown,
+    handleOptionMouseEnter,
+    handlePopoverChange,
     setActiveIndex,
   }
 }

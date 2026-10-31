@@ -1,4 +1,3 @@
-import { ClassNames } from '@emotion/react'
 import { Popover as MantinePopover } from '@mantine/core'
 import '@mantine/core/styles/Popover.css'
 import { type KeyboardEvent, useImperativeHandle, useRef, useState } from 'react'
@@ -114,144 +113,113 @@ export const SelectField = (props: SelectFieldProps) => {
   }
 
   return (
-    <ClassNames>
-      {({ css }) => (
-        <MantinePopover
-          position="bottom-start"
-          offset={2}
-          width="target"
-          middlewares={{
-            size: {
-              apply({ availableHeight, elements }) {
-                elements.floating.style.maxHeight = `min(400px, ${availableHeight}px)`
-                elements.floating.style.minHeight = `min(200px, ${elements.floating.scrollHeight}px)`
-              },
-            },
+    <MantinePopover
+      position="bottom-start"
+      offset={2}
+      width="target"
+      middlewares={{
+        size: {
+          apply({ availableHeight, elements }) {
+            elements.floating.style.maxHeight = `min(400px, ${availableHeight}px)`
+            elements.floating.style.minHeight = `min(200px, ${elements.floating.scrollHeight}px)`
+          },
+        },
+      }}
+      opened={opened}
+      onChange={setOpened}
+      closeOnClickOutside
+      closeOnEscape
+      withRoles={false}
+    >
+      <MantinePopover.Target>
+        <div
+          css={fieldCss.styles}
+          className={cx('a11y-outline-proxy', className)}
+          style={style}
+          onClick={() => {
+            if (disabled) return
+            if (opened) {
+              setOpened(false)
+            } else {
+              open()
+            }
           }}
-          opened={opened}
-          onChange={setOpened}
-          closeOnClickOutside
-          closeOnEscape
-          withRoles={false}
+          onClickCapture={(event) => disabled && event.stopPropagation()}
+          onKeyDownCapture={(event) => disabled && event.stopPropagation()}
         >
-          <MantinePopover.Target>
-            <div
-              className={cx('a11y-outline-proxy', className, css`
-                ${fieldCss.styles}
-              `)}
-              style={style}
-              onClick={() => {
-                if (disabled) return
-                if (opened) {
-                  setOpened(false)
-                } else {
-                  open()
-                }
-              }}
-              onClickCapture={(event) => disabled && event.stopPropagation()}
-              onKeyDownCapture={(event) => disabled && event.stopPropagation()}
-            >
-              {prefix && (
-                <span
-                  className={css`
-                    ${fieldCss.prefixStyles}
-                  `}
-                  style={{ width: prefixWidth ?? fieldCss.prefixWidth }}
-                >
-                  {prefix}
-                </span>
-              )}
-              <input
-                ref={innerRef}
-                id={id}
-                type="text"
-                role="combobox"
-                aria-haspopup="listbox"
-                aria-expanded={opened}
-                aria-controls={`${id}-options`}
-                aria-activedescendant={opened && activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined}
-                aria-description={ariaDescription}
-                aria-describedby={ariaDescribedBy}
-                aria-disabled={disabled || undefined}
-                autoComplete="off"
-                disabled={disabled}
-                readOnly
-                value={selectedOption?.label ?? ''}
-                placeholder={placeholder}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onKeyDown={handleKeyDown}
-                className={css`
-                  ${fieldCss.inputStyles}
-                `}
-              />
-              <span
-                className={css`
-                  ${fieldCss.suffixStyles}
-                `}
+          {prefix && (
+            <span css={fieldCss.prefixStyles} style={{ width: prefixWidth ?? fieldCss.prefixWidth }}>
+              {prefix}
+            </span>
+          )}
+          <input
+            ref={innerRef}
+            id={id}
+            type="text"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded={opened}
+            aria-controls={`${id}-options`}
+            aria-activedescendant={opened && activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined}
+            aria-description={ariaDescription}
+            aria-describedby={ariaDescribedBy}
+            aria-disabled={disabled || undefined}
+            autoComplete="off"
+            disabled={disabled}
+            readOnly
+            value={selectedOption?.label ?? ''}
+            placeholder={placeholder}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onKeyDown={handleKeyDown}
+            css={fieldCss.inputStyles}
+          />
+          <span css={fieldCss.suffixStyles}>
+            {canClear && (
+              <button
+                type="button"
+                title={t('ds.action.clear')}
+                aria-label={t('ds.action.clear')}
+                css={fieldCss.clearButtonStyles}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onChange?.(null)
+                }}
               >
-                {canClear && (
-                  <button
-                    type="button"
-                    title={t('ds.action.clear')}
-                    aria-label={t('ds.action.clear')}
-                    className={css`
-                      ${fieldCss.clearButtonStyles}
-                    `}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      onChange?.(null)
-                    }}
-                  >
-                    ×
-                  </button>
-                )}
-                <span
-                  aria-hidden
-                  className={css`
-                    ${fieldCss.chevronStyles}
-                  `}
-                />
-              </span>
-            </div>
-          </MantinePopover.Target>
-          <MantinePopover.Dropdown
-            className={css`
-              ${dropdownCss.styles}
-            `}
-          >
-            <div id={`${id}-options`} role="listbox" aria-label={placeholder}>
-              {options.map((option, index) => {
-                const isSelected = option.value === value
-                return (
-                  <div
-                    key={option.value}
-                    id={`${id}-option-${index}`}
-                    role="option"
-                    aria-selected={isSelected}
-                    aria-disabled={option.disabled || undefined}
-                    className={cx(
-                      css`
-                        ${optionCss.styles}
-                      `,
-                      classNames?.option,
-                    )}
-                    data-selected={isSelected || undefined}
-                    data-disabled={option.disabled || undefined}
-                    onMouseEnter={() => !option.disabled && setActiveIndex(index)}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => selectOption(index)}
-                  >
-                    {optionFn ? optionFn(option) : option.label}
-                    {isSelected && <span aria-hidden className="select-field-option-check">✓</span>}
-                  </div>
-                )
-              })}
-            </div>
-          </MantinePopover.Dropdown>
-        </MantinePopover>
-      )}
-    </ClassNames>
+                ×
+              </button>
+            )}
+            <span aria-hidden css={fieldCss.chevronStyles} />
+          </span>
+        </div>
+      </MantinePopover.Target>
+      <MantinePopover.Dropdown css={dropdownCss}>
+        <div id={`${id}-options`} role="listbox" aria-label={placeholder}>
+          {options.map((option, index) => {
+            const isSelected = option.value === value
+            return (
+              <div
+                key={option.value}
+                id={`${id}-option-${index}`}
+                role="option"
+                aria-selected={isSelected}
+                aria-disabled={option.disabled || undefined}
+                css={optionCss}
+                className={classNames?.option}
+                data-selected={isSelected || undefined}
+                data-disabled={option.disabled || undefined}
+                onMouseEnter={() => !option.disabled && setActiveIndex(index)}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => selectOption(index)}
+              >
+                {optionFn ? optionFn(option) : option.label}
+                {isSelected && <span aria-hidden className="select-field-option-check">✓</span>}
+              </div>
+            )
+          })}
+        </div>
+      </MantinePopover.Dropdown>
+    </MantinePopover>
   )
 }

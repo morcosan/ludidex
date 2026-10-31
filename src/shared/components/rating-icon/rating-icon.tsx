@@ -28,7 +28,10 @@ export const RatingIcon = (props: RatingIconProps) => {
       />
 
       <span
-        className={cx('font-weight-lg text-color-white relative z-10', large ? 'text-size-lg' : 'text-size-xs pb-px')}
+        className={cx(
+          'font-weight-lg text-color-white flex-center absolute inset-0 z-10 flex',
+          large ? 'text-size-lg' : 'text-size-xs',
+        )}
       >
         <span className="text-[0.8em]">{value}</span>
       </span>

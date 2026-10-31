@@ -1,98 +1,130 @@
-import { css } from '@emotion/react'
+import { type CSSObject } from '@emotion/react'
+import { useThemeService } from '../../services/theme-service'
 import { useFieldStyles } from '../_shared/use-field-styles'
 import { type SelectFieldProps } from './_types'
 
 export const useStyles = (props: SelectFieldProps) => {
-  const { size, prefix } = props
+  const { size } = props
   const { cssBaseVars } = useFieldStyles({ size })
+  const { tokens } = useThemeService()
 
-  const fieldCss = css`
-    border-radius: var(--ds-radius-sm);
-
-    & .mantine-Input-wrapper {
-      --input-height-sm: ${cssBaseVars.minHeight};
-    }
-
-    & .mantine-Input-section {
-      justify-content: end;
-    }
-
-    & [data-combined-clear-section] {
-      gap: 0 !important;
-      padding: 0 !important;
-    }
-
-    & .mantine-Select-input {
-      cursor: default;
-      border: 1px solid var(--ds-color-border-default);
-      border-radius: ${cssBaseVars.borderRadius};
-      background-color: var(--ds-color-bg-field);
-      padding-right: var(--ds-spacing-sm-5);
-      padding-left: ${prefix ? cssBaseVars.minHeight : cssBaseVars.textPaddingX};
-      pointer-events: auto;
-      color: var(--ds-color-text-default);
-      font-size: ${cssBaseVars.fontSize};
-      text-overflow: ellipsis;
-
-      &:not(.clearable) {
-        padding-right: var(--ds-spacing-xs-8);
-      }
-
-      &:not(.disabled):focus {
-        border: 1px solid var(--ds-color-border-active);
-      }
-
-      &::placeholder {
-        color: var(--ds-color-text-placeholder);
-      }
-
-      &.disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-      }
-    }
-
-    & .mantine-InputClearButton-root {
-      cursor: pointer;
-      border-radius: var(--ds-radius-full);
-      background-color: transparent !important;
-      color: var(--ds-color-text-subtle);
-
-      &:hover {
-        background-color: var(--ds-color-hover-text-default) !important;
-      }
-    }
-  `
-
-  const dropdownCss = css`
-    z-index: var(--ds-z-index-dropdown) !important;
-    box-shadow: var(--ds-shadow-md) !important;
-    border: 1px solid var(--ds-color-border-subtle) !important;
-    background-color: var(--ds-color-bg-popup) !important;
-    padding: var(--ds-spacing-xs-1) !important;
-    overflow: auto !important;
-
-    & .mantine-Select-option {
-      position: relative !important;
-      color: var(--ds-color-text-default) !important;
-
-      &:hover:not([data-combobox-disabled]) {
-        background: var(--ds-color-hover-text-default);
-      }
-
-      &[data-combobox-selected] {
-        background: var(--ds-color-bg-highlight) !important;
-      }
-
-      & svg {
-        opacity: 1 !important;
-        margin-top: -2px !important;
-      }
-    }
-  `
+  const fieldCss: CSSObject = {
+    display: 'flex',
+    alignItems: 'center',
+    minWidth: 0,
+    height: cssBaseVars.minHeight,
+    border: `1px solid ${tokens.color['border-default']}`,
+    borderRadius: cssBaseVars.borderRadius,
+    backgroundColor: tokens.color['bg-field'],
+    color: tokens.color['text-default'],
+    '&:focus-within': {
+      borderColor: tokens.color['border-active'],
+    },
+    '&:has(input:disabled)': {
+      opacity: 0.4,
+      cursor: 'not-allowed',
+    },
+  }
+  const prefixCss: CSSObject = {
+    display: 'flex',
+    flex: '0 0 auto',
+    alignItems: 'center',
+    height: '100%',
+    margin: `0 calc(-1 * ${tokens.spacing['xs-1']}) 0 ${tokens.spacing['xs-1']}`,
+  }
+  const inputCss: CSSObject = {
+    flex: '1 1 0%',
+    width: 'auto',
+    minWidth: 0,
+    height: '100%',
+    padding: `0 ${cssBaseVars.textPaddingX}`,
+    border: 0,
+    outline: 0,
+    background: 'transparent',
+    color: tokens.color['text-default'],
+    fontSize: cssBaseVars.fontSize,
+    textOverflow: 'ellipsis',
+    cursor: 'default',
+    '&::placeholder': {
+      color: tokens.color['text-placeholder'],
+      opacity: 1,
+    },
+    '&:disabled': {
+      cursor: 'not-allowed',
+    },
+  }
+  const suffixCss: CSSObject = {
+    display: 'flex',
+    flex: '0 0 auto',
+    alignItems: 'center',
+    gap: tokens.spacing['xs-2'],
+    paddingRight: tokens.spacing['xs-2'],
+  }
+  const clearButtonCss: CSSObject = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: tokens.spacing['button-h-xs'],
+    height: tokens.spacing['button-h-xs'],
+    padding: tokens.spacing['xs-1'],
+    borderRadius: tokens.radius['full'],
+    background: 'transparent',
+    color: tokens.color['text-subtle'],
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: tokens.color['hover-text-default'],
+    },
+  }
+  const chevronSize = (() => {
+    if (size === 'xs') return tokens.fontSize['sm']
+    if (size === 'sm') return tokens.fontSize['sm']
+    if (size === 'md') return tokens.fontSize['lg']
+    if (size === 'lg') return tokens.fontSize['lg']
+    if (size === 'xl') return tokens.fontSize['lg']
+    return ''
+  })()
+  const chevronCss: CSSObject = {
+    display: 'block',
+    width: chevronSize,
+    height: chevronSize,
+    flex: '0 0 auto',
+  }
+  const optionCss: CSSObject = {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    minHeight: tokens.spacing['field-h-xs'],
+    padding: `${tokens.spacing['xs-2']} ${tokens.spacing['xs-3']}`,
+    borderRadius: tokens.radius['xs'],
+    color: tokens.color['text-default'],
+    cursor: 'pointer',
+    '&:hover:not([data-disabled="true"])': {
+      background: tokens.color['hover-text-default'],
+    },
+    '&[data-selected="true"]': {
+      background: tokens.color['bg-highlight'],
+    },
+    '&[data-disabled="true"]': {
+      opacity: 0.4,
+      cursor: 'not-allowed',
+    },
+  }
+  const optionCheckCss: CSSObject = {
+    position: 'absolute',
+    top: '50%',
+    right: tokens.spacing['xs-1'],
+    width: tokens.spacing['xs-7'],
+    transform: 'translateY(-50%)',
+  }
 
   return {
-    dropdownCss,
     fieldCss,
+    prefixCss,
+    inputCss,
+    suffixCss,
+    clearButtonCss,
+    chevronCss,
+    optionCss,
+    optionCheckCss,
   }
 }

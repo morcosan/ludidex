@@ -47,6 +47,7 @@ const RatingVariants = () => {
             <RatingField
               value={values[index]}
               labels={RATING_LABELS}
+              className="w-md-6"
               onChange={(value) =>
                 setValues((current) => current.map((item, itemIndex) => (itemIndex === index ? value : item)))
               }

@@ -11,12 +11,12 @@ const meta: Meta = {
     props: {
       title: 'Section title',
       surface: 'page',
-      titleClassName: '',
-      bodyClassName: '',
       className: '',
+      classNames: { title: '', body: '' },
       style: {},
     },
     inlineRadios: ['surface'],
+    clearDefaults: ['classNames'],
   }),
 }
 

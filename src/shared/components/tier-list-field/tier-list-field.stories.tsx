@@ -49,6 +49,7 @@ const TierListVariants = () => {
             <TierListField
               value={values[index]}
               labels={TIER_LIST_LABELS}
+              className="w-md-5"
               onChange={(value) =>
                 setValues((current) => current.map((item, itemIndex) => (itemIndex === index ? value : item)))
               }

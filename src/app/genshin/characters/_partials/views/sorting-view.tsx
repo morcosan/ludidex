@@ -3,7 +3,6 @@ import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { Fragment, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type DisplayClass } from '../character-listing'
 import { type ViewType } from '../use-view-options'
 import { formatNumber, formatPercent, roundValue } from './utils'
 
@@ -90,13 +89,15 @@ const useSorting = (props: SortingProps): SortAxis => {
 interface SortingViewProps {
   characters: GenshinCharacter[]
   viewType: ViewType
-  displayClass: DisplayClass
-  contentClass: string
+  classNames: {
+    row: string
+    content: string
+  }
   renderItem: (character: GenshinCharacter) => ReactNode
 }
 
 export const SortingView = (props: SortingViewProps) => {
-  const { characters, viewType, displayClass, contentClass, renderItem } = props
+  const { characters, viewType, classNames, renderItem } = props
   const { t } = useTranslation()
   const { sortGroups, floorValue, formatValue } = useSorting({ characters, viewType })
   const hasCharacters = sortGroups.some((group) => group.characters.length > 0)
@@ -116,9 +117,9 @@ export const SortingView = (props: SortingViewProps) => {
 
       {sortGroups.map(({ key, characters: chars }, index) => (
         <Fragment key={key}>
-          <div className={cx('flex items-start items-stretch', displayClass.row)}>
+          <div className={cx('flex items-start items-stretch', classNames.row)}>
             <div className="w-md-2 border-color-border-on-glass shrink-0 border-r" />
-            <ul className={contentClass}>{chars.map(renderItem)}</ul>
+            <ul className={classNames.content}>{chars.map(renderItem)}</ul>
           </div>
           {renderLabel(sortGroups[index + 1]?.value ?? floorValue, `sorting-label-${key}`)}
         </Fragment>

@@ -64,8 +64,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
   return (
     <Card
       className={cx('w-xl-0', className)}
-      surfaceClassName="p-0!"
-      contentClassName="flex flex-col"
+      classNames={{ surface: 'p-0!', content: 'flex flex-col' }}
       style={{ '--element-color': GenshinElementColor[character.element] }}
     >
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
@@ -82,7 +81,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
                 value={RATING_VALUES.find((rating) => rating === toNumber(draft.rating))}
                 labels={ratingLabels}
                 readonly={!isEditing}
-                className={cx(isEditing ? 'w-md-6 my-xs-1' : 'mr-xs-0')}
+                className={cx(isEditing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
                 onChange={(value) => handleDraftChange('rating' satisfies keyof typeof draft)(String(value))}
               />
             </div>
@@ -92,7 +91,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
               <StatusField
                 value={isEditing ? (draft.status as CharacterStatus | undefined) : userData?.status}
                 readonly={!isEditing}
-                className={cx(isEditing ? 'my-xs-1 w-md-6' : 'mr-xs-0')}
+                className={cx(isEditing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
                 onChange={(value) => handleDraftChange('status' satisfies keyof typeof draft)(value ?? '')}
               />
             </div>
@@ -121,12 +120,12 @@ export const CharacterCard = (props: CharacterCardProps) => {
             <CharacterTrait
               label={character.weapon}
               icon={GenshinWeaponIconUrls[character.weapon][0]}
-              iconClass="brightness-90"
+              classNames={{ icon: 'brightness-90' }}
             />
             <CharacterTrait
               label={character.nation}
               icon={GenshinNationIconUrls[character.nation][0]}
-              iconClass="brightness-40"
+              classNames={{ icon: 'brightness-40' }}
             />
           </div>
 
@@ -166,7 +165,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
                     labels={tierListLabels}
                     readonly={!isEditing}
                     iconPos="right"
-                    className="w-md-3"
+                    className="w-md-6"
                     onChange={(value) =>
                       handleDraftChange('tierLists' satisfies keyof typeof draft, field)(value ?? '')
                     }

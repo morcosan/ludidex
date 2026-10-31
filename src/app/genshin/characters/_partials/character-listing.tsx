@@ -54,10 +54,10 @@ export const CharacterListing = (props: CharacterListingProps) => {
     <li key={character.id}>
       <CharacterItem
         character={character}
-        sizeClass={displayClass.size}
         status={userData?.characters?.[character.id]?.status}
         selected={selectedItemId === character.id}
         noLabel={displaySize === 'small'}
+        classNames={{ avatar: displayClass.size, label: displayClass.size }}
         onClick={onClickItem}
       />
     </li>
@@ -71,16 +71,21 @@ export const CharacterListing = (props: CharacterListingProps) => {
         <TierListView
           characters={characters}
           viewType={viewType}
-          displayClass={displayClass}
-          contentClass={contentClass}
+          classNames={{
+            row: displayClass.row,
+            list: displayClass.list,
+            content: contentClass,
+          }}
           renderItem={renderItem}
         />
       ) : isSortingView ? (
         <SortingView
           characters={characters}
           viewType={viewType}
-          displayClass={displayClass}
-          contentClass={contentClass}
+          classNames={{
+            row: displayClass.row,
+            content: contentClass,
+          }}
           renderItem={renderItem}
         />
       ) : (

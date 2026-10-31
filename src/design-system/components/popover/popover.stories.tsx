@@ -12,6 +12,10 @@ const meta: Meta = {
     props: {
       opened: undefined,
       position: 'top',
+      offset: 4,
+      width: undefined,
+      middlewares: undefined,
+      withRoles: undefined,
       className: 'max-w-md-9 truncate',
       style: {},
     },

@@ -14,7 +14,12 @@ export const TierListIcon = (props: TierListIconProps) => {
       className={cx('h-xs-8 w-sm-0 min-w-sm-0 flex-center flex rounded-xs', className)}
       style={{ backgroundColor: color }}
     >
-      <span className="font-weight-xl text-color-white ml-[-0.15em] leading-0 tracking-[-0.15em] text-shadow-md">
+      <span
+        className={cx(
+          'ml-[-0.15em] tracking-[-0.15em]',
+          'font-weight-xl text-color-white text-size-sm leading-0 text-shadow-md',
+        )}
+      >
         {value}
       </span>
     </span>

@@ -1,11 +1,8 @@
-import { ClassNames } from '@emotion/react'
-import { Select, type SelectProps } from '@mantine/core'
-import '@mantine/core/styles/CloseButton.css'
-import '@mantine/core/styles/Combobox.css'
-import '@mantine/core/styles/Popover.css'
-import { useEffect, useImperativeHandle, useRef } from 'react'
+import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Popover } from '../popover/popover'
 import { type SelectFieldProps } from './_types'
+import { useEvents } from './_use-events'
 import { useStyles } from './_use-styles'
 
 export type { SelectFieldProps, SelectOption, SelectValue } from './_types'
@@ -15,72 +12,132 @@ export const SelectField = (props: SelectFieldProps) => {
     ariaDescribedBy,
     ariaDescription,
     className,
+    classNames,
     clearable,
     disabled,
     id,
     onBlur,
-    onChange,
     onFocus,
     optionFn,
     options,
     placeholder,
     prefix,
-    ref,
     size = 'md',
     style,
     value,
   } = props
   const { t } = useTranslation()
-  const { dropdownCss, fieldCss } = useStyles({ ...props, size })
-  const innerRef = useRef<HTMLInputElement>(null)
+  const styles = useStyles({ ...props, size })
+  const {
+    activeIndex,
+    innerRef,
+    opened,
+    handleClear,
+    handleClearMouseDown,
+    handleFieldClick,
+    handleFieldClickCapture,
+    handleFieldKeyDownCapture,
+    handleKeyDown,
+    handleOptionClick,
+    handleOptionMouseDown,
+    handleOptionMouseEnter,
+    handlePopoverChange,
+  } = useEvents(props)
+  const selectedOption = options.find((option) => option.value === value)
+  const canClear = clearable && !disabled && value !== null
 
-  useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
-
-  useEffect(() => {
-    if (disabled) innerRef.current?.setAttribute('aria-disabled', String(disabled))
-    if (ariaDescription) innerRef.current?.setAttribute('aria-description', ariaDescription)
-    if (ariaDescribedBy) innerRef.current?.setAttribute('aria-describedby', ariaDescribedBy)
-  }, [disabled, ariaDescribedBy, ariaDescription])
-
-  const getSelectProps = (css: Function): SelectProps => ({
-    id: id,
-    value: value,
-    data: options,
-    renderOption: optionFn ? ({ option }) => optionFn(option) : undefined,
-    leftSection: prefix,
-    placeholder: placeholder,
-    clearable: clearable && !disabled,
-    allowDeselect: false,
-    withScrollArea: false,
-    comboboxProps: {
-      offset: 2,
-      middlewares: {
+  return (
+    <Popover
+      position="bottom-start"
+      offset={2}
+      width="target"
+      opened={opened}
+      withRoles={false}
+      transitionProps={{ duration: 0 }}
+      middlewares={{
         size: {
           apply({ availableHeight, elements }) {
             elements.floating.style.maxHeight = `min(400px, ${availableHeight}px)`
             elements.floating.style.minHeight = `min(200px, ${elements.floating.scrollHeight}px)`
           },
         },
-      },
-    },
-    className: cx('a11y-outline-proxy', className),
-    style: style,
-    classNames: {
-      root: css`
-        ${fieldCss.styles}
-      `,
-      input: cx(clearable && !disabled && 'clearable', disabled && 'disabled'),
-      dropdown: css`
-        ${dropdownCss.styles}
-      `,
-    },
-    clearButtonProps: { title: t('ds.action.clear') },
-    onChange: onChange,
-    onFocus: onFocus,
-    onBlur: onBlur,
-    onClickCapture: (event) => disabled && event.stopPropagation(),
-    onKeyDownCapture: (event) => disabled && event.stopPropagation(),
-  })
-
-  return <ClassNames>{({ css }) => <Select {...getSelectProps(css)} ref={innerRef} />}</ClassNames>
+      }}
+      trigger={
+        <div
+          css={styles.fieldCss}
+          className={cx('a11y-outline-proxy', className)}
+          style={style}
+          onClick={handleFieldClick}
+          onClickCapture={handleFieldClickCapture}
+          onKeyDownCapture={handleFieldKeyDownCapture}
+        >
+          {prefix && <span css={styles.prefixCss}>{prefix}</span>}
+          <input
+            ref={innerRef}
+            id={id}
+            type="text"
+            role="combobox"
+            value={selectedOption?.label ?? ''}
+            placeholder={placeholder}
+            aria-haspopup="listbox"
+            aria-expanded={opened}
+            aria-controls={`${id}-options`}
+            aria-activedescendant={opened && activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined}
+            aria-description={ariaDescription}
+            aria-describedby={ariaDescribedBy}
+            aria-disabled={disabled || undefined}
+            autoComplete="off"
+            disabled={disabled}
+            readOnly
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onKeyDown={handleKeyDown}
+            css={styles.inputCss}
+          />
+          <span css={styles.suffixCss}>
+            {canClear && (
+              <button
+                type="button"
+                title={t('ds.action.clear')}
+                aria-label={t('ds.action.clear')}
+                css={styles.clearButtonCss}
+                onMouseDown={handleClearMouseDown}
+                onClick={handleClear}
+              >
+                <XIcon aria-hidden />
+              </button>
+            )}
+            <ChevronDownIcon aria-hidden css={styles.chevronCss} />
+          </span>
+        </div>
+      }
+      className="p-xs-0!"
+      onChange={handlePopoverChange}
+    >
+      <div id={`${id}-options`} role="listbox" aria-label={placeholder}>
+        {options.map((option, index) => {
+          const isSelected = option.value === value
+          return (
+            <div
+              key={option.value}
+              id={`${id}-option-${index}`}
+              role="option"
+              aria-selected={isSelected}
+              aria-disabled={option.disabled || undefined}
+              css={styles.optionCss}
+              className={classNames?.option}
+              data-selected={isSelected || undefined}
+              data-disabled={option.disabled || undefined}
+              onMouseEnter={() => handleOptionMouseEnter(index)}
+              onMouseDown={handleOptionMouseDown}
+              onClick={() => handleOptionClick(index)}
+            >
+              {optionFn ? optionFn(option) : option.label}
+              {isSelected && <CheckIcon aria-hidden css={styles.optionCheckCss} />}
+            </div>
+          )
+        })}
+      </div>
+    </Popover>
+  )
 }

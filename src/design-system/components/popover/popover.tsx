@@ -1,8 +1,13 @@
 import { useThemeService } from '@design-system'
-import type { CSSObject } from '@emotion/react'
+import { type CSSObject } from '@emotion/react'
 import { Popover as MantinePopover } from '@mantine/core'
 import '@mantine/core/styles/Popover.css'
-import type { CSSProperties, ReactNode } from 'react'
+import type { ComponentProps, CSSProperties, ReactNode } from 'react'
+
+type MantinePopoverProps = ComponentProps<typeof MantinePopover>
+type PopoverMiddlewares = MantinePopoverProps['middlewares']
+type PopoverWidth = MantinePopoverProps['width']
+type PopoverTransitionProps = MantinePopoverProps['transitionProps']
 
 export interface PopoverProps extends ReactProps {
   /**
@@ -32,6 +37,16 @@ export interface PopoverProps extends ReactProps {
     | 'right-start'
     | 'right'
     | 'right-end'
+  /** Offset between the trigger and dropdown */
+  offset?: number
+  /** Width of the dropdown, or `target` to match the trigger */
+  width?: PopoverWidth
+  /** Floating UI middleware configuration */
+  middlewares?: PopoverMiddlewares
+  /** Mantine dropdown role configuration */
+  withRoles?: boolean
+  /** Transition props for the dropdown */
+  transitionProps?: PopoverTransitionProps
   /** CSS class attribute for the dropdown element */
   className?: string
   /** CSS style attribute for the dropdown element */
@@ -45,10 +60,25 @@ export interface PopoverProps extends ReactProps {
 }
 
 export const Popover = (props: PopoverProps) => {
-  const { trigger, children, opened, position = 'top', className, style, onChange } = props
+  const {
+    trigger,
+    children,
+    opened,
+    position = 'top',
+    offset = 4,
+    width,
+    middlewares,
+    withRoles,
+    transitionProps,
+    className,
+    style,
+    onChange,
+  } = props
   const { tokens } = useThemeService()
 
   const surfaceCss: CSSObject = {
+    zIndex: tokens.zIndex['dropdown'],
+    overflow: 'auto',
     padding: `${tokens.spacing['xs-2']} ${tokens.spacing['xs-3']}`,
     border: `1px solid ${tokens.color['border-surface']}`,
     borderRadius: tokens.radius['sm'],
@@ -58,7 +88,16 @@ export const Popover = (props: PopoverProps) => {
   }
 
   return (
-    <MantinePopover position={position} opened={opened} offset={4} onChange={onChange}>
+    <MantinePopover
+      opened={opened}
+      position={position}
+      offset={offset}
+      width={width}
+      middlewares={middlewares}
+      withRoles={withRoles}
+      transitionProps={transitionProps}
+      onChange={onChange}
+    >
       <MantinePopover.Target>{trigger}</MantinePopover.Target>
       <MantinePopover.Dropdown css={surfaceCss} className={className} style={style}>
         {children}

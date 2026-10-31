@@ -33,10 +33,10 @@ export interface CardProps extends HtmlDataProps {
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string
-  /** CSS class attribute for the surface element */
-  surfaceClassName?: string
-  /** CSS class attribute for the content element */
-  contentClassName?: string
+  classNames?: {
+    surface?: string
+    content?: string
+  }
   /** CSS style attribute for the wrapper element */
   style?: CSSProperties
 

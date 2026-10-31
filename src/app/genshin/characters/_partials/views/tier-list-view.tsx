@@ -14,7 +14,6 @@ import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { withAlpha } from '@app-shared/utils/various'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type DisplayClass } from '../character-listing'
 import { type ViewType } from '../use-view-options'
 
 type ValueFn = (character: GenshinCharacter) => unknown
@@ -29,19 +28,22 @@ interface TierData {
 interface TierViewProps {
   characters: GenshinCharacter[]
   viewType: ViewType
-  displayClass: DisplayClass
-  contentClass: string
+  classNames: {
+    row: string
+    list: string
+    content: string
+  }
   renderItem: (character: GenshinCharacter) => ReactNode
 }
 
 export const TierListView = (props: TierViewProps) => {
-  const { characters, viewType, displayClass, contentClass, renderItem } = props
+  const { characters, viewType, classNames, renderItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData)
   const preferences = useUserDataStore((state) => state.userData?.preferences)
   const ratingLabels = { ...RATING_LABELS, ...preferences?.ratingLabels }
   const tierListLabels = { ...TIER_LIST_LABELS, ...preferences?.tierListLabels }
-  const labelClass = cx(displayClass.row, displayClass.list)
+  const labelClass = cx(classNames.row, classNames.list)
 
   const getRatingValue = (character: GenshinCharacter) => userData?.genshin?.characters[character.id]?.rating
   const getStatusValue = (character: GenshinCharacter) => userData?.genshin?.characters[character.id]?.status
@@ -107,14 +109,14 @@ export const TierListView = (props: TierViewProps) => {
   return (
     <div className="divide-color-border-on-glass flex h-fit w-full flex-col divide-y">
       {tiers.map(({ key, label, chars, bgColor }) => (
-        <div key={key} className={cx('flex items-start items-stretch', displayClass.row)}>
+        <div key={key} className={cx('flex items-start items-stretch', classNames.row)}>
           {/* TIER LABEL */}
           <div className="w-md-6 px-xs-2 border-color-border-on-glass relative flex items-start border-r">
             {bgColor && <span className="inset-xs-1 absolute -z-10 rounded-sm" style={{ backgroundColor: bgColor }} />}
             <div className={cx('flex-center mx-0! flex w-full', labelClass)}>{label}</div>
           </div>
           {/* CHARACTERS */}
-          <ul className={contentClass}>{chars.map(renderItem)}</ul>
+          <ul className={classNames.content}>{chars.map(renderItem)}</ul>
         </div>
       ))}
     </div>

@@ -23,14 +23,33 @@ type ArgType = {
     value?: { name: string; value?: string }[]
   }
   control?: { type: string }
+  table?: {
+    type?: {
+      summary?: string
+      detail?: string
+    }
+    [key: string]: unknown
+  }
 }
 const argTypesEnhancers = [
   ({ argTypes }: StoryContext<any, ArgType>) => {
-    // Force all props of type string to be displayed as single line textarea
     Object.keys(argTypes).forEach((key: string) => {
-      const type = argTypes[key].type
+      const arg = argTypes[key]
+      const type = arg.type
+
+      // Force all props of type string to be displayed as single line textarea
       if (type?.name === 'union' && type.value?.some((t: any) => t.name === 'string')) {
-        argTypes[key].control = { type: 'text' }
+        arg.control = { type: 'text' }
+      }
+
+      // Show object types with one member per line
+      const summary = arg.table?.type?.summary
+      if (typeof summary === 'string' && summary.startsWith('{')) {
+        const body = summary.replace(/^\{\s*|\s*\}$/g, '').replace(/\s+(?=\w+\??:)/g, '\n  ')
+        arg.table = {
+          ...arg.table,
+          type: { summary: `{\n  ${body}\n}` },
+        }
       }
     })
     return argTypes

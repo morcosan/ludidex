@@ -3,6 +3,12 @@ import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
 import { type SelectFieldProps, type SelectOption } from './select-field'
 
+const getOptionFn = (optionFn: SelectFieldProps['optionFn'] | string) => {
+  if (typeof optionFn !== 'string') return optionFn
+  // eslint-disable-next-line no-eval
+  return eval(optionFn)
+}
+
 const meta: Meta = {
   title: 'Design System / Components / Select Field',
   ...defineMeta(SelectField, {
@@ -43,8 +49,7 @@ const meta: Meta = {
         <SelectField
           {...props}
           value={value}
-          // eslint-disable-next-line no-eval
-          optionFn={props.optionFn && eval(props.optionFn as unknown as string)}
+          optionFn={getOptionFn(props.optionFn)}
           onChange={setValue}
         />
       )
@@ -61,8 +66,8 @@ const Examples: StoryObj<typeof SelectField> = {
 
   render: (props: SelectFieldProps) => (
     <div className="p-sm-0 flex min-h-0 flex-1 flex-col justify-between">
-      <SelectField {...props} />
-      <SelectField {...props} />
+      <SelectField {...props} optionFn={getOptionFn(props.optionFn)} />
+      <SelectField {...props} optionFn={getOptionFn(props.optionFn)} />
     </div>
   ),
 }

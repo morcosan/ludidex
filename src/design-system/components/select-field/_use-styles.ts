@@ -87,7 +87,6 @@ export const useStyles = (props: SelectFieldProps) => {
 
   const dropdownCss: CSSObject = {
     zIndex: `${tokens.zIndex['dropdown']} !important`,
-    maxHeight: 400,
     padding: `${tokens.spacing['xs-1']} !important`,
     overflow: 'auto',
     border: `1px solid ${tokens.color['border-subtle']} !important`,

@@ -52,6 +52,8 @@ export const SelectField = (props: SelectFieldProps) => {
       position="bottom-start"
       offset={2}
       width="target"
+      opened={opened}
+      withRoles={false}
       middlewares={{
         size: {
           apply({ availableHeight, elements }) {
@@ -60,11 +62,9 @@ export const SelectField = (props: SelectFieldProps) => {
           },
         },
       }}
-      opened={opened}
-      onChange={handlePopoverChange}
       closeOnClickOutside
       closeOnEscape
-      withRoles={false}
+      onChange={handlePopoverChange}
     >
       <MantinePopover.Target>
         <div

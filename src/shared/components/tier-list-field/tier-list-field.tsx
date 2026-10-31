@@ -47,7 +47,7 @@ export const TierListField = (props: TierListFieldProps) => {
           </span>
         )
       }}
-      optionClass="px-0!"
+      classNames={{ option: 'px-0!' }}
       className={cx('min-w-md-3', className)}
       onChange={(selected) => onChange?.(TIER_LIST_VALUES.find((tier) => tier === selected))}
     />

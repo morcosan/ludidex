@@ -15,6 +15,7 @@ export const SelectField = (props: SelectFieldProps) => {
     ariaDescribedBy,
     ariaDescription,
     className,
+    classNames,
     clearable,
     disabled,
     id,
@@ -22,7 +23,6 @@ export const SelectField = (props: SelectFieldProps) => {
     onChange,
     onFocus,
     optionFn,
-    optionClass,
     options,
     placeholder,
     prefix,
@@ -76,7 +76,7 @@ export const SelectField = (props: SelectFieldProps) => {
       dropdown: css`
         ${dropdownCss.styles}
       `,
-      option: optionClass,
+      option: classNames?.option,
     },
     clearButtonProps: { title: t('ds.action.clear') },
     onChange: onChange,

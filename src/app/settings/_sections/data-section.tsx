@@ -123,7 +123,12 @@ export const DataSection = (props: SectionProps) => {
   }
 
   return (
-    <PageSection id={id} title={title} className={className} bodyClass="pt-xs-5 gap-xs-4 min-h-lg-0 flex flex-col">
+    <PageSection
+      id={id}
+      title={title}
+      className={className}
+      classNames={{ body: 'pt-xs-5 gap-xs-4 min-h-lg-0 flex flex-col' }}
+    >
       <div className="flex items-center">
         <TextHighlight text={t('general.label.exportData')} keyword={keyword} />:
         <Button state={isExporting ? 'loading' : 'active'} className="ml-xs-3" onClick={handleClickExport}>

@@ -18,8 +18,10 @@ export const CharacterItem = (props: CharacterItemProps) => {
   return (
     <Card
       state={selected ? 'selected' : 'active'}
-      surfaceClass={cx(noLabel ? 'p-px!' : 'p-xs-0!')}
-      contentClass="relative flex w-full flex-col"
+      classNames={{
+        surface: cx(noLabel ? 'p-px!' : 'p-xs-0!'),
+        content: 'relative flex w-full flex-col',
+      }}
       data-character-item
       onClick={() => onClick?.(character)}
     >

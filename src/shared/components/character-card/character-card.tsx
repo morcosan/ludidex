@@ -64,8 +64,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
   return (
     <Card
       className={cx('w-xl-0', className)}
-      surfaceClass="p-0!"
-      contentClass="flex flex-col"
+      classNames={{ surface: 'p-0!', content: 'flex flex-col' }}
       style={{ '--element-color': GenshinElementColor[character.element] }}
     >
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
@@ -121,12 +120,12 @@ export const CharacterCard = (props: CharacterCardProps) => {
             <CharacterTrait
               label={character.weapon}
               icon={GenshinWeaponIconUrls[character.weapon][0]}
-              iconClass="brightness-90"
+              classNames={{ icon: 'brightness-90' }}
             />
             <CharacterTrait
               label={character.nation}
               icon={GenshinNationIconUrls[character.nation][0]}
-              iconClass="brightness-40"
+              classNames={{ icon: 'brightness-40' }}
             />
           </div>
 

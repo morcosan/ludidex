@@ -28,7 +28,7 @@ const meta: Meta = {
     },
     events: ['onChange'],
     inlineRadios: ['size'],
-    clearDefaults: ['options', 'value'],
+    clearDefaults: ['options', 'value', 'classNames'],
 
     render: (props: SelectFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -16,8 +16,7 @@ export const StatsSection = ({ title, items, children }: Props) => {
     <PageSection
       surface="card"
       title={title}
-      titleClass="pb-xs-2!"
-      bodyClass="pt-0!"
+      classNames={{ title: 'pb-xs-2!', body: 'pt-0!' }}
       className={cx(!items?.length && 'divide-none!')}
     >
       {items?.length && (

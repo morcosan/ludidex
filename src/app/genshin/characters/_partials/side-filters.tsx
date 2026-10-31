@@ -25,7 +25,7 @@ export const SideFilters = (props: SideFiltersProps) => {
   return (
     <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
       {/* VIEW TYPES */}
-      <PageSection title={t('general.label.view')} bodyClass="gap-xs-0">
+      <PageSection title={t('general.label.view')} classNames={{ body: 'gap-xs-0' }}>
         {viewOptions.map(({ value, label, icon }) => (
           <Button
             key={value}

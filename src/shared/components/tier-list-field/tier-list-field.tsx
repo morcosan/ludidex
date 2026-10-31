@@ -1,5 +1,5 @@
 import { type TierListLabels } from '@app-shared/state/types'
-import { SelectField, type SelectOption } from '@design-system'
+import { SelectField, type SelectOption, useThemeService } from '@design-system'
 import { TIER_LIST_VALUES, type TierListValue } from '../../data/settings'
 import { TierListIcon } from '../tier-list-icon/tier-list-icon'
 
@@ -14,6 +14,7 @@ export interface TierListFieldProps extends ReactProps {
 
 export const TierListField = (props: TierListFieldProps) => {
   const { value, labels, iconPos = 'left', readonly, className, onChange } = props
+  const { tokens } = useThemeService()
   const options: SelectOption[] = [
     ...TIER_LIST_VALUES.map((tier) => ({ value: tier, label: labels[tier] })),
     { value: '', label: '--' },
@@ -34,7 +35,8 @@ export const TierListField = (props: TierListFieldProps) => {
       id="tier-list-field"
       size="xs"
       value={value ?? ''}
-      prefix={value ? <TierListIcon value={value} /> : undefined}
+      prefix={value ? <TierListIcon value={value} className="mr-xs-1" /> : undefined}
+      prefixWidth={tokens.spacing['sm-2']}
       options={options}
       optionFn={(option) => {
         const tier = TIER_LIST_VALUES.find((tier) => tier === option.value)

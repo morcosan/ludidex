@@ -104,4 +104,9 @@ pre.prismjs {
   & tr[title]:hover > td {
     background: var(--ds-color-hover-button-default) !important;
   }
+
+  /* Preserve object type display */
+  & td span {
+    white-space: pre-wrap !important;
+  }
 }

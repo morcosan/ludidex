@@ -28,7 +28,7 @@ export const SelectField = (props: SelectFieldProps) => {
     value,
   } = props
   const { t } = useTranslation()
-  const { dropdownCss, fieldCss, optionCss } = useStyles({ ...props, size })
+  const styles = useStyles({ ...props, size })
   const {
     activeIndex,
     innerRef,
@@ -68,7 +68,7 @@ export const SelectField = (props: SelectFieldProps) => {
     >
       <MantinePopover.Target>
         <div
-          css={fieldCss.styles}
+          css={styles.fieldCss}
           className={cx('a11y-outline-proxy', className)}
           style={style}
           onClick={handleFieldClick}
@@ -76,7 +76,7 @@ export const SelectField = (props: SelectFieldProps) => {
           onKeyDownCapture={handleFieldKeyDownCapture}
         >
           {prefix && (
-            <span css={fieldCss.prefixStyles} style={{ width: prefixWidth ?? fieldCss.prefixWidth }}>
+            <span css={styles.prefixCss} style={{ width: prefixWidth ?? styles.prefixWidth }}>
               {prefix}
             </span>
           )}
@@ -100,26 +100,27 @@ export const SelectField = (props: SelectFieldProps) => {
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyDown={handleKeyDown}
-            css={fieldCss.inputStyles}
+            css={styles.inputCss}
           />
-          <span css={fieldCss.suffixStyles}>
+          <span css={styles.suffixCss}>
             {canClear && (
               <button
                 type="button"
                 title={t('ds.action.clear')}
                 aria-label={t('ds.action.clear')}
-                css={fieldCss.clearButtonStyles}
+                css={styles.clearButtonCss}
                 onMouseDown={handleClearMouseDown}
                 onClick={handleClear}
               >
                 ×
               </button>
             )}
-            <span aria-hidden css={fieldCss.chevronStyles} />
+            <span aria-hidden css={styles.chevronCss} />
           </span>
         </div>
       </MantinePopover.Target>
-      <MantinePopover.Dropdown css={dropdownCss}>
+
+      <MantinePopover.Dropdown css={styles.dropdownCss}>
         <div id={`${id}-options`} role="listbox" aria-label={placeholder}>
           {options.map((option, index) => {
             const isSelected = option.value === value
@@ -130,7 +131,7 @@ export const SelectField = (props: SelectFieldProps) => {
                 role="option"
                 aria-selected={isSelected}
                 aria-disabled={option.disabled || undefined}
-                css={optionCss}
+                css={styles.optionCss}
                 className={classNames?.option}
                 data-selected={isSelected || undefined}
                 data-disabled={option.disabled || undefined}

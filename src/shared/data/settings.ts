@@ -2,15 +2,15 @@ export type RatingValue = 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1
 export const RATING_VALUES: RatingValue[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] as const
 
 export const RATING_LABELS = {
-  10: 'Perfect',
-  9: 'Superb',
-  8: 'Great',
-  7: 'Good',
-  6: 'Fine',
-  5: 'Average',
-  4: 'Mediocre',
-  3: 'Subpar',
-  2: 'Bad',
+  10: 'Favorite',
+  9: 'Amazing',
+  8: 'Superb',
+  7: 'Great',
+  6: 'Good',
+  5: 'Nice',
+  4: 'Fine',
+  3: 'Dull',
+  2: 'Lame',
   1: 'Awful',
 } as const
 
@@ -36,10 +36,10 @@ export const TIER_LIST_LABELS = {
   S: 'Elite',
   A: 'Great',
   B: 'Good',
-  C: 'Decent',
-  D: 'Weak',
-  E: 'Poor',
-  F: 'Worst',
+  C: 'Fine',
+  D: 'Dull',
+  E: 'Weak',
+  F: 'Poor',
 } as const
 
 export const TIER_LIST_COLORS = {
@@ -79,3 +79,5 @@ export const STATUS_COLORS = {
   missing: '#E5484D',
   ignored: '#7C8494',
 } as const
+
+export const MAX_TEAM_SIZE = 4

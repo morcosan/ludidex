@@ -4,25 +4,27 @@ import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
+import { useFilterParams } from '@app-shared/utils/use-filter-params'
+import { useViewOptions } from '@app-shared/utils/use-view-options'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { matchesFilters } from '../_shared/config'
+import { FiltersBar } from '../_shared/filters-bar'
 import { CharacterListing } from './_partials/character-listing'
-import { SideFilters } from './_partials/side-filters'
-import { TopFilters } from './_partials/top-filters'
-import { useFilterParams } from './_partials/use-filter-params'
-import { useViewOptions } from './_partials/use-view-options'
+import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_partials/config'
+import { SidePanel } from './_partials/side-panel'
 
 export default function Page() {
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData)
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const displaySize = useUserSettingsStore((state) => state.userSettings?.displaySize ?? 'medium')
-  const setDisplaySize = useUserSettingsStore((state) => state.setDisplaySize)
-  const { filters, handleFiltersChange } = useFilterParams()
+  const characterItemSize = useUserSettingsStore((state) => state.userSettings?.characterItemSize ?? 'medium')
+  const setCharacterItemSize = useUserSettingsStore((state) => state.setCharacterItemSize)
+  const { filters, handleFiltersChange } = useFilterParams(CHARACTER_FILTERS)
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions()
+  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(CHARACTER_VIEW_TYPES, 'default')
 
   useClickOutside({
     enabled: isPreviewOpen,
@@ -30,13 +32,9 @@ export default function Page() {
     callback: () => setIsPreviewOpen(false),
   })
 
-  const characters = CHARACTERS.filter(({ element, weapon, nation }) => {
-    return (
-      (filters.elements.length === 0 || filters.elements.includes(element)) &&
-      (filters.weapons.length === 0 || filters.weapons.includes(weapon)) &&
-      (filters.nations.length === 0 || filters.nations.includes(nation))
-    )
-  }).sort((charA, charB) => charA.name.localeCompare(charB.name))
+  const characters = CHARACTERS.filter((character) => matchesFilters(character, filters)).sort((charA, charB) =>
+    charA.name.localeCompare(charB.name),
+  )
 
   const filtersCount = filters.elements.length + filters.weapons.length + filters.nations.length
 
@@ -62,7 +60,7 @@ export default function Page() {
     <div className="flex h-full">
       {/* LEFT SIDE */}
       <div className="flex h-full flex-1 flex-col">
-        <TopFilters value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
+        <FiltersBar value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
 
         <h1 className={cx('flex', viewType === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
           <Breadcrumb first>
@@ -75,7 +73,7 @@ export default function Page() {
         <CharacterListing
           characters={characters}
           viewType={viewType}
-          displaySize={displaySize}
+          itemSize={characterItemSize}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           onClickItem={handleClickCharacter}
         />
@@ -83,12 +81,12 @@ export default function Page() {
 
       {/* RIGHT SIDE */}
       <div className="min-w-xl-0 mx-xs-3 relative h-full">
-        <SideFilters
-          displaySize={displaySize}
+        <SidePanel
+          itemSize={characterItemSize}
           viewType={viewType}
           viewOptions={viewOptions}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
-          onChangeDisplaySize={setDisplaySize}
+          onChangeItemSize={setCharacterItemSize}
           onChangeView={handleViewChange}
         />
 
@@ -105,8 +103,8 @@ export default function Page() {
             <CharacterCard
               character={previewCharacter}
               userPrefs={userPrefs}
-              userData={userData?.genshin?.characters[previewCharacter.id]}
-              isOpen={isPreviewOpen}
+              userData={userData?.genshin?.characters?.[previewCharacter.id]}
+              opened={isPreviewOpen}
               className="h-full"
               onSave={handleSaveCharacter}
               onClose={handleClosePreview}

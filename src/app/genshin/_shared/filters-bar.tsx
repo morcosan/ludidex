@@ -8,14 +8,15 @@ import {
 } from '@app-shared/data/genshin/core'
 import { Button, IconButton } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type CharacterFilters } from './use-filter-params'
+import { type GenshinFilters } from './config'
 
 interface TopFiltersProps extends ReactProps {
-  value: CharacterFilters
-  onChange: (filters: CharacterFilters) => void
+  value: GenshinFilters
+  onChange: (filters: GenshinFilters) => void
 }
 
-const TopFilters = ({ value, className, onChange }: TopFiltersProps) => {
+export const FiltersBar = (props: TopFiltersProps) => {
+  const { value, className, onChange } = props
   const { t } = useTranslation()
   const hasFilters = value.elements.length > 0 || value.weapons.length > 0 || value.nations.length > 0
 
@@ -90,5 +91,3 @@ const TopFilters = ({ value, className, onChange }: TopFiltersProps) => {
     </div>
   )
 }
-
-export { TopFilters }

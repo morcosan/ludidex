@@ -27,4 +27,37 @@ const isPathUnderSegment = (pathname: string, segment: string): boolean => {
 
 const withAlpha = (color: string, opacity: number) => `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`
 
-export { formatFileSize, getDataSize, getDateAsYYYYMMDD, getTimeAsHHMMSS, isPathUnderSegment, withAlpha }
+const formatInteger = (value: number) => String(Math.round(value))
+const formatPercent = (value: number) => `${Math.round(value)}%`
+
+const roundValue = (value: number, direction: 'up' | 'down', step: number) => {
+  const round = direction === 'up' ? Math.ceil : Math.floor
+  return round(value / step) * step
+}
+
+const parseTags = (value: string) => {
+  return value
+    .split(/[,\n]/)
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+}
+
+const toNumber = (value: string) => {
+  if (!value.trim()) return undefined
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : undefined
+}
+
+export {
+  formatFileSize,
+  formatInteger,
+  formatPercent,
+  getDataSize,
+  getDateAsYYYYMMDD,
+  getTimeAsHHMMSS,
+  isPathUnderSegment,
+  parseTags,
+  roundValue,
+  toNumber,
+  withAlpha,
+}

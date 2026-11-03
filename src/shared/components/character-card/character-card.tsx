@@ -1,4 +1,3 @@
-import { useStickyOnTop } from '@app-shared/utils/use-sticky-on-top'
 import { Card, Image, TextField } from '@design-system'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,40 +7,37 @@ import {
   GenshinNationIconUrls,
   GenshinWeaponIconUrls,
 } from '../../data/genshin/core'
-import {
-  RATING_LABELS,
-  RATING_VALUES,
-  TIER_LIST_LABELS,
-  TIER_LIST_VALUES,
-  type CharacterStatus,
-} from '../../data/settings'
+import { TIER_LIST_LABELS } from '../../data/settings'
+import { useStickyOnTop } from '../../utils/use-sticky-on-top'
+import { CardActions } from '../_shared/card-actions'
+import { CardBanner } from '../_shared/card-banner'
+import { CardSection, type SectionItem } from '../_shared/card-section'
+import { CharacterTrait } from '../_shared/character-trait'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
-import { RatingField } from '../rating-field/rating-field'
-import { StatusField } from '../status-field/status-field'
 import { Tag } from '../tag/tag'
 import { TierListField } from '../tier-list-field/tier-list-field'
-import { Actions } from './_partials/actions'
-import { CharacterTrait } from './_partials/character-trait'
-import { StatsSection, type SectionItem } from './_partials/stats-section'
 import { useData } from './_partials/use-data'
-import { toNumber, useDraft } from './_partials/use-draft'
+import { useDraft } from './_partials/use-draft'
 import { type CharacterCardProps } from './_types'
 
 export { type CharacterCardProps }
 
 export const CharacterCard = (props: CharacterCardProps) => {
-  const { character, userData, userPrefs, isOpen = true, className, onClose } = props
+  const { character, userData, userPrefs, opened = true, className, onClose } = props
   const { t } = useTranslation()
-  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
   const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
   const { statSections, tierFields } = useData(props)
   const {
     draft,
     hasChanges,
     isEditing,
-    getDraftValue,
+    getStatValue,
+    handleRatingChange,
+    handleStatusChange,
+    handleTagsChange,
+    handleTierListChange,
+    handleStatChange,
     handleClickDiscard,
-    handleDraftChange,
     handleClickEdit,
     handleClickSave,
   } = useDraft(props)
@@ -50,9 +46,9 @@ export const CharacterCard = (props: CharacterCardProps) => {
   const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
 
   useEffect(() => {
-    if (!isOpen && isEditing) handleClickDiscard()
+    if (!opened && isEditing) handleClickDiscard()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, isEditing])
+  }, [opened, isEditing])
 
   const handleClickClose = () => {
     if (isEditing) handleClickDiscard()
@@ -69,34 +65,21 @@ export const CharacterCard = (props: CharacterCardProps) => {
     >
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
-        <div className="relative">
-          <div className={cx('bg-(--element-color)', imageFilterClass)} />
-          <Image srcs={character.bannerUrls} alt="" className="pointer-events-none relative aspect-3/2 object-cover" />
-          <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
-
-          <div className="top-xs-0 left-xs-0 right-xs-0 gap-y-xs-0 absolute z-10 flex flex-col">
-            {/* RATING */}
-            <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
-              <RatingField
-                value={RATING_VALUES.find((rating) => rating === toNumber(draft.rating))}
-                labels={ratingLabels}
-                readonly={!isEditing}
-                className={cx(isEditing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
-                onChange={(value) => handleDraftChange('rating' satisfies keyof typeof draft)(String(value))}
-              />
-            </div>
-
-            {/* STATUS */}
-            <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
-              <StatusField
-                value={isEditing ? (draft.status as CharacterStatus | undefined) : userData?.status}
-                readonly={!isEditing}
-                className={cx(isEditing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
-                onChange={(value) => handleDraftChange('status' satisfies keyof typeof draft)(value ?? '')}
-              />
-            </div>
-          </div>
-        </div>
+        <CardBanner
+          banner={
+            <>
+              <div className={cx('bg-(--element-color)', imageFilterClass)} />
+              <Image srcs={character.bannerUrls} className="pointer-events-none relative aspect-3/2 object-cover" />
+              <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
+            </>
+          }
+          editing={isEditing}
+          userPrefs={userPrefs}
+          ratingValue={draft.rating}
+          statusValue={draft.status}
+          onChangeRating={handleRatingChange}
+          onChangeStatus={handleStatusChange}
+        />
 
         {/* NAME */}
         <div
@@ -116,29 +99,29 @@ export const CharacterCard = (props: CharacterCardProps) => {
         <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex flex-col">
           {/* TRAITS */}
           <div className="gap-x-xs-5 gap-y-xs-2 flex flex-wrap items-center justify-between">
-            <CharacterTrait label={character.element} icon={GenshinElementIconUrls[character.element][0]} />
+            <CharacterTrait label={character.element} iconSrcs={GenshinElementIconUrls[character.element]} />
             <CharacterTrait
               label={character.weapon}
-              icon={GenshinWeaponIconUrls[character.weapon][0]}
+              iconSrcs={GenshinWeaponIconUrls[character.weapon]}
               classNames={{ icon: 'brightness-90' }}
             />
             <CharacterTrait
               label={character.nation}
-              icon={GenshinNationIconUrls[character.nation][0]}
+              iconSrcs={GenshinNationIconUrls[character.nation]}
               classNames={{ icon: 'brightness-40' }}
             />
           </div>
 
           {/* TAGS */}
-          <StatsSection title={t('game.label.tags')}>
+          <CardSection title={t('game.label.tags')}>
             {isEditing ? (
               <TextField
                 id="character-card-tags"
                 size="xs"
-                value={draft.tags as string}
+                value={draft.tags}
                 placeholder={t('game.placeholder.tags')}
                 multiline
-                onChange={handleDraftChange('tags' satisfies keyof typeof draft)}
+                onChange={handleTagsChange}
               />
             ) : userData?.tags?.length ? (
               <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
@@ -149,26 +132,22 @@ export const CharacterCard = (props: CharacterCardProps) => {
             ) : (
               <span className="text-size-sm min-h-field-h-xs">--</span>
             )}
-          </StatsSection>
+          </CardSection>
 
           {/* TIER LISTS */}
-          <StatsSection
+          <CardSection
             title={t('game.label.tierLists')}
-            items={Object.entries(tierFields).map(([field, label]): SectionItem => {
+            items={tierFields.map(({ field, label }): SectionItem => {
               return {
                 label,
                 value: (
                   <TierListField
-                    value={TIER_LIST_VALUES.find(
-                      (tier) => tier === getDraftValue('tierLists' satisfies keyof typeof draft, field),
-                    )}
+                    value={draft.tierLists[field]}
                     labels={tierListLabels}
                     readonly={!isEditing}
                     iconPos="right"
                     className="w-md-6"
-                    onChange={(value) =>
-                      handleDraftChange('tierLists' satisfies keyof typeof draft, field)(value ?? '')
-                    }
+                    onChange={(value) => handleTierListChange(field, value)}
                   />
                 ),
               }
@@ -177,20 +156,20 @@ export const CharacterCard = (props: CharacterCardProps) => {
 
           {/* STATS */}
           {statSections.map(({ label: sectionLabel, path, rows }) => (
-            <StatsSection
+            <CardSection
               key={sectionLabel}
               title={sectionLabel}
               items={rows.map(({ label, value, field, percent }): SectionItem => ({
                 label,
                 value:
-                  isEditing && field ? (
+                  isEditing && path && field ? (
                     <TextField
                       id={`character-card-${path}-${field}`}
                       size="xs"
-                      value={getDraftValue(path, field)}
+                      value={getStatValue(path, field)}
                       suffix={percent && <span className="text-size-xs text-color-text-placeholder mr-xs-2">%</span>}
                       className="w-md-1"
-                      onChange={path ? handleDraftChange(path, field) : handleDraftChange(field)}
+                      onChange={(value) => handleStatChange(path, field, value)}
                     />
                   ) : (
                     <span className="text-size-sm font-weight-lg pr-xs-0">{value}</span>
@@ -200,8 +179,8 @@ export const CharacterCard = (props: CharacterCardProps) => {
           ))}
         </div>
 
-        <Actions
-          isEditing={isEditing}
+        <CardActions
+          editing={isEditing}
           hasChanges={hasChanges}
           onDiscard={handleClickDiscard}
           onClose={handleClickClose}

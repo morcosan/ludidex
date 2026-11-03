@@ -2242,4 +2242,21 @@ export const CHARACTERS: GenshinCharacter[] = [
       'https://i.gachabase.net/V9JGn-Ku1v_klXBoxpd7nLfxptnZ8Rk3bgPGn9h6t6Y/q:50/f:webp/plain/gi/assets/329fd2c566f0ba274f771a501276b4a0.png',
     ],
   },
-]
+  {
+    id: 'nicole',
+    name: 'Nicole',
+    element: 'Pyro',
+    weapon: 'Catalyst',
+    nation: 'None',
+    bonusStat: '+28.8% ATK',
+    na1HitDmg: [35.1, 63.3],
+    iconUrls: [
+      'https://i.gachabase.net/G4WV9cN7pfEk4lcOdnZrCMxsQ9dOp9nLoEi91BjWz7I/q:50/f:webp/plain/gi/assets/833692cb4e6ce9947f542124487dc04f.png',
+      'https://static.wikia.nocookie.net/gensin-impact/images/a/a0/Nicole_Icon.png',
+    ],
+    cardUrls: [],
+    bannerUrls: [
+      'https://i.gachabase.net/vISnBVYb0v8Bb-2OoT9cuSEbhpGNKZmOcv5HE82i40s/q:50/f:webp/plain/gi/assets/4b630764b8bca96ac2a0b6334b1d7b68.png',
+    ],
+  },
+] as const

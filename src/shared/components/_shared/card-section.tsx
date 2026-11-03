@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { PageSection } from '../../page-section/page-section'
+import { PageSection } from '../page-section/page-section'
 
 export interface SectionItem {
   label: string
@@ -11,7 +11,7 @@ interface Props extends ReactProps {
   items?: SectionItem[]
 }
 
-export const StatsSection = ({ title, items, children }: Props) => {
+export const CardSection = ({ title, items, children }: Props) => {
   return (
     <PageSection
       surface="card"

@@ -120,7 +120,8 @@
       "specialBonus": "Special Bonus"
     },
     "status": {
-      "empty": "No characters match the selected filters"
+      "noCharacters": "No characters match the selected filters",
+      "noTeams": "No teams match the selected filters"
     }
   },
   "marketing": {

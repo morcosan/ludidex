@@ -60,7 +60,7 @@ export default function Layout() {
                 tooltip={t(game.nameKey)}
                 classNames={{ surface: 'p-px!', content: 'flex-center h-full w-full' }}
               >
-                <Image srcs={game.iconUrls} alt="" className="h-sm-4 w-sm-4 rounded-md" />
+                <Image srcs={game.iconUrls} className="h-sm-4 w-sm-4 rounded-md" />
               </Card>
             ))}
           </div>

@@ -1,19 +1,20 @@
 import { type GenshinCharacter } from '@app-shared/data/genshin/characters'
-import { type DisplaySize } from '@app-shared/state/types'
+import { type ItemSize } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { type ViewType } from '@app-shared/utils/use-view-options'
 import { useTranslation } from 'react-i18next'
+import { TierListView } from '../../_shared/tier-list-view'
 import { CharacterItem } from './character-item'
-import { type ViewType } from './use-view-options'
+import { type CharacterViewType } from './config'
 import { SortingView } from './views/sorting-view'
-import { TierListView } from './views/tier-list-view'
 
-export interface DisplayClass {
+export interface ItemSizeClass {
   size: string
   list: string
   row: string
 }
 
-const DISPLAY_CLASSES: Record<DisplaySize, DisplayClass> = {
+const ITEM_SIZE_CLASSES: Record<ItemSize, ItemSizeClass> = {
   small: {
     size: 'w-md-1',
     list: 'gap-xs-3 m-xs-3',
@@ -33,22 +34,35 @@ const DISPLAY_CLASSES: Record<DisplaySize, DisplayClass> = {
 
 interface CharacterListingProps {
   characters: GenshinCharacter[]
-  viewType: ViewType
-  displaySize: DisplaySize
+  viewType: CharacterViewType
+  itemSize: ItemSize
   selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, viewType, displaySize, selectedItemId, onClickItem } = props
+  const { characters, viewType, itemSize, selectedItemId, onClickItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
 
   const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
 
-  const displayClass = DISPLAY_CLASSES[displaySize]
-  const contentClass = cx('flex h-fit flex-1 flex-wrap', displayClass.list)
+  const itemSizeClass = ITEM_SIZE_CLASSES[itemSize]
+  const contentClass = cx('flex h-fit flex-1 flex-wrap', itemSizeClass.list)
+
+  const getValue = (character: GenshinCharacter, viewType: ViewType) => {
+    const characterUserData = userData?.characters?.[character.id]
+    if (viewType === 'rating') return characterUserData?.rating
+    if (viewType === 'status') return characterUserData?.status
+    if (viewType === 'tier-main-dps') return characterUserData?.tierLists?.mainDps
+    if (viewType === 'tier-sub-dps') return characterUserData?.tierLists?.subDps
+    if (viewType === 'tier-support') return characterUserData?.tierLists?.support
+    if (viewType === 'tier-exploration') return characterUserData?.tierLists?.exploration
+    if (viewType === 'tier-outfit') return characterUserData?.tierLists?.outfit
+    if (viewType === 'tier-personality') return characterUserData?.tierLists?.personality
+    return undefined
+  }
 
   const renderItem = (character: GenshinCharacter) => (
     <li key={character.id}>
@@ -56,8 +70,8 @@ export const CharacterListing = (props: CharacterListingProps) => {
         character={character}
         status={userData?.characters?.[character.id]?.status}
         selected={selectedItemId === character.id}
-        noLabel={displaySize === 'small'}
-        classNames={{ avatar: displayClass.size, label: displayClass.size }}
+        noLabel={itemSize === 'small'}
+        classNames={{ avatar: itemSizeClass.size, label: itemSizeClass.size }}
         onClick={onClickItem}
       />
     </li>
@@ -66,16 +80,17 @@ export const CharacterListing = (props: CharacterListingProps) => {
   return (
     <div className="pr-xs-3 flex min-h-0 flex-1 overflow-y-auto">
       {characters.length === 0 && !isSortingView ? (
-        <p className="text-size-sm text-color-text-subtle">{t('game.status.empty')}</p>
+        <p className="text-size-sm text-color-text-subtle">{t('game.status.noCharacters')}</p>
       ) : isTierListView ? (
         <TierListView
-          characters={characters}
+          items={characters}
           viewType={viewType}
           classNames={{
-            row: displayClass.row,
-            list: displayClass.list,
+            row: itemSizeClass.row,
+            list: itemSizeClass.list,
             content: contentClass,
           }}
+          getValue={getValue}
           renderItem={renderItem}
         />
       ) : isSortingView ? (
@@ -83,7 +98,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
           characters={characters}
           viewType={viewType}
           classNames={{
-            row: displayClass.row,
+            row: itemSizeClass.row,
             content: contentClass,
           }}
           renderItem={renderItem}

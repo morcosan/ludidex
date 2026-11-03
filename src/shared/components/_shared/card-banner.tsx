@@ -1,0 +1,45 @@
+import { RatingField, StatusField } from '@app-shared/components'
+import { type CharacterStatus, RATING_LABELS, type RatingValue } from '@app-shared/data/settings'
+import type { UserPrefs } from '@app-shared/state/types'
+import { type ReactNode } from 'react'
+
+interface CardBannerProps {
+  banner?: ReactNode
+  editing?: boolean
+  userPrefs?: UserPrefs
+  ratingValue?: RatingValue
+  statusValue?: CharacterStatus
+  onChangeRating?: (value: RatingValue | undefined) => void
+  onChangeStatus?: (value: CharacterStatus | undefined) => void
+}
+
+export const CardBanner = (props: CardBannerProps) => {
+  const { banner, editing, userPrefs, ratingValue, statusValue, onChangeRating, onChangeStatus } = props
+  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
+
+  return (
+    <div className="relative">
+      {banner}
+
+      <div className="top-xs-0 left-xs-0 right-xs-0 gap-y-xs-0 absolute z-10 flex flex-col">
+        <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+          <RatingField
+            value={ratingValue}
+            labels={ratingLabels}
+            readonly={!editing}
+            className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+            onChange={onChangeRating}
+          />
+        </div>
+        <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+          <StatusField
+            value={statusValue}
+            readonly={!editing}
+            className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+            onChange={onChangeStatus}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,12 +1,12 @@
 import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { formatInteger, formatPercent, roundValue } from '@app-shared/utils/various'
 import { Fragment, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type ViewType } from '../use-view-options'
-import { formatNumber, formatPercent, roundValue } from './utils'
+import { type CharacterViewType } from '../config'
 
-type SortingViewType = Extract<ViewType, `sort-${string}`>
+type SortingViewType = Extract<CharacterViewType, `sort-${string}`>
 type CharUserData = GenshinCharacterUserData
 
 interface SortGroup {
@@ -33,11 +33,11 @@ const getStatValue = (stat: keyof NonNullable<CharUserData['stats']>) => {
   return (_: GenshinCharacter, userData?: CharUserData) => userData?.stats?.[stat]
 }
 const VIEW_CONFIGS: Record<SortingViewType, ViewConfig> = {
-  'sort-level': { step: 5, getValue: getStatValue('level'), formatValue: formatNumber },
-  'sort-hp': { step: 5000, getValue: getStatValue('hp'), formatValue: formatNumber },
-  'sort-atk': { step: 100, getValue: getStatValue('atk'), formatValue: formatNumber },
-  'sort-def': { step: 100, getValue: getStatValue('def'), formatValue: formatNumber },
-  'sort-em': { step: 100, getValue: getStatValue('em'), formatValue: formatNumber },
+  'sort-level': { step: 5, getValue: getStatValue('level'), formatValue: formatInteger },
+  'sort-hp': { step: 5000, getValue: getStatValue('hp'), formatValue: formatInteger },
+  'sort-atk': { step: 100, getValue: getStatValue('atk'), formatValue: formatInteger },
+  'sort-def': { step: 100, getValue: getStatValue('def'), formatValue: formatInteger },
+  'sort-em': { step: 100, getValue: getStatValue('em'), formatValue: formatInteger },
   'sort-er': { step: 10, getValue: getStatValue('er'), formatValue: formatPercent },
   'sort-crit-rate': { step: 10, getValue: getStatValue('critRate'), formatValue: formatPercent },
   'sort-crit-dmg': { step: 10, getValue: getStatValue('critDmg'), formatValue: formatPercent },
@@ -46,7 +46,7 @@ const VIEW_CONFIGS: Record<SortingViewType, ViewConfig> = {
 
 interface SortingProps {
   characters: GenshinCharacter[]
-  viewType: ViewType
+  viewType: CharacterViewType
 }
 
 const useSorting = (props: SortingProps): SortAxis => {
@@ -56,7 +56,7 @@ const useSorting = (props: SortingProps): SortAxis => {
   const config = VIEW_CONFIGS[viewType as SortingViewType]
 
   const sortedChars = CHARACTERS.map((character): SortedCharacter | undefined => {
-    const value = config.getValue(character, userData?.genshin?.characters[character.id])
+    const value = config.getValue(character, userData?.genshin?.characters?.[character.id])
     return value === undefined ? undefined : { character, value }
   })
     .filter((entry): entry is SortedCharacter => entry !== undefined)
@@ -88,7 +88,7 @@ const useSorting = (props: SortingProps): SortAxis => {
 
 interface SortingViewProps {
   characters: GenshinCharacter[]
-  viewType: ViewType
+  viewType: CharacterViewType
   classNames: {
     row: string
     content: string
@@ -126,6 +126,6 @@ export const SortingView = (props: SortingViewProps) => {
       ))}
     </div>
   ) : (
-    <p className="text-size-sm text-color-text-subtle">{t('game.status.empty')}</p>
+    <p className="text-size-sm text-color-text-subtle">{t('game.status.noCharacters')}</p>
   )
 }

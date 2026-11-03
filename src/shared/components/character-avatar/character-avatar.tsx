@@ -32,7 +32,7 @@ export const CharacterAvatar = (props: CharacterAvatarProps) => {
 
   return (
     <div
-      className={cx('relative rounded-md', className, classConfig[status]?.root)}
+      className={cx('relative aspect-square rounded-md', className, classConfig[status]?.root)}
       style={{ '--element-color': GenshinElementColor[character.element] }}
     >
       <div
@@ -43,7 +43,6 @@ export const CharacterAvatar = (props: CharacterAvatarProps) => {
       />
       <Image
         srcs={character.iconUrls}
-        alt=""
         loading="lazy"
         className={cx('pointer-events-none relative aspect-square rounded-md object-cover', classConfig[status]?.img)}
       />

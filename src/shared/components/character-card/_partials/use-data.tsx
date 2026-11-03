@@ -36,14 +36,14 @@ export const useData = (props: CharacterCardProps) => {
     critDmg: { label: t('game.stats.critDmg'), percent: true },
     elemDmg: { label: t('game.stats.elemDmg', { element: character.element }), percent: true },
   }
-  const tierFields: Record<keyof GenshinTierScores, string> = {
-    mainDps: t('game.label.mainDps'),
-    subDps: t('game.label.subDps'),
-    support: t('game.label.support'),
-    exploration: t('game.label.exploration'),
-    outfit: t('game.label.outfit'),
-    personality: t('game.label.personality'),
-  }
+  const tierFields: { field: keyof GenshinTierScores; label: string }[] = [
+    { field: 'mainDps', label: t('game.label.mainDps') },
+    { field: 'subDps', label: t('game.label.subDps') },
+    { field: 'support', label: t('game.label.support') },
+    { field: 'exploration', label: t('game.label.exploration') },
+    { field: 'outfit', label: t('game.label.outfit') },
+    { field: 'personality', label: t('game.label.personality') },
+  ]
   const statSections: StatSection[] = [
     {
       label: t('game.label.talents'),

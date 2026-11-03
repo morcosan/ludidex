@@ -6,7 +6,7 @@ import { CheckCheckIcon, Undo2Icon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 interface ActionsProps {
-  isEditing: boolean
+  editing: boolean
   hasChanges: boolean
   onDiscard: () => void
   onClose: () => void
@@ -14,12 +14,12 @@ interface ActionsProps {
   onEdit: () => void
 }
 
-export const Actions = ({ isEditing, onDiscard, onClose, onSave, onEdit }: ActionsProps) => {
+export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit }: ActionsProps) => {
   const { t } = useTranslation()
 
   return (
     <>
-      {isEditing ? (
+      {editing ? (
         <IconButton
           size="md"
           variant="default"
@@ -43,7 +43,7 @@ export const Actions = ({ isEditing, onDiscard, onClose, onSave, onEdit }: Actio
         </IconButton>
       )}
 
-      {isEditing ? (
+      {editing ? (
         <IconButton
           size="md"
           variant="primary"

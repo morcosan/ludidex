@@ -5,11 +5,13 @@ export interface CharacterCardProps extends ReactProps {
   character: GenshinCharacter
   userData?: GenshinCharacterUserData
   userPrefs?: UserPrefs
-  isOpen?: boolean
+  opened?: boolean
   className?: string
   onSave?: (data: GenshinCharacterUserData) => void
   onClose?: () => void
 }
+
+export type StatSectionPath = 'stats' | 'talents'
 
 export interface StatRow {
   label: string
@@ -20,7 +22,7 @@ export interface StatRow {
 
 export interface StatSection {
   label: string
-  path?: string
+  path?: StatSectionPath
   rows: StatRow[]
 }
 

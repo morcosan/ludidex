@@ -36,6 +36,10 @@ export interface ButtonProps extends HtmlDataProps {
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string
+  classNames?: {
+    surface?: string
+    content?: string
+  }
   /** CSS style attribute for the wrapper element */
   style?: CSSProperties
 

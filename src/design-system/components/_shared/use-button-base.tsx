@@ -23,11 +23,28 @@ interface BaseButtonProps extends HtmlDataProps {
   linkType?: LinkType
   isIcon?: boolean
   className?: string
+  classNames?: {
+    surface?: string
+    content?: string
+  }
   style?: CSSProperties
 }
 
 export const useButtonBase = (props: BaseButtonProps) => {
-  const { ariaDescription, children, className, size, style, tooltip, state, variant, floating, isIcon } = props
+  const {
+    ariaDescription,
+    children,
+    className,
+    classNames,
+    floating,
+    isIcon,
+    size,
+    state,
+    style,
+    tooltip,
+    variant,
+    //
+  } = props
   const { tokens } = useThemeService()
   const { bindings: baseBindings, isNoop, isPressed, pressing } = useClickable(props)
   const dataProps = useDataProps(props)
@@ -94,7 +111,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
   const surfaceHoverCss: CSSObject = {
     ...styles.surfaceHover,
   }
-  const childrenCss: CSSObject = {
+  const contentCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: isMenuItem ? 'unset' : 'center',
@@ -131,8 +148,10 @@ export const useButtonBase = (props: BaseButtonProps) => {
   }
 
   const content = (
-    <span css={surfaceCss}>
-      <span css={childrenCss}>{children}</span>
+    <span css={surfaceCss} className={classNames?.surface}>
+      <span css={contentCss} className={classNames?.content}>
+        {children}
+      </span>
       {state === 'loading' && (
         <span css={spinnerCss}>
           <Loader css={spinnerIconCss} />

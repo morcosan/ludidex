@@ -17,7 +17,6 @@ export const ImageSlideshow = (props: ImageSlideshowProps) => {
         <Image
           key={slot}
           srcs={[srcs[index], ...srcs.filter((_, i) => i !== index)]}
-          alt=""
           loading="eager"
           style={{ transitionDuration: `${transition}ms` }}
           className={cx(

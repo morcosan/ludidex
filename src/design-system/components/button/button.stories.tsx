@@ -16,10 +16,12 @@ const meta: Meta = {
       linkHref: '',
       linkType: 'internal',
       className: '',
+      classNames: { surface: '', content: '' },
       style: {},
     },
     events: ['onClick'],
     inlineRadios: ['state', 'size', 'variant', 'linkType'],
+    clearDefaults: ['classNames'],
   }),
 }
 

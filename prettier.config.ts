@@ -15,7 +15,7 @@ const config = {
   cssDeclarationSorterKeepOverrides: false,
 
   // Plugin: tailwindcss
-  tailwindAttributes: ['/ClassName$/'],
+  tailwindAttributes: ['/ClassName$/', '/classNames$/'],
   tailwindFunctions: ['clsx', 'cx'],
 }
 

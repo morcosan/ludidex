@@ -1,137 +1,168 @@
 import { isEqual } from 'lodash-es'
-import { useEffect, useMemo, useState } from 'react'
-import { RATING_VALUES } from '../../../data/settings'
+import { useEffect, useState } from 'react'
+import { RATING_VALUES, type CharacterStatus, type RatingValue, type TierListValue } from '../../../data/settings'
 import { type GenshinCharacterUserData } from '../../../state/types'
-import { type CharacterCardProps } from '../_types'
+import { parseTags, toNumber } from '../../../utils/various'
+import {
+  type CharacterCardProps,
+  type GenshinStats,
+  type GenshinTalents,
+  type GenshinTierScores,
+  type StatSectionPath,
+} from '../_types'
 
-type GenericDataDraft<T> = {
-  [K in keyof T]?: T[K] extends object ? GenericDataDraft<T[K]> : string
-}
-type DataDraft = GenericDataDraft<GenshinCharacterUserData>
+const TIER_LIST_FIELDS = [
+  ...['mainDps', 'subDps', 'support', 'exploration', 'outfit', 'personality'],
+] as const satisfies readonly (keyof GenshinTierScores)[]
 
-const draftValue = (value: unknown): string | DataDraft => {
-  if (Array.isArray(value)) return value.join(', ')
-  if (typeof value === 'object' && value !== null) return createDraft(value)
-  return value === undefined ? '' : String(value)
-}
+const STAT_FIELDS = [
+  ...['level', 'hp', 'atk', 'def', 'critDmg', 'critRate', 'elemDmg', 'em', 'er'],
+] as const satisfies readonly (keyof GenshinStats)[]
 
-const createDraft = (data: object): DataDraft => {
-  return Object.fromEntries(Object.entries(data).map(([key, value]) => [key, draftValue(value)]))
-}
+const TALENT_FIELDS = ['conLv', 'attackLv', 'skillLv', 'burstLv'] as const satisfies readonly (keyof GenshinTalents)[]
 
-const createUserDraft = (userData?: GenshinCharacterUserData): DataDraft => {
-  return userData ? createDraft(userData) : {}
-}
-
-const setDraftValue = (draft: DataDraft, [key, ...rest]: string[], value: string): DataDraft => {
-  if (!key) return draft
-  if (!rest.length) return { ...draft, [key]: value }
-
-  const current = (draft as any)[key]
-  const child = typeof current === 'object' ? current : {}
-  return { ...draft, [key]: setDraftValue(child, rest, value) }
+interface CharacterDraft {
+  rating?: RatingValue
+  status?: CharacterStatus
+  tags: string
+  tierLists: Record<keyof GenshinTierScores, TierListValue | undefined>
+  stats: Record<keyof GenshinStats, string>
+  talents: Record<keyof GenshinTalents, string>
 }
 
-const toNumber = (value?: string) => {
-  if (!value?.trim()) return undefined
-  const parsed = Number(value)
-  return Number.isFinite(parsed) ? parsed : undefined
+const toDraftValue = (value?: number) => (value === undefined ? '' : String(value))
+
+const createNumberDraft = <K extends string>(
+  fields: readonly K[],
+  values?: Partial<Record<K, number>>,
+): Record<K, string> => {
+  const draft = {} as Record<K, string>
+  for (const field of fields) {
+    draft[field] = toDraftValue(values?.[field])
+  }
+  return draft
 }
 
-const buildData = (draft: DataDraft, parentKey?: string): Record<string, unknown> => {
-  const data: Record<string, unknown> = {}
+const buildNumberRecord = <K extends string>(
+  fields: readonly K[],
+  values: Record<K, string>,
+): Partial<Record<K, number>> => {
+  const result: Partial<Record<K, number>> = {}
+  for (const field of fields) {
+    const value = toNumber(values[field])
+    if (value !== undefined) result[field] = value
+  }
+  return result
+}
 
-  for (const [key, value] of Object.entries(draft)) {
-    if (typeof value === 'object') {
-      const nested = buildData(value, key)
-      if (Object.keys(nested).length) data[key] = nested
-      continue
-    }
+const buildTierLists = (tierLists: CharacterDraft['tierLists']): GenshinTierScores => {
+  const result: GenshinTierScores = {}
+  for (const field of TIER_LIST_FIELDS) {
+    const value = tierLists[field]
+    if (value !== undefined) result[field] = value
+  }
+  return result
+}
 
-    if (parentKey === ('tierLists' satisfies keyof typeof draft)) {
-      if (value) data[key] = value
-      continue
-    }
-
-    if (key === ('tags' satisfies keyof typeof draft)) {
-      const tags = value
-        .split(/[,\n]/)
-        .map((tag) => tag.trim())
-        .filter(Boolean)
-      if (tags.length) data[key] = tags
-      continue
-    }
-
-    if (key === ('status' satisfies keyof typeof draft)) {
-      if (value) data[key] = value
-      continue
-    }
-
-    const number = toNumber(value)
-    if (number !== undefined) {
-      if (key === ('rating' satisfies keyof typeof draft)) {
-        const rating = RATING_VALUES.find((ratingValue) => ratingValue === number)
-        if (rating !== undefined) data[key] = rating
-      } else {
-        data[key] = number
-      }
-    }
+const createDraft = (userData?: GenshinCharacterUserData): CharacterDraft => {
+  const tierLists = {} as CharacterDraft['tierLists']
+  for (const field of TIER_LIST_FIELDS) {
+    tierLists[field] = userData?.tierLists?.[field]
   }
 
-  return data
+  return {
+    rating: RATING_VALUES.find((rating) => rating === userData?.rating),
+    status: userData?.status,
+    tags: userData?.tags?.join(', ') ?? '',
+    tierLists,
+    stats: createNumberDraft(STAT_FIELDS, userData?.stats),
+    talents: createNumberDraft(TALENT_FIELDS, userData?.talents),
+  }
 }
 
-const useDraft = (props: CharacterCardProps) => {
+const buildCharacter = (draft: CharacterDraft): GenshinCharacterUserData => {
+  const tags = parseTags(draft.tags)
+  const tierLists = buildTierLists(draft.tierLists)
+  const stats = buildNumberRecord(STAT_FIELDS, draft.stats)
+  const talents = buildNumberRecord(TALENT_FIELDS, draft.talents)
+
+  return {
+    ...(draft.rating === undefined ? {} : { rating: draft.rating }),
+    ...(draft.status === undefined ? {} : { status: draft.status }),
+    ...(tags.length === 0 ? {} : { tags }),
+    ...(Object.keys(tierLists).length === 0 ? {} : { tierLists }),
+    ...(Object.keys(stats).length === 0 ? {} : { stats }),
+    ...(Object.keys(talents).length === 0 ? {} : { talents }),
+  }
+}
+
+export const useDraft = (props: CharacterCardProps) => {
   const { character, userData, onSave } = props
-  const [draft, setDraft] = useState<DataDraft>(() => createUserDraft(userData))
+  const [draft, setDraft] = useState<CharacterDraft>(() => createDraft(userData))
   const [isEditing, setIsEditing] = useState(false)
-  const draftData = useMemo(() => buildData(draft), [draft])
-  const savedData = useMemo(() => buildData(createUserDraft(userData)), [userData])
-  const hasChanges = !isEqual(draftData, savedData)
+  const hasChanges = !isEqual(buildCharacter(draft), buildCharacter(createDraft(userData)))
 
-  const getDraftValue = (path: string | undefined, field: string) => {
-    if (!path) return ((draft as any)[field] as string | undefined) ?? ''
-    const section = (draft as any)[path]
-    return typeof section === 'object' ? ((section[field] as string | undefined) ?? '') : ''
+  const handleRatingChange = (rating?: RatingValue) => {
+    setDraft((current) => ({ ...current, rating }))
   }
 
-  const handleDraftChange =
-    (...path: string[]) =>
-    (value: string) => {
-      setDraft((current) => setDraftValue(current, path, value))
-    }
+  const handleStatusChange = (status?: CharacterStatus) => {
+    setDraft((current) => ({ ...current, status }))
+  }
+
+  const handleTagsChange = (tags: string) => {
+    setDraft((current) => ({ ...current, tags }))
+  }
+
+  const handleTierListChange = (field: keyof GenshinTierScores, value?: TierListValue) => {
+    setDraft((current) => ({ ...current, tierLists: { ...current.tierLists, [field]: value } }))
+  }
+
+  const handleStatChange = (path: StatSectionPath, field: string, value: string) => {
+    setDraft((current) =>
+      path === 'stats'
+        ? { ...current, stats: { ...current.stats, [field]: value } }
+        : { ...current, talents: { ...current.talents, [field]: value } },
+    )
+  }
+
+  const getStatValue = (path: StatSectionPath, field: string) => {
+    return (draft[path] as Record<string, string>)[field] ?? ''
+  }
 
   const handleClickEdit = () => {
-    setDraft(createUserDraft(userData))
+    setDraft(createDraft(userData))
     setIsEditing(true)
   }
 
   const handleClickDiscard = () => {
     setIsEditing(false)
-    setDraft(createUserDraft(userData))
+    setDraft(createDraft(userData))
   }
 
   const handleClickSave = () => {
     setIsEditing(false)
     if (!hasChanges) return
-    onSave?.(draftData as GenshinCharacterUserData)
+    onSave?.(buildCharacter(draft))
   }
 
   useEffect(() => {
     setIsEditing(false)
-    setDraft(createUserDraft(userData))
+    setDraft(createDraft(userData))
   }, [character, userData])
 
   return {
     draft,
     hasChanges,
     isEditing,
-    getDraftValue,
+    getStatValue,
+    handleRatingChange,
+    handleStatusChange,
+    handleTagsChange,
+    handleTierListChange,
+    handleStatChange,
     handleClickDiscard,
     handleClickEdit,
     handleClickSave,
-    handleDraftChange,
   }
 }
-
-export { toNumber, useDraft }

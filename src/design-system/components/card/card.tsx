@@ -29,7 +29,8 @@ export const Card = (props: CardProps) => {
   const dataProps = useDataProps(props)
   const isStatic = state === 'static'
   const isSelected = state === 'selected'
-  const surfaceSelector = '& > span'
+  const Element = isStatic ? 'div' : 'span'
+  const surfaceSelector = `& > ${Element}`
 
   const spinnerCss: CSSObject = {
     position: 'absolute',
@@ -139,16 +140,16 @@ export const Card = (props: CardProps) => {
   }
 
   const content = (
-    <span css={surfaceCss} className={classNames?.surface}>
-      <span css={contentCss} className={classNames?.content}>
+    <Element css={surfaceCss} className={classNames?.surface}>
+      <Element css={contentCss} className={classNames?.content}>
         {children}
-      </span>
+      </Element>
       {state === 'loading' && (
-        <span css={spinnerCss}>
+        <Element css={spinnerCss}>
           <Loader css={spinnerIconCss} />
-        </span>
+        </Element>
       )}
-    </span>
+    </Element>
   )
 
   return isStatic ? (

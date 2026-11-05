@@ -2,10 +2,10 @@ import { Card, Image, TextField } from '@design-system'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  GenshinElementColor,
-  GenshinElementIconUrls,
-  GenshinNationIconUrls,
-  GenshinWeaponIconUrls,
+  GENSHIN_ELEMENT_COLORS,
+  GENSHIN_ELEMENT_ICONS,
+  GENSHIN_NATION_ICONS,
+  GENSHIN_WEAPON_ICONS,
 } from '../../data/genshin/core'
 import { TIER_LIST_LABELS } from '../../data/settings'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
@@ -61,7 +61,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
     <Card
       className={cx('w-xl-0', className)}
       classNames={{ surface: 'p-0!', content: 'flex flex-col' }}
-      style={{ '--element-color': GenshinElementColor[character.element] }}
+      style={{ '--element-color': GENSHIN_ELEMENT_COLORS[character.element] }}
     >
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
@@ -92,22 +92,22 @@ export const CharacterCard = (props: CharacterCardProps) => {
           {isNameSticky && (
             <CharacterAvatar character={character} className="top-xs-4 left-xs-4 h-sm-0 w-sm-0 absolute!" />
           )}
-          <span className="text-size-xl font-weight-lg">{character.name}</span>
+          <h3 className="text-size-xl font-weight-lg h-field-h-md flex items-center">{character.name}</h3>
         </div>
 
         {/* CONTENT */}
         <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex flex-col">
           {/* TRAITS */}
           <div className="gap-x-xs-5 gap-y-xs-2 flex flex-wrap items-center justify-between">
-            <CharacterTrait label={character.element} iconSrcs={GenshinElementIconUrls[character.element]} />
+            <CharacterTrait label={character.element} iconSrcs={GENSHIN_ELEMENT_ICONS[character.element]} />
             <CharacterTrait
               label={character.weapon}
-              iconSrcs={GenshinWeaponIconUrls[character.weapon]}
+              iconSrcs={GENSHIN_WEAPON_ICONS[character.weapon]}
               classNames={{ icon: 'brightness-90' }}
             />
             <CharacterTrait
               label={character.nation}
-              iconSrcs={GenshinNationIconUrls[character.nation]}
+              iconSrcs={GENSHIN_NATION_ICONS[character.nation]}
               classNames={{ icon: 'brightness-40' }}
             />
           </div>

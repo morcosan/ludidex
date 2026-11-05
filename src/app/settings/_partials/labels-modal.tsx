@@ -47,11 +47,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
           labels: ratingLabels,
           setLabels: setRatingLabels,
           renderLabel: (key: string) => (
-            <RatingField
-              value={RATING_VALUES.find((value) => String(value) === key)}
-              labels={RATING_LABELS}
-              readonly
-            />
+            <RatingField value={RATING_VALUES.find((value) => String(value) === key)} labels={RATING_LABELS} readonly />
           ),
         }
       : {
@@ -104,7 +100,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
               value={draft[key] ?? ''}
               ariaLabel={`${title} ${key}`}
               className="w-lg-2"
-              onChange={(value) => setDraft((current) => ({ ...current, [key]: value }))}
+              onChange={(value) => setDraft((state) => ({ ...state, [key]: value }))}
             />
           </div>
         ))}

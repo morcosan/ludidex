@@ -16,7 +16,7 @@ export type GenshinElement = (typeof GENSHIN_ELEMENTS)[number]
 export type GenshinWeaponType = (typeof GENSHIN_WEAPONS)[number]
 export type GenshinNation = (typeof GENSHIN_NATIONS)[number]
 
-export const GenshinElementIconUrls: Record<GenshinElement, string[]> = {
+export const GENSHIN_ELEMENT_ICONS: Record<GenshinElement, string[]> = {
   Anemo: ['https://img.game8.co/3290051/36b300a24dcc860f3c7ee93f26730b4c.png/show'],
   Geo: ['https://img.game8.co/3320681/38138954452bee60aa0badc68636b5aa.png/show'],
   Electro: ['https://img.game8.co/3546441/89177e80b9cb7226530780a64fb4addc.png/show'],
@@ -26,7 +26,7 @@ export const GenshinElementIconUrls: Record<GenshinElement, string[]> = {
   Cryo: ['https://img.game8.co/3313079/45778fd49d63ed897695baa2688a6f8c.png/show'],
 }
 
-export const GenshinWeaponIconUrls: Record<GenshinWeaponType, string[]> = {
+export const GENSHIN_WEAPON_ICONS: Record<GenshinWeaponType, string[]> = {
   Sword: [
     'https://img.game8.co/3289646/704a65e3db73086112f54efe514c1229.png/show',
     'https://static.wikia.nocookie.net/gensin-impact/images/8/81/Icon_Sword.png',
@@ -49,7 +49,7 @@ export const GenshinWeaponIconUrls: Record<GenshinWeaponType, string[]> = {
   ],
 }
 
-export const GenshinNationIconUrls: Record<GenshinNation, string[]> = {
+export const GENSHIN_NATION_ICONS: Record<GenshinNation, string[]> = {
   Mondstadt: [
     'https://static.wikia.nocookie.net/gensin-impact/images/c/ce/Mondstadt_Emblem_Night.png',
     'https://webstatic.hoyoverse.com/upload/uploadstatic/contentweb/20200319/2020031918573764353.png',
@@ -82,7 +82,7 @@ export const GenshinNationIconUrls: Record<GenshinNation, string[]> = {
   None: [],
 }
 
-export const GenshinElementColor: Record<GenshinElement, string> = {
+export const GENSHIN_ELEMENT_COLORS: Record<GenshinElement, string> = {
   Anemo: '#5CC6B0',
   Geo: '#E8B53A',
   Electro: '#A98BD0',

@@ -49,7 +49,7 @@ const RatingVariants = () => {
               labels={RATING_LABELS}
               className="w-md-6"
               onChange={(value) =>
-                setValues((current) => current.map((item, itemIndex) => (itemIndex === index ? value : item)))
+                setValues((state) => state.map((item, itemIndex) => (itemIndex === index ? value : item)))
               }
             />
             <RatingField value={rating} labels={RATING_LABELS} readonly />

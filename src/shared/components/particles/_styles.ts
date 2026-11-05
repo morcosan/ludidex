@@ -5,23 +5,36 @@ export const particlesCss: CSSObject = {
   inset: 0,
   zIndex: 999999,
   pointerEvents: 'none',
+  containerType: 'size',
 }
 
 const particleAnimation = keyframes({
   '0%': {
-    transform: 'translate(-50%, -50%) translate(0, 0) scale(1) rotate(var(--rotation))',
+    transform: [
+      'translate(-50%, -50%)',
+      'translate(var(--ox), var(--oy))',
+      'translate(0, 0)',
+      'scale(1)',
+      'rotate(var(--rotation))',
+    ].join(' '),
     opacity: 0.9,
   },
   '100%': {
-    transform: 'translate(-50%, -50%) translate(var(--x), var(--y)) scale(0) rotate(var(--rotation))',
+    transform: [
+      'translate(-50%, -50%)',
+      'translate(var(--ox), var(--oy))',
+      'translate(var(--x), var(--y))',
+      'scale(0)',
+      'rotate(var(--rotation))',
+    ].join(' '),
     opacity: 0,
   },
 })
 
 export const particleCss: CSSObject = {
   position: 'absolute',
-  top: 'var(--oy)',
-  left: 'var(--ox)',
+  top: 0,
+  left: 0,
   opacity: 0,
   filter: 'saturate(1.5)',
   animation: `${particleAnimation} var(--t) ease-out var(--d) infinite`,
@@ -29,9 +42,7 @@ export const particleCss: CSSObject = {
   width: 'var(--s)',
   height: 'var(--s)',
   pointerEvents: 'none',
-  '@media (prefers-reduced-motion: reduce)': {
-    animation: 'none',
-  },
+  ...(import.meta.env.DEV ? {} : { '@media (prefers-reduced-motion: reduce)': { animation: 'none' } }),
 }
 
 export const particleIconCss: CSSObject = {

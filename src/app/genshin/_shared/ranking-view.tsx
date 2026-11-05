@@ -15,16 +15,16 @@ import { withAlpha } from '@app-shared/utils/various'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-type TierValue = string | number | undefined
+type RankValue = string | number | undefined
 
-interface TierData<T> {
+interface RankData<T> {
   key: string
   label: ReactNode
   items: T[]
   bgColor?: string
 }
 
-interface TierViewProps<T> {
+interface RankingViewProps<T> {
   items: T[]
   viewType: ViewType
   classNames: {
@@ -32,11 +32,11 @@ interface TierViewProps<T> {
     list: string
     content: string
   }
-  getValue: (item: T, viewType: ViewType) => TierValue
+  getValue: (item: T, viewType: ViewType) => RankValue
   renderItem: (item: T) => ReactNode
 }
 
-export const TierListView = <T,>(props: TierViewProps<T>) => {
+export const RankingView = <T,>(props: RankingViewProps<T>) => {
   const { items, viewType, classNames, renderItem, getValue } = props
   const { t } = useTranslation()
   const preferences = useUserDataStore((state) => state.userData?.preferences)
@@ -44,14 +44,14 @@ export const TierListView = <T,>(props: TierViewProps<T>) => {
   const tierListLabels = { ...TIER_LIST_LABELS, ...preferences?.tierListLabels }
   const labelClass = cx(classNames.row, classNames.list)
 
-  const getNoTierData = (key: string): TierData<T> => ({
+  const getNoTierData = (key: string): RankData<T> => ({
     key,
     label: <span>--</span>,
     items: items.filter((item) => getValue(item, viewType) === undefined),
   })
 
-  const getRatingData = (): TierData<T>[] => [
-    ...RATING_VALUES.map((value): TierData<T> => ({
+  const getRatingData = (): RankData<T>[] => [
+    ...RATING_VALUES.map((value): RankData<T> => ({
       key: String(value),
       label: renderLabel(<RatingIcon value={value} large />, ratingLabels[value]),
       items: items.filter((item) => getValue(item, 'rating') === value),
@@ -60,8 +60,8 @@ export const TierListView = <T,>(props: TierViewProps<T>) => {
     getNoTierData('no-rating'),
   ]
 
-  const getStatusData = (): TierData<T>[] => [
-    ...CHARACTER_STATUSES.map((status): TierData<T> => ({
+  const getStatusData = (): RankData<T>[] => [
+    ...CHARACTER_STATUSES.map((status): RankData<T> => ({
       key: status,
       label: renderLabel(<StatusIcon value={status} large className="text-color-white!" />, t(`game.label.${status}`)),
       items: items.filter((item) => getValue(item, 'status') === status),
@@ -70,8 +70,8 @@ export const TierListView = <T,>(props: TierViewProps<T>) => {
     getNoTierData('no-status'),
   ]
 
-  const getTierData = (): TierData<T>[] => [
-    ...TIER_LIST_VALUES.map((value): TierData<T> => ({
+  const getTierData = (): RankData<T>[] => [
+    ...TIER_LIST_VALUES.map((value): RankData<T> => ({
       key: value,
       label: renderLabel(
         <span className="text-size-xxl mt-xs-1 ml-[-0.15em] leading-1 tracking-[-0.15em]">{value}</span>,

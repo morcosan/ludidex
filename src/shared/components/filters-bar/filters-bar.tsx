@@ -1,37 +1,50 @@
-import {
-  GENSHIN_ELEMENTS,
-  GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
-  GenshinElementIconUrls,
-  GenshinNationIconUrls,
-  GenshinWeaponIconUrls,
-} from '@app-shared/data/genshin/core'
 import { Button, IconButton } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type GenshinFilters } from './config'
+import {
+  GENSHIN_ELEMENT_ICONS,
+  GENSHIN_ELEMENTS,
+  GENSHIN_NATION_ICONS,
+  GENSHIN_NATIONS,
+  GENSHIN_WEAPON_ICONS,
+  GENSHIN_WEAPONS,
+  type GenshinElement,
+  type GenshinNation,
+  type GenshinWeaponType,
+} from '../../data/genshin/core'
 
-interface TopFiltersProps extends ReactProps {
-  value: GenshinFilters
-  onChange: (filters: GenshinFilters) => void
+export interface FiltersBarValue {
+  elements: GenshinElement[]
+  weapons: GenshinWeaponType[]
+  nations: GenshinNation[]
 }
 
-export const FiltersBar = (props: TopFiltersProps) => {
-  const { value, className, onChange } = props
+// eslint-disable-next-line react-refresh/only-export-components
+export const EMPTY_FILTERS: FiltersBarValue = { elements: [], weapons: [], nations: [] }
+
+export interface FiltersBarProps extends ReactProps {
+  value: FiltersBarValue
+  surface?: 'glass' | 'paper'
+  onChange?: (filters: FiltersBarValue) => void
+}
+
+export const FiltersBar = (props: FiltersBarProps) => {
+  const { value, surface = 'glass', className, onChange } = props
   const { t } = useTranslation()
   const hasFilters = value.elements.length > 0 || value.weapons.length > 0 || value.nations.length > 0
 
   const groupClass = cx(
     'gap-xs-1 py-xs-1 px-xs-2 flex flex-wrap',
-    'border-color-border-inset rounded-max bg-color-bg-region border',
+    'rounded-max border',
+    surface === 'glass'
+      ? 'bg-color-bg-region border-color-border-inset'
+      : 'bg-color-bg-field border-color-border-surface',
   )
 
   const toggleFilter = <T,>(values: T[], item: T) => {
     return values.includes(item) ? values.filter((value) => value !== item) : [...values, item]
   }
 
-  const handleClearFilters = () => {
-    onChange({ elements: [], weapons: [], nations: [] })
-  }
+  const handleClearFilters = () => onChange?.(EMPTY_FILTERS)
 
   return (
     <div className={cx('gap-xs-5 flex flex-wrap items-center', className)}>
@@ -43,9 +56,9 @@ export const FiltersBar = (props: TopFiltersProps) => {
             size="sm"
             tooltip={element}
             state={value.elements.includes(element) ? 'selected' : 'active'}
-            onClick={() => onChange({ ...value, elements: toggleFilter(value.elements, element) })}
+            onClick={() => onChange?.({ ...value, elements: toggleFilter(value.elements, element) })}
           >
-            <img src={GenshinElementIconUrls[element][0]} alt="" className="h-sm-0 w-sm-0" />
+            <img src={GENSHIN_ELEMENT_ICONS[element][0]} alt="" className="h-sm-0 w-sm-0" />
           </IconButton>
         ))}
       </div>
@@ -58,9 +71,9 @@ export const FiltersBar = (props: TopFiltersProps) => {
             size="sm"
             tooltip={weapon}
             state={value.weapons.includes(weapon) ? 'selected' : 'active'}
-            onClick={() => onChange({ ...value, weapons: toggleFilter(value.weapons, weapon) })}
+            onClick={() => onChange?.({ ...value, weapons: toggleFilter(value.weapons, weapon) })}
           >
-            <img src={GenshinWeaponIconUrls[weapon][0]} alt="" className="h-sm-0 w-sm-0 brightness-90" />
+            <img src={GENSHIN_WEAPON_ICONS[weapon][0]} alt="" className="h-sm-0 w-sm-0 brightness-90" />
           </IconButton>
         ))}
       </div>
@@ -73,10 +86,10 @@ export const FiltersBar = (props: TopFiltersProps) => {
             size="sm"
             tooltip={nation === 'None' ? 'N/A' : nation}
             state={value.nations.includes(nation) ? 'selected' : 'active'}
-            onClick={() => onChange({ ...value, nations: toggleFilter(value.nations, nation) })}
+            onClick={() => onChange?.({ ...value, nations: toggleFilter(value.nations, nation) })}
           >
-            {GenshinNationIconUrls[nation][0] ? (
-              <img src={GenshinNationIconUrls[nation][0]} alt="" className="h-sm-0 w-sm-0 brightness-40" />
+            {GENSHIN_NATION_ICONS[nation][0] ? (
+              <img src={GENSHIN_NATION_ICONS[nation][0]} alt="" className="h-sm-0 w-sm-0 brightness-40" />
             ) : (
               <span className="text-size-xs text-color-text-placeholder">N/A</span>
             )}

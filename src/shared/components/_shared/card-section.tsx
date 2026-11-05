@@ -14,7 +14,7 @@ interface Props extends ReactProps {
 export const CardSection = ({ title, items, children }: Props) => {
   return (
     <PageSection
-      surface="card"
+      surface="paper"
       title={title}
       classNames={{ title: 'pb-xs-2!', body: 'pt-0!' }}
       className={cx(!items?.length && 'divide-none!')}

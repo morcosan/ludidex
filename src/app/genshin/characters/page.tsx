@@ -1,4 +1,4 @@
-import { Breadcrumb, CharacterCard } from '@app-shared/components'
+import { Breadcrumb, CharacterCard, FiltersBar } from '@app-shared/components'
 import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
@@ -9,7 +9,7 @@ import { useViewOptions } from '@app-shared/utils/use-view-options'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { matchesFilters } from '../_shared/config'
-import { FiltersBar } from '../_shared/filters-bar'
+import { PreviewDrawer } from '../_shared/preview-drawer'
 import { CharacterListing } from './_partials/character-listing'
 import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_partials/config'
 import { SidePanel } from './_partials/side-panel'
@@ -19,7 +19,7 @@ export default function Page() {
   const userData = useUserDataStore((state) => state.userData)
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const characterItemSize = useUserSettingsStore((state) => state.userSettings?.characterItemSize ?? 'medium')
+  const characterItemSize = useUserSettingsStore((state) => state.userSettings?.characterItemSize ?? 'md')
   const setCharacterItemSize = useUserSettingsStore((state) => state.setCharacterItemSize)
   const { filters, handleFiltersChange } = useFilterParams(CHARACTER_FILTERS)
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
@@ -62,7 +62,7 @@ export default function Page() {
       <div className="flex h-full flex-1 flex-col">
         <FiltersBar value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
 
-        <h1 className={cx('flex', viewType === 'default' ? 'mb-sm-0' : 'mb-xs-8')}>
+        <h1 className="flex">
           <Breadcrumb first>
             {t('general.label.characters')} ({characters.length})
           </Breadcrumb>
@@ -75,6 +75,7 @@ export default function Page() {
           viewType={viewType}
           itemSize={characterItemSize}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
+          className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
           onClickItem={handleClickCharacter}
         />
       </div>
@@ -91,14 +92,7 @@ export default function Page() {
         />
 
         {/* CHARACTER PREVIEW */}
-        <div
-          className={cx(
-            '-top-xs-2 -bottom-xs-2 z-navbar absolute right-0',
-            'duration-md transition-transform ease-in-out',
-            isPreviewOpen ? 'translate-x-0' : 'translate-x-[110%]',
-          )}
-          data-preview-drawer
-        >
+        <PreviewDrawer opened={isPreviewOpen}>
           {previewCharacter && (
             <CharacterCard
               character={previewCharacter}
@@ -110,7 +104,7 @@ export default function Page() {
               onClose={handleClosePreview}
             />
           )}
-        </div>
+        </PreviewDrawer>
       </div>
     </div>
   )

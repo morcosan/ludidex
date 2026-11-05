@@ -24,7 +24,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit }: Act
           size="md"
           variant="default"
           tooltip={t('general.action.discardChanges')}
-          className="-top-xs-5 -right-xs-6 absolute! z-20"
+          className="-top-xs-5 -right-xs-5 absolute! z-20"
           floating
           onClick={onDiscard}
         >
@@ -35,7 +35,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit }: Act
           size="md"
           variant="default"
           tooltip={t('ds.action.close')}
-          className="-top-xs-5 -right-xs-6 absolute! z-20"
+          className="-top-xs-5 -right-xs-5 absolute! z-20"
           floating
           onClick={onClose}
         >
@@ -48,7 +48,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit }: Act
           size="md"
           variant="primary"
           tooltip={t('general.action.saveChanges')}
-          className="top-sm-5 -right-xs-6 absolute! z-20"
+          className="top-sm-5 -right-xs-5 absolute! z-20"
           floating
           onClick={onSave}
         >
@@ -59,7 +59,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit }: Act
           size="md"
           variant="default"
           tooltip={t('general.action.edit')}
-          className="top-sm-5 -right-xs-6 absolute! z-20"
+          className="top-sm-5 -right-xs-5 absolute! z-20"
           floating
           onClick={onEdit}
         >

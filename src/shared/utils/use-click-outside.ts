@@ -18,16 +18,16 @@ export const useClickOutside = (props: ClickOutsideProps) => {
   useEffect(() => {
     if (!enabled) return
 
-    const handleDocumentClick = (event: MouseEvent) => {
+    const handleMouseDown = (event: MouseEvent) => {
       const target = event.target
       if (!(target instanceof Element)) return
       if (target.closest(allowSelector)) return
       handleOutsideClick()
     }
 
-    document.addEventListener('click', handleDocumentClick, true)
+    document.addEventListener('mousedown', handleMouseDown, true)
     return () => {
-      document.removeEventListener('click', handleDocumentClick, true)
+      document.removeEventListener('mousedown', handleMouseDown, true)
     }
   }, [enabled, allowSelector])
 }

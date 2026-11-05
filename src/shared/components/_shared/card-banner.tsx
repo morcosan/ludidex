@@ -16,6 +16,7 @@ interface CardBannerProps {
 export const CardBanner = (props: CardBannerProps) => {
   const { banner, editing, userPrefs, ratingValue, statusValue, onChangeRating, onChangeStatus } = props
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
+  const showStatus = statusValue !== undefined || onChangeStatus !== undefined
 
   return (
     <div className="relative">
@@ -31,14 +32,16 @@ export const CardBanner = (props: CardBannerProps) => {
             onChange={onChangeRating}
           />
         </div>
-        <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
-          <StatusField
-            value={statusValue}
-            readonly={!editing}
-            className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
-            onChange={onChangeStatus}
-          />
-        </div>
+        {showStatus && (
+          <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+            <StatusField
+              value={statusValue}
+              readonly={!editing}
+              className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+              onChange={onChangeStatus}
+            />
+          </div>
+        )}
       </div>
     </div>
   )

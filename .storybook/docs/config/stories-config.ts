@@ -61,7 +61,7 @@ const defineArgType = ({ control, header, value }: ControlParam): InputType => (
 const defineArgs = <C>(args: ArgsConfig<C>) => {
   const { slots, props, events, hasMethods, clearDefaults, inlineRadios, shortcuts, render } = args
   const argTypes: ArgTypes = {}
-  const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'style']
+  const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'classNames', 'style']
 
   Object.keys(slots || {}).forEach(
     (key: string) => (argTypes[key] = defineArgType({ header: 'Slots', control: 'text' })),

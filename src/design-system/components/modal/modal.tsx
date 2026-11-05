@@ -15,7 +15,11 @@ export type { ModalProps, ModalWidth } from './_types'
 export const Modal = (props: ModalProps) => {
   const { actions, children, extras, height = 'fit', noClose, noDismiss, onClose, title, width = 'md' } = props
   const { translate } = useI18nService()
-  const { focusTrap1Ref, focusTrap2Ref, isVisible, modalRef, stackIndex } = useEvents({ ...props, width, height })
+  const { focusTrap1Ref, focusTrap2Ref, isMounted, isVisible, modalRef, stackIndex } = useEvents({
+    ...props,
+    width,
+    height,
+  })
   const { modalCss, actionsCss, modalBodyCss, footerCss, titleCss, overlayCss, rootCss, cssVars } = useStyles({
     ...props,
     height,
@@ -36,41 +40,45 @@ export const Modal = (props: ModalProps) => {
 
       {/* MODAL */}
       <section ref={modalRef} role="dialog" aria-modal="true" aria-labelledby={modalId} tabIndex={-1} css={modalCss}>
-        {/* TITLE */}
-        <h1 id={modalId} css={titleCss}>
-          {title}
-        </h1>
+        {isMounted && (
+          <>
+            {/* TITLE */}
+            <h1 id={modalId} css={titleCss}>
+              {title}
+            </h1>
 
-        {/* CLOSE BUTTON */}
-        {!noClose && (
-          <IconButton
-            tooltip={translate('ds.action.close')}
-            variant="optional"
-            size="sm"
-            className="absolute!"
-            css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
-            onClick={onClose}
-          >
-            <XIcon aria-hidden className="h-xs-8" />
-          </IconButton>
-        )}
-
-        {/* BODY */}
-        <div css={modalBodyCss}>{children}</div>
-
-        {/* FOOTER */}
-        <div css={footerCss}>
-          {extras}
-
-          <div css={actionsCss}>
+            {/* CLOSE BUTTON */}
             {!noClose && (
-              <Button variant="optional" onClick={onClose}>
-                {translate('ds.action.close')}
-              </Button>
+              <IconButton
+                tooltip={translate('ds.action.close')}
+                variant="optional"
+                size="sm"
+                className="absolute!"
+                css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
+                onClick={onClose}
+              >
+                <XIcon aria-hidden className="h-xs-8" />
+              </IconButton>
             )}
-            {actions}
-          </div>
-        </div>
+
+            {/* BODY */}
+            <div css={modalBodyCss}>{children}</div>
+
+            {/* FOOTER */}
+            <div css={footerCss}>
+              {extras}
+
+              <div css={actionsCss}>
+                {!noClose && (
+                  <Button variant="optional" onClick={onClose}>
+                    {translate('ds.action.close')}
+                  </Button>
+                )}
+                {actions}
+              </div>
+            </div>
+          </>
+        )}
       </section>
 
       {/* FOCUS TRAP */}

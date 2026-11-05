@@ -2,10 +2,10 @@ import { RATING_LABELS, TIER_LIST_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 import { type GenshinCharacter_v1, USER_DATA_VERSION_V1, UserDataSchema_v1 } from './versions/schema_v1'
 
-const ItemSizeSchema = z.enum(['small', 'medium', 'large'])
+const ItemSizeSchema = z.enum(['sm', 'md', 'lg'])
 const UserSettingsSchema = z.object({
-  characterItemSize: ItemSizeSchema.default('medium'),
-  teamItemSize: ItemSizeSchema.default('medium'),
+  characterItemSize: ItemSizeSchema.default('md'),
+  teamItemSize: ItemSizeSchema.default('md'),
 })
 
 type UserData = z.infer<typeof UserDataSchema_v1>

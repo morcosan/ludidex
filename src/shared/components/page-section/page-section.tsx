@@ -11,7 +11,7 @@ export interface PageSectionProps extends ReactProps {
    */
   title: ReactNode
   id?: string
-  surface?: 'page' | 'card'
+  surface?: 'glass' | 'paper'
   className?: string
   classNames?: {
     title?: string
@@ -21,10 +21,10 @@ export interface PageSectionProps extends ReactProps {
 }
 
 export const PageSection = (props: PageSectionProps) => {
-  const { id, title, surface = 'page', className, classNames, children } = props
+  const { id, title, surface = 'glass', className, classNames, children } = props
 
-  const rootClass = cx(surface === 'page' ? 'divide-color-border-on-glass' : 'divide-color-border-subtle')
-  const titleClass = cx(surface === 'page' ? 'text-color-text-subtle' : 'text-color-text-placeholder')
+  const rootClass = cx(surface === 'glass' ? 'divide-color-border-on-glass' : 'divide-color-border-subtle')
+  const titleClass = cx(surface === 'glass' ? 'text-color-text-subtle' : 'text-color-text-placeholder')
 
   return (
     <div id={id} className={cx('flex flex-col divide-y', rootClass, className)}>

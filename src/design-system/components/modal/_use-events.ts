@@ -8,6 +8,7 @@ let _globalStackIndex = 0
 export const useEvents = (props: ModalProps) => {
   const { opened, onClose, onClosed, onOpened, noDismiss } = props
   const [isVisible, setIsVisible] = useState(false)
+  const [isMounted, setIsMounted] = useState(opened)
   const [stackIndex, setStackIndex] = useState(0)
   const modalRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLElement>(null)
@@ -37,7 +38,10 @@ export const useEvents = (props: ModalProps) => {
   const handleModalClose = () => {
     if (!isVisible) return
     setIsVisible(false)
-    wait(ANIM_TIME.HIDE).then(onClosed)
+    wait(ANIM_TIME.HIDE).then(() => {
+      setIsMounted(false)
+      onClosed?.()
+    })
     triggerRef.current?.focus()
   }
 
@@ -86,12 +90,14 @@ export const useEvents = (props: ModalProps) => {
   useEffect(() => {
     computeStackIndex()
     opened ? handleModalOpen() : handleModalClose()
+    opened && setIsMounted(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened])
 
   return {
     focusTrap1Ref,
     focusTrap2Ref,
+    isMounted,
     isVisible,
     modalRef,
     stackIndex,

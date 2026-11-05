@@ -34,7 +34,7 @@ const meta: Meta = {
     },
     events: ['onChange'],
     inlineRadios: ['size'],
-    clearDefaults: ['options', 'value', 'classNames'],
+    clearDefaults: ['options', 'value'],
 
     render: (props: SelectFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -45,14 +45,7 @@ const meta: Meta = {
         setValue(props.value)
       }, [props.value])
 
-      return (
-        <SelectField
-          {...props}
-          value={value}
-          optionFn={getOptionFn(props.optionFn)}
-          onChange={setValue}
-        />
-      )
+      return <SelectField {...props} value={value} optionFn={getOptionFn(props.optionFn)} onChange={setValue} />
     },
   }),
 }

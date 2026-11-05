@@ -103,26 +103,26 @@ export const useDraft = (props: CharacterCardProps) => {
   const hasChanges = !isEqual(buildCharacter(draft), buildCharacter(createDraft(userData)))
 
   const handleRatingChange = (rating?: RatingValue) => {
-    setDraft((current) => ({ ...current, rating }))
+    setDraft((state) => ({ ...state, rating }))
   }
 
   const handleStatusChange = (status?: CharacterStatus) => {
-    setDraft((current) => ({ ...current, status }))
+    setDraft((state) => ({ ...state, status }))
   }
 
   const handleTagsChange = (tags: string) => {
-    setDraft((current) => ({ ...current, tags }))
+    setDraft((state) => ({ ...state, tags }))
   }
 
   const handleTierListChange = (field: keyof GenshinTierScores, value?: TierListValue) => {
-    setDraft((current) => ({ ...current, tierLists: { ...current.tierLists, [field]: value } }))
+    setDraft((state) => ({ ...state, tierLists: { ...state.tierLists, [field]: value } }))
   }
 
   const handleStatChange = (path: StatSectionPath, field: string, value: string) => {
-    setDraft((current) =>
+    setDraft((state) =>
       path === 'stats'
-        ? { ...current, stats: { ...current.stats, [field]: value } }
-        : { ...current, talents: { ...current.talents, [field]: value } },
+        ? { ...state, stats: { ...state.stats, [field]: value } }
+        : { ...state, talents: { ...state.talents, [field]: value } },
     )
   }
 

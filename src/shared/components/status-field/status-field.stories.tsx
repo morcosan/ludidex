@@ -47,7 +47,7 @@ const StatusVariants = () => {
               value={values[index]}
               className="w-md-5"
               onChange={(value) =>
-                setValues((current) => current.map((item, itemIndex) => (itemIndex === index ? value : item)))
+                setValues((state) => state.map((item, itemIndex) => (itemIndex === index ? value : item)))
               }
             />
             <StatusField value={status} readonly />

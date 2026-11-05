@@ -19,9 +19,9 @@ export const SidePanel = (props: SideFiltersProps) => {
   const { t } = useTranslation()
 
   const itemSizeOptions: SelectOption[] = [
-    { value: 'small', label: t('general.label.small') },
-    { value: 'medium', label: t('general.label.medium') },
-    { value: 'large', label: t('general.label.large') },
+    { value: 'sm' satisfies ItemSize, label: t('general.label.small') },
+    { value: 'md' satisfies ItemSize, label: t('general.label.medium') },
+    { value: 'lg' satisfies ItemSize, label: t('general.label.large') },
   ]
 
   return (

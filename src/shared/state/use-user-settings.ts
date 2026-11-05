@@ -30,12 +30,12 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userSettings))
   },
 
-  setCharacterItemSize(characterItemSize) {
+  setCharacterItemSize(characterItemSize: ItemSize) {
     set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, characterItemSize }) }))
     get().saveUserSettings()
   },
 
-  setTeamItemSize(teamItemSize) {
+  setTeamItemSize(teamItemSize: ItemSize) {
     set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, teamItemSize }) }))
     get().saveUserSettings()
   },

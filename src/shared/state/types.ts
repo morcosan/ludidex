@@ -11,7 +11,7 @@ import {
 
 const ItemSizeSchema = z.enum(['sm', 'md', 'lg'])
 const UserSettingsSchema = z.object({
-  characterItemSize: ItemSizeSchema.default('md'),
+  charItemSize: ItemSizeSchema.default('md'),
   teamItemSize: ItemSizeSchema.default('md'),
 })
 

@@ -7,7 +7,7 @@ interface UserSettingsStore {
   userSettings: UserSettings | null
   loadUserSettings(): void
   saveUserSettings(): void
-  setCharacterItemSize(characterItemSize: ItemSize): void
+  setCharItemSize(charItemSize: ItemSize): void
   setTeamItemSize(teamItemSize: ItemSize): void
 }
 
@@ -30,8 +30,8 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userSettings))
   },
 
-  setCharacterItemSize(characterItemSize: ItemSize) {
-    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, characterItemSize }) }))
+  setCharItemSize(charItemSize: ItemSize) {
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charItemSize }) }))
     get().saveUserSettings()
   },
 

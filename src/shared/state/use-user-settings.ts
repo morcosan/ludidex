@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { type ItemSize, type UserSettings, UserSettingsSchema } from './types'
+import { type CharacterLabel, type ItemSize, type UserSettings, UserSettingsSchema } from './types'
 
 const STORAGE_KEY = 'app-user-settings'
 
@@ -8,6 +8,8 @@ interface UserSettingsStore {
   loadUserSettings(): void
   saveUserSettings(): void
   setCharItemSize(charItemSize: ItemSize): void
+  setCharLabelTop(charLabelTop: CharacterLabel): void
+  setCharLabelBottom(charLabelBottom: CharacterLabel): void
   setTeamItemSize(teamItemSize: ItemSize): void
 }
 
@@ -32,6 +34,16 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
 
   setCharItemSize(charItemSize: ItemSize) {
     set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charItemSize }) }))
+    get().saveUserSettings()
+  },
+
+  setCharLabelTop(charLabelTop: CharacterLabel) {
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelTop }) }))
+    get().saveUserSettings()
+  },
+
+  setCharLabelBottom(charLabelBottom: CharacterLabel) {
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelBottom }) }))
     get().saveUserSettings()
   },
 

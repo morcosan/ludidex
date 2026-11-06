@@ -42,6 +42,8 @@
       "home": "Home",
       "importData": "Import data",
       "large": "Large",
+      "labelOnBottom": "Label on bottom",
+      "labelOnTop": "Label on top",
       "listing": "Listing",
       "medium": "Medium",
       "modeDark": "Dark",

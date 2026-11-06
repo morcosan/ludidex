@@ -1,7 +1,7 @@
 import { type ComboboxItem } from '@mantine/core'
 import { type CSSProperties, type ReactNode } from 'react'
 
-export type SelectOption = ComboboxItem
+export type SelectOption<T extends string = string> = ComboboxItem<T>
 export type SelectValue = string | null
 export type SelectFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

@@ -21,6 +21,10 @@ export default function Page() {
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const charItemSize = useUserSettingsStore((state) => state.userSettings?.charItemSize ?? 'md')
   const setCharItemSize = useUserSettingsStore((state) => state.setCharItemSize)
+  const charLabelTop = useUserSettingsStore((state) => state.userSettings?.charLabelTop)
+  const charLabelBottom = useUserSettingsStore((state) => state.userSettings?.charLabelBottom)
+  const setCharLabelTop = useUserSettingsStore((state) => state.setCharLabelTop)
+  const setCharLabelBottom = useUserSettingsStore((state) => state.setCharLabelBottom)
   const { filters, handleFiltersChange } = useFilterParams(CHARACTER_FILTERS)
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -86,8 +90,12 @@ export default function Page() {
           itemSize={charItemSize}
           viewType={viewType}
           viewOptions={viewOptions}
+          charLabelTop={charLabelTop}
+          charLabelBottom={charLabelBottom}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
           onChangeItemSize={setCharItemSize}
+          onChangeCharLabelTop={setCharLabelTop}
+          onChangeCharLabelBottom={setCharLabelBottom}
           onChangeView={handleViewChange}
         />
 

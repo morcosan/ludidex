@@ -22,7 +22,7 @@ export const TeamItem = (props: TeamItemProps) => {
   const { team, size = 'md', selected, className, onClick } = props
   const { t } = useTranslation()
 
-  const classes = ((): SizeClasses => {
+  const classNames = ((): SizeClasses => {
     if (size === 'sm') return { size: 'w-lg-1', list: 'gap-xs-0 p-xs-0', label: 'py-xs-0' }
     if (size === 'md') return { size: 'w-lg-2', list: 'gap-xs-1 p-xs-1', label: 'py-xs-0' }
     if (size === 'lg') return { size: 'w-lg-4', list: 'gap-xs-1 p-xs-1', label: 'py-xs-1' }
@@ -36,12 +36,12 @@ export const TeamItem = (props: TeamItemProps) => {
   return (
     <Card
       state={selected ? 'selected' : 'active'}
-      className={cx(classes.size, className)}
+      className={cx(classNames.size, className)}
       classNames={{ surface: 'p-xs-0!', content: 'flex w-full flex-col' }}
       data-team-item
       onClick={() => onClick?.(team)}
     >
-      <span className={cx('bg-color-grey-3 flex w-full justify-center rounded-sm', classes.list)}>
+      <span className={cx('bg-color-grey-3 flex w-full justify-center rounded-sm', classNames.list)}>
         {Array.from({ length: 4 }, (_, index) => {
           const character = characters[index]
           return character ? (
@@ -56,7 +56,7 @@ export const TeamItem = (props: TeamItemProps) => {
         className={cx(
           'translate-y-xs-0 min-h-lh rounded-md',
           'text-size-xs truncate text-center leading-1',
-          classes.label,
+          classNames.label,
         )}
       >
         {team.name || <span className="text-color-text-placeholder">{t('general.label.newTeam')}</span>}

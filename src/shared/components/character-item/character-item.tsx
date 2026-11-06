@@ -15,6 +15,8 @@ export interface CharacterItemProps extends ReactProps {
   selected?: boolean
   disabled?: boolean
   tooltip?: string
+  labelTop?: string
+  labelBottom?: string
   className?: string
   onClick?: (character: GenshinCharacter) => void
 }
@@ -23,7 +25,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
   const { character, status, size = 'md', selected, disabled, tooltip, className, onClick } = props
   const hasName = size !== 'sm'
 
-  const classes = ((): SizeClasses => {
+  const classNames = ((): SizeClasses => {
     if (size === 'sm') return { size: 'w-md-1', label: '' }
     if (size === 'md') return { size: 'w-md-2', label: 'py-px' }
     if (size === 'lg') return { size: 'w-md-4', label: 'py-xs-0' }
@@ -42,15 +44,17 @@ export const CharacterItem = (props: CharacterItemProps) => {
       data-character-item
       onClick={() => onClick?.(character)}
     >
-      <CharacterAvatar character={character} status={status} className={classes.size} />
+      <span className="relative">
+        <CharacterAvatar character={character} status={status} className={classNames.size} />
+      </span>
 
       {hasName && (
         <span
           className={cx(
             'translate-y-xs-0 rounded-md',
             'text-size-xs truncate text-center leading-1',
-            classes.size,
-            classes.label,
+            classNames.size,
+            classNames.label,
           )}
         >
           {character.name}

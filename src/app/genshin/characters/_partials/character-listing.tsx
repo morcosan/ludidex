@@ -5,7 +5,7 @@ import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type ViewType } from '@app-shared/utils/use-view-options'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
-import { type CharacterViewType } from './config'
+import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from './config'
 import { SortingView } from './views/sorting-view'
 
 export interface ItemSizeClass {
@@ -60,12 +60,21 @@ export const CharacterListing = (props: CharacterListingProps) => {
     return undefined
   }
 
+  const getLabelBottom = (character: GenshinCharacter): string | undefined => {
+    if (!viewType.startsWith('sort-')) return undefined
+    const data = userData?.characters?.[character.id]
+    const config = VIEW_CONFIGS[viewType as SortingViewType]
+    const value = config.getValue(character, data)
+    return value === undefined ? undefined : config.formatValue(value)
+  }
+
   const renderItem = (character: GenshinCharacter) => (
     <li key={character.id}>
       <CharacterItem
         character={character}
         status={userData?.characters?.[character.id]?.status}
         size={itemSize}
+        labelBottom={getLabelBottom(character)}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />

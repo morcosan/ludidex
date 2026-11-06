@@ -22,7 +22,7 @@ export interface CharacterItemProps extends ReactProps {
 }
 
 export const CharacterItem = (props: CharacterItemProps) => {
-  const { character, status, size = 'md', selected, disabled, tooltip, className, onClick } = props
+  const { character, status, size = 'md', selected, disabled, tooltip, labelBottom, className, onClick } = props
   const hasName = size !== 'sm'
 
   const classNames = ((): SizeClasses => {
@@ -46,6 +46,18 @@ export const CharacterItem = (props: CharacterItemProps) => {
     >
       <span className="relative">
         <CharacterAvatar character={character} status={status} className={classNames.size} />
+
+        {labelBottom && (
+          <span
+            className={cx(
+              'px-xs-1 absolute bottom-px left-px max-w-full py-px',
+              'bg-color-white rounded-xs rounded-bl-sm!',
+              'text-size-xs font-weight-md truncate leading-1',
+            )}
+          >
+            {labelBottom}
+          </span>
+        )}
       </span>
 
       {hasName && (

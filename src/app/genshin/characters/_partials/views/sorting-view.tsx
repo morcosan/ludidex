@@ -1,13 +1,9 @@
 import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
-import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
-import { formatInteger, formatPercent, roundValue } from '@app-shared/utils/various'
+import { roundValue } from '@app-shared/utils/various'
 import { Fragment, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type CharacterViewType } from '../config'
-
-type SortingViewType = Extract<CharacterViewType, `sort-${string}`>
-type CharUserData = GenshinCharacterUserData
+import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from '../config'
 
 interface SortGroup {
   key: string
@@ -22,26 +18,6 @@ interface SortAxis {
 interface SortedCharacter {
   character: GenshinCharacter
   value: number
-}
-interface ViewConfig {
-  step: number
-  getValue: (character: GenshinCharacter, userData?: CharUserData) => number | undefined
-  formatValue: (value: number) => string
-}
-
-const getStatValue = (stat: keyof NonNullable<CharUserData['stats']>) => {
-  return (_: GenshinCharacter, userData?: CharUserData) => userData?.stats?.[stat]
-}
-const VIEW_CONFIGS: Record<SortingViewType, ViewConfig> = {
-  'sort-level': { step: 5, getValue: getStatValue('level'), formatValue: formatInteger },
-  'sort-hp': { step: 5000, getValue: getStatValue('hp'), formatValue: formatInteger },
-  'sort-atk': { step: 100, getValue: getStatValue('atk'), formatValue: formatInteger },
-  'sort-def': { step: 100, getValue: getStatValue('def'), formatValue: formatInteger },
-  'sort-em': { step: 100, getValue: getStatValue('em'), formatValue: formatInteger },
-  'sort-er': { step: 10, getValue: getStatValue('er'), formatValue: formatPercent },
-  'sort-crit-rate': { step: 10, getValue: getStatValue('critRate'), formatValue: formatPercent },
-  'sort-crit-dmg': { step: 10, getValue: getStatValue('critDmg'), formatValue: formatPercent },
-  'sort-base-attack': { step: 10, getValue: (char) => char.na1HitDmg[1] || undefined, formatValue: formatPercent },
 }
 
 interface SortingProps {

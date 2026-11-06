@@ -3,7 +3,7 @@ import { type GenshinCharacter } from '../../data/genshin'
 import { type CharacterStatus } from '../../data/settings'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 
-interface ClassConfig {
+interface SizeClasses {
   size: string
   label: string
 }
@@ -21,8 +21,9 @@ export interface CharacterItemProps extends ReactProps {
 
 export const CharacterItem = (props: CharacterItemProps) => {
   const { character, status, size = 'md', selected, disabled, tooltip, className, onClick } = props
-  const hasLabel = size !== 'sm'
-  const config = ((): ClassConfig => {
+  const hasName = size !== 'sm'
+
+  const classes = ((): SizeClasses => {
     if (size === 'sm') return { size: 'w-md-1', label: '' }
     if (size === 'md') return { size: 'w-md-2', label: 'py-px' }
     if (size === 'lg') return { size: 'w-md-4', label: 'py-xs-0' }
@@ -35,20 +36,21 @@ export const CharacterItem = (props: CharacterItemProps) => {
       className={className}
       tooltip={tooltip}
       classNames={{
-        surface: cx(hasLabel ? 'p-xs-0!' : 'p-px!'),
+        surface: cx(hasName ? 'p-xs-0!' : 'p-px!'),
         content: 'relative flex w-full flex-col',
       }}
       data-character-item
       onClick={() => onClick?.(character)}
     >
-      <CharacterAvatar character={character} status={status} className={config.size} />
-      {hasLabel && (
+      <CharacterAvatar character={character} status={status} className={classes.size} />
+
+      {hasName && (
         <span
           className={cx(
             'translate-y-xs-0 rounded-md',
             'text-size-xs truncate text-center leading-1',
-            config.size,
-            config.label,
+            classes.size,
+            classes.label,
           )}
         >
           {character.name}

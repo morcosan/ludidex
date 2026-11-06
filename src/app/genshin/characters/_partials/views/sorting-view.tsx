@@ -1,4 +1,4 @@
-import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { formatInteger, formatPercent, roundValue } from '@app-shared/utils/various'
@@ -55,7 +55,7 @@ const useSorting = (props: SortingProps): SortAxis => {
 
   const config = VIEW_CONFIGS[viewType as SortingViewType]
 
-  const sortedChars = CHARACTERS.map((character): SortedCharacter | undefined => {
+  const sortedChars = GENSHIN_CHARACTERS.map((character): SortedCharacter | undefined => {
     const value = config.getValue(character, userData?.genshin?.characters?.[character.id])
     return value === undefined ? undefined : { character, value }
   })
@@ -126,6 +126,6 @@ export const SortingView = (props: SortingViewProps) => {
       ))}
     </div>
   ) : (
-    <p className="text-size-sm text-color-text-subtle">{t('game.status.noCharacters')}</p>
+    <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
   )
 }

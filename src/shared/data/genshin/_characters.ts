@@ -1,4 +1,4 @@
-import type { GenshinElement, GenshinNation, GenshinWeaponType } from './core'
+import type { GenshinElement, GenshinNation, GenshinWeaponType } from './_core'
 
 export interface GenshinCharacter {
   id: string
@@ -13,7 +13,7 @@ export interface GenshinCharacter {
   bannerUrls: string[]
 }
 
-export const CHARACTERS: GenshinCharacter[] = [
+export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'aino',
     name: 'Aino',
@@ -2260,3 +2260,7 @@ export const CHARACTERS: GenshinCharacter[] = [
     ],
   },
 ] as const
+
+export const GENSHIN_CHARACTERS_BY_ID: Record<string, (typeof GENSHIN_CHARACTERS)[number]> = Object.fromEntries(
+  GENSHIN_CHARACTERS.map((character) => [character.id, character]),
+)

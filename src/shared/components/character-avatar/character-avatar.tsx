@@ -1,6 +1,5 @@
 import { Image } from '@design-system'
-import { type GenshinCharacter } from '../../data/genshin/characters'
-import { GENSHIN_ELEMENT_COLORS } from '../../data/genshin/core'
+import { GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data/genshin'
 import { type CharacterStatus } from '../../data/settings'
 import { Particles } from '../particles/particles'
 
@@ -32,7 +31,7 @@ export const CharacterAvatar = (props: CharacterAvatarProps) => {
 
   return (
     <span
-      className={cx('relative aspect-square rounded-md', className, classConfig[status]?.root)}
+      className={cx('relative flex aspect-square rounded-md', className, classConfig[status]?.root)}
       style={{ '--element-color': GENSHIN_ELEMENT_COLORS[character.element] }}
     >
       <span

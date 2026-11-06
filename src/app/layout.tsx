@@ -73,8 +73,8 @@ export default function Layout() {
             trigger={
               <IconButton
                 tooltip={t('general.label.settings')}
-                className="mt-auto"
                 floating
+                className="mt-auto"
                 onClick={() => setIsQuickSettingsOpen((open) => !open)}
               >
                 <SettingsIcon strokeWidth={1.5} aria-hidden className="h-sm-0 w-sm-0" />

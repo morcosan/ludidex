@@ -48,10 +48,18 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
+const formatUserInput = (value: string) =>
+  value
+    .normalize('NFC')
+    .replace(/[^\p{L}\p{M}\p{N}\p{Sc}\s\x21-\x7E]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
 export {
   formatFileSize,
   formatInteger,
   formatPercent,
+  formatUserInput,
   getDataSize,
   getDateAsYYYYMMDD,
   getTimeAsHHMMSS,

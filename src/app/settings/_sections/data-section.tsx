@@ -43,9 +43,9 @@ export const DataSection = (props: SectionProps) => {
       link.download = `ludidex-data--${getDateAsYYYYMMDD(now)}--${getTimeAsHHMMSS(now)}.json`
       link.click()
       setTimeout(() => URL.revokeObjectURL(url), 0)
-      setExportMessage({ type: 'success', text: t('general.status.dataExported') })
+      setExportMessage({ type: 'success', text: t('general.notice.dataExported') })
     } catch {
-      setExportMessage({ type: 'error', text: t('general.status.dataExportFailed') })
+      setExportMessage({ type: 'error', text: t('general.notice.dataExportFailed') })
     } finally {
       setIsExporting(false)
     }
@@ -68,7 +68,7 @@ export const DataSection = (props: SectionProps) => {
       await wait(1000) // Fake processing delay
       setImportData(null)
       setIsImporting(false)
-      setImportMessage({ type: 'error', text: t('general.status.invalidDataFile') })
+      setImportMessage({ type: 'error', text: t('general.notice.invalidDataFile') })
     }
   }
 
@@ -79,9 +79,9 @@ export const DataSection = (props: SectionProps) => {
       await wait(1000) // Fake processing delay
       replaceUserData(importData)
       setIsModalOpen(false)
-      setImportMessage({ type: 'success', text: t('general.status.dataImported') })
+      setImportMessage({ type: 'success', text: t('general.notice.dataImported') })
     } catch {
-      setImportMessage({ type: 'error', text: t('general.status.dataImportFailed') })
+      setImportMessage({ type: 'error', text: t('general.notice.dataImportFailed') })
     }
   }
 

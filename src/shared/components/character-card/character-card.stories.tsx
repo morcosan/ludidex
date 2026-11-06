@@ -1,13 +1,13 @@
 import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { CHARACTERS } from '../../data/genshin/characters'
+import { GENSHIN_CHARACTERS } from '../../data/genshin'
 import { CharacterCard } from './character-card'
 
 const meta: Meta = {
   title: 'App / Components / Character Card',
   ...defineMeta(CharacterCard, {
     props: {
-      character: CHARACTERS.find((character) => character.id === 'vodyanitsa'),
+      character: GENSHIN_CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       userData: {
         rating: 10,
         status: 'main',

@@ -1,5 +1,5 @@
 import { Breadcrumb, CharacterCard, FiltersBar } from '@app-shared/components'
-import { CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin/characters'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
@@ -32,7 +32,7 @@ export default function Page() {
     callback: () => setIsPreviewOpen(false),
   })
 
-  const characters = CHARACTERS.filter((character) => matchesFilters(character, filters)).sort((charA, charB) =>
+  const characters = GENSHIN_CHARACTERS.filter((character) => matchesFilters(character, filters)).sort((charA, charB) =>
     charA.name.localeCompare(charB.name),
   )
 

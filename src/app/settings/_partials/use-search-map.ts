@@ -21,11 +21,11 @@ const SECTION_TRANSLATION_KEYS: Record<string, ParseKeys[]> = {
     'general.label.exportData',
     'general.label.importData',
     'general.label.uploaded',
-    'general.status.dataExportFailed',
-    'general.status.dataExported',
-    'general.status.dataImportFailed',
-    'general.status.dataImported',
-    'general.status.invalidDataFile',
+    'general.notice.dataExportFailed',
+    'general.notice.dataExported',
+    'general.notice.dataImportFailed',
+    'general.notice.dataImported',
+    'general.notice.invalidDataFile',
   ],
 }
 

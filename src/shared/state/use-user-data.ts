@@ -4,6 +4,7 @@ import { getLabelOverrides, parseUserData } from './_utils'
 import {
   EMPTY_USER_DATA,
   type GenshinCharacterUserData,
+  type GenshinTeamUserData,
   type RatingLabels,
   type TierListLabels,
   type UserData,
@@ -18,7 +19,8 @@ interface UserDataStore {
   replaceUserData(userData: UserData): void
   setRatingLabels(ratingLabels: Partial<RatingLabels>): void
   setTierListLabels(tierListLabels: Partial<TierListLabels>): void
-  setGenshinCharacter(characterId: string, data: GenshinCharacterUserData): void
+  setGenshinCharacter(characterId: string, data: GenshinCharacterUserData | null): void
+  setGenshinTeam(teamId: string, data: GenshinTeamUserData | null): void
 }
 
 const useUserDataStore = create<UserDataStore>((set, get) => ({
@@ -26,9 +28,8 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
 
   loadUserData() {
     const stored = localStorage.getItem(USER_DATA_COOKIE_KEY)
-    if (!stored) return
     try {
-      get().replaceUserData(parseUserData(JSON.parse(stored)))
+      get().replaceUserData(stored ? parseUserData(JSON.parse(stored)) : EMPTY_USER_DATA)
     } catch (error) {
       console.error(`Failed parsing '${USER_DATA_COOKIE_KEY}' from local storage\n`, error)
     }
@@ -40,13 +41,13 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(userData))
   },
 
-  replaceUserData(data) {
+  replaceUserData(data: UserData) {
     const parsed = parseUserData(data)
     localStorage.setItem(USER_DATA_COOKIE_KEY, JSON.stringify(parsed))
-    set({ userData: parsed })
+    set({ userData: { ...parsed, genshin: { ...parsed.genshin, teams: parsed.genshin?.teams } } })
   },
 
-  setRatingLabels(labels) {
+  setRatingLabels(labels: Partial<RatingLabels>) {
     set((state) => {
       const userData = state.userData ?? EMPTY_USER_DATA
       return {
@@ -59,7 +60,7 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     get().saveUserData()
   },
 
-  setTierListLabels(labels) {
+  setTierListLabels(labels: Partial<TierListLabels>) {
     set((state) => {
       const userData = state.userData ?? EMPTY_USER_DATA
       return {
@@ -72,18 +73,36 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
     get().saveUserData()
   },
 
-  setGenshinCharacter(characterId, data) {
+  setGenshinCharacter(characterId: string, data: GenshinCharacterUserData | null) {
     set((state) => {
       const userData = state.userData ?? EMPTY_USER_DATA
       const characters = { ...userData.genshin?.characters }
 
-      if (Object.keys(data).length) {
-        characters[characterId] = data
+      if (data) {
+        const { rating, status, tierLists, stats, talents, tags } = data
+        characters[characterId] = { rating, status, tierLists, stats, talents, tags }
       } else {
         delete characters[characterId]
       }
 
       return { userData: { ...userData, genshin: { ...userData.genshin, characters } } }
+    })
+    get().saveUserData()
+  },
+
+  setGenshinTeam(teamId: string, data: GenshinTeamUserData | null) {
+    set((state) => {
+      const userData = state.userData ?? EMPTY_USER_DATA
+      const teams = { ...userData.genshin?.teams }
+
+      if (data) {
+        const { name, rating, tags } = data
+        teams[teamId] = { name, rating, tags }
+      } else {
+        delete teams[teamId]
+      }
+
+      return { userData: { ...userData, genshin: { ...userData.genshin, teams } } }
     })
     get().saveUserData()
   },

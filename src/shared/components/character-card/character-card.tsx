@@ -6,7 +6,7 @@ import {
   GENSHIN_ELEMENT_ICONS,
   GENSHIN_NATION_ICONS,
   GENSHIN_WEAPON_ICONS,
-} from '../../data/genshin/core'
+} from '../../data/genshin'
 import { TIER_LIST_LABELS } from '../../data/settings'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
 import { CardActions } from '../_shared/card-actions'

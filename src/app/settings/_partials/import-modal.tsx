@@ -23,6 +23,7 @@ const countDataValues = (value: unknown): number => {
 
 const getDataSummary = (data: UserData) => ({
   characters: Object.values(data.genshin?.characters ?? {}).filter((char) => countDataValues(char) > 0).length,
+  teams: Object.keys(data.genshin?.teams ?? {}).length,
   preferences: countDataValues(data.preferences),
   values: countDataValues({ genshin: data.genshin }),
   size: getDataSize(data),
@@ -86,6 +87,12 @@ export const ImportModal = (props: DataImportModalProps) => {
               <td className="py-xs-2">{currentSummary.characters}</td>
               <td className="py-xs-2">{renderArrow(importSummary.characters - currentSummary.characters)}</td>
               <td className="py-xs-2">{importSummary.characters}</td>
+            </tr>
+            <tr>
+              <td className="py-xs-2">{t('general.label.teams')}</td>
+              <td className="py-xs-2">{currentSummary.teams}</td>
+              <td className="py-xs-2">{renderArrow(importSummary.teams - currentSummary.teams)}</td>
+              <td className="py-xs-2">{importSummary.teams}</td>
             </tr>
             <tr>
               <td className="py-xs-2">{t('general.label.preferences')}</td>

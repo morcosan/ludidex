@@ -12,6 +12,9 @@
       "clear": "Clear",
       "clearFilters": "Clear filters",
       "clearSearch": "Clear search",
+      "createNewTeam": "Create new team",
+      "delete": "Delete",
+      "deleteTeam": "Delete team",
       "discardChanges": "Discard changes",
       "download": "Download",
       "edit": "Edit",
@@ -21,6 +24,7 @@
       "save": "Save",
       "saveChanges": "Save changes",
       "searchSettings": "Search settings",
+      "selectTeamMembers": "Select team members",
       "sort": "Sort",
       "upload": "Upload"
     },
@@ -42,6 +46,7 @@
       "medium": "Medium",
       "modeDark": "Dark",
       "modeLight": "Light",
+      "newTeam": "New team",
       "none": "None",
       "preferences": "Preferences",
       "rating": "Rating",
@@ -63,12 +68,19 @@
       "search": "Search..."
     },
     "status": {
+      "loading": "Loading..."
+    },
+    "notice": {
+      "cannotBeUndone": "This action cannot be undone",
       "dataExportFailed": "Data could not be exported",
       "dataExported": "Data exported",
       "dataImportFailed": "Data could not be imported",
       "dataImported": "Data imported",
       "invalidDataFile": "This file is not a valid LudiDex data export",
-      "loading": "Loading..."
+      "invalidTeamId": "Team must be unique and have at least one member",
+      "invalidTeamName": "Team name must be unique and not empty",
+      "noCharacters": "No characters match the selected filters",
+      "noTeams": "No teams match the selected filters"
     }
   },
   "game": {
@@ -120,8 +132,7 @@
       "specialBonus": "Special Bonus"
     },
     "status": {
-      "noCharacters": "No characters match the selected filters",
-      "noTeams": "No teams match the selected filters"
+      "alreadySelected": "Already selected"
     }
   },
   "marketing": {

@@ -77,7 +77,6 @@ export const Popover = (props: PopoverProps) => {
   const { tokens } = useThemeService()
 
   const surfaceCss: CSSObject = {
-    zIndex: tokens.zIndex['dropdown'],
     overflow: 'auto',
     padding: `${tokens.spacing['xs-2']} ${tokens.spacing['xs-3']}`,
     border: `1px solid ${tokens.color['border-surface']}`,
@@ -93,6 +92,7 @@ export const Popover = (props: PopoverProps) => {
       position={position}
       offset={offset}
       width={width}
+      zIndex={tokens.zIndex['dropdown']}
       middlewares={middlewares}
       withRoles={withRoles}
       transitionProps={transitionProps}

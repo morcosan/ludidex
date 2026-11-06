@@ -10,7 +10,7 @@ import {
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
-} from '../../data/genshin/core'
+} from '../../data/genshin'
 
 export interface FiltersBarValue {
   elements: GenshinElement[]

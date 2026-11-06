@@ -1,4 +1,4 @@
-import type { GenshinCharacter } from '../../data/genshin/characters'
+import type { GenshinCharacter } from '../../data/genshin'
 import type { GenshinCharacterUserData, UserPrefs } from '../../state/types'
 
 export interface CharacterCardProps extends ReactProps {

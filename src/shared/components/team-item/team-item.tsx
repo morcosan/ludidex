@@ -23,9 +23,9 @@ export const TeamItem = (props: TeamItemProps) => {
   const { t } = useTranslation()
 
   const config = ((): ClassConfig => {
-    if (size === 'sm') return { size: 'w-lg-1', list: 'gap-xs-0 p-xs-0', label: 'leading-1' }
-    if (size === 'md') return { size: 'w-lg-2', list: 'gap-xs-1 p-xs-1', label: 'leading-1' }
-    if (size === 'lg') return { size: 'w-lg-4', list: 'gap-xs-1 p-xs-1', label: 'leading-sm' }
+    if (size === 'sm') return { size: 'w-lg-1', list: 'gap-xs-0 p-xs-0', label: 'py-xs-0' }
+    if (size === 'md') return { size: 'w-lg-2', list: 'gap-xs-1 p-xs-1', label: 'py-xs-0' }
+    if (size === 'lg') return { size: 'w-lg-4', list: 'gap-xs-1 p-xs-1', label: 'py-xs-1' }
     return { size: '', list: '', label: '' }
   })()
 
@@ -41,7 +41,7 @@ export const TeamItem = (props: TeamItemProps) => {
       data-team-item
       onClick={() => onClick?.(team)}
     >
-      <div className={cx('bg-color-grey-3 flex w-full justify-center rounded-sm', config.list)}>
+      <span className={cx('bg-color-grey-3 flex w-full justify-center rounded-sm', config.list)}>
         {Array.from({ length: 4 }, (_, index) => {
           const character = characters[index]
           return character ? (
@@ -50,12 +50,16 @@ export const TeamItem = (props: TeamItemProps) => {
             <div key={`empty-${index}`} className="aspect-square w-1/4" />
           )
         })}
-      </div>
-      <div
-        className={cx('translate-y-xs-0 px-xs-1 my-xs-0 min-h-lh', 'text-size-xs truncate text-center', config.label)}
+      </span>
+      <span
+        className={cx(
+          'translate-y-xs-0 min-h-lh rounded-md',
+          'text-size-xs truncate text-center leading-1',
+          config.label,
+        )}
       >
         {team.name || <span className="text-color-text-placeholder">{t('general.label.newTeam')}</span>}
-      </div>
+      </span>
     </Card>
   )
 }

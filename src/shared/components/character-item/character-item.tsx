@@ -3,6 +3,11 @@ import { type GenshinCharacter } from '../../data/genshin'
 import { type CharacterStatus } from '../../data/settings'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 
+interface ClassConfig {
+  size: string
+  label: string
+}
+
 export interface CharacterItemProps extends ReactProps {
   character: GenshinCharacter
   status?: CharacterStatus
@@ -17,11 +22,11 @@ export interface CharacterItemProps extends ReactProps {
 export const CharacterItem = (props: CharacterItemProps) => {
   const { character, status, size = 'md', selected, disabled, tooltip, className, onClick } = props
   const hasLabel = size !== 'sm'
-  const sizeClass = (() => {
-    if (size === 'sm') return 'w-md-1'
-    if (size === 'md') return 'w-md-2'
-    if (size === 'lg') return 'w-md-4'
-    return ''
+  const config = ((): ClassConfig => {
+    if (size === 'sm') return { size: 'w-md-1', label: '' }
+    if (size === 'md') return { size: 'w-md-2', label: 'py-px' }
+    if (size === 'lg') return { size: 'w-md-4', label: 'py-xs-0' }
+    return { size: '', label: '' }
   })()
 
   return (
@@ -36,11 +41,18 @@ export const CharacterItem = (props: CharacterItemProps) => {
       data-character-item
       onClick={() => onClick?.(character)}
     >
-      <CharacterAvatar character={character} status={status} className={sizeClass} />
+      <CharacterAvatar character={character} status={status} className={config.size} />
       {hasLabel && (
-        <div className={cx('translate-y-xs-0 text-size-xs truncate rounded-b-md text-center', sizeClass)}>
+        <span
+          className={cx(
+            'translate-y-xs-0 rounded-md',
+            'text-size-xs truncate text-center leading-1',
+            config.size,
+            config.label,
+          )}
+        >
           {character.name}
-        </div>
+        </span>
       )}
     </Card>
   )

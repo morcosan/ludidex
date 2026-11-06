@@ -24,8 +24,8 @@ const CharacterLabelSchema = z.enum([
 ])
 const UserSettingsSchema = z.object({
   charItemSize: ItemSizeSchema.default('md'),
-  charLabelTop: CharacterLabelSchema.default('level'),
-  charLabelBottom: CharacterLabelSchema.default('atk'),
+  charLabelTop: CharacterLabelSchema.optional(),
+  charLabelBottom: CharacterLabelSchema.optional(),
   teamItemSize: ItemSizeSchema.default('md'),
 })
 

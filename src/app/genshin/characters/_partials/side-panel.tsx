@@ -10,12 +10,12 @@ interface SideFiltersProps extends ReactProps {
   viewType: CharacterViewType
   viewOptions: readonly ViewOption<CharacterViewType>[]
   itemSize: ItemSize
-  charLabelTop: CharacterLabel
-  charLabelBottom: CharacterLabel
+  charLabelTop: CharacterLabel | null
+  charLabelBottom: CharacterLabel | null
   onChangeView: (viewType: CharacterViewType) => void
   onChangeItemSize: (size: ItemSize) => void
-  onChangeCharLabelTop: (label: CharacterLabel) => void
-  onChangeCharLabelBottom: (label: CharacterLabel) => void
+  onChangeCharLabelTop: (label: CharacterLabel | null) => void
+  onChangeCharLabelBottom: (label: CharacterLabel | null) => void
 }
 
 export const SidePanel = (props: SideFiltersProps) => {
@@ -39,7 +39,7 @@ export const SidePanel = (props: SideFiltersProps) => {
     { value: 'lg', label: t('general.label.large') },
   ]
 
-  const charLabelOptions: SelectOption<CharacterLabel>[] = [
+  const charLabelOptions: SelectOption<CharacterLabel | ''>[] = [
     { value: 'rating', label: t('general.label.rating') },
     { value: 'status', label: t('general.label.status') },
     { value: 'level', label: t('game.label.level') },
@@ -50,6 +50,7 @@ export const SidePanel = (props: SideFiltersProps) => {
     { value: 'er', label: t('game.stats.er') },
     { value: 'critRate', label: t('game.stats.critRate') },
     { value: 'critDmg', label: t('game.stats.critDmg') },
+    { value: '', label: '--' },
   ]
 
   const settingClass = cx('gap-xs-2 flex items-center justify-between')
@@ -79,10 +80,10 @@ export const SidePanel = (props: SideFiltersProps) => {
           <SelectField
             id="char-label-top"
             size="sm"
-            value={charLabelTop}
+            value={charLabelTop ?? ''}
             options={charLabelOptions}
             className="w-md-4"
-            onChange={(value) => value && onChangeCharLabelTop(value as CharacterLabel)}
+            onChange={(value) => onChangeCharLabelTop(value ? (value as CharacterLabel) : null)}
           />
         </div>
         {/* LABEL BOTTOM */}
@@ -91,10 +92,10 @@ export const SidePanel = (props: SideFiltersProps) => {
           <SelectField
             id="char-label-bottom"
             size="sm"
-            value={charLabelBottom}
+            value={charLabelBottom ?? ''}
             options={charLabelOptions}
             className="w-md-4"
-            onChange={(value) => value && onChangeCharLabelBottom(value as CharacterLabel)}
+            onChange={(value) => onChangeCharLabelBottom(value ? (value as CharacterLabel) : null)}
           />
         </div>
       </PageSection>

@@ -8,8 +8,8 @@ interface UserSettingsStore {
   loadUserSettings(): void
   saveUserSettings(): void
   setCharItemSize(charItemSize: ItemSize): void
-  setCharLabelTop(charLabelTop: CharacterLabel): void
-  setCharLabelBottom(charLabelBottom: CharacterLabel): void
+  setCharLabelTop(charLabelTop: CharacterLabel | null): void
+  setCharLabelBottom(charLabelBottom: CharacterLabel | null): void
   setTeamItemSize(teamItemSize: ItemSize): void
 }
 
@@ -37,13 +37,29 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
     get().saveUserSettings()
   },
 
-  setCharLabelTop(charLabelTop: CharacterLabel) {
-    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelTop }) }))
+  setCharLabelTop(charLabelTop: CharacterLabel | null) {
+    set((state) => {
+      const userSettings = { ...state.userSettings }
+      if (charLabelTop === null) {
+        delete userSettings.charLabelTop
+      } else {
+        userSettings.charLabelTop = charLabelTop
+      }
+      return { userSettings: UserSettingsSchema.parse(userSettings) }
+    })
     get().saveUserSettings()
   },
 
-  setCharLabelBottom(charLabelBottom: CharacterLabel) {
-    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelBottom }) }))
+  setCharLabelBottom(charLabelBottom: CharacterLabel | null) {
+    set((state) => {
+      const userSettings = { ...state.userSettings }
+      if (charLabelBottom === null) {
+        delete userSettings.charLabelBottom
+      } else {
+        userSettings.charLabelBottom = charLabelBottom
+      }
+      return { userSettings: UserSettingsSchema.parse(userSettings) }
+    })
     get().saveUserSettings()
   },
 

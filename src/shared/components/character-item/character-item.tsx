@@ -22,7 +22,18 @@ export interface CharacterItemProps extends ReactProps {
 }
 
 export const CharacterItem = (props: CharacterItemProps) => {
-  const { character, status, size = 'md', selected, disabled, tooltip, labelBottom, className, onClick } = props
+  const {
+    character,
+    status,
+    size = 'md',
+    selected,
+    disabled,
+    tooltip,
+    labelTop,
+    labelBottom,
+    className,
+    onClick,
+  } = props
   const hasName = size !== 'sm'
 
   const classNames = ((): SizeClasses => {
@@ -31,6 +42,12 @@ export const CharacterItem = (props: CharacterItemProps) => {
     if (size === 'lg') return { size: 'w-md-4', name: 'py-xs-0' }
     return { size: '', name: '' }
   })()
+
+  const labelRootClass = cx('right-xs-1 absolute left-px z-10 flex')
+  const labelTextClass = cx(
+    'px-xs-1 py-xs-0 bg-color-white max-w-full rounded-xs',
+    'text-size-xxs font-weight-lg truncate leading-1',
+  )
 
   return (
     <Card
@@ -45,17 +62,17 @@ export const CharacterItem = (props: CharacterItemProps) => {
       onClick={() => onClick?.(character)}
     >
       <span className="relative">
+        {labelTop && (
+          <span className={cx('top-px', labelRootClass)}>
+            <span className={cx(labelTextClass, 'rounded-tl-sm!')}>{labelTop}</span>
+          </span>
+        )}
+
         <CharacterAvatar character={character} status={status} className={classNames.size} />
 
         {labelBottom && (
-          <span
-            className={cx(
-              'px-xs-1 py-xs-0 absolute bottom-px left-px max-w-full',
-              'bg-color-white rounded-xs rounded-bl-sm!',
-              'text-size-xxs font-weight-lg truncate leading-1',
-            )}
-          >
-            {labelBottom}
+          <span className={cx('bottom-px', labelRootClass)}>
+            <span className={cx(labelTextClass, 'rounded-bl-sm!')}>{labelBottom}</span>
           </span>
         )}
       </span>

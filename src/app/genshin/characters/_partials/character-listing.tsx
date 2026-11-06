@@ -62,10 +62,22 @@ export const CharacterListing = (props: CharacterListingProps) => {
 
   const getLabelBottom = (character: GenshinCharacter): string | undefined => {
     if (!viewType.startsWith('sort-')) return undefined
+
     const data = userData?.characters?.[character.id]
     const config = VIEW_CONFIGS[viewType as SortingViewType]
     const value = config.getValue(character, data)
-    return value === undefined ? undefined : config.formatValue(value)
+    if (value === undefined) return undefined
+
+    const formattedValue = config.formatValue(value)
+    if (viewType === 'sort-level') return t('game.format.level', { value: formattedValue })
+    if (viewType === 'sort-hp') return t('game.format.hp', { value: formattedValue })
+    if (viewType === 'sort-atk') return t('game.format.atk', { value: formattedValue })
+    if (viewType === 'sort-def') return t('game.format.def', { value: formattedValue })
+    if (viewType === 'sort-em') return t('game.format.em', { value: formattedValue })
+    if (viewType === 'sort-er') return t('game.format.er', { value: formattedValue })
+    if (viewType === 'sort-crit-rate') return t('game.format.critRate', { value: formattedValue })
+    if (viewType === 'sort-crit-dmg') return t('game.format.critDmg', { value: formattedValue })
+    if (viewType === 'sort-base-attack') return t('game.format.baseAttack', { value: formattedValue })
   }
 
   const renderItem = (character: GenshinCharacter) => (

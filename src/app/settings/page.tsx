@@ -88,7 +88,7 @@ export default function Page() {
             />
             <h1 className="mb-xs-7 flex">
               <Breadcrumb first>{t('general.label.settings')}</Breadcrumb>
-              {keyword && <Breadcrumb>{t('general.label.withSearch', { keyword })}</Breadcrumb>}
+              {keyword && <Breadcrumb>{t('general.format.withSearch', { keyword })}</Breadcrumb>}
             </h1>
           </div>
         </div>

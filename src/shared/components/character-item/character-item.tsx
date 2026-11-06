@@ -5,7 +5,7 @@ import { CharacterAvatar } from '../character-avatar/character-avatar'
 
 interface SizeClasses {
   size: string
-  label: string
+  name: string
 }
 
 export interface CharacterItemProps extends ReactProps {
@@ -26,10 +26,10 @@ export const CharacterItem = (props: CharacterItemProps) => {
   const hasName = size !== 'sm'
 
   const classNames = ((): SizeClasses => {
-    if (size === 'sm') return { size: 'w-md-1', label: '' }
-    if (size === 'md') return { size: 'w-md-2', label: 'py-px' }
-    if (size === 'lg') return { size: 'w-md-4', label: 'py-xs-0' }
-    return { size: '', label: '' }
+    if (size === 'sm') return { size: 'w-md-1', name: '' }
+    if (size === 'md') return { size: 'w-md-2', name: 'py-px' }
+    if (size === 'lg') return { size: 'w-md-4', name: 'py-xs-0' }
+    return { size: '', name: '' }
   })()
 
   return (
@@ -50,9 +50,9 @@ export const CharacterItem = (props: CharacterItemProps) => {
         {labelBottom && (
           <span
             className={cx(
-              'px-xs-1 absolute bottom-px left-px max-w-full py-px',
+              'px-xs-1 py-xs-0 absolute bottom-px left-px max-w-full',
               'bg-color-white rounded-xs rounded-bl-sm!',
-              'text-size-xs font-weight-md truncate leading-1',
+              'text-size-xxs font-weight-lg truncate leading-1',
             )}
           >
             {labelBottom}
@@ -66,7 +66,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
             'translate-y-xs-0 rounded-md',
             'text-size-xs truncate text-center leading-1',
             classNames.size,
-            classNames.label,
+            classNames.name,
           )}
         >
           {character.name}

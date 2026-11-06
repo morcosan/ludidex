@@ -59,7 +59,9 @@
       "tierListLabels": "Tier list labels",
       "uploaded": "Uploaded",
       "view": "View",
-      "viewSettings": "View settings",
+      "viewSettings": "View settings"
+    },
+    "format": {
       "withFilters_one": "with {count} filter",
       "withFilters_other": "with {count} filters",
       "withSearch": "search: \"{keyword}\""
@@ -111,6 +113,17 @@
       "unused": "Unused",
       "weapon": "Weapon"
     },
+    "format": {
+      "atk": "ATK: {value}",
+      "baseAttack": "ATK: {value}",
+      "critDmg": "CRIT: {value}",
+      "critRate": "CRIT: {value}",
+      "def": "DEF: {value}",
+      "em": "EM: {value}",
+      "er": "ER: {value}",
+      "hp": "HP: {value}",
+      "level": "Lv: {value}"
+    },
     "placeholder": {
       "tags": "Tag, tag..."
     },
@@ -118,8 +131,8 @@
       "atk": "ATK",
       "baseAttackLv10": "Base Attack (Lv. 10)",
       "constellation": "Constellation",
-      "critDmg": "Crit DMG",
-      "critRate": "Crit Rate",
+      "critDmg": "CRIT DMG",
+      "critRate": "CRIT Rate",
       "def": "DEF",
       "elemBurst": "Elemental Burst",
       "elemDmg": "{element} DMG",

@@ -14,7 +14,12 @@ export const useData = (props: CharacterCardProps) => {
   const { t } = useTranslation()
 
   const buildStatRows = <T extends object>(data: T, fields: Record<keyof T, StatField>): StatRow[] => {
-    const formatValue = (value?: unknown, suffix = '') => (value === undefined ? '--' : `${value}${suffix}`)
+    const formatValue = (value?: unknown, suffix = '') => {
+      if (value === undefined) return '--'
+      const formatted = typeof value === 'number' ? value.toLocaleString('en-US', { maximumFractionDigits: 1 }) : value
+      return `${formatted}${suffix}`
+    }
+
     return Object.entries(fields as Record<string, StatField>).map(([field, { label, percent }]) => {
       return { label, field, percent, value: formatValue(data[field as keyof T], percent ? '%' : '') }
     })

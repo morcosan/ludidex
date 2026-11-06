@@ -27,7 +27,7 @@ const isPathUnderSegment = (pathname: string, segment: string): boolean => {
 
 const withAlpha = (color: string, opacity: number) => `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`
 
-const formatInteger = (value: number) => String(Math.round(value))
+const formatInteger = (value: number) => Math.round(value).toLocaleString('en-US')
 const formatPercent = (value: number) => `${Math.round(value)}%`
 
 const roundValue = (value: number, direction: 'up' | 'down', step: number) => {

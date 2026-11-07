@@ -103,7 +103,7 @@ export default function Page() {
             {t('general.label.teams')} ({currTeams.length})
           </Breadcrumb>
           <Breadcrumb>{viewLabel}</Breadcrumb>
-          {filtersCount > 0 && <Breadcrumb>{t('general.label.withFilters', { count: filtersCount })}</Breadcrumb>}
+          {filtersCount > 0 && <Breadcrumb>{t('general.format.withFilters', { count: filtersCount })}</Breadcrumb>}
         </h1>
 
         {/* LISTING */}

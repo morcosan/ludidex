@@ -62,7 +62,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
     <Modal opened={opened} title={title} width="xl" height="full" noFooter data-character-modal onClose={onClose}>
       <div className={cx('flex h-full min-h-0 flex-col', className)}>
         {selection && (
-          <ul className="gap-xs-3 mb-sm-0 py-xs-0 flex flex-wrap overflow-hidden">
+          <ul className="gap-xs-3 mb-sm-0 py-xs-0 flex flex-wrap">
             {selection.slots.map((slot, index) => (
               <li key={index} className="relative">
                 {slot ? (
@@ -101,7 +101,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
         <FiltersBar value={filters} surface="paper" className="mb-xs-5" onChange={setFilters} />
 
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <ul className="gap-xs-3 py-xs-0 flex flex-wrap overflow-hidden">
+          <ul className="gap-xs-3 py-xs-0 flex flex-wrap">
             {characters.map((character) => (
               <li key={character.id}>
                 <CharacterItem

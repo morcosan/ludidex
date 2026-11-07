@@ -6,6 +6,7 @@
 export const CSS_PREFIX__FONT_SIZE = '--ds-font-size-'
 
 export const TOKENS__FONT_SIZE = {
+  xxs: { value: '0.6875rem' },
   xs: { value: '0.75rem' },
   sm: { value: '0.875rem' },
   md: { value: '0.9375rem' },

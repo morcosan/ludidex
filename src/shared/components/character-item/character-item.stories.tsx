@@ -13,6 +13,8 @@ const meta: Meta = {
       selected: false,
       disabled: false,
       tooltip: '',
+      labelTop: '',
+      labelBottom: '',
     },
     events: ['onClick'],
     inlineRadios: ['status', 'size'],

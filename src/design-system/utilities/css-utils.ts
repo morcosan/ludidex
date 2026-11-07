@@ -33,3 +33,6 @@ export const CSS_A11Y_OUTLINE_PROXY: CSSObject = {
     outlineOffset: 'var(--ds-spacing-a11y-outline)',
   },
 }
+export const CSS_KEY__REDUCED_MOTION = import.meta.env.DEV
+  ? '@media not all'
+  : '@media (prefers-reduced-motion: reduce)'

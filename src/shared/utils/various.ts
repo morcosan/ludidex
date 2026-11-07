@@ -27,8 +27,11 @@ const isPathUnderSegment = (pathname: string, segment: string): boolean => {
 
 const withAlpha = (color: string, opacity: number) => `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`
 
-const formatInteger = (value: number) => String(Math.round(value))
-const formatPercent = (value: number) => `${Math.round(value)}%`
+const formatInteger = (value: number, compact = false) => {
+  const formatFn = compact ? new Intl.NumberFormat('en-US', { notation: 'compact' }) : new Intl.NumberFormat('en-US')
+  return formatFn.format(Math.floor(value))
+}
+const formatPercent = (value: number, compact = false) => `${formatInteger(value, compact)}%`
 
 const roundValue = (value: number, direction: 'up' | 'down', step: number) => {
   const round = direction === 'up' ? Math.ceil : Math.floor

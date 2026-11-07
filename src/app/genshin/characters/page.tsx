@@ -19,8 +19,12 @@ export default function Page() {
   const userData = useUserDataStore((state) => state.userData)
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const characterItemSize = useUserSettingsStore((state) => state.userSettings?.characterItemSize ?? 'md')
-  const setCharacterItemSize = useUserSettingsStore((state) => state.setCharacterItemSize)
+  const charItemSize = useUserSettingsStore((state) => state.userSettings?.charItemSize ?? 'md')
+  const setCharItemSize = useUserSettingsStore((state) => state.setCharItemSize)
+  const charLabelTop = useUserSettingsStore((state) => state.userSettings?.charLabelTop ?? null)
+  const charLabelBottom = useUserSettingsStore((state) => state.userSettings?.charLabelBottom ?? null)
+  const setCharLabelTop = useUserSettingsStore((state) => state.setCharLabelTop)
+  const setCharLabelBottom = useUserSettingsStore((state) => state.setCharLabelBottom)
   const { filters, handleFiltersChange } = useFilterParams(CHARACTER_FILTERS)
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -67,13 +71,15 @@ export default function Page() {
             {t('general.label.characters')} ({characters.length})
           </Breadcrumb>
           <Breadcrumb>{viewLabel}</Breadcrumb>
-          {filtersCount > 0 && <Breadcrumb>{t('general.label.withFilters', { count: filtersCount })}</Breadcrumb>}
+          {filtersCount > 0 && <Breadcrumb>{t('general.format.withFilters', { count: filtersCount })}</Breadcrumb>}
         </h1>
 
         <CharacterListing
           characters={characters}
           viewType={viewType}
-          itemSize={characterItemSize}
+          itemSize={charItemSize}
+          labelTop={charLabelTop}
+          labelBottom={charLabelBottom}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
           onClickItem={handleClickCharacter}
@@ -83,11 +89,15 @@ export default function Page() {
       {/* RIGHT SIDE */}
       <div className="min-w-xl-0 mx-xs-3 relative h-full">
         <SidePanel
-          itemSize={characterItemSize}
+          itemSize={charItemSize}
           viewType={viewType}
           viewOptions={viewOptions}
+          charLabelTop={charLabelTop}
+          charLabelBottom={charLabelBottom}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
-          onChangeItemSize={setCharacterItemSize}
+          onChangeItemSize={setCharItemSize}
+          onChangeCharLabelTop={setCharLabelTop}
+          onChangeCharLabelBottom={setCharLabelBottom}
           onChangeView={handleViewChange}
         />
 

@@ -5,6 +5,7 @@
 
 :root,
 :host {
+  --ds-font-size-xxs: 0.6875rem;
   --ds-font-size-xs: 0.75rem;
   --ds-font-size-sm: 0.875rem;
   --ds-font-size-md: 0.9375rem;

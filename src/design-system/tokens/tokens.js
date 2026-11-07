@@ -234,6 +234,7 @@ export default {
   },
   'font-family': { sans: { $value: "'Geist', sans-serif" }, mono: { $value: "'Geist Mono', monospace" } },
   'font-size': {
+    xxs: { $value: '0.6875rem' },
     xs: { $value: '0.75rem' },
     sm: { $value: '0.875rem' },
     md: { $value: '0.9375rem' },

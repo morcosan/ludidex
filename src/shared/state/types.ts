@@ -10,8 +10,22 @@ import {
 } from './versions/schema_v1'
 
 const ItemSizeSchema = z.enum(['sm', 'md', 'lg'])
+const CharacterLabelSchema = z.enum([
+  'rating',
+  'status',
+  'level',
+  'hp',
+  'atk',
+  'def',
+  'em',
+  'er',
+  'critRate',
+  'critDmg',
+])
 const UserSettingsSchema = z.object({
-  characterItemSize: ItemSizeSchema.default('md'),
+  charItemSize: ItemSizeSchema.default('md'),
+  charLabelTop: CharacterLabelSchema.nullable().default(null),
+  charLabelBottom: CharacterLabelSchema.nullable().default(null),
   teamItemSize: ItemSizeSchema.default('md'),
 })
 
@@ -22,6 +36,7 @@ type TierListLabels = Record<keyof typeof TIER_LIST_LABELS, string>
 type GenshinUserData = UserData['genshin']
 type GenshinCharacterUserData = GenshinCharacter_v1
 type GenshinTeamUserData = GenshinTeam_v1
+type CharacterLabel = z.infer<typeof CharacterLabelSchema>
 type ItemSize = z.infer<typeof ItemSizeSchema>
 type UserSettings = z.infer<typeof UserSettingsSchema>
 
@@ -37,6 +52,7 @@ export {
   UserSettingsSchema,
   packTeamId,
   unpackTeamId,
+  type CharacterLabel,
   type GenshinCharacterUserData,
   type GenshinTeam,
   type GenshinTeamUserData,

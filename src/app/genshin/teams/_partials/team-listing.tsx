@@ -41,7 +41,7 @@ export const TeamListing = (props: TeamListingProps) => {
   const classNames = SIZE_CLASSES[itemSize]
 
   const isTierListView = viewType === 'rating'
-  const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap overflow-hidden', classNames.list)
+  const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap', classNames.list)
 
   const getValue = (team: GenshinTeam, viewType: ViewType) => {
     if (viewType === 'rating') return team.rating

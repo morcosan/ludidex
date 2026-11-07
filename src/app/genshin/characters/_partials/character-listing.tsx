@@ -1,12 +1,14 @@
 import { CharacterItem } from '@app-shared/components'
-import { type GenshinCharacter } from '@app-shared/data/genshin'
-import { type ItemSize } from '@app-shared/state/types'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
+import { RATING_LABELS, type RatingValue } from '@app-shared/data/settings'
+import { type CharacterLabel, type ItemSize } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type ViewType } from '@app-shared/utils/use-view-options'
+import { formatInteger, formatPercent } from '@app-shared/utils/various'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
-import { type CharacterViewType } from './config'
-import { SortingView } from './views/sorting-view'
+import { SortingView } from '../../_shared/sorting-view'
+import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from './config'
 
 export interface ItemSizeClass {
   list: string
@@ -32,20 +34,25 @@ interface CharacterListingProps extends ReactProps {
   characters: GenshinCharacter[]
   viewType: CharacterViewType
   itemSize: ItemSize
+  labelTop: CharacterLabel | null
+  labelBottom: CharacterLabel | null
   selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, viewType, itemSize, selectedItemId, className, onClickItem } = props
+  const { characters, viewType, itemSize, labelTop, labelBottom, selectedItemId, className, onClickItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
+  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
 
   const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
+  const sortingConfig = isSortingView ? VIEW_CONFIGS[viewType as SortingViewType] : undefined
 
   const classNames = SIZE_CLASSES[itemSize]
-  const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap overflow-hidden', classNames.list)
+  const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap', classNames.list)
 
   const getValue = (character: GenshinCharacter, viewType: ViewType) => {
     const characterUserData = userData?.characters?.[character.id]
@@ -60,12 +67,57 @@ export const CharacterListing = (props: CharacterListingProps) => {
     return undefined
   }
 
+  const getLabel = (character: GenshinCharacter, label: CharacterLabel | null): string | undefined => {
+    if (!label) return undefined
+
+    const data = userData?.characters?.[character.id]
+
+    if (label === 'status') return data?.status ? t(`game.label.${data.status}`) : undefined
+    if (label === 'rating')
+      return data?.rating
+        ? t('game.format.rating', {
+            value: data.rating,
+            label: ratingLabels[data.rating as RatingValue],
+          })
+        : undefined
+
+    const value = data?.stats?.[label]
+    if (value === undefined) return undefined
+
+    const isPercent = label === 'er' || label === 'critRate' || label === 'critDmg'
+    const formatted = isPercent ? formatPercent(value, true) : formatInteger(value, true)
+    return t(`game.format.${label}`, { value: formatted })
+  }
+
+  const getSortLabel = (character: GenshinCharacter, existingLabel: CharacterLabel | null): string | undefined => {
+    if (!viewType.startsWith('sort-')) return undefined
+
+    const config = VIEW_CONFIGS[viewType as SortingViewType]
+    if (config.label === existingLabel) return undefined
+
+    const value = config.getValue(character, userData?.characters?.[character.id])
+    if (value === undefined) return undefined
+
+    const formattedValue = config.formatValue(value, true)
+    if (viewType === 'sort-level') return t('game.format.level', { value: formattedValue })
+    if (viewType === 'sort-hp') return t('game.format.hp', { value: formattedValue })
+    if (viewType === 'sort-atk') return t('game.format.atk', { value: formattedValue })
+    if (viewType === 'sort-def') return t('game.format.def', { value: formattedValue })
+    if (viewType === 'sort-em') return t('game.format.em', { value: formattedValue })
+    if (viewType === 'sort-er') return t('game.format.er', { value: formattedValue })
+    if (viewType === 'sort-crit-rate') return t('game.format.critRate', { value: formattedValue })
+    if (viewType === 'sort-crit-dmg') return t('game.format.critDmg', { value: formattedValue })
+    if (viewType === 'sort-base-attack') return t('game.format.baseAttack', { value: formattedValue })
+  }
+
   const renderItem = (character: GenshinCharacter) => (
     <li key={character.id}>
       <CharacterItem
         character={character}
         status={userData?.characters?.[character.id]?.status}
         size={itemSize}
+        labelTop={labelTop ? getLabel(character, labelTop) : getSortLabel(character, labelBottom)}
+        labelBottom={getLabel(character, labelBottom)}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />
@@ -88,14 +140,18 @@ export const CharacterListing = (props: CharacterListingProps) => {
           getValue={getValue}
           renderItem={renderItem}
         />
-      ) : isSortingView ? (
+      ) : sortingConfig ? (
         <SortingView
-          characters={characters}
-          viewType={viewType}
+          items={characters}
+          itemsPool={GENSHIN_CHARACTERS}
+          valueStep={sortingConfig.step}
+          emptyText={t('general.notice.noCharacters')}
           classNames={{
             row: classNames.row,
             content: contentClass,
           }}
+          getValue={(character) => sortingConfig.getValue(character, userData?.characters?.[character.id])}
+          formatValue={sortingConfig.formatValue}
           renderItem={renderItem}
         />
       ) : (

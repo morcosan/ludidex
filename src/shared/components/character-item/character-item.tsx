@@ -3,6 +3,11 @@ import { type GenshinCharacter } from '../../data/genshin'
 import { type CharacterStatus } from '../../data/settings'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 
+interface ClassNames {
+  size: string
+  name: string
+}
+
 export interface CharacterItemProps extends ReactProps {
   character: GenshinCharacter
   status?: CharacterStatus
@@ -10,37 +15,79 @@ export interface CharacterItemProps extends ReactProps {
   selected?: boolean
   disabled?: boolean
   tooltip?: string
+  labelTop?: string
+  labelBottom?: string
   className?: string
   onClick?: (character: GenshinCharacter) => void
 }
 
 export const CharacterItem = (props: CharacterItemProps) => {
-  const { character, status, size = 'md', selected, disabled, tooltip, className, onClick } = props
-  const hasLabel = size !== 'sm'
-  const sizeClass = (() => {
-    if (size === 'sm') return 'w-md-1'
-    if (size === 'md') return 'w-md-2'
-    if (size === 'lg') return 'w-md-4'
-    return ''
+  const {
+    character,
+    status,
+    size = 'md',
+    selected,
+    disabled,
+    tooltip,
+    labelTop,
+    labelBottom,
+    className,
+    onClick,
+  } = props
+  const hasName = size !== 'sm'
+
+  const classNames = ((): ClassNames => {
+    if (size === 'sm') return { size: 'w-md-1', name: '' }
+    if (size === 'md') return { size: 'w-md-2', name: 'py-px' }
+    if (size === 'lg') return { size: 'w-md-4', name: 'py-xs-0' }
+    return { size: '', name: '' }
   })()
+
+  const labelRootClass = cx('right-xs-1 absolute left-px z-10 flex')
+  const labelTextClass = cx(
+    'px-xs-1 py-xs-0 bg-color-white-alpha-15 max-w-full rounded-xs',
+    'text-size-xxs font-weight-md truncate leading-1',
+  )
 
   return (
     <Card
       state={disabled ? 'disabled' : selected ? 'selected' : 'active'}
       className={className}
-      tooltip={tooltip}
+      tooltip={tooltip || (size === 'sm' ? character.name : undefined)}
       classNames={{
-        surface: cx(hasLabel ? 'p-xs-0!' : 'p-px!'),
+        surface: cx(hasName ? 'p-xs-0!' : 'p-px!'),
         content: 'relative flex w-full flex-col',
       }}
       data-character-item
       onClick={() => onClick?.(character)}
     >
-      <CharacterAvatar character={character} status={status} className={sizeClass} />
-      {hasLabel && (
-        <div className={cx('translate-y-xs-0 text-size-xs truncate rounded-b-md text-center', sizeClass)}>
+      <span className="relative">
+        {labelTop && (
+          <span className={cx('top-px', labelRootClass)}>
+            <span className={cx(labelTextClass, 'rounded-tl-sm!')}>{labelTop}</span>
+          </span>
+        )}
+
+        <CharacterAvatar character={character} status={status} className={classNames.size} />
+
+        {labelBottom && (
+          <span className={cx('bottom-px', labelRootClass)}>
+            <span className={cx(labelTextClass, 'rounded-bl-sm!')}>{labelBottom}</span>
+          </span>
+        )}
+      </span>
+
+      {hasName && (
+        <span
+          className={cx(
+            'translate-y-xs-0 rounded-md',
+            'text-size-xs truncate text-center leading-1',
+            classNames.size,
+            classNames.name,
+          )}
+        >
           {character.name}
-        </div>
+        </span>
       )}
     </Card>
   )

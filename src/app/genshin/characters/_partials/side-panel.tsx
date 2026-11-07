@@ -54,7 +54,7 @@ export const SidePanel = (props: SideFiltersProps) => {
   ]
 
   const settingClass = cx('gap-xs-2 flex items-center justify-between')
-  const fieldClass = cx('w-md-6')
+  const fieldClass = cx('w-md-8')
 
   return (
     <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
@@ -62,15 +62,16 @@ export const SidePanel = (props: SideFiltersProps) => {
       <ViewListing viewType={viewType} viewOptions={viewOptions} onChangeView={onChangeView} />
 
       {/* VIEW SETTINGS */}
-      <PageSection title={t('general.label.viewSettings')} className="pb-sm-0" classNames={{ body: 'gap-xs-3' }}>
+      <PageSection title={t('general.label.viewSettings')} className="pb-sm-9" classNames={{ body: 'gap-xs-3' }}>
         {/* LABEL TOP */}
         <div className={settingClass}>
           <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
           <SelectField
             id="char-label-top"
-            size="sm"
             value={charLabelTop ?? ''}
             options={charLabelOptions}
+            size="xs"
+            clearable={Boolean(charLabelTop)}
             className={fieldClass}
             onChange={(value) => onChangeCharLabelTop(value ? (value as CharacterLabel) : null)}
           />
@@ -80,9 +81,11 @@ export const SidePanel = (props: SideFiltersProps) => {
           <span className="text-size-sm">{t('general.label.labelOnBottom')}</span>
           <SelectField
             id="char-label-bottom"
-            size="sm"
             value={charLabelBottom ?? ''}
             options={charLabelOptions}
+            size="xs"
+            clearable={Boolean(charLabelBottom)}
+
             className={fieldClass}
             onChange={(value) => onChangeCharLabelBottom(value ? (value as CharacterLabel) : null)}
           />
@@ -92,9 +95,9 @@ export const SidePanel = (props: SideFiltersProps) => {
           <span className="text-size-sm">{t('general.label.displaySize')}</span>
           <SelectField
             id="char-item-size"
-            size="sm"
             value={itemSize}
             options={itemSizeOptions}
+            size="xs"
             className={fieldClass}
             onChange={(value) => value && onChangeItemSize(value as ItemSize)}
           />

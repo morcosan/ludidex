@@ -53,7 +53,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
     <Card
       state={disabled ? 'disabled' : selected ? 'selected' : 'active'}
       className={className}
-      tooltip={tooltip}
+      tooltip={tooltip || (size === 'sm' ? character.name : undefined)}
       classNames={{
         surface: cx(hasName ? 'p-xs-0!' : 'p-px!'),
         content: 'relative flex w-full flex-col',

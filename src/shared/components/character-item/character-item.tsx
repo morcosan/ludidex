@@ -45,8 +45,8 @@ export const CharacterItem = (props: CharacterItemProps) => {
 
   const labelRootClass = cx('right-xs-1 absolute left-px z-10 flex')
   const labelTextClass = cx(
-    'px-xs-1 py-xs-0 bg-color-white max-w-full rounded-xs',
-    'text-size-xxs font-weight-lg truncate leading-1',
+    'px-xs-1 py-xs-0 bg-color-white-alpha-15 max-w-full rounded-xs',
+    'text-size-xxs font-weight-md truncate leading-1',
   )
 
   return (

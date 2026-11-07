@@ -91,9 +91,10 @@ export const CharacterListing = (props: CharacterListingProps) => {
   const getSortLabel = (character: GenshinCharacter): string | undefined => {
     if (!viewType.startsWith('sort-')) return undefined
 
-    const data = userData?.characters?.[character.id]
     const config = VIEW_CONFIGS[viewType as SortingViewType]
-    const value = config.getValue(character, data)
+    if (config.label === labelTop) return undefined
+
+    const value = config.getValue(character, userData?.characters?.[character.id])
     if (value === undefined) return undefined
 
     const formattedValue = config.formatValue(value)

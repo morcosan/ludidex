@@ -118,8 +118,8 @@
     "format": {
       "atk": "ATK: {value}",
       "baseAttack": "ATK: {value}",
-      "critDmg": "CRIT: {value}",
-      "critRate": "CRIT: {value}",
+      "critDmg": "CR-D: {value}",
+      "critRate": "CR-R: {value}",
       "def": "DEF: {value}",
       "em": "EM: {value}",
       "er": "ER: {value}",

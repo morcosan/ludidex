@@ -54,6 +54,7 @@ export const SidePanel = (props: SideFiltersProps) => {
   ]
 
   const settingClass = cx('gap-xs-2 flex items-center justify-between')
+  const fieldClass = cx('w-md-6')
 
   return (
     <div className={cx('px-xs-8 py-xs-4 gap-y-sm-5 flex flex-col', className)}>
@@ -70,7 +71,7 @@ export const SidePanel = (props: SideFiltersProps) => {
             size="sm"
             value={itemSize}
             options={itemSizeOptions}
-            className="w-md-4"
+            className={fieldClass}
             onChange={(value) => value && onChangeItemSize(value as ItemSize)}
           />
         </div>
@@ -82,7 +83,7 @@ export const SidePanel = (props: SideFiltersProps) => {
             size="sm"
             value={charLabelTop ?? ''}
             options={charLabelOptions}
-            className="w-md-4"
+            className={fieldClass}
             onChange={(value) => onChangeCharLabelTop(value ? (value as CharacterLabel) : null)}
           />
         </div>
@@ -94,7 +95,7 @@ export const SidePanel = (props: SideFiltersProps) => {
             size="sm"
             value={charLabelBottom ?? ''}
             options={charLabelOptions}
-            className="w-md-4"
+            className={fieldClass}
             onChange={(value) => onChangeCharLabelBottom(value ? (value as CharacterLabel) : null)}
           />
         </div>

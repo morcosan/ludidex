@@ -38,28 +38,12 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
   },
 
   setCharLabelTop(charLabelTop: CharacterLabel | null) {
-    set((state) => {
-      const userSettings = { ...state.userSettings }
-      if (charLabelTop === null) {
-        delete userSettings.charLabelTop
-      } else {
-        userSettings.charLabelTop = charLabelTop
-      }
-      return { userSettings: UserSettingsSchema.parse(userSettings) }
-    })
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelTop }) }))
     get().saveUserSettings()
   },
 
   setCharLabelBottom(charLabelBottom: CharacterLabel | null) {
-    set((state) => {
-      const userSettings = { ...state.userSettings }
-      if (charLabelBottom === null) {
-        delete userSettings.charLabelBottom
-      } else {
-        userSettings.charLabelBottom = charLabelBottom
-      }
-      return { userSettings: UserSettingsSchema.parse(userSettings) }
-    })
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, charLabelBottom }) }))
     get().saveUserSettings()
   },
 

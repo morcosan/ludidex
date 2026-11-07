@@ -40,6 +40,7 @@ export const SidePanel = (props: SideFiltersProps) => {
   ]
 
   const charLabelOptions: SelectOption<CharacterLabel | ''>[] = [
+    { value: '', label: '--' },
     { value: 'rating', label: t('general.label.rating') },
     { value: 'status', label: t('general.label.status') },
     { value: 'level', label: t('game.label.level') },
@@ -50,7 +51,6 @@ export const SidePanel = (props: SideFiltersProps) => {
     { value: 'er', label: t('game.stats.er') },
     { value: 'critRate', label: t('game.stats.critRate') },
     { value: 'critDmg', label: t('game.stats.critDmg') },
-    { value: '', label: '--' },
   ]
 
   const settingClass = cx('gap-xs-2 flex items-center justify-between')
@@ -63,18 +63,6 @@ export const SidePanel = (props: SideFiltersProps) => {
 
       {/* VIEW SETTINGS */}
       <PageSection title={t('general.label.viewSettings')} className="pb-sm-0" classNames={{ body: 'gap-xs-3' }}>
-        {/* DISPLAY SIZE */}
-        <div className={settingClass}>
-          <span className="text-size-sm">{t('general.label.displaySize')}</span>
-          <SelectField
-            id="char-item-size"
-            size="sm"
-            value={itemSize}
-            options={itemSizeOptions}
-            className={fieldClass}
-            onChange={(value) => value && onChangeItemSize(value as ItemSize)}
-          />
-        </div>
         {/* LABEL TOP */}
         <div className={settingClass}>
           <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
@@ -97,6 +85,18 @@ export const SidePanel = (props: SideFiltersProps) => {
             options={charLabelOptions}
             className={fieldClass}
             onChange={(value) => onChangeCharLabelBottom(value ? (value as CharacterLabel) : null)}
+          />
+        </div>
+        {/* DISPLAY SIZE */}
+        <div className={settingClass}>
+          <span className="text-size-sm">{t('general.label.displaySize')}</span>
+          <SelectField
+            id="char-item-size"
+            size="sm"
+            value={itemSize}
+            options={itemSizeOptions}
+            className={fieldClass}
+            onChange={(value) => value && onChangeItemSize(value as ItemSize)}
           />
         </div>
       </PageSection>

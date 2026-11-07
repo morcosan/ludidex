@@ -118,13 +118,14 @@
     "format": {
       "atk": "ATK: {value}",
       "baseAttack": "ATK: {value}",
-      "critDmg": "CR-D: {value}",
-      "critRate": "CR-R: {value}",
+      "critDmg": "CRD: {value}",
+      "critRate": "CRR: {value}",
       "def": "DEF: {value}",
       "em": "EM: {value}",
       "er": "ER: {value}",
       "hp": "HP: {value}",
-      "level": "Lv: {value}"
+      "level": "Lv: {value}",
+      "rating": "{value} - {label}"
     },
     "placeholder": {
       "tags": "Tag, tag..."

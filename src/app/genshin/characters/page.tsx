@@ -78,6 +78,8 @@ export default function Page() {
           characters={characters}
           viewType={viewType}
           itemSize={charItemSize}
+          labelTop={charLabelTop}
+          labelBottom={charLabelBottom}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
           onClickItem={handleClickCharacter}

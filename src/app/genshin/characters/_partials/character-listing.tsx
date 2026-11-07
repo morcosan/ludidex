@@ -1,8 +1,10 @@
 import { CharacterItem } from '@app-shared/components'
 import { type GenshinCharacter } from '@app-shared/data/genshin'
-import { type ItemSize } from '@app-shared/state/types'
+import { RATING_LABELS, type RatingValue } from '@app-shared/data/settings'
+import { type CharacterLabel, type ItemSize } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type ViewType } from '@app-shared/utils/use-view-options'
+import { formatInteger, formatPercent } from '@app-shared/utils/various'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
 import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from './config'
@@ -32,14 +34,18 @@ interface CharacterListingProps extends ReactProps {
   characters: GenshinCharacter[]
   viewType: CharacterViewType
   itemSize: ItemSize
+  labelTop: CharacterLabel | null
+  labelBottom: CharacterLabel | null
   selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, viewType, itemSize, selectedItemId, className, onClickItem } = props
+  const { characters, viewType, itemSize, labelTop, labelBottom, selectedItemId, className, onClickItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
+  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
 
   const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
@@ -60,7 +66,29 @@ export const CharacterListing = (props: CharacterListingProps) => {
     return undefined
   }
 
-  const getLabelBottom = (character: GenshinCharacter): string | undefined => {
+  const getLabel = (character: GenshinCharacter, label: CharacterLabel | null): string | undefined => {
+    if (!label) return undefined
+
+    const data = userData?.characters?.[character.id]
+
+    if (label === 'status') return data?.status ? t(`game.label.${data.status}`) : undefined
+    if (label === 'rating')
+      return data?.rating
+        ? t('game.format.rating', {
+            value: data.rating,
+            label: ratingLabels[data.rating as RatingValue],
+          })
+        : undefined
+
+    const value = data?.stats?.[label]
+    if (value === undefined) return undefined
+
+    const isPercent = label === 'er' || label === 'critRate' || label === 'critDmg'
+    const formatted = isPercent ? formatPercent(value) : formatInteger(value)
+    return t(`game.format.${label}`, { value: formatted })
+  }
+
+  const getSortLabel = (character: GenshinCharacter): string | undefined => {
     if (!viewType.startsWith('sort-')) return undefined
 
     const data = userData?.characters?.[character.id]
@@ -86,7 +114,8 @@ export const CharacterListing = (props: CharacterListingProps) => {
         character={character}
         status={userData?.characters?.[character.id]?.status}
         size={itemSize}
-        labelBottom={getLabelBottom(character)}
+        labelTop={getLabel(character, labelTop)}
+        labelBottom={labelBottom ? getLabel(character, labelBottom) : getSortLabel(character)}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />

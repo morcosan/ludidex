@@ -18,7 +18,12 @@
       "grep *": "allow",
       "head": "allow",
       "head *": "allow",
-      "pnpm lint-code": "allow"
+      "pnpm lint-code": "allow",
+      "git status": "allow",
+      "git status *": "allow",
+      "git log": "allow",
+      "git log *": "allow",
+      "git log *--output*": "deny"
     }
   }
 }

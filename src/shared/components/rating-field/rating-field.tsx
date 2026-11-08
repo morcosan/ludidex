@@ -1,5 +1,5 @@
-import { type RatingLabels } from '@app-shared/state/types'
 import { RATING_VALUES, type RatingValue } from '../../data/settings'
+import { type RatingLabels } from '../../state/types'
 import { useFieldBase } from '../_shared/use-field-base'
 import { RatingIcon } from '../rating-icon/rating-icon'
 

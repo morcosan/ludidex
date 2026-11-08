@@ -1,7 +1,8 @@
-import { RatingField, StatusField } from '@app-shared/components'
-import { type CharacterStatus, RATING_LABELS, type RatingValue } from '@app-shared/data/settings'
-import type { UserPrefs } from '@app-shared/state/types'
 import { type ReactNode } from 'react'
+import { type CharacterStatus, RATING_LABELS, type RatingValue } from '../../data/settings'
+import { type UserPrefs } from '../../state/types'
+import { RatingField } from '../rating-field/rating-field'
+import { StatusField } from '../status-field/status-field'
 
 interface CardBannerProps {
   banner?: ReactNode

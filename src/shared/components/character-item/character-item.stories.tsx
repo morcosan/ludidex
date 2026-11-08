@@ -15,6 +15,7 @@ const meta: Meta = {
       tooltip: '',
       labelTop: '',
       labelBottom: '',
+      slotDigit: '',
     },
     events: ['onClick'],
     inlineRadios: ['status', 'size'],

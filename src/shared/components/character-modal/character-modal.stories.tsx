@@ -21,6 +21,7 @@ const meta: Meta = {
           alyosha: { status: 'pulling' },
         },
       },
+      userSettings: null,
       selection: {
         slots: [GENSHIN_CHARACTERS_BY_ID['sandrone'], null, GENSHIN_CHARACTERS_BY_ID['vodyanitsa'], null],
         index: 1,
@@ -28,7 +29,7 @@ const meta: Meta = {
       className: '',
     },
     events: ['onSelect', 'onChangeSlot', 'onClose'],
-    clearDefaults: ['title', 'userData', 'selection'],
+    clearDefaults: ['title', 'userData', 'userSettings', 'selection'],
 
     render: (props: CharacterModalProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks

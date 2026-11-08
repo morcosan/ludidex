@@ -90,7 +90,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
           )}
         >
           {isNameSticky && (
-            <CharacterAvatar character={character} className="top-xs-4 left-xs-4 h-sm-0 w-sm-0 absolute!" />
+            <CharacterAvatar character={character} className="top-xs-5 left-xs-4 h-sm-0 w-sm-0 absolute!" />
           )}
           <h3 className="text-size-xl font-weight-lg h-field-h-md flex items-center">{character.name}</h3>
         </div>
@@ -155,7 +155,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
           />
 
           {/* STATS */}
-          {statSections.map(({ label: sectionLabel, path, rows }) => (
+          {statSections.map(({ label: sectionLabel, rows, path, mono }) => (
             <CardSection
               key={sectionLabel}
               title={sectionLabel}
@@ -168,11 +168,14 @@ export const CharacterCard = (props: CharacterCardProps) => {
                       size="xs"
                       value={getStatValue(path, field)}
                       suffix={percent && <span className="text-size-xs text-color-text-placeholder mr-xs-2">%</span>}
-                      className="w-md-1"
+                      className="w-md-1 [&_input]:font-family-mono"
                       onChange={(value) => handleStatChange(path, field, value)}
                     />
                   ) : (
-                    <span className="text-size-sm font-weight-lg pr-xs-0">{value}</span>
+                    <span className="text-size-sm font-weight-md pr-xs-0">
+                      <span className={cx(mono && value !== '--' && 'font-family-mono')}>{value}</span>
+                      {percent && value !== '--' && <span className="ml-px">%</span>}
+                    </span>
                   ),
               }))}
             />

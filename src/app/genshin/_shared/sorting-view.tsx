@@ -1,4 +1,4 @@
-import { roundValue } from '@app-shared/utils/various'
+import { formatInteger, roundValue } from '@app-shared/utils/various'
 import { Fragment, type ReactNode } from 'react'
 
 interface SortGroup<T> {
@@ -16,18 +16,18 @@ interface SortingViewProps<T> {
   items: T[]
   itemsPool: T[]
   valueStep: number
+  percent: boolean
   emptyText: ReactNode
   classNames: {
     row: string
     content: string
   }
   getValue: (item: T) => number | undefined
-  formatValue: (value: number, compact?: boolean) => string
   renderItem: (item: T) => ReactNode
 }
 
 export const SortingView = <T,>(props: SortingViewProps<T>) => {
-  const { items, itemsPool, valueStep, formatValue, emptyText, classNames, getValue, renderItem } = props
+  const { items, itemsPool, valueStep, percent, emptyText, classNames, getValue, renderItem } = props
 
   const sortedPool = itemsPool
     .map((item): SortedItem<T> | undefined => {
@@ -62,7 +62,10 @@ export const SortingView = <T,>(props: SortingViewProps<T>) => {
 
   const renderLabel = (value: number, key: string) => (
     <div key={key} className={cx('pr-xs-6 relative flex items-center justify-end', labelWrapperClass)}>
-      <span className="text-size-sm">{formatValue(value, true)}</span>
+      <span className="text-size-sm pr-xs-0">
+        <span className="font-family-mono">{formatInteger(value, valueStep >= 1_000)}</span>
+        {percent && <span className="ml-px">%</span>}
+      </span>
       <span className="bg-color-border-on-glass w-xs-3 absolute top-1/2 right-0 h-px" />
     </div>
   )

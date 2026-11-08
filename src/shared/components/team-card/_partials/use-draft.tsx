@@ -6,7 +6,7 @@ import { formatUserInput, parseTags } from '../../../utils/various'
 import { type TeamCardProps } from '../_types'
 
 interface TeamDraft {
-  charIds: Array<string | null>
+  charIds: (string | null)[]
   name: string
   rating?: RatingValue
   tags: string
@@ -30,9 +30,9 @@ const buildTeamData = (draft: TeamDraft): GenshinTeamUserData => {
 }
 
 export const useDraft = (props: TeamCardProps) => {
-  const { team, onSave } = props
+  const { team, editing, onSave } = props
   const [draft, setDraft] = useState<TeamDraft>(() => createDraft(team))
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(Boolean(editing))
 
   const characterIds = [...new Set(draft.charIds.filter((id) => id !== null))]
   const hasFieldChanges = !isEqual(buildTeamData(draft), buildTeamData(createDraft(team)))
@@ -84,9 +84,9 @@ export const useDraft = (props: TeamCardProps) => {
   }
 
   useEffect(() => {
-    setIsEditing(false)
+    setIsEditing(Boolean(editing))
     setDraft(createDraft(team))
-  }, [team])
+  }, [team, editing])
 
   return {
     draft,

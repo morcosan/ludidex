@@ -146,9 +146,6 @@
       "normalAttack": "Normal Attack",
       "normalAttackDmg": "Normal Attack DMG",
       "specialBonus": "Special Bonus"
-    },
-    "status": {
-      "alreadySelected": "Already selected"
     }
   },
   "marketing": {

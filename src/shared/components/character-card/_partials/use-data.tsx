@@ -14,14 +14,13 @@ export const useData = (props: CharacterCardProps) => {
   const { t } = useTranslation()
 
   const buildStatRows = <T extends object>(data: T, fields: Record<keyof T, StatField>): StatRow[] => {
-    const formatValue = (value?: unknown, suffix = '') => {
+    const formatValue = (value?: unknown): string => {
       if (value === undefined) return '--'
-      const formatted = typeof value === 'number' ? value.toLocaleString('en-US', { maximumFractionDigits: 1 }) : value
-      return `${formatted}${suffix}`
+      return typeof value === 'number' ? value.toLocaleString('en-US', { maximumFractionDigits: 1 }) : String(value)
     }
 
     return Object.entries(fields as Record<string, StatField>).map(([field, { label, percent }]) => {
-      return { label, field, percent, value: formatValue(data[field as keyof T], percent ? '%' : '') }
+      return { label, field, percent, value: formatValue(data[field as keyof T]) }
     })
   }
   const talentFields: Record<keyof GenshinTalents, StatField> = {
@@ -52,13 +51,15 @@ export const useData = (props: CharacterCardProps) => {
   const statSections: StatSection[] = [
     {
       label: t('game.label.talents'),
-      path: 'talents',
       rows: buildStatRows(userData?.talents || {}, talentFields),
+      path: 'talents',
+      mono: true,
     },
     {
       label: t('game.label.stats'),
-      path: 'stats',
       rows: buildStatRows(userData?.stats || {}, statFields),
+      path: 'stats',
+      mono: true,
     },
     {
       label: t('game.label.baseStats'),

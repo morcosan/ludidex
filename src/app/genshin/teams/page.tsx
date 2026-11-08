@@ -26,7 +26,8 @@ export default function Page() {
   }, [teamData])
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const teamItemSize = useUserSettingsStore((state) => state.userSettings?.teamItemSize ?? 'md')
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const teamItemSize = userSettings?.teamItemSize ?? 'md'
   const setTeamItemSize = useUserSettingsStore((state) => state.setTeamItemSize)
   const { filters, handleFiltersChange } = useFilterParams(TEAM_FILTERS)
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
@@ -43,6 +44,7 @@ export default function Page() {
   })
 
   const previewTeam = [...userTeams, ...emptyTeams].find((team) => team.id === previewTeamId)
+  const isEmptyPreview = emptyTeams.some((team) => team.id === previewTeamId)
   const currTeams = [...filterTeamsByChars(userTeams, filters), ...emptyTeams]
   const filtersCount = filters.elements.length + filters.weapons.length + filters.nations.length
 
@@ -148,7 +150,9 @@ export default function Page() {
               team={previewTeam}
               userData={gameData}
               userPrefs={userPrefs}
+              userSettings={userSettings}
               opened={isPreviewOpen}
+              editing={isEmptyPreview}
               className="h-full"
               onSave={handleSaveTeam}
               onClose={handleClosePreview}

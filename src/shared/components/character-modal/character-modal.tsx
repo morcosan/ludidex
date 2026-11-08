@@ -3,12 +3,13 @@ import { XIcon } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_CHARACTERS, type GenshinCharacter } from '../../data/genshin'
-import { type GenshinUserData } from '../../state/types'
+import { type GenshinUserData, type UserPrefs, type UserSettings } from '../../state/types'
+import { useCharacterLabel } from '../../utils/use-character-label'
 import { CharacterItem } from '../character-item/character-item'
 import { EMPTY_FILTERS, FiltersBar, type FiltersBarValue } from '../filters-bar/filters-bar'
 
 export interface CharacterModalSelection {
-  slots: Array<GenshinCharacter | null>
+  slots: (GenshinCharacter | null)[]
   index: number
 }
 
@@ -19,6 +20,8 @@ export interface CharacterModalProps extends ReactProps {
   // Props
   opened: boolean
   userData?: GenshinUserData
+  userPrefs?: UserPrefs
+  userSettings?: UserSettings | null
   selection?: CharacterModalSelection
   className?: string
 
@@ -29,9 +32,11 @@ export interface CharacterModalProps extends ReactProps {
 }
 
 export const CharacterModal = (props: CharacterModalProps) => {
-  const { opened, title, userData, selection, className, onSelect, onChangeSlot, onClose } = props
+  const { opened, title, userData, userPrefs, userSettings, selection, className } = props
+  const { onSelect, onChangeSlot, onClose } = props
   const { t } = useTranslation()
   const [filters, setFilters] = useState<FiltersBarValue>(EMPTY_FILTERS)
+  const { getLabel } = useCharacterLabel({ userData, userPrefs })
 
   const characters = GENSHIN_CHARACTERS.filter((character) => {
     return (
@@ -42,7 +47,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
   }).sort((characterA, characterB) => characterA.name.localeCompare(characterB.name))
 
   const isSlotSelected = (slotIndex: number) => selection?.index === slotIndex
-  const isCharSelected = (char: GenshinCharacter) => selection?.slots.some((slot) => slot?.id === char.id)
+  const getCharSlotIndex = (char: GenshinCharacter) => selection?.slots.findIndex((slot) => slot?.id === char.id) ?? -1
 
   const onClickSlot = (slotIndex: number) => {
     if (isSlotSelected(slotIndex)) return
@@ -50,6 +55,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
   }
 
   const onClickOption = (character: GenshinCharacter) => {
+    if (getCharSlotIndex(character) > -1) return
     selection ? onSelect?.(character, selection.index) : onSelect?.(character)
   }
 
@@ -90,7 +96,12 @@ export const CharacterModal = (props: CharacterModalProps) => {
                     classNames={{ surface: 'p-px!' }}
                     onClick={() => onClickSlot(index)}
                   >
-                    <div className="w-md-1 bg-color-grey-5 aspect-square rounded-md" />
+                    <div
+                      className={cx(
+                        'w-md-1 aspect-square rounded-md',
+                        isSlotSelected(index) ? 'bg-color-black-alpha-3' : 'bg-color-black-alpha-5',
+                      )}
+                    />
                   </Card>
                 )}
               </li>
@@ -102,18 +113,23 @@ export const CharacterModal = (props: CharacterModalProps) => {
 
         <div className="min-h-0 flex-1 overflow-y-auto">
           <ul className="gap-xs-3 py-xs-0 flex flex-wrap">
-            {characters.map((character) => (
-              <li key={character.id}>
-                <CharacterItem
-                  character={character}
-                  status={userData?.characters?.[character.id]?.status}
-                  disabled={isCharSelected(character)}
-                  tooltip={isCharSelected(character) ? t('game.status.alreadySelected') : undefined}
-                  size="sm"
-                  onClick={onClickOption}
-                />
-              </li>
-            ))}
+            {characters.map((character) => {
+              const slotIndex = getCharSlotIndex(character)
+              return (
+                <li key={character.id} className="relative">
+                  <CharacterItem
+                    character={character}
+                    status={userData?.characters?.[character.id]?.status}
+                    selected={slotIndex > -1}
+                    slotDigit={slotIndex > -1 ? String(slotIndex + 1) : undefined}
+                    labelTop={getLabel(character, userSettings?.charLabelTop || null)}
+                    labelBottom={getLabel(character, userSettings?.charLabelBottom || null)}
+                    size="sm"
+                    onClick={onClickOption}
+                  />
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>

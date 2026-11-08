@@ -1,10 +1,10 @@
-import { formatUserInput } from '@app-shared/utils/various'
 import { Card, TextField } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data/genshin'
 import { packTeamId } from '../../state/types'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
+import { formatUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
 import { CardSection } from '../_shared/card-section'
@@ -19,7 +19,7 @@ import { type TeamCardProps } from './_types'
 export { type TeamCardProps }
 
 export const TeamCard = (props: TeamCardProps) => {
-  const { team, userData, userPrefs, opened = true, className, onClose, onDelete } = props
+  const { team, userData, userPrefs, userSettings, opened = true, className, onClose, onDelete } = props
   const { t } = useTranslation()
   const {
     draft,
@@ -84,6 +84,20 @@ export const TeamCard = (props: TeamCardProps) => {
 
   const handleSelectMember = (character: GenshinCharacter | null, slotIndex: number = memberIndex) => {
     handleMemberChange(slotIndex, character?.id || null)
+
+    if (character) {
+      const updatedSlots = Object.assign([...members], { [slotIndex]: character })
+      const nextSlotIndex = getNextSlotIndex(updatedSlots, slotIndex)
+      setMemberIndex(nextSlotIndex ?? slotIndex)
+    }
+  }
+
+  const getNextSlotIndex = (slots: (object | null)[], slotIndex: number): number | undefined => {
+    for (let i = 1; i < slots.length; i++) {
+      const index = (slotIndex + i) % slots.length
+      const isEmpty = !slots[index]
+      if (isEmpty) return index
+    }
   }
 
   const handleClickSave = () => {
@@ -204,6 +218,8 @@ export const TeamCard = (props: TeamCardProps) => {
         opened={isCharModalOpen}
         title={t('general.action.selectTeamMembers')}
         userData={userData}
+        userPrefs={userPrefs}
+        userSettings={userSettings}
         selection={memberSelection}
         onSelect={handleSelectMember}
         onChangeSlot={setMemberIndex}

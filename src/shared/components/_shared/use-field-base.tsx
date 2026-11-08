@@ -58,7 +58,7 @@ export const useFieldBase = <T extends string | number>(props: UseFieldBaseProps
     return (
       <div className={cx('h-field-h-xs flex max-w-full items-center', iconPos === 'right' && 'justify-end', className)}>
         {value && iconPos === 'left' && renderIcon?.(value, 'mr-xs-1')}
-        <span className={cx(labelClassName, 'font-weight-lg')}>{label}</span>
+        <span className={cx(labelClassName, 'font-weight-md')}>{label}</span>
         {value && iconPos === 'right' && renderIcon?.(value, 'ml-xs-1')}
       </div>
     )

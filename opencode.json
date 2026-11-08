@@ -26,7 +26,12 @@
       "git log *--output*": "deny",
       "git show": "allow",
       "git show *": "allow",
-      "git show *--output*": "deny"
+      "git show *--output*": "deny",
+      "git diff": "allow",
+      "git diff *": "allow",
+      "git diff *--output*": "deny",
+      "git diff *--no-index*": "deny",
+      "git diff *--ext-diff*": "deny"
     }
   }
 }

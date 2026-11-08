@@ -16,10 +16,13 @@ const meta: Meta = {
       userPrefs: {
         ratingLabels: {},
       },
+      userSettings: null,
       opened: true,
+      editing: false,
       className: 'bg-color-white w-xl-0 h-xl-8',
     },
     events: ['onClose', 'onSave', 'onDelete'],
+    clearDefaults: ['team', 'userPrefs', 'userSettings'],
   }),
 }
 
@@ -27,5 +30,16 @@ const Default: StoryObj<typeof TeamCard> = {
   tags: ['autodocs', 'controls'],
 }
 
+const NewTeam: StoryObj<typeof TeamCard> = {
+  args: {
+    team: {
+      id: 'empty-team-0',
+      name: '',
+      charIds: [],
+    },
+    editing: true,
+  },
+}
+
 export default meta
-export { Default }
+export { Default, NewTeam }

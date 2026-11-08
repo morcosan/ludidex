@@ -22,8 +22,9 @@ export interface StatRow {
 
 export interface StatSection {
   label: string
-  path?: StatSectionPath
   rows: StatRow[]
+  path?: StatSectionPath
+  mono?: boolean
 }
 
 export interface StatField {

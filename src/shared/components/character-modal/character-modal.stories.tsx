@@ -3,6 +3,7 @@ import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data/genshin'
+import { type UserSettings } from '../../state/types'
 import { CharacterModal, type CharacterModalProps, type CharacterModalSelection } from './character-modal'
 
 const meta: Meta = {
@@ -28,7 +29,7 @@ const meta: Meta = {
       },
       className: '',
     },
-    events: ['onSelect', 'onChangeSlot', 'onClose'],
+    events: ['onSelect', 'onChangeSlot', 'onChangeSettings', 'onClose'],
     clearDefaults: ['title', 'userData', 'userSettings', 'selection'],
 
     render: (props: CharacterModalProps) => {
@@ -36,6 +37,8 @@ const meta: Meta = {
       const [opened, setOpened] = useState(props.opened)
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selection, setSelection] = useState<CharacterModalSelection | undefined>(props.selection)
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [userSettings, setUserSettings] = useState<UserSettings | null>(props.userSettings ?? null)
 
       const handleSelect = (character: GenshinCharacter | null, slotIndex?: number) => {
         if (slotIndex !== undefined) {
@@ -64,6 +67,11 @@ const meta: Meta = {
         setSelection(props.selection)
       }, [props.selection])
 
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        setUserSettings(props.userSettings ?? null)
+      }, [props.userSettings])
+
       return (
         <>
           <Button variant="default" onClick={() => setOpened(true)}>
@@ -74,8 +82,10 @@ const meta: Meta = {
             {...props}
             opened={opened}
             selection={selection}
+            userSettings={userSettings}
             onSelect={handleSelect}
             onChangeSlot={handleChangeSlot}
+            onChangeSettings={setUserSettings}
             onClose={() => {
               setOpened(false)
               props.onClose?.()

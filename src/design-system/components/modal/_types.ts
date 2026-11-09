@@ -34,6 +34,7 @@ export interface ModalProps extends HtmlDataProps {
   noClose?: boolean
   /** Flag for hiding the footer */
   noFooter?: boolean
+  classNames?: { body?: string }
 
   /**
    * Events

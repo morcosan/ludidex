@@ -6,16 +6,18 @@ const meta: Meta = {
   title: 'App / Components / Page Section',
   ...defineMeta(PageSection, {
     slots: {
-      children: 'Section content',
+      children: 'Content',
+      actions: 'Actions',
     },
     props: {
-      title: 'Section title',
+      title: 'Title',
       surface: 'glass',
-      className: '',
-      classNames: { title: '', body: '' },
+      className: 'w-lg-9',
+      classNames: { header: '', body: '' },
       style: {},
     },
     inlineRadios: ['surface'],
+    clearDefaults: ['title'],
   }),
 }
 

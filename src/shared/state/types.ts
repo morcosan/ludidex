@@ -1,13 +1,13 @@
 import { RATING_LABELS, TIER_LIST_LABELS } from '@app-shared/data/settings'
 import { z } from 'zod'
 import {
-  type GenshinCharacter_v1,
-  type GenshinTeam_v1,
-  USER_DATA_VERSION_V1,
-  UserDataSchema_v1,
-  packTeamId,
-  unpackTeamId,
-} from './versions/schema_v1'
+  type GenshinCharacter_v0,
+  type GenshinTeam_v0,
+  USER_DATA_VERSION_V0,
+  UserDataSchema_v0,
+  packTeamId_v0,
+  unpackTeamId_v0,
+} from './versions/schema_v0'
 
 const ItemSizeSchema = z.enum(['sm', 'md', 'lg'])
 const CharacterLabelSchema = z.enum([
@@ -29,13 +29,13 @@ const UserSettingsSchema = z.object({
   teamItemSize: ItemSizeSchema.default('md'),
 })
 
-type UserData = z.infer<typeof UserDataSchema_v1>
+type UserData = z.infer<typeof UserDataSchema_v0>
 type UserPrefs = UserData['preferences']
 type RatingLabels = Record<keyof typeof RATING_LABELS, string>
 type TierListLabels = Record<keyof typeof TIER_LIST_LABELS, string>
 type GenshinUserData = UserData['genshin']
-type GenshinCharacterUserData = GenshinCharacter_v1
-type GenshinTeamUserData = GenshinTeam_v1
+type GenshinCharacterUserData = GenshinCharacter_v0
+type GenshinTeamUserData = GenshinTeam_v0
 type CharacterLabel = z.infer<typeof CharacterLabelSchema>
 type ItemSize = z.infer<typeof ItemSizeSchema>
 type UserSettings = z.infer<typeof UserSettingsSchema>
@@ -45,7 +45,9 @@ interface GenshinTeam extends GenshinTeamUserData {
   charIds: string[]
 }
 
-const EMPTY_USER_DATA: UserData = { version: USER_DATA_VERSION_V1 }
+const EMPTY_USER_DATA: UserData = { version: USER_DATA_VERSION_V0 }
+const packTeamId = packTeamId_v0
+const unpackTeamId = unpackTeamId_v0
 
 export {
   EMPTY_USER_DATA,

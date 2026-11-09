@@ -29,11 +29,11 @@ export const SidePanel = (props: SideFiltersProps) => {
       {/* VIEW TYPES */}
       <ViewListing viewType={viewType} viewOptions={viewOptions} onChangeView={onChangeView} />
 
-      {/* VIEW SETTINGS */}
-      <PageSection title={t('general.label.viewSettings')} className="min-h-md-5">
-        {/* DISPLAY SIZE */}
+      {/* APPEARANCE */}
+      <PageSection title={t('general.label.appearance')} className="min-h-md-5">
+        {/* ITEM SIZE */}
         <div className="gap-xs-2 flex items-center justify-between">
-          <span className="text-size-sm">{t('general.label.displaySize')}</span>
+          <span className="text-size-sm">{t('general.label.itemSize')}</span>
           <SelectField
             id="teams-item-size"
             size="sm"

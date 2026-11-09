@@ -18,6 +18,7 @@ const meta: Meta = {
       noDismiss: false,
       noClose: false,
       noFooter: false,
+      classNames: { body: '' },
     },
     events: ['onOpened', 'onClose', 'onClosed'],
     inlineRadios: ['width', 'height'],

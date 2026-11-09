@@ -18,8 +18,7 @@ export interface FiltersBarValue {
   nations: GenshinNation[]
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const EMPTY_FILTERS: FiltersBarValue = { elements: [], weapons: [], nations: [] }
+const EMPTY_FILTERS: FiltersBarValue = { elements: [], weapons: [], nations: [] }
 
 export interface FiltersBarProps extends ReactProps {
   value: FiltersBarValue

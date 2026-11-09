@@ -29,6 +29,7 @@ export default function Page() {
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const teamItemSize = userSettings?.teamItemSize ?? 'md'
   const setTeamItemSize = useUserSettingsStore((state) => state.setTeamItemSize)
+  const setUserSettings = useUserSettingsStore((state) => state.setUserSettings)
   const { filters, handleFiltersChange } = useFilterParams(TEAM_FILTERS)
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -133,7 +134,7 @@ export default function Page() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="min-w-xl-0 mx-xs-3 relative h-full">
+      <div className="min-w-character-card mx-xs-3 relative h-full">
         <SidePanel
           itemSize={teamItemSize}
           viewType={viewType}
@@ -157,6 +158,7 @@ export default function Page() {
               onSave={handleSaveTeam}
               onClose={handleClosePreview}
               onDelete={handleDeleteTeam}
+              onChangeSettings={setUserSettings}
             />
           )}
         </PreviewDrawer>

@@ -10,4 +10,5 @@ export interface TeamCardProps extends ReactProps {
   onClose?: () => void
   onSave?: (team: GenshinTeam) => void
   onDelete?: (team: GenshinTeam) => void
+  onChangeSettings?: (userSettings: UserSettings) => void
 }

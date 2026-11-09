@@ -1,7 +1,8 @@
-import { CHARACTER_STATUSES, RATING_LABELS, TIER_LIST_LABELS, TIER_LIST_VALUES } from '@app-shared/data/settings'
 import { z } from 'zod'
+import { GENSHIN_CHARACTER_IDS } from '../../data/genshin'
+import { CHARACTER_STATUSES, RATING_LABELS, TIER_LIST_LABELS, TIER_LIST_VALUES } from '../../data/settings'
 
-const USER_DATA_VERSION_V0 = 'v1.2'
+const USER_DATA_VERSION_V0 = 'v0.4'
 
 const GenshinCharacterSchema_v0 = z.object({
   rating: z.number().optional(),
@@ -40,11 +41,36 @@ const GenshinCharacterSchema_v0 = z.object({
   tags: z.array(z.string()).optional(),
 })
 
+const unpackTeamId_v0 = (id: string): string[] => id.split('_')
+const packTeamId_v0 = (charIds: string[]): string => charIds.join('_')
+
+const GenshinTeamSchema_v0 = z.object({
+  name: z.string(),
+  rating: z.number().optional(),
+  tags: z.array(z.string()).optional(),
+})
+
+const GenshinTeamsSchema_v0 = z.record(z.string(), GenshinTeamSchema_v0).superRefine((teams, ctx) => {
+  for (const teamId of Object.keys(teams)) {
+    const characterIds = unpackTeamId_v0(teamId)
+    if (characterIds.length < 1 || characterIds.length > 4) {
+      ctx.addIssue({ code: 'custom', message: 'Teams must contain between one and four character IDs', path: [teamId] })
+    }
+    if (characterIds.some((id) => !GENSHIN_CHARACTER_IDS.includes(id))) {
+      ctx.addIssue({ code: 'custom', message: 'Team keys must contain valid character IDs', path: [teamId] })
+    }
+    if (new Set(characterIds).size !== characterIds.length) {
+      ctx.addIssue({ code: 'custom', message: 'Team character IDs must be unique', path: [teamId] })
+    }
+  }
+})
+
 const UserDataSchema_v0 = z.object({
   version: z.literal(USER_DATA_VERSION_V0),
   genshin: z
     .object({
-      characters: z.record(z.string(), GenshinCharacterSchema_v0),
+      characters: z.record(z.string(), GenshinCharacterSchema_v0).optional(),
+      teams: GenshinTeamsSchema_v0.optional(),
     })
     .optional(),
   preferences: z
@@ -60,5 +86,15 @@ const UserDataSchema_v0 = z.object({
 })
 
 type UserData_v0 = z.infer<typeof UserDataSchema_v0>
+type GenshinCharacter_v0 = z.infer<typeof GenshinCharacterSchema_v0>
+type GenshinTeam_v0 = z.infer<typeof GenshinTeamSchema_v0>
 
-export { UserDataSchema_v0, type UserData_v0 }
+export {
+  packTeamId_v0,
+  unpackTeamId_v0,
+  USER_DATA_VERSION_V0,
+  UserDataSchema_v0,
+  type GenshinCharacter_v0,
+  type GenshinTeam_v0,
+  type UserData_v0,
+}

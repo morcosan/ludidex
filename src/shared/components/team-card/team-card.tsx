@@ -19,7 +19,17 @@ import { type TeamCardProps } from './_types'
 export { type TeamCardProps }
 
 export const TeamCard = (props: TeamCardProps) => {
-  const { team, userData, userPrefs, userSettings, opened = true, className, onClose, onDelete } = props
+  const {
+    team,
+    userData,
+    userPrefs,
+    userSettings,
+    opened = true,
+    className,
+    onClose,
+    onChangeSettings,
+    onDelete,
+  } = props
   const { t } = useTranslation()
   const {
     draft,
@@ -121,7 +131,7 @@ export const TeamCard = (props: TeamCardProps) => {
   }
 
   return (
-    <Card className={cx('w-xl-0', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
+    <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
         <CardBanner
@@ -223,6 +233,7 @@ export const TeamCard = (props: TeamCardProps) => {
         selection={memberSelection}
         onSelect={handleSelectMember}
         onChangeSlot={setMemberIndex}
+        onChangeSettings={onChangeSettings}
         onClose={() => {
           setIsCharModalOpen(false)
           setHasChangedMembers(true)

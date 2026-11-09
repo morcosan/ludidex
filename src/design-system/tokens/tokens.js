@@ -401,6 +401,7 @@ export default {
     'modal-md': { $value: '{spacing.xl-9}' },
     'modal-lg': { $value: '{spacing.xxl-2}' },
     'modal-xl': { $value: '{spacing.xxl-5}' },
+    'character-card': { $value: '{spacing.xl-0}' },
   },
   'z-index': {
     lv1: { $value: 1000 },

@@ -19,9 +19,9 @@ const meta: Meta = {
       userSettings: null,
       opened: true,
       editing: false,
-      className: 'bg-color-white w-xl-0 h-xl-8',
+      className: 'h-xl-8',
     },
-    events: ['onClose', 'onSave', 'onDelete'],
+    events: ['onClose', 'onSave', 'onDelete', 'onChangeSettings'],
     clearDefaults: ['team', 'userPrefs', 'userSettings'],
   }),
 }

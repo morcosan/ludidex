@@ -23,6 +23,7 @@
       "replaceData": "Replace data",
       "save": "Save",
       "saveChanges": "Save changes",
+      "searchCharacters": "Search characters",
       "searchSettings": "Search settings",
       "selectTeamMembers": "Select team members",
       "sort": "Sort",
@@ -30,6 +31,7 @@
     },
     "label": {
       "appTitle": "LudiDex",
+      "appearance": "Appearance",
       "background": "Background",
       "characters": "Characters",
       "current": "Current",
@@ -37,13 +39,14 @@
       "dataSize": "Data size",
       "dataValues": "Data values",
       "default": "Default",
-      "displaySize": "Display size",
       "exportData": "Export data",
+      "filters": "Filters",
       "home": "Home",
       "importData": "Import data",
-      "large": "Large",
+      "itemSize": "Item size",
       "labelOnBottom": "Label on bottom",
       "labelOnTop": "Label on top",
+      "large": "Large",
       "listing": "Listing",
       "medium": "Medium",
       "modeDark": "Dark",
@@ -60,8 +63,7 @@
       "teams": "Teams",
       "tierListLabels": "Tier list labels",
       "uploaded": "Uploaded",
-      "view": "View",
-      "viewSettings": "View settings"
+      "view": "View"
     },
     "format": {
       "withFilters_one": "with {count} filter",

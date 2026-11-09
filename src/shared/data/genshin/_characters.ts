@@ -1242,10 +1242,10 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
     id: 'mitya',
     name: 'Mitya',
     element: 'Electro',
-    weapon: 'Sword',
+    weapon: 'Catalyst',
     nation: 'Snezhnaya',
     bonusStat: '+38.4% CRIT DMG',
-    na1HitDmg: [45, 88.9],
+    na1HitDmg: [58.8, 105.8],
     iconUrls: [
       'https://i.gachabase.net/oC4A4yBHAk3psjdaZYUHITErYghAZdSbqAYJWn698QI/q:50/f:webp/plain/gi/assets/01f26722851dc864fe866c284750d09a.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/f/fd/Mitya_Icon.png',
@@ -1836,7 +1836,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
     weapon: 'Sword',
     nation: 'Snezhnaya',
     bonusStat: '+24% ATK',
-    na1HitDmg: [0, 0],
+    na1HitDmg: [32.5, 64.2],
     iconUrls: [
       'https://i.gachabase.net/x1npnEDcWW7PTF9Q5BO2ksFFtuoGJj2VLY-HdzCj4PI/q:50/f:webp/plain/gi/assets/b21a22b6e99dac5f41f591ce207bf2d5.png',
       'https://static.wikia.nocookie.net/gensin-impact/images/3/32/Valeriy_Icon.png',
@@ -2264,3 +2264,5 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
 export const GENSHIN_CHARACTERS_BY_ID: Record<string, (typeof GENSHIN_CHARACTERS)[number]> = Object.fromEntries(
   GENSHIN_CHARACTERS.map((character) => [character.id, character]),
 )
+
+export const GENSHIN_CHARACTER_IDS = [...new Set(GENSHIN_CHARACTERS.map(({ id }) => id))] as const

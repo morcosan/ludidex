@@ -13,7 +13,18 @@ export type { ModalProps, ModalWidth } from './_types'
 
 /** Basic modal component */
 export const Modal = (props: ModalProps) => {
-  const { actions, children, extras, height = 'fit', noClose, noDismiss, onClose, title, width = 'md' } = props
+  const {
+    actions,
+    children,
+    extras,
+    height = 'fit',
+    noClose,
+    noDismiss,
+    onClose,
+    title,
+    width = 'md',
+    classNames,
+  } = props
   const { translate } = useI18nService()
   const { focusTrap1Ref, focusTrap2Ref, isMounted, isVisible, modalRef, stackIndex } = useEvents({
     ...props,
@@ -62,7 +73,9 @@ export const Modal = (props: ModalProps) => {
             )}
 
             {/* BODY */}
-            <div css={modalBodyCss}>{children}</div>
+            <div css={modalBodyCss} className={classNames?.body}>
+              {children}
+            </div>
 
             {/* FOOTER */}
             <div css={footerCss}>

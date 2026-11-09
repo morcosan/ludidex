@@ -25,17 +25,17 @@ export interface SearchFieldProps extends ReactProps {
 }
 
 export const SearchField = (props: SearchFieldProps) => {
-  const { id, value, label, size, disabled, onChange, onBlur, className, style } = props
+  const { id, value, label, size = 'md', disabled, onChange, onBlur, className, style } = props
   const { t } = useTranslation()
   const [query, setQuery] = useState(value)
   const debouncedRef = useRef<ReturnType<typeof debounce>>(null)
 
   const iconClass = ((): string => {
-    if (size === 'xs') return 'ml-xs-1 text-size-xs'
-    if (size === 'sm') return 'ml-xs-1 text-size-sm'
-    if (size === 'md') return 'ml-xs-2 text-size-md'
-    if (size === 'lg') return 'ml-xs-2 text-size-md'
-    if (size === 'xl') return 'ml-xs-3 text-size-md'
+    if (size === 'xs') return 'ml-xs-1 -mr-xs-0 text-size-xs'
+    if (size === 'sm') return 'ml-xs-1 -mr-xs-1 text-size-sm'
+    if (size === 'md') return 'ml-xs-2 -mr-xs-2 text-size-md'
+    if (size === 'lg') return 'ml-xs-3 -mr-xs-2 text-size-md'
+    if (size === 'xl') return 'ml-xs-4 -mr-xs-3 text-size-md'
     return ''
   })()
 

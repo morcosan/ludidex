@@ -16,7 +16,7 @@ export const CardSection = ({ title, items, children }: Props) => {
     <PageSection
       surface="paper"
       title={title}
-      classNames={{ title: 'pb-xs-2!', body: 'pt-0!' }}
+      classNames={{ body: 'pt-0!' }}
       className={cx(!items?.length && 'divide-none!')}
     >
       {items?.length && (

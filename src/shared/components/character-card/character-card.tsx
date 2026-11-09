@@ -59,7 +59,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
 
   return (
     <Card
-      className={cx('w-xl-0', className)}
+      className={cx('w-character-card', className)}
       classNames={{ surface: 'p-0!', content: 'flex flex-col' }}
       style={{ '--element-color': GENSHIN_ELEMENT_COLORS[character.element] }}
     >

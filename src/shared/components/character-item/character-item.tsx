@@ -15,8 +15,8 @@ export interface CharacterItemProps extends ReactProps {
   selected?: boolean
   disabled?: boolean
   tooltip?: string
-  labelTop?: string
-  labelBottom?: string
+  labelTop?: string | null
+  labelBottom?: string | null
   slotDigit?: string
   className?: string
   onClick?: (character: GenshinCharacter) => void

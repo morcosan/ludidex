@@ -41,7 +41,7 @@ const meta: Meta = {
         ratingLabels: {},
       },
       opened: true,
-      className: 'bg-color-white w-xl-0 h-xl-8',
+      className: 'h-xl-8',
     },
     events: ['onClose', 'onSave'],
   }),

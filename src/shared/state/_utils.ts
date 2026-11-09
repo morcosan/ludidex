@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { type UserData } from './types'
-import { migrate_v0_to_v1 } from './versions/migrate_v0_to_v1'
+import { migrate_vn1_to_v0 } from './versions/migrate_vn1_to_v0'
 import { UserDataSchema_v0 } from './versions/schema_v0'
-import { UserDataSchema_v1 } from './versions/schema_v1'
+import { UserDataSchema_vn1 } from './versions/schema_vn1'
 
 const getLabelOverrides = <K extends PropertyKey>(labels: Partial<Record<K, string>>, defaults: Record<K, string>) => {
   const overrides: Partial<Record<K, string>> = {}
@@ -15,8 +15,8 @@ const getLabelOverrides = <K extends PropertyKey>(labels: Partial<Record<K, stri
 
 const parseUserData = (data: unknown): UserData | never => {
   const versions = [
-    { schema: UserDataSchema_v1, migrate: (v: unknown) => v },
-    { schema: UserDataSchema_v0, migrate: migrate_v0_to_v1 },
+    { schema: UserDataSchema_v0, migrate: (v: unknown) => v },
+    { schema: UserDataSchema_vn1, migrate: migrate_vn1_to_v0 },
   ]
 
   let result

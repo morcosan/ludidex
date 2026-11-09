@@ -98,4 +98,5 @@
   --ds-spacing-modal-md: var(--ds-spacing-xl-9);
   --ds-spacing-modal-lg: var(--ds-spacing-xxl-2);
   --ds-spacing-modal-xl: var(--ds-spacing-xxl-5);
+  --ds-spacing-character-card: var(--ds-spacing-xl-0);
 }

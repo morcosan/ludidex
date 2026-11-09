@@ -1,10 +1,10 @@
-import { GENSHIN_CHARACTERS } from '@app-shared/data/genshin'
-import { CHARACTER_STATUSES, RATING_LABELS, TIER_LIST_LABELS, TIER_LIST_VALUES } from '@app-shared/data/settings'
 import { z } from 'zod'
+import { GENSHIN_CHARACTER_IDS } from '../../data/genshin'
+import { CHARACTER_STATUSES, RATING_LABELS, TIER_LIST_LABELS, TIER_LIST_VALUES } from '../../data/settings'
 
-const USER_DATA_VERSION_V1 = 'v1.3'
+const USER_DATA_VERSION_VN1 = 'v1.3'
 
-const GenshinCharacterSchema_v1 = z.object({
+const GenshinCharacterSchema_vn1 = z.object({
   rating: z.number().optional(),
   status: z.enum(CHARACTER_STATUSES).optional(),
   tierLists: z
@@ -41,24 +41,21 @@ const GenshinCharacterSchema_v1 = z.object({
   tags: z.array(z.string()).optional(),
 })
 
-const CHARACTER_IDS = new Set(GENSHIN_CHARACTERS.map(({ id }) => id))
+const unpackTeamId_vn1 = (id: string): string[] => id.split('_')
 
-const unpackTeamId = (id: string): string[] => id.split('_')
-const packTeamId = (charIds: string[]): string => charIds.join('_')
-
-const GenshinTeamSchema_v1 = z.object({
+const GenshinTeamSchema_vn1 = z.object({
   name: z.string(),
   rating: z.number().optional(),
   tags: z.array(z.string()).optional(),
 })
 
-const GenshinTeamsSchema_v1 = z.record(z.string(), GenshinTeamSchema_v1).superRefine((teams, ctx) => {
+const GenshinTeamsSchema_vn1 = z.record(z.string(), GenshinTeamSchema_vn1).superRefine((teams, ctx) => {
   for (const teamId of Object.keys(teams)) {
-    const characterIds = unpackTeamId(teamId)
+    const characterIds = unpackTeamId_vn1(teamId)
     if (characterIds.length < 1 || characterIds.length > 4) {
       ctx.addIssue({ code: 'custom', message: 'Teams must contain between one and four character IDs', path: [teamId] })
     }
-    if (characterIds.some((id) => !CHARACTER_IDS.has(id))) {
+    if (characterIds.some((id) => !GENSHIN_CHARACTER_IDS.includes(id))) {
       ctx.addIssue({ code: 'custom', message: 'Team keys must contain valid character IDs', path: [teamId] })
     }
     if (new Set(characterIds).size !== characterIds.length) {
@@ -67,12 +64,12 @@ const GenshinTeamsSchema_v1 = z.record(z.string(), GenshinTeamSchema_v1).superRe
   }
 })
 
-const UserDataSchema_v1 = z.object({
-  version: z.literal(USER_DATA_VERSION_V1),
+const UserDataSchema_vn1 = z.object({
+  version: z.literal(USER_DATA_VERSION_VN1),
   genshin: z
     .object({
-      characters: z.record(z.string(), GenshinCharacterSchema_v1).optional(),
-      teams: GenshinTeamsSchema_v1.optional(),
+      characters: z.record(z.string(), GenshinCharacterSchema_vn1).optional(),
+      teams: GenshinTeamsSchema_vn1.optional(),
     })
     .optional(),
   preferences: z
@@ -87,16 +84,6 @@ const UserDataSchema_v1 = z.object({
     .optional(),
 })
 
-type UserData_v1 = z.infer<typeof UserDataSchema_v1>
-type GenshinCharacter_v1 = z.infer<typeof GenshinCharacterSchema_v1>
-type GenshinTeam_v1 = z.infer<typeof GenshinTeamSchema_v1>
+type UserData_vn1 = z.infer<typeof UserDataSchema_vn1>
 
-export {
-  packTeamId,
-  unpackTeamId,
-  USER_DATA_VERSION_V1,
-  UserDataSchema_v1,
-  type GenshinCharacter_v1,
-  type GenshinTeam_v1,
-  type UserData_v1,
-}
+export { UserDataSchema_vn1, type UserData_vn1 }

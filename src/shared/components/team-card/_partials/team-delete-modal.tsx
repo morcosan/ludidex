@@ -1,6 +1,6 @@
 import { Button, Modal } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID } from '../../../data/genshin'
+import { GENSHIN_CHARACTERS_BY_ID } from '../../../data'
 import { type GenshinTeam } from '../../../state/types'
 import { CharacterAvatar } from '../../character-avatar/character-avatar'
 import { ErrorNotice } from './error-notice'

@@ -1,6 +1,6 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { RATING_VALUES } from '../../data/settings'
+import { RATING_VALUES } from '../../data'
 import { RatingIcon } from './rating-icon'
 
 const meta: Meta = {

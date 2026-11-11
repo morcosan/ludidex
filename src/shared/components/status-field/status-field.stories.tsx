@@ -1,7 +1,7 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Fragment, useEffect, useState } from 'react'
-import { CHARACTER_STATUSES, type CharacterStatus } from '../../data/settings'
+import { CHARACTER_STATUSES, type CharacterStatus } from '../../data'
 import { StatusField, type StatusFieldProps } from './status-field'
 
 const meta: Meta = {

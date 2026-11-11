@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ReactNode } from 'react'
-import { STATUS_COLORS, type CharacterStatus } from '../../data/settings'
+import { STATUS_COLORS, type CharacterStatus } from '../../data'
 
 export interface StatusIconProps extends ReactProps {
   value: CharacterStatus

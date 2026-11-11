@@ -1,5 +1,6 @@
-import { EMPTY_USER_DATA, type UserData } from '@app-shared/state/types'
+import { type UserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { EMPTY_USER_DATA } from '@app-shared/state/utils'
 import { formatFileSize, getDataSize } from '@app-shared/utils/various'
 import { Button, Modal } from '@design-system'
 import { ArrowDownRightIcon, ArrowUpRightIcon, EqualApproximatelyIcon } from 'lucide-react'

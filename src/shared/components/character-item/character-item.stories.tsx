@@ -1,6 +1,6 @@
 import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { GENSHIN_CHARACTERS } from '../../data/genshin'
+import { GENSHIN_CHARACTERS } from '../../data'
 import { CharacterItem } from './character-item'
 
 const meta: Meta = {

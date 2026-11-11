@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { CHARACTER_STATUSES, type CharacterStatus } from '../../data/settings'
+import { CHARACTER_STATUSES, type CharacterStatus } from '../../data'
 import { useFieldBase } from '../_shared/use-field-base'
 import { StatusIcon } from '../status-icon/status-icon'
 

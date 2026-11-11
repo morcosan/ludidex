@@ -1,6 +1,6 @@
 import { Card } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data/genshin'
+import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { type GenshinTeam } from '../../state/types'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 

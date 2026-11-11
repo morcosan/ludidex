@@ -1,11 +1,5 @@
 import { RatingField, TierListField } from '@app-shared/components'
-import {
-  RATING_LABELS,
-  RATING_VALUES,
-  TIER_LIST_LABELS,
-  TIER_LIST_VALUES,
-  type TierListValue,
-} from '@app-shared/data/settings'
+import { RATING_LABELS, RATING_VALUES, TIER_LIST_LABELS, TIER_LIST_VALUES, type TierListValue } from '@app-shared/data'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { Button, Modal, TextField } from '@design-system'
 import { type ReactNode, useEffect, useState } from 'react'

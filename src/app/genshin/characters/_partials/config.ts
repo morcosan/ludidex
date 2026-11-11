@@ -1,4 +1,4 @@
-import type { GenshinCharacter } from '@app-shared/data/genshin'
+import type { GenshinCharacter } from '@app-shared/data'
 import type { CharacterLabel, GenshinCharacterUserData } from '@app-shared/state/types'
 import { VIEW_TYPES } from '@app-shared/utils/use-view-options'
 import { GENSHIN_FILTERS } from '../../_shared/config'

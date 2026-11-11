@@ -1,3 +1,6 @@
+import LogoIcon from '@app-shared/assets/logo-icon.svg?react'
+import { useUserAssetsStore } from '@app-shared/state/use-user-assets'
+import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import {
   A11yService,
@@ -10,14 +13,13 @@ import {
 } from '@design-system'
 import { StrictMode } from 'react'
 import { useNavigate } from 'react-router'
-import LogoIcon from '../shared/assets/logo-icon.svg?react'
-import { useUserDataStore } from '../shared/state/use-user-data'
 import { QueryProvider } from './api'
 import { I18nProvider, initClientI18n } from './i18n'
 
 initClientI18n()
 useUserDataStore.getState().loadUserData()
 useUserSettingsStore.getState().loadUserSettings()
+useUserAssetsStore.getState().loadUserAssets()
 
 const RouterProvider = ({ children }: ReactProps) => {
   const navigate = useNavigate()

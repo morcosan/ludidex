@@ -2,17 +2,16 @@ import { Button } from '@design-system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  GENSHIN_ELEMENT_ICONS,
+  CHARACTER_STATUSES,
   GENSHIN_ELEMENTS,
-  GENSHIN_NATION_ICONS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPON_ICONS,
   GENSHIN_WEAPONS,
+  type CharacterStatus,
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
-} from '../../data/genshin'
-import { CHARACTER_STATUSES, type CharacterStatus } from '../../data/settings'
+} from '../../data'
+import { useUserAssetsStore } from '../../state/use-user-assets'
 import { PageSection } from '../page-section/page-section'
 import { SearchField } from '../search-field/search-field'
 import { StatusIcon } from '../status-icon/status-icon'
@@ -40,6 +39,10 @@ export interface FiltersSectionProps extends ReactProps {
 export const FiltersSection = (props: FiltersSectionProps) => {
   const { filters, search, surface = 'glass', className, classNames, onChange, onSearch } = props
   const { t } = useTranslation()
+  const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
+  const elementIcons = getElementIcons()
+  const weaponIcons = getWeaponIcons()
+  const nationIcons = getNationIcons()
   const [searchFieldKey, setSearchFieldKey] = useState(0)
   const hasFilters =
     search.length > 0 ||
@@ -89,8 +92,9 @@ export const FiltersSection = (props: FiltersSectionProps) => {
         order="length"
         surface={surface}
         ariaLabel={t('game.label.element')}
+        getLabel={(element) => t(`game.elements.${element}`)}
         renderIcon={(element) => (
-          <img src={GENSHIN_ELEMENT_ICONS[element][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 shrink-0" />
+          <img src={elementIcons[element][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 shrink-0" />
         )}
         onToggle={(element) => onChange?.({ ...filters, elements: toggleFilter(filters.elements, element) })}
       />
@@ -113,8 +117,9 @@ export const FiltersSection = (props: FiltersSectionProps) => {
         order="alphabetical"
         surface={surface}
         ariaLabel={t('game.label.weapon')}
+        getLabel={(weapon) => t(`game.weapons.${weapon}`)}
         renderIcon={(weapon) => (
-          <img src={GENSHIN_WEAPON_ICONS[weapon][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-90" />
+          <img src={weaponIcons[weapon][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-90" />
         )}
         onToggle={(weapon) => onChange?.({ ...filters, weapons: toggleFilter(filters.weapons, weapon) })}
       />
@@ -125,10 +130,10 @@ export const FiltersSection = (props: FiltersSectionProps) => {
         selection={filters.nations}
         surface={surface}
         ariaLabel={t('game.label.nation')}
-        getLabel={(nation) => (nation === 'None' ? 'N/A' : nation)}
+        getLabel={(nation) => t(`game.nations.${nation}`)}
         renderIcon={(nation) =>
-          nation === 'None' ? null : (
-            <img src={GENSHIN_NATION_ICONS[nation][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-40" />
+          nation === 'none' ? null : (
+            <img src={nationIcons[nation][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-40" />
           )
         }
         onToggle={(nation) => onChange?.({ ...filters, nations: toggleFilter(filters.nations, nation) })}

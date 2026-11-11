@@ -1,6 +1,6 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { TIER_LIST_VALUES } from '../../data/settings'
+import { TIER_LIST_VALUES } from '../../data'
 import { TierListIcon } from './tier-list-icon'
 
 const meta: Meta = {

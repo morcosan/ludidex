@@ -8,7 +8,7 @@ import {
   TIER_LIST_COLORS,
   TIER_LIST_LABELS,
   TIER_LIST_VALUES,
-} from '@app-shared/data/settings'
+} from '@app-shared/data'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { type ViewType } from '@app-shared/utils/use-view-options'
 import { withAlpha } from '@app-shared/utils/various'

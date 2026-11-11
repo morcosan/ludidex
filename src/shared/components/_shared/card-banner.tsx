@@ -1,13 +1,12 @@
 import { type ReactNode } from 'react'
-import { type CharacterStatus, RATING_LABELS, type RatingValue } from '../../data/settings'
-import { type UserPrefs } from '../../state/types'
+import { type CharacterStatus, RATING_LABELS, type RatingValue } from '../../data'
+import { useUserDataStore } from '../../state/use-user-data'
 import { RatingField } from '../rating-field/rating-field'
 import { StatusField } from '../status-field/status-field'
 
 interface CardBannerProps {
   banner?: ReactNode
   editing?: boolean
-  userPrefs?: UserPrefs
   ratingValue?: RatingValue
   statusValue?: CharacterStatus
   onChangeRating?: (value: RatingValue | undefined) => void
@@ -15,7 +14,8 @@ interface CardBannerProps {
 }
 
 export const CardBanner = (props: CardBannerProps) => {
-  const { banner, editing, userPrefs, ratingValue, statusValue, onChangeRating, onChangeStatus } = props
+  const { banner, editing, ratingValue, statusValue, onChangeRating, onChangeStatus } = props
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
   const showStatus = statusValue !== undefined || onChangeStatus !== undefined
 

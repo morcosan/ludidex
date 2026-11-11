@@ -2,8 +2,9 @@ import { Button } from '@design-system'
 import { defineMeta } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { useEffect, useState } from 'react'
-import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data/genshin'
-import { type UserSettings } from '../../state/types'
+import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
+import { useUserDataStore } from '../../state/use-user-data'
+import { EMPTY_USER_DATA } from '../../state/utils'
 import { CharacterModal, type CharacterModalProps, type CharacterModalSelection } from './character-modal'
 
 const meta: Meta = {
@@ -14,31 +15,20 @@ const meta: Meta = {
     },
     props: {
       opened: false,
-      userData: {
-        characters: {
-          aino: { status: 'maxed' },
-          albedo: { status: 'building' },
-          alhaitham: { status: 'missing' },
-          alyosha: { status: 'pulling' },
-        },
-      },
-      userSettings: null,
       selection: {
         slots: [GENSHIN_CHARACTERS_BY_ID['sandrone'], null, GENSHIN_CHARACTERS_BY_ID['vodyanitsa'], null],
         index: 1,
       },
       className: '',
     },
-    events: ['onSelect', 'onChangeSlot', 'onChangeSettings', 'onClose'],
-    clearDefaults: ['title', 'userData', 'userSettings', 'selection'],
+    events: ['onSelect', 'onChangeSlot', 'onClose'],
+    clearDefaults: ['title', 'selection'],
 
     render: (props: CharacterModalProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [opened, setOpened] = useState(props.opened)
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selection, setSelection] = useState<CharacterModalSelection | undefined>(props.selection)
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [userSettings, setUserSettings] = useState<UserSettings | null>(props.userSettings ?? null)
 
       const handleSelect = (character: GenshinCharacter | null, slotIndex?: number) => {
         if (slotIndex !== undefined) {
@@ -67,11 +57,6 @@ const meta: Meta = {
         setSelection(props.selection)
       }, [props.selection])
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        setUserSettings(props.userSettings ?? null)
-      }, [props.userSettings])
-
       return (
         <>
           <Button variant="default" onClick={() => setOpened(true)}>
@@ -82,10 +67,8 @@ const meta: Meta = {
             {...props}
             opened={opened}
             selection={selection}
-            userSettings={userSettings}
             onSelect={handleSelect}
             onChangeSlot={handleChangeSlot}
-            onChangeSettings={setUserSettings}
             onClose={() => {
               setOpened(false)
               props.onClose?.()
@@ -95,6 +78,22 @@ const meta: Meta = {
       )
     },
   }),
+
+  beforeEach: () => {
+    useUserDataStore.setState({
+      userData: {
+        ...EMPTY_USER_DATA,
+        genshin: {
+          characters: {
+            aino: { status: 'maxed', stats: { level: 80 } },
+            albedo: { status: 'building', stats: { level: 56 } },
+            alhaitham: { status: 'missing', stats: { level: 60 } },
+            alyosha: { status: 'pulling', stats: { level: 90 } },
+          },
+        },
+      },
+    })
+  },
 }
 
 const Default: StoryObj<typeof CharacterModal> = {

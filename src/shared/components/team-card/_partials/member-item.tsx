@@ -1,11 +1,7 @@
 import { Card } from '@design-system'
-import {
-  GENSHIN_ELEMENT_ICONS,
-  GENSHIN_NATION_ICONS,
-  GENSHIN_WEAPON_ICONS,
-  type GenshinCharacter,
-} from '../../../data/genshin'
-import { type CharacterStatus } from '../../../data/settings'
+import { useTranslation } from 'react-i18next'
+import { type CharacterStatus, type GenshinCharacter } from '../../../data'
+import { useUserAssetsStore } from '../../../state/use-user-assets'
 import { CharacterTrait } from '../../_shared/character-trait'
 import { CharacterAvatar } from '../../character-avatar/character-avatar'
 
@@ -17,6 +13,12 @@ interface MemberItemProps {
 }
 
 export const MemberItem = ({ character, status, editing, onClick }: MemberItemProps) => {
+  const { t } = useTranslation()
+  const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
+  const elementIcons = getElementIcons()
+  const weaponIcons = getWeaponIcons()
+  const nationIcons = getNationIcons()
+
   return (
     <li className="py-xs-0 flex">
       <Card
@@ -36,16 +38,20 @@ export const MemberItem = ({ character, status, editing, onClick }: MemberItemPr
               <span className="text-size-md font-weight-lg truncate leading-1">{character.name}</span>
 
               <span className="gap-xs-9 text-color-text-subtle text-size-xs flex items-center">
-                <CharacterTrait label={character.element} iconSrcs={GENSHIN_ELEMENT_ICONS[character.element]} small />
                 <CharacterTrait
-                  label={character.weapon}
-                  iconSrcs={GENSHIN_WEAPON_ICONS[character.weapon]}
+                  label={t(`game.elements.${character.element}`)}
+                  iconSrcs={elementIcons[character.element]}
+                  small
+                />
+                <CharacterTrait
+                  label={t(`game.weapons.${character.weapon}`)}
+                  iconSrcs={weaponIcons[character.weapon]}
                   classNames={{ icon: 'brightness-90' }}
                   small
                 />
                 <CharacterTrait
-                  label={character.nation}
-                  iconSrcs={GENSHIN_NATION_ICONS[character.nation]}
+                  label={t(`game.nations.${character.nation}`)}
+                  iconSrcs={nationIcons[character.nation]}
                   classNames={{ icon: 'brightness-40' }}
                   small
                 />

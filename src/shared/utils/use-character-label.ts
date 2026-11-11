@@ -1,16 +1,12 @@
-import { type GenshinCharacter } from '../data/genshin'
-import { RATING_LABELS, type RatingValue } from '../data/settings'
-import { type CharacterLabel, type GenshinUserData, type UserPrefs } from '../state/types'
 import { useTranslation } from 'react-i18next'
+import { RATING_LABELS, type GenshinCharacter, type RatingValue } from '../data'
+import { type CharacterLabel } from '../state/types'
+import { useUserDataStore } from '../state/use-user-data'
 import { formatInteger, formatPercent } from './various'
 
-interface CharacterLabelProps {
-  userData?: GenshinUserData
-  userPrefs?: UserPrefs
-}
-
-export const useCharacterLabel = (props: CharacterLabelProps) => {
-  const { userData, userPrefs } = props
+export const useCharacterLabel = () => {
+  const userData = useUserDataStore((state) => state.userData?.genshin)
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const { t } = useTranslation()
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
 

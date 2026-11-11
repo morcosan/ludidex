@@ -1,4 +1,4 @@
-import { type GameId } from '@app-shared/data/games'
+import { type GameId } from '@app-shared/data'
 import { type ParseKeys } from 'i18next'
 import { type ReactElement } from 'react'
 import { type RouteObject } from 'react-router'

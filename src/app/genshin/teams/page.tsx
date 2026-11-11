@@ -1,7 +1,7 @@
 import { Breadcrumb, FiltersBar, TeamCard } from '@app-shared/components'
-import { type GenshinTeam, unpackTeamId } from '@app-shared/state/types'
+import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
-import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
+import { unpackTeamId } from '@app-shared/state/utils'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useFilterParams } from '@app-shared/utils/use-filter-params'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
@@ -18,18 +18,12 @@ import { TeamListing } from './_partials/team-listing'
 export default function Page() {
   const { t } = useTranslation()
   const teamData = useUserDataStore((state) => state.userData?.genshin?.teams)
-  const gameData = useUserDataStore((state) => state.userData?.genshin)
   const userTeams = useMemo((): GenshinTeam[] => {
     return Object.entries(teamData ?? {})
       .map(([id, team]): GenshinTeam => ({ ...team, id, charIds: unpackTeamId(id) }))
       .sort((teamA, teamB) => teamA.name.localeCompare(teamB.name))
   }, [teamData])
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const userSettings = useUserSettingsStore((state) => state.userSettings)
-  const teamItemSize = userSettings?.teamItemSize ?? 'md'
-  const setTeamItemSize = useUserSettingsStore((state) => state.setTeamItemSize)
-  const setUserSettings = useUserSettingsStore((state) => state.setUserSettings)
   const { filters, handleFiltersChange } = useFilterParams(TEAM_FILTERS)
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -113,7 +107,6 @@ export default function Page() {
         <TeamListing
           teams={currTeams}
           viewType={viewType}
-          itemSize={teamItemSize}
           selectedTeamId={isPreviewOpen ? previewTeamId : undefined}
           scrollRef={scrollRef}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
@@ -136,11 +129,9 @@ export default function Page() {
       {/* RIGHT SIDE */}
       <div className="min-w-character-card mx-xs-3 relative h-full">
         <SidePanel
-          itemSize={teamItemSize}
           viewType={viewType}
           viewOptions={viewOptions}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
-          onChangeItemSize={setTeamItemSize}
           onChangeView={handleViewChange}
         />
 
@@ -149,16 +140,12 @@ export default function Page() {
           {previewTeam && (
             <TeamCard
               team={previewTeam}
-              userData={gameData}
-              userPrefs={userPrefs}
-              userSettings={userSettings}
               opened={isPreviewOpen}
               editing={isEmptyPreview}
               className="h-full"
               onSave={handleSaveTeam}
               onClose={handleClosePreview}
               onDelete={handleDeleteTeam}
-              onChangeSettings={setUserSettings}
             />
           )}
         </PreviewDrawer>

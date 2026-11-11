@@ -1,6 +1,6 @@
 import { Image } from '@design-system'
-import { GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data/genshin'
-import { type CharacterStatus } from '../../data/settings'
+import { GENSHIN_ELEMENT_COLORS, type CharacterStatus, type GenshinCharacter } from '../../data'
+import { useUserAssetsStore } from '../../state/use-user-assets'
 import { AvatarAura } from '../avatar-aura/avatar-aura'
 
 interface ClassNames {
@@ -17,6 +17,8 @@ export interface CharacterAvatarProps extends ReactProps {
 
 export const CharacterAvatar = (props: CharacterAvatarProps) => {
   const { character, status = 'main', className } = props
+  const { getCharacterIcons } = useUserAssetsStore()
+  const iconSrcs = getCharacterIcons(character.id)
 
   const classNames: Record<CharacterStatus, ClassNames> = {
     maxed: { root: '', bg: 'saturate-130', img: 'saturate-130' },
@@ -44,7 +46,7 @@ export const CharacterAvatar = (props: CharacterAvatarProps) => {
       {status === 'maxed' && <AvatarAura scale={1.9} className="absolute! inset-0" />}
 
       <Image
-        srcs={character.iconUrls}
+        srcs={iconSrcs}
         loading="lazy"
         className={cx('pointer-events-none relative aspect-square rounded-md object-cover', classNames[status]?.img)}
       />

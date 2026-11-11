@@ -132,6 +132,33 @@
     "placeholder": {
       "tags": "Tag, tag..."
     },
+    "elements": {
+      "anemo": "Anemo",
+      "cryo": "Cryo",
+      "dendro": "Dendro",
+      "electro": "Electro",
+      "geo": "Geo",
+      "hydro": "Hydro",
+      "pyro": "Pyro"
+    },
+    "weapons": {
+      "bow": "Bow",
+      "catalyst": "Catalyst",
+      "claymore": "Claymore",
+      "polearm": "Polearm",
+      "sword": "Sword"
+    },
+    "nations": {
+      "fontaine": "Fontaine",
+      "inazuma": "Inazuma",
+      "liyue": "Liyue",
+      "mondstadt": "Mondstadt",
+      "natlan": "Natlan",
+      "nodkrai": "Nod-Krai",
+      "none": "N/A",
+      "snezhnaya": "Snezhnaya",
+      "sumeru": "Sumeru"
+    },
     "stats": {
       "atk": "ATK",
       "baseAttackLv10": "Base Attack (Lv. 10)",

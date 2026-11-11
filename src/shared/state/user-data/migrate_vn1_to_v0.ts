@@ -1,5 +1,5 @@
-import { type GenshinCharacter_v0, type GenshinTeam_v0, USER_DATA_VERSION_V0, type UserData_v0 } from './schema_v0'
-import { type UserData_vn1 } from './schema_vn1'
+import { type GenshinCharacter_v0, type GenshinTeam_v0, USER_DATA_VERSION_V0, type UserData_v0 } from './v0'
+import { type UserData_vn1 } from './vn1'
 
 const migrate_vn1_to_v0 = (data: UserData_vn1): UserData_v0 => {
   return {

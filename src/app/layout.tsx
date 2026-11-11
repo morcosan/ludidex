@@ -1,5 +1,7 @@
+import LogoIcon from '@app-shared/assets/logo-icon.svg?react'
 import { ImageSlideshow, type ImageSlideshowHandle } from '@app-shared/components'
-import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL } from '@app-shared/data/settings'
+import { BACKGROUND_SWAP_DURATION, BACKGROUND_SWAP_INTERVAL, GAMES } from '@app-shared/data'
+import { useUserAssetsStore } from '@app-shared/state/use-user-assets'
 import { isPathUnderSegment } from '@app-shared/utils/various'
 import { Button, Card, IconButton, Image, Popover } from '@design-system'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
@@ -10,11 +12,10 @@ import { useTranslation } from 'react-i18next'
 import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
 import { appRoutes, gameRouteDefaults } from '../routes'
-import LogoIcon from '../shared/assets/logo-icon.svg?react'
-import { GAMES } from '../shared/data/games'
 
 export default function Layout() {
   const { t } = useTranslation()
+  const { getGameIcons, getGameBackgrounds } = useUserAssetsStore()
   const location = useLocation()
   const bgSlideshowRef = useRef<ImageSlideshowHandle>(null)
   const [isBgLoading, setIsBgLoading] = useState(false)
@@ -35,7 +36,7 @@ export default function Layout() {
       <div className="relative flex h-dvh overflow-hidden">
         <ImageSlideshow
           ref={bgSlideshowRef}
-          srcs={GAMES[0].backgroundUrls}
+          srcs={getGameBackgrounds()}
           interval={BACKGROUND_SWAP_INTERVAL}
           transition={BACKGROUND_SWAP_DURATION}
           onLoading={setIsBgLoading}
@@ -60,7 +61,7 @@ export default function Layout() {
                 tooltip={t(game.nameKey)}
                 classNames={{ surface: 'p-px!', content: 'flex-center h-full w-full' }}
               >
-                <Image srcs={game.iconUrls} className="h-sm-4 w-sm-4 rounded-md" />
+                <Image srcs={getGameIcons()} className="h-sm-4 w-sm-4 rounded-md" />
               </Card>
             ))}
           </div>

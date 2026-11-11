@@ -1,7 +1,8 @@
 import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { MAX_TEAM_SIZE, RATING_VALUES, type RatingValue } from '../../../data/settings'
-import { type GenshinTeam, type GenshinTeamUserData, packTeamId } from '../../../state/types'
+import { MAX_TEAM_SIZE, RATING_VALUES, type RatingValue } from '../../../data'
+import { type GenshinTeam, type GenshinTeamUserData } from '../../../state/types'
+import { packTeamId } from '../../../state/utils'
 import { formatUserInput, parseTags } from '../../../utils/various'
 import { type TeamCardProps } from '../_types'
 

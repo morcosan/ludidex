@@ -1,7 +1,8 @@
 import { CharacterItem } from '@app-shared/components'
-import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data'
 import { type CharacterLabel, type ItemSize } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useCharacterLabel } from '@app-shared/utils/use-character-label'
 import { type ViewType } from '@app-shared/utils/use-view-options'
 import { formatInteger } from '@app-shared/utils/various'
@@ -33,25 +34,22 @@ const SIZE_CLASSES: Record<ItemSize, ItemSizeClass> = {
 interface CharacterListingProps extends ReactProps {
   characters: GenshinCharacter[]
   viewType: CharacterViewType
-  itemSize: ItemSize
-  labelTop: CharacterLabel | null
-  labelBottom: CharacterLabel | null
   selectedItemId?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, viewType, itemSize, labelTop, labelBottom, selectedItemId, className, onClickItem } = props
+  const { characters, viewType, selectedItemId, className, onClickItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
-  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const { getLabel } = useCharacterLabel({ userData, userPrefs })
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const { getLabel } = useCharacterLabel()
 
   const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
   const sortingConfig = isSortingView ? VIEW_CONFIGS[viewType as SortingViewType] : undefined
 
-  const classNames = SIZE_CLASSES[itemSize]
+  const classNames = SIZE_CLASSES[userSettings.charItemSize]
   const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap', classNames.list)
 
   const getValue = (character: GenshinCharacter, viewType: ViewType) => {
@@ -93,9 +91,13 @@ export const CharacterListing = (props: CharacterListingProps) => {
       <CharacterItem
         character={character}
         status={userData?.characters?.[character.id]?.status}
-        size={itemSize}
-        labelTop={labelTop ? getLabel(character, labelTop) : getSortLabel(character, labelBottom)}
-        labelBottom={getLabel(character, labelBottom)}
+        size={userSettings.charItemSize}
+        labelTop={
+          userSettings.charLabelTop
+            ? getLabel(character, userSettings.charLabelTop)
+            : getSortLabel(character, userSettings.charLabelBottom)
+        }
+        labelBottom={getLabel(character, userSettings.charLabelBottom)}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />

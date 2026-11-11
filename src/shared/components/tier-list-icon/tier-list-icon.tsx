@@ -1,4 +1,4 @@
-import { TIER_LIST_COLORS, type TierListValue } from '../../data/settings'
+import { TIER_LIST_COLORS, type TierListValue } from '../../data'
 
 export interface TierListIconProps extends ReactProps {
   value: TierListValue

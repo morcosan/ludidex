@@ -1,4 +1,4 @@
-import { TIER_LIST_VALUES, type TierListValue } from '../../data/settings'
+import { TIER_LIST_VALUES, type TierListValue } from '../../data'
 import { type TierListLabels } from '../../state/types'
 import { useFieldBase } from '../_shared/use-field-base'
 import { TierListIcon } from '../tier-list-icon/tier-list-icon'

@@ -1,5 +1,6 @@
 import { PageSection } from '@app-shared/components'
 import { type ItemSize } from '@app-shared/state/types'
+import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { type ViewOption } from '@app-shared/utils/use-view-options'
 import { SelectField, type SelectOption } from '@design-system'
 import { useTranslation } from 'react-i18next'
@@ -9,14 +10,14 @@ import { type TeamViewType } from './config'
 interface SideFiltersProps extends ReactProps {
   viewType: TeamViewType
   viewOptions: readonly ViewOption<TeamViewType>[]
-  itemSize: ItemSize
   onChangeView: (viewType: TeamViewType) => void
-  onChangeItemSize: (size: ItemSize) => void
 }
 
 export const SidePanel = (props: SideFiltersProps) => {
-  const { itemSize, viewType, viewOptions, className, onChangeItemSize, onChangeView } = props
+  const { viewType, viewOptions, className, onChangeView } = props
   const { t } = useTranslation()
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const updateUserSettings = useUserSettingsStore((state) => state.updateUserSettings)
 
   const itemSizeOptions: SelectOption<ItemSize>[] = [
     { value: 'sm', label: t('general.label.small') },
@@ -37,10 +38,10 @@ export const SidePanel = (props: SideFiltersProps) => {
           <SelectField
             id="teams-item-size"
             size="sm"
-            value={itemSize}
+            value={userSettings.teamItemSize}
             options={itemSizeOptions}
             className="w-md-4"
-            onChange={(value) => value && onChangeItemSize(value as ItemSize)}
+            onChange={(value) => value && updateUserSettings({ teamItemSize: value as ItemSize })}
           />
         </div>
       </PageSection>

@@ -1,11 +1,13 @@
 import { Breadcrumb, ImageSlideshow } from '@app-shared/components'
-import { GAMES } from '@app-shared/data/games'
+import { GAMES } from '@app-shared/data'
+import { useUserAssetsStore } from '@app-shared/state/use-user-assets'
 import { Card } from '@design-system'
 import { useTranslation } from 'react-i18next'
 import { gameRouteDefaults } from '../routes'
 
 export default function Page() {
   const { t } = useTranslation()
+  const { getGameBanners } = useUserAssetsStore()
 
   return (
     <div className="px-sm-0 py-xs-6 flex h-full flex-col">
@@ -26,7 +28,7 @@ export default function Page() {
             classNames={{ surface: 'p-xs-1!', content: 'relative overflow-hidden rounded-sm' }}
           >
             <ImageSlideshow
-              srcs={game.bannerUrls}
+              srcs={getGameBanners()}
               interval={4000}
               transition={2000}
               className={cx('aspect-video h-full object-cover')}

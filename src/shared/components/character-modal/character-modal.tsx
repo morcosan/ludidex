@@ -1,8 +1,9 @@
 import { Modal } from '@design-system'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS, type GenshinCharacter } from '../../data/genshin'
-import { type GenshinUserData, type UserPrefs, type UserSettings } from '../../state/types'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '../../data'
+import { useUserDataStore } from '../../state/use-user-data'
+import { useUserSettingsStore } from '../../state/use-user-settings'
 import { useCharacterLabel } from '../../utils/use-character-label'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
@@ -17,26 +18,24 @@ export interface CharacterModalProps {
 
   // Props
   opened: boolean
-  userData?: GenshinUserData
-  userPrefs?: UserPrefs
-  userSettings?: UserSettings | null
   selection?: CharacterModalSelection
   className?: string
 
   // Events
   onSelect?: (character: GenshinCharacter | null, slotIndex?: number) => void
   onChangeSlot?: (slotIndex: number) => void
-  onChangeSettings?: (userSettings: UserSettings) => void
   onClose?: () => void
 }
 
 export const CharacterModal = (props: CharacterModalProps) => {
-  const { opened, title, userData, userPrefs, userSettings, selection } = props
-  const { onSelect, onChangeSlot, onChangeSettings, onClose } = props
+  const { opened, title, selection } = props
+  const { onSelect, onChangeSlot, onClose } = props
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   const [search, setSearch] = useState('')
   const { t } = useTranslation()
-  const { getLabel } = useCharacterLabel({ userData, userPrefs })
+  const userData = useUserDataStore((state) => state.userData?.genshin)
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const { getLabel } = useCharacterLabel()
 
   const lcSearch = search.trim().toLocaleLowerCase()
 
@@ -75,7 +74,6 @@ export const CharacterModal = (props: CharacterModalProps) => {
         {selection && (
           <SelectionSlots
             selection={selection}
-            userData={userData}
             onChangeSlot={onChangeSlot}
             onClearSlot={(slotIndex) => onSelect?.(null, slotIndex)}
           />
@@ -89,7 +87,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
             onChange={setFilters}
             onSearch={setSearch}
           />
-          <AppearanceSection userSettings={userSettings} className="pb-xs-9" onChange={onChangeSettings} />
+          <AppearanceSection className="pb-xs-9" />
         </div>
       </div>
 
@@ -108,9 +106,9 @@ export const CharacterModal = (props: CharacterModalProps) => {
                     status={userData?.characters?.[character.id]?.status}
                     selected={slotIndex > -1}
                     slotDigit={slotIndex > -1 ? String(slotIndex + 1) : undefined}
-                    size={userSettings?.charItemSize}
-                    labelTop={userSettings?.charLabelTop && getLabel(character, userSettings.charLabelTop)}
-                    labelBottom={userSettings?.charLabelBottom && getLabel(character, userSettings.charLabelBottom)}
+                    size={userSettings.charItemSize}
+                    labelTop={userSettings.charLabelTop && getLabel(character, userSettings.charLabelTop)}
+                    labelBottom={userSettings.charLabelBottom && getLabel(character, userSettings.charLabelBottom)}
                     onClick={onClickOption}
                   />
                 </li>

@@ -1,6 +1,6 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { CHARACTER_STATUSES } from '../../data/settings'
+import { CHARACTER_STATUSES } from '../../data'
 import { StatusIcon } from './status-icon'
 
 const meta: Meta = {

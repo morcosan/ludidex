@@ -1,13 +1,9 @@
 import { Card, Image, TextField } from '@design-system'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  GENSHIN_ELEMENT_COLORS,
-  GENSHIN_ELEMENT_ICONS,
-  GENSHIN_NATION_ICONS,
-  GENSHIN_WEAPON_ICONS,
-} from '../../data/genshin'
-import { TIER_LIST_LABELS } from '../../data/settings'
+import { GENSHIN_ELEMENT_COLORS, TIER_LIST_LABELS } from '../../data'
+import { useUserAssetsStore } from '../../state/use-user-assets'
+import { useUserDataStore } from '../../state/use-user-data'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
@@ -23,8 +19,15 @@ import { type CharacterCardProps } from './_types'
 export { type CharacterCardProps }
 
 export const CharacterCard = (props: CharacterCardProps) => {
-  const { character, userData, userPrefs, opened = true, className, onClose } = props
+  const { character, opened = true, className, onClose } = props
   const { t } = useTranslation()
+  const userData = useUserDataStore((state) => state.userData?.genshin?.characters?.[character.id])
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
+  const { getElementIcons, getWeaponIcons, getNationIcons, getCharacterBanners } = useUserAssetsStore()
+  const elementIcons = getElementIcons()
+  const weaponIcons = getWeaponIcons()
+  const nationIcons = getNationIcons()
+  const bannerSrcs = getCharacterBanners(character.id)
   const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
   const { statSections, tierFields } = useData(props)
   const {
@@ -69,12 +72,11 @@ export const CharacterCard = (props: CharacterCardProps) => {
           banner={
             <>
               <div className={cx('bg-(--element-color)', imageFilterClass)} />
-              <Image srcs={character.bannerUrls} className="pointer-events-none relative aspect-3/2 object-cover" />
+              <Image srcs={bannerSrcs} className="pointer-events-none relative aspect-3/2 object-cover" />
               <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
             </>
           }
           editing={isEditing}
-          userPrefs={userPrefs}
           ratingValue={draft.rating}
           statusValue={draft.status}
           onChangeRating={handleRatingChange}
@@ -99,15 +101,18 @@ export const CharacterCard = (props: CharacterCardProps) => {
         <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex flex-col">
           {/* TRAITS */}
           <div className="gap-x-xs-5 gap-y-xs-2 flex flex-wrap items-center justify-between">
-            <CharacterTrait label={character.element} iconSrcs={GENSHIN_ELEMENT_ICONS[character.element]} />
             <CharacterTrait
-              label={character.weapon}
-              iconSrcs={GENSHIN_WEAPON_ICONS[character.weapon]}
+              label={t(`game.elements.${character.element}`)}
+              iconSrcs={elementIcons[character.element]}
+            />
+            <CharacterTrait
+              label={t(`game.weapons.${character.weapon}`)}
+              iconSrcs={weaponIcons[character.weapon]}
               classNames={{ icon: 'brightness-90' }}
             />
             <CharacterTrait
-              label={character.nation}
-              iconSrcs={GENSHIN_NATION_ICONS[character.nation]}
+              label={t(`game.nations.${character.nation}`)}
+              iconSrcs={nationIcons[character.nation]}
               classNames={{ icon: 'brightness-40' }}
             />
           </div>

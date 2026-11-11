@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useUserDataStore } from '../../../state/use-user-data'
 import type {
   CharacterCardProps,
   GenshinStats,
@@ -10,7 +11,8 @@ import type {
 } from '../_types'
 
 export const useData = (props: CharacterCardProps) => {
-  const { character, userData } = props
+  const { character } = props
+  const userData = useUserDataStore((state) => state.userData?.genshin?.characters?.[character.id])
   const { t } = useTranslation()
 
   const buildStatRows = <T extends object>(data: T, fields: Record<keyof T, StatField>): StatRow[] => {
@@ -38,7 +40,10 @@ export const useData = (props: CharacterCardProps) => {
     er: { label: t('game.stats.er'), percent: true },
     critRate: { label: t('game.stats.critRate'), percent: true },
     critDmg: { label: t('game.stats.critDmg'), percent: true },
-    elemDmg: { label: t('game.stats.elemDmg', { element: character.element }), percent: true },
+    elemDmg: {
+      label: t('game.stats.elemDmg', { element: t(`game.elements.${character.element}`) }),
+      percent: true,
+    },
   }
   const tierFields: { field: keyof GenshinTierScores; label: string }[] = [
     { field: 'mainDps', label: t('game.label.mainDps') },

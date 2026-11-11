@@ -1,8 +1,7 @@
 import { Breadcrumb, CharacterCard, FiltersBar } from '@app-shared/components'
-import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data/genshin'
-import { UserSettingsSchema, type GenshinCharacterUserData } from '@app-shared/state/types'
+import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data'
+import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
-import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useFilterParams } from '@app-shared/utils/use-filter-params'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
@@ -16,12 +15,7 @@ import { SidePanel } from './_partials/side-panel'
 
 export default function Page() {
   const { t } = useTranslation()
-  const userData = useUserDataStore((state) => state.userData)
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
-  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const storedUserSettings = useUserSettingsStore((state) => state.userSettings)
-  const userSettings = UserSettingsSchema.parse(storedUserSettings ?? {})
-  const setUserSettings = useUserSettingsStore((state) => state.setUserSettings)
   const { filters, handleFiltersChange } = useFilterParams(CHARACTER_FILTERS)
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -74,9 +68,6 @@ export default function Page() {
         <CharacterListing
           characters={characters}
           viewType={viewType}
-          itemSize={userSettings.charItemSize}
-          labelTop={userSettings.charLabelTop}
-          labelBottom={userSettings.charLabelBottom}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
           onClickItem={handleClickCharacter}
@@ -86,11 +77,9 @@ export default function Page() {
       {/* RIGHT SIDE */}
       <div className="min-w-character-card mx-xs-3 relative h-full">
         <SidePanel
-          userSettings={userSettings}
           viewType={viewType}
           viewOptions={viewOptions}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
-          onChangeSettings={setUserSettings}
           onChangeView={handleViewChange}
         />
 
@@ -99,8 +88,6 @@ export default function Page() {
           {previewCharacter && (
             <CharacterCard
               character={previewCharacter}
-              userPrefs={userPrefs}
-              userData={userData?.genshin?.characters?.[previewCharacter.id]}
               opened={isPreviewOpen}
               className="h-full"
               onSave={handleSaveCharacter}

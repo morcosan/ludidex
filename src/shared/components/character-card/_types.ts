@@ -1,10 +1,8 @@
-import type { GenshinCharacter } from '../../data/genshin'
-import type { GenshinCharacterUserData, UserPrefs } from '../../state/types'
+import type { GenshinCharacter } from '../../data'
+import type { GenshinCharacterUserData } from '../../state/types'
 
 export interface CharacterCardProps extends ReactProps {
   character: GenshinCharacter
-  userData?: GenshinCharacterUserData
-  userPrefs?: UserPrefs
   opened?: boolean
   className?: string
   onSave?: (data: GenshinCharacterUserData) => void

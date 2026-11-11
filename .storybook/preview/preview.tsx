@@ -1,10 +1,12 @@
 import { HocComposer, RoutingService } from '@design-system'
 import { type Preview } from '@storybook/react-vite'
 import { I18nProvider, initClientI18n } from '../../src/core/i18n'
+import { useUserAssetsStore } from '../../src/shared/state/use-user-assets'
 import { argTypesEnhancers, getDocsConfig, getStoryConfig, mockNavigate, toolbarConfig } from './_preview-config'
 import './styles/index.css'
 
 initClientI18n()
+useUserAssetsStore.getState().loadUserAssets()
 
 const hoc = HocComposer.hoc
 const providers = [

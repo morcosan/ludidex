@@ -1,5 +1,5 @@
 import { CrownIcon, HeartIcon } from 'lucide-react'
-import { type RatingValue } from '../../data/settings'
+import { type RatingValue } from '../../data'
 
 export interface RatingIconProps extends ReactProps {
   value: RatingValue

@@ -1,8 +1,9 @@
 import { Card, TextField } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data/genshin'
-import { packTeamId } from '../../state/types'
+import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
+import { useUserDataStore } from '../../state/use-user-data'
+import { packTeamId } from '../../state/utils'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
 import { formatUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
@@ -19,18 +20,9 @@ import { type TeamCardProps } from './_types'
 export { type TeamCardProps }
 
 export const TeamCard = (props: TeamCardProps) => {
-  const {
-    team,
-    userData,
-    userPrefs,
-    userSettings,
-    opened = true,
-    className,
-    onClose,
-    onChangeSettings,
-    onDelete,
-  } = props
+  const { team, opened = true, className, onClose, onDelete } = props
   const { t } = useTranslation()
+  const userData = useUserDataStore((state) => state.userData?.genshin)
   const {
     draft,
     hasChanges,
@@ -137,7 +129,6 @@ export const TeamCard = (props: TeamCardProps) => {
         <CardBanner
           banner={<div className="bg-color-grey-9 aspect-3/2 rounded-md object-cover" />}
           editing={isEditing}
-          userPrefs={userPrefs}
           ratingValue={draft.rating}
           onChangeRating={handleRatingChange}
         />
@@ -227,13 +218,9 @@ export const TeamCard = (props: TeamCardProps) => {
       <CharacterModal
         opened={isCharModalOpen}
         title={t('general.action.selectTeamMembers')}
-        userData={userData}
-        userPrefs={userPrefs}
-        userSettings={userSettings}
         selection={memberSelection}
         onSelect={handleSelectMember}
         onChangeSlot={setMemberIndex}
-        onChangeSettings={onChangeSettings}
         onClose={() => {
           setIsCharModalOpen(false)
           setHasChangedMembers(true)

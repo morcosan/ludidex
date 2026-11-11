@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { type UserData } from './types'
-import { migrate_vn1_to_v0 } from './versions/migrate_vn1_to_v0'
-import { UserDataSchema_v0 } from './versions/schema_v0'
-import { UserDataSchema_vn1 } from './versions/schema_vn1'
+import { type UserData } from '../types'
+import { migrate_vn1_to_v0 } from './migrate_vn1_to_v0'
+import { UserDataSchema_v0 } from './v0'
+import { UserDataSchema_vn1 } from './vn1'
 
 const getLabelOverrides = <K extends PropertyKey>(labels: Partial<Record<K, string>>, defaults: Record<K, string>) => {
   const overrides: Partial<Record<K, string>> = {}

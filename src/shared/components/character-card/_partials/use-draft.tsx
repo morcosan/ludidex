@@ -1,7 +1,8 @@
 import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { RATING_VALUES, type CharacterStatus, type RatingValue, type TierListValue } from '../../../data/settings'
+import { RATING_VALUES, type CharacterStatus, type RatingValue, type TierListValue } from '../../../data'
 import { type GenshinCharacterUserData } from '../../../state/types'
+import { useUserDataStore } from '../../../state/use-user-data'
 import { parseTags, toNumber } from '../../../utils/various'
 import {
   type CharacterCardProps,
@@ -97,7 +98,8 @@ const buildCharacter = (draft: CharacterDraft): GenshinCharacterUserData => {
 }
 
 export const useDraft = (props: CharacterCardProps) => {
-  const { character, userData, onSave } = props
+  const { character, onSave } = props
+  const userData = useUserDataStore((state) => state.userData?.genshin?.characters?.[character.id])
   const [draft, setDraft] = useState<CharacterDraft>(() => createDraft(userData))
   const [isEditing, setIsEditing] = useState(false)
   const hasChanges = !isEqual(buildCharacter(draft), buildCharacter(createDraft(userData)))

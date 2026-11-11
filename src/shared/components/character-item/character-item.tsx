@@ -1,6 +1,5 @@
 import { Card } from '@design-system'
-import { type GenshinCharacter } from '../../data/genshin'
-import { type CharacterStatus } from '../../data/settings'
+import { type CharacterStatus, type GenshinCharacter } from '../../data'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 
 interface ClassNames {

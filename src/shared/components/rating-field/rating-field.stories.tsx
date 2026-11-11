@@ -1,7 +1,7 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Fragment, useEffect, useState } from 'react'
-import { RATING_LABELS, RATING_VALUES, type RatingValue } from '../../data/settings'
+import { RATING_LABELS, RATING_VALUES, type RatingValue } from '../../data'
 import { RatingField, type RatingFieldProps } from './rating-field'
 
 const meta: Meta = {

@@ -1,8 +1,8 @@
 import { Card, IconButton } from '@design-system'
 import { XIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { type GenshinCharacter } from '../../../data/genshin'
-import { type GenshinUserData } from '../../../state/types'
+import { type GenshinCharacter } from '../../../data'
+import { useUserDataStore } from '../../../state/use-user-data'
 import { CharacterItem } from '../../character-item/character-item'
 
 export interface CharacterModalSelection {
@@ -12,13 +12,13 @@ export interface CharacterModalSelection {
 
 interface SelectionSlotsProps {
   selection: CharacterModalSelection
-  userData?: GenshinUserData
   onChangeSlot?: (slotIndex: number) => void
   onClearSlot?: (slotIndex: number) => void
 }
 
 export const SelectionSlots = (props: SelectionSlotsProps) => {
-  const { selection, userData, onChangeSlot, onClearSlot } = props
+  const { selection, onChangeSlot, onClearSlot } = props
+  const characters = useUserDataStore((state) => state.userData?.genshin?.characters)
   const { t } = useTranslation()
 
   const isSlotSelected = (slotIndex: number) => selection.index === slotIndex
@@ -41,7 +41,7 @@ export const SelectionSlots = (props: SelectionSlotsProps) => {
             <>
               <CharacterItem
                 character={slot}
-                status={userData?.characters?.[slot.id]?.status}
+                status={characters?.[slot.id]?.status}
                 size="sm"
                 selected={isSlotSelected(index)}
                 onClick={() => onClickSlot(index)}

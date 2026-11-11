@@ -1,16 +1,14 @@
 import { Button, IconButton } from '@design-system'
 import { useTranslation } from 'react-i18next'
 import {
-  GENSHIN_ELEMENT_ICONS,
   GENSHIN_ELEMENTS,
-  GENSHIN_NATION_ICONS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPON_ICONS,
   GENSHIN_WEAPONS,
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
-} from '../../data/genshin'
+} from '../../data'
+import { useUserAssetsStore } from '../../state/use-user-assets'
 
 export interface FiltersBarValue {
   elements: GenshinElement[]
@@ -29,6 +27,10 @@ export interface FiltersBarProps extends ReactProps {
 export const FiltersBar = (props: FiltersBarProps) => {
   const { value, surface = 'glass', className, onChange } = props
   const { t } = useTranslation()
+  const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
+  const elementIcons = getElementIcons()
+  const weaponIcons = getWeaponIcons()
+  const nationIcons = getNationIcons()
   const hasFilters = value.elements.length > 0 || value.weapons.length > 0 || value.nations.length > 0
 
   const groupClass = cx(
@@ -53,11 +55,11 @@ export const FiltersBar = (props: FiltersBarProps) => {
           <IconButton
             key={element}
             size="sm"
-            tooltip={element}
+            tooltip={t(`game.elements.${element}`)}
             state={value.elements.includes(element) ? 'selected' : 'active'}
             onClick={() => onChange?.({ ...value, elements: toggleFilter(value.elements, element) })}
           >
-            <img src={GENSHIN_ELEMENT_ICONS[element][0]} alt="" className="h-sm-0 w-sm-0" />
+            <img src={elementIcons[element][0]} alt="" className="h-sm-0 w-sm-0" />
           </IconButton>
         ))}
       </div>
@@ -68,11 +70,11 @@ export const FiltersBar = (props: FiltersBarProps) => {
           <IconButton
             key={weapon}
             size="sm"
-            tooltip={weapon}
+            tooltip={t(`game.weapons.${weapon}`)}
             state={value.weapons.includes(weapon) ? 'selected' : 'active'}
             onClick={() => onChange?.({ ...value, weapons: toggleFilter(value.weapons, weapon) })}
           >
-            <img src={GENSHIN_WEAPON_ICONS[weapon][0]} alt="" className="h-sm-0 w-sm-0 brightness-90" />
+            <img src={weaponIcons[weapon][0]} alt="" className="h-sm-0 w-sm-0 brightness-90" />
           </IconButton>
         ))}
       </div>
@@ -83,14 +85,14 @@ export const FiltersBar = (props: FiltersBarProps) => {
           <IconButton
             key={nation}
             size="sm"
-            tooltip={nation === 'None' ? 'N/A' : nation}
+            tooltip={t(`game.nations.${nation}`)}
             state={value.nations.includes(nation) ? 'selected' : 'active'}
             onClick={() => onChange?.({ ...value, nations: toggleFilter(value.nations, nation) })}
           >
-            {GENSHIN_NATION_ICONS[nation][0] ? (
-              <img src={GENSHIN_NATION_ICONS[nation][0]} alt="" className="h-sm-0 w-sm-0 brightness-40" />
+            {nationIcons[nation][0] ? (
+              <img src={nationIcons[nation][0]} alt="" className="h-sm-0 w-sm-0 brightness-40" />
             ) : (
-              <span className="text-size-xs text-color-text-placeholder">N/A</span>
+              <span className="text-size-xs text-color-text-placeholder">{t('game.nations.none')}</span>
             )}
           </IconButton>
         ))}

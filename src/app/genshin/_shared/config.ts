@@ -4,7 +4,7 @@ import {
   GENSHIN_NATIONS,
   GENSHIN_WEAPONS,
   type GenshinCharacter,
-} from '@app-shared/data/genshin'
+} from '@app-shared/data'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { type FilterValues } from '@app-shared/utils/use-filter-params'
 

@@ -1,7 +1,7 @@
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Fragment, useEffect, useState } from 'react'
-import { TIER_LIST_LABELS, TIER_LIST_VALUES, type TierListValue } from '../../data/settings'
+import { TIER_LIST_LABELS, TIER_LIST_VALUES, type TierListValue } from '../../data'
 import { TierListField, type TierListFieldProps } from './tier-list-field'
 
 const meta: Meta = {

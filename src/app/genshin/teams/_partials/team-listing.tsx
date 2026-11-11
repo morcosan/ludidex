@@ -1,5 +1,6 @@
 import { TeamItem } from '@app-shared/components'
 import { type GenshinTeam, type ItemSize } from '@app-shared/state/types'
+import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { type ViewType } from '@app-shared/utils/use-view-options'
 import { type RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,16 +30,16 @@ const SIZE_CLASSES: Record<ItemSize, ItemSizeClass> = {
 interface TeamListingProps extends ReactProps {
   teams: GenshinTeam[]
   viewType: TeamViewType
-  itemSize: ItemSize
   selectedTeamId?: string
   scrollRef?: RefObject<HTMLDivElement | null>
   onClickItem?: (team: GenshinTeam) => void
 }
 
 export const TeamListing = (props: TeamListingProps) => {
-  const { teams, viewType, itemSize, selectedTeamId, scrollRef, className, onClickItem } = props
+  const { teams, viewType, selectedTeamId, scrollRef, className, onClickItem } = props
   const { t } = useTranslation()
-  const classNames = SIZE_CLASSES[itemSize]
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const classNames = SIZE_CLASSES[userSettings.teamItemSize]
 
   const isTierListView = viewType === 'rating'
   const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap', classNames.list)
@@ -50,7 +51,12 @@ export const TeamListing = (props: TeamListingProps) => {
 
   const renderItem = (team: GenshinTeam) => (
     <li key={team.id}>
-      <TeamItem team={team} size={itemSize} selected={team.id === selectedTeamId} onClick={onClickItem} />
+      <TeamItem
+        team={team}
+        size={userSettings.teamItemSize}
+        selected={team.id === selectedTeamId}
+        onClick={onClickItem}
+      />
     </li>
   )
 

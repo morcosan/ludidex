@@ -1,16 +1,14 @@
 import { SelectField, type SelectOption } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type CharacterLabel, type ItemSize, type UserSettings } from '../../state/types'
+import { type CharacterLabel, type ItemSize } from '../../state/types'
+import { useUserSettingsStore } from '../../state/use-user-settings'
 import { PageSection } from '../page-section/page-section'
 
-export interface AppearanceSectionProps extends ReactProps {
-  userSettings?: UserSettings | null
-  onChange?: (userSettings: UserSettings) => void
-}
-
-export const AppearanceSection = (props: AppearanceSectionProps) => {
-  const { userSettings, className, onChange } = props
+export const AppearanceSection = (props: ReactProps) => {
+  const { className } = props
   const { t } = useTranslation()
+  const userSettings = useUserSettingsStore((state) => state.userSettings)
+  const updateUserSettings = useUserSettingsStore((state) => state.updateUserSettings)
 
   const itemSizeOptions: SelectOption<ItemSize>[] = [
     { value: 'sm', label: t('general.label.small') },
@@ -41,41 +39,35 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
         <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
         <SelectField
           id="char-label-top"
-          value={userSettings?.charLabelTop ?? ''}
+          value={userSettings.charLabelTop ?? ''}
           options={charLabelOptions}
           size="xs"
-          clearable={Boolean(userSettings?.charLabelTop)}
+          clearable={Boolean(userSettings.charLabelTop)}
           className={fieldClass}
-          onChange={(value) =>
-            userSettings && onChange?.({ ...userSettings, charLabelTop: value ? (value as CharacterLabel) : null })
-          }
+          onChange={(value) => updateUserSettings({ charLabelTop: value ? (value as CharacterLabel) : null })}
         />
       </div>
       <div className={settingClass}>
         <span className="text-size-sm">{t('general.label.labelOnBottom')}</span>
         <SelectField
           id="char-label-bottom"
-          value={userSettings?.charLabelBottom ?? ''}
+          value={userSettings.charLabelBottom ?? ''}
           options={charLabelOptions}
           size="xs"
-          clearable={Boolean(userSettings?.charLabelBottom)}
+          clearable={Boolean(userSettings.charLabelBottom)}
           className={fieldClass}
-          onChange={(value) =>
-            userSettings && onChange?.({ ...userSettings, charLabelBottom: value ? (value as CharacterLabel) : null })
-          }
+          onChange={(value) => updateUserSettings({ charLabelBottom: value ? (value as CharacterLabel) : null })}
         />
       </div>
       <div className={settingClass}>
         <span className="text-size-sm">{t('general.label.itemSize')}</span>
         <SelectField
           id="char-item-size"
-          value={userSettings?.charItemSize ?? 'md'}
+          value={userSettings.charItemSize}
           options={itemSizeOptions}
           size="xs"
           className={fieldClass}
-          onChange={(value) =>
-            value && userSettings && onChange?.({ ...userSettings, charItemSize: value as ItemSize })
-          }
+          onChange={(value) => value && updateUserSettings({ charItemSize: value as ItemSize })}
         />
       </div>
     </PageSection>

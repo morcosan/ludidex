@@ -1,18 +1,19 @@
+import { z } from 'zod'
 import { create } from 'zustand'
-import { type ItemSize, type UserSettings, UserSettingsSchema } from './types'
+import { type UserSettings } from './types'
+import { UserSettingsSchema } from './user-settings'
 
 const STORAGE_KEY = 'app-user-settings'
 
 interface UserSettingsStore {
-  userSettings: UserSettings | null
-  loadUserSettings(): void
-  saveUserSettings(): void
-  setUserSettings(userSettings: UserSettings): void
-  setTeamItemSize(teamItemSize: ItemSize): void
+  userSettings: UserSettings
+  loadUserSettings: () => void
+  saveUserSettings: () => void
+  updateUserSettings: (userSettings: Partial<UserSettings>) => void
 }
 
 const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
-  userSettings: null,
+  userSettings: UserSettingsSchema.parse({}),
 
   loadUserSettings() {
     const stored = localStorage.getItem(STORAGE_KEY)
@@ -20,23 +21,20 @@ const useUserSettingsStore = create<UserSettingsStore>((set, get) => ({
     try {
       set({ userSettings: UserSettingsSchema.parse(JSON.parse(stored)) })
     } catch (error) {
-      console.error(`Failed parsing '${STORAGE_KEY}' from local storage\n`, error)
+      console.error(
+        `Failed parsing '${STORAGE_KEY}' from local storage\n`,
+        error instanceof z.ZodError ? z.prettifyError(error) : error,
+      )
     }
   },
 
   saveUserSettings() {
     const { userSettings } = get()
-    if (!userSettings) return
     localStorage.setItem(STORAGE_KEY, JSON.stringify(userSettings))
   },
 
-  setUserSettings(userSettings: UserSettings) {
-    set({ userSettings })
-    get().saveUserSettings()
-  },
-
-  setTeamItemSize(teamItemSize: ItemSize) {
-    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, teamItemSize }) }))
+  updateUserSettings(userSettings: Partial<UserSettings>) {
+    set((state) => ({ userSettings: UserSettingsSchema.parse({ ...state.userSettings, ...userSettings }) }))
     get().saveUserSettings()
   },
 }))

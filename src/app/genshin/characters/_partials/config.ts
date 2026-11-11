@@ -1,12 +1,22 @@
-import type { GenshinCharacter } from '@app-shared/data'
-import type { CharacterLabel, GenshinCharacterUserData } from '@app-shared/state/types'
+import {
+  CHARACTER_STATUSES,
+  GENSHIN_ELEMENTS,
+  GENSHIN_NATIONS,
+  GENSHIN_WEAPONS,
+  type GenshinCharacter,
+} from '@app-shared/data'
+import { type CharacterLabel, type GenshinCharacterUserData } from '@app-shared/state/types'
 import { VIEW_TYPES } from '@app-shared/utils/use-view-options'
-import { GENSHIN_FILTERS } from '../../_shared/config'
 
 type CharacterViewType = (typeof CHARACTER_VIEW_TYPES)[number]
 type SortingViewType = Extract<CharacterViewType, `sort-${string}`>
 
-const CHARACTER_FILTERS = GENSHIN_FILTERS
+const CHARACTER_FILTERS = {
+  elements: GENSHIN_ELEMENTS,
+  statuses: CHARACTER_STATUSES,
+  weapons: GENSHIN_WEAPONS,
+  nations: GENSHIN_NATIONS,
+}
 
 const CHARACTER_VIEW_TYPES = VIEW_TYPES
 

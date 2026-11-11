@@ -1,3 +1,4 @@
+import { sortByName } from '@app-shared/utils/various'
 import { Modal } from '@design-system'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,31 +32,40 @@ export const CharacterModal = (props: CharacterModalProps) => {
   const { opened, title, selection } = props
   const { onSelect, onChangeSlot, onClose } = props
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
-  const [search, setSearch] = useState('')
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const { getLabel } = useCharacterLabel()
 
-  const lcSearch = search.trim().toLocaleLowerCase()
+  const lcSearch = (filters.search ?? '').trim().toLocaleLowerCase()
 
   const characters = GENSHIN_CHARACTERS.filter((character) => {
     const status = userData?.characters?.[character.id]?.status
     const hasSearch = character.name.toLocaleLowerCase().includes(lcSearch)
     return (
       hasSearch &&
-      (filters.elements.length === 0 || filters.elements.includes(character.element)) &&
-      (filters.statuses.length === 0 || (status && filters.statuses.includes(status))) &&
-      (filters.weapons.length === 0 || filters.weapons.includes(character.weapon)) &&
-      (filters.nations.length === 0 || filters.nations.includes(character.nation))
+      (!filters.elements?.length || filters.elements.includes(character.element)) &&
+      (!filters.statuses?.length || (status && filters.statuses.includes(status))) &&
+      (!filters.weapons?.length || filters.weapons.includes(character.weapon)) &&
+      (!filters.nations?.length || filters.nations.includes(character.nation))
     )
-  }).sort((characterA, characterB) => characterA.name.localeCompare(characterB.name))
+  }).sort(sortByName)
 
   const getCharSlotIndex = (char: GenshinCharacter) => selection?.slots.findIndex((slot) => slot?.id === char.id) ?? -1
 
   const onClickOption = (character: GenshinCharacter) => {
-    if (getCharSlotIndex(character) > -1) return
-    selection ? onSelect?.(character, selection.index) : onSelect?.(character)
+    if (!selection) {
+      onSelect?.(character)
+      return
+    }
+
+    const slotIndex = getCharSlotIndex(character)
+    if (slotIndex > -1) {
+      onSelect?.(null, slotIndex)
+      onChangeSlot?.(slotIndex)
+    } else {
+      onSelect?.(character, selection.index)
+    }
   }
 
   return (
@@ -80,13 +90,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
         )}
 
         <div className="pr-xs-0 gap-sm-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
-          <FiltersSection
-            filters={filters}
-            search={search}
-            surface="paper"
-            onChange={setFilters}
-            onSearch={setSearch}
-          />
+          <FiltersSection filters={filters} surface="paper" onChange={setFilters} />
           <AppearanceSection className="pb-xs-9" />
         </div>
       </div>

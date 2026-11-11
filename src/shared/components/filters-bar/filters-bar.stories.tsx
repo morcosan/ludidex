@@ -7,7 +7,7 @@ const meta: Meta = {
   title: 'App / Components / Filters Bar',
   ...defineMeta(FiltersBar, {
     props: {
-      value: {
+      filters: {
         elements: [],
         weapons: [],
         nations: [],
@@ -15,18 +15,18 @@ const meta: Meta = {
       className: '',
     },
     events: ['onChange'],
-    clearDefaults: ['value'],
+    clearDefaults: ['filters'],
 
     render: (props: FiltersBarProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [value, setValue] = useState(props.value)
+      const [value, setValue] = useState(props.filters)
 
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
-        setValue(props.value)
-      }, [props.value])
+        setValue(props.filters)
+      }, [props.filters])
 
-      return <FiltersBar {...props} value={value} onChange={setValue} />
+      return <FiltersBar {...props} filters={value} onChange={setValue} />
     },
   }),
 }

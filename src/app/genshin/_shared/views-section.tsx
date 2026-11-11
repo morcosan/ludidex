@@ -3,13 +3,13 @@ import { type ViewOption, type ViewType } from '@app-shared/utils/use-view-optio
 import { Button } from '@design-system'
 import { useTranslation } from 'react-i18next'
 
-interface ViewSectionProps<T extends ViewType> extends ReactProps {
+interface ViewsSectionProps<T extends ViewType> extends ReactProps {
   viewType: T
   viewOptions: readonly ViewOption<T>[]
   onChangeView: (viewType: T) => void
 }
 
-export const ViewListing = <T extends ViewType>(props: ViewSectionProps<T>) => {
+export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) => {
   const { viewType, viewOptions, className, onChangeView } = props
   const { t } = useTranslation()
 

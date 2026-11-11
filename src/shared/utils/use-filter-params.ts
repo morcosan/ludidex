@@ -1,15 +1,19 @@
+import { type Filters } from '@app-shared/components'
 import { useSearchParams } from 'react-router'
 
-export type FilterConfig = Record<string, readonly string[]>
-export type FilterValues<T extends FilterConfig> = {
-  [K in keyof T]: T[K][number][]
+type FilterKey = keyof Omit<Filters, 'search'>
+
+export type FilterConfig = {
+  [K in FilterKey]?: readonly NonNullable<Filters[K]>[number][]
 }
 
-export const useFilterParams = <T extends FilterConfig>(config: T) => {
+export type FilterParams = Filters & { search: string }
+
+export const useFilterParams = (config: FilterConfig) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const filters = _utils.parseFilters(searchParams, config)
 
-  const handleFiltersChange = (newFilters: FilterValues<T>) => {
+  const handleFiltersChange = (newFilters: Filters) => {
     setSearchParams((params) => {
       _utils.setFilterParams(params, config, newFilters)
       return params
@@ -29,23 +33,39 @@ const _utils = {
     return [...new Set(values)].filter((item): item is T => allowed.includes(item))
   },
 
-  parseFilters: <T extends FilterConfig>(params: URLSearchParams, config: T): FilterValues<T> => {
-    return Object.fromEntries(
-      Object.entries(config).map(([key, allValues]) => [key, _utils.parseValues(params.get(key), allValues)]),
-    ) as unknown as FilterValues<T>
+  parseFilters: (params: URLSearchParams, config: FilterConfig): FilterParams => {
+    const filters = Object.fromEntries(
+      Object.entries(config).map(([key, allValues]) => [
+        key,
+        _utils.parseValues(params.get(key), allValues ?? []),
+      ]),
+    ) as unknown as FilterParams
+
+    filters.search = params.get('search') ?? ''
+    return filters
   },
 
-  setValues: (params: URLSearchParams, key: string, values: readonly string[]) => {
-    if (!values.length) {
+  setValue: (params: URLSearchParams, key: string, value: string) => {
+    if (!value) {
       params.delete(key)
       return
     }
-    params.set(key, values.join(','))
+    params.set(key, value)
   },
 
-  setFilterParams: <T extends FilterConfig>(params: URLSearchParams, config: T, filters: FilterValues<T>) => {
+  setValues: (params: URLSearchParams, key: string, values: readonly string[]) => {
+    _utils.setValue(params, key, values.join(','))
+  },
+
+  setFilterParams: (params: URLSearchParams, config: FilterConfig, filters: Filters) => {
     Object.keys(config).forEach((key) => {
-      _utils.setValues(params, key, filters[key as keyof T])
+      const values = filters[key as FilterKey]
+      if (values === undefined) return
+      _utils.setValues(params, key, values)
     })
+
+    if (filters.search !== undefined) {
+      _utils.setValue(params, 'search', filters.search)
+    }
   },
 }

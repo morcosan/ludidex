@@ -12,10 +12,9 @@ const meta: Meta = {
         statuses: [],
         weapons: [],
         nations: [],
+        search: '',
       },
-      search: '',
       className: '',
-      classNames: { body: '' },
     },
     events: ['onChange'],
     clearDefaults: ['filters'],
@@ -23,20 +22,13 @@ const meta: Meta = {
     render: (props: FiltersSectionProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [value, setValue] = useState(props.filters)
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [search, setSearch] = useState(props.search || '')
 
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         setValue(props.filters)
       }, [props.filters])
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        setSearch(props.search || '')
-      }, [props.search])
-
-      return <FiltersSection {...props} filters={value} search={search} onChange={setValue} onSearch={setSearch} />
+      return <FiltersSection {...props} filters={value} onChange={setValue} />
     },
   }),
 }

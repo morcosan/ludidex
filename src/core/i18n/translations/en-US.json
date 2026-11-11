@@ -25,6 +25,7 @@
       "saveChanges": "Save changes",
       "searchCharacters": "Search characters",
       "searchSettings": "Search settings",
+      "searchTeams": "Search teams",
       "selectTeamMembers": "Select team members",
       "sort": "Sort",
       "upload": "Upload"
@@ -39,6 +40,7 @@
       "dataSize": "Data size",
       "dataValues": "Data values",
       "default": "Default",
+      "emptySlot": "Empty slot",
       "exportData": "Export data",
       "filters": "Filters",
       "home": "Home",

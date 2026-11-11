@@ -32,7 +32,7 @@ export const MemberItem = ({ character, status, editing, onClick }: MemberItemPr
       >
         {character ? (
           <>
-            <CharacterAvatar character={character} status={status} className="h-sm-5 w-sm-5 shrink-0" />
+            <CharacterAvatar character={character} status={status} className="h-sm-5 w-sm-5" />
 
             <span className="gap-xs-2 flex min-w-0 flex-1 flex-col">
               <span className="text-size-md font-weight-lg truncate leading-1">{character.name}</span>

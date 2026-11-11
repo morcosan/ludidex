@@ -1,16 +1,17 @@
-import { Breadcrumb, FiltersBar, TeamCard } from '@app-shared/components'
+import { Breadcrumb, FiltersBar, TeamCard, type Filters } from '@app-shared/components'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { unpackTeamId } from '@app-shared/state/utils'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useFilterParams } from '@app-shared/utils/use-filter-params'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
+import { sortByName } from '@app-shared/utils/various'
 import { IconButton } from '@design-system'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { filterTeamsByChars } from '../_shared/config'
 import { PreviewDrawer } from '../_shared/preview-drawer'
+import { useFilterUtils } from '../_shared/use-filter-utils'
 import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_partials/config'
 import { SidePanel } from './_partials/side-panel'
 import { TeamListing } from './_partials/team-listing'
@@ -18,16 +19,17 @@ import { TeamListing } from './_partials/team-listing'
 export default function Page() {
   const { t } = useTranslation()
   const teamData = useUserDataStore((state) => state.userData?.genshin?.teams)
+  const { countFilters, filterTeams } = useFilterUtils()
   const userTeams = useMemo((): GenshinTeam[] => {
     return Object.entries(teamData ?? {})
       .map(([id, team]): GenshinTeam => ({ ...team, id, charIds: unpackTeamId(id) }))
-      .sort((teamA, teamB) => teamA.name.localeCompare(teamB.name))
+      .sort(sortByName)
   }, [teamData])
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const { filters, handleFiltersChange } = useFilterParams(TEAM_FILTERS)
+  const { filters, handleFiltersChange: updateFilterParams } = useFilterParams(TEAM_FILTERS)
+  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(TEAM_VIEW_TYPES, 'default')
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(TEAM_VIEW_TYPES, 'default')
   const [emptyTeams, setEmptyTeams] = useState<GenshinTeam[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
   const canScrollRef = useRef(false)
@@ -40,8 +42,14 @@ export default function Page() {
 
   const previewTeam = [...userTeams, ...emptyTeams].find((team) => team.id === previewTeamId)
   const isEmptyPreview = emptyTeams.some((team) => team.id === previewTeamId)
-  const currTeams = [...filterTeamsByChars(userTeams, filters), ...emptyTeams]
-  const filtersCount = filters.elements.length + filters.weapons.length + filters.nations.length
+  const currTeams = [...filterTeams(userTeams, filters), ...emptyTeams]
+  const filtersCount = countFilters(filters)
+  const topBarFilters: Filters = { search: filters.search, elements: filters.elements }
+  const sectionFilters: Filters = { statuses: filters.statuses, weapons: filters.weapons, nations: filters.nations }
+
+  const handleFiltersChange = (newFilters: Filters) => {
+    updateFilterParams({ ...filters, ...newFilters })
+  }
 
   const handleClickTeam = (team: GenshinTeam) => {
     if (isPreviewOpen && previewTeamId === team.id) {
@@ -93,7 +101,12 @@ export default function Page() {
     <div className="flex h-full">
       {/* LEFT SIDE */}
       <div className="relative flex h-full flex-1 flex-col">
-        <FiltersBar value={filters} className="mb-xs-5" onChange={handleFiltersChange} />
+        <FiltersBar
+          filters={topBarFilters}
+          type="teams"
+          className="mb-xs-5 justify-between"
+          onChange={handleFiltersChange}
+        />
 
         <h1 className="flex">
           <Breadcrumb first>
@@ -101,6 +114,7 @@ export default function Page() {
           </Breadcrumb>
           <Breadcrumb>{viewLabel}</Breadcrumb>
           {filtersCount > 0 && <Breadcrumb>{t('general.format.withFilters', { count: filtersCount })}</Breadcrumb>}
+          {filters.search && <Breadcrumb>{t('general.format.withSearch', { keyword: filters.search })}</Breadcrumb>}
         </h1>
 
         {/* LISTING */}
@@ -127,11 +141,14 @@ export default function Page() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="min-w-character-card mx-xs-3 relative h-full">
+      <div className="w-character-card mx-xs-3 relative h-full">
         <SidePanel
+          filters={sectionFilters}
+          otherFilters={topBarFilters}
           viewType={viewType}
           viewOptions={viewOptions}
           className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
+          onChangeFilters={handleFiltersChange}
           onChangeView={handleViewChange}
         />
 

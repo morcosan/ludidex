@@ -45,6 +45,8 @@ const parseTags = (value: string) => {
     .filter(Boolean)
 }
 
+const sortByName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)
+
 const toNumber = (value: string) => {
   if (!value.trim()) return undefined
   const parsed = Number(value)
@@ -69,6 +71,7 @@ export {
   isPathUnderSegment,
   parseTags,
   roundValue,
+  sortByName,
   toNumber,
   withAlpha,
 }

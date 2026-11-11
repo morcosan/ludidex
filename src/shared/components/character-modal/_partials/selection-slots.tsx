@@ -1,5 +1,4 @@
-import { Card, IconButton } from '@design-system'
-import { XIcon } from 'lucide-react'
+import { Card } from '@design-system'
 import { useTranslation } from 'react-i18next'
 import { type GenshinCharacter } from '../../../data'
 import { useUserDataStore } from '../../../state/use-user-data'
@@ -18,46 +17,31 @@ interface SelectionSlotsProps {
 
 export const SelectionSlots = (props: SelectionSlotsProps) => {
   const { selection, onChangeSlot, onClearSlot } = props
-  const characters = useUserDataStore((state) => state.userData?.genshin?.characters)
   const { t } = useTranslation()
+  const characters = useUserDataStore((state) => state.userData?.genshin?.characters)
 
   const isSlotSelected = (slotIndex: number) => selection.index === slotIndex
 
   const onClickSlot = (slotIndex: number) => {
-    if (isSlotSelected(slotIndex)) return
     onChangeSlot?.(slotIndex)
-  }
-
-  const onClickClearSlot = (slotIndex: number, event: ReactMouseEvent) => {
-    event.stopPropagation()
     onClearSlot?.(slotIndex)
   }
 
   return (
     <ul className="py-xs-0 gap-xs-5 flex">
       {selection.slots.map((slot, index) => (
-        <li key={index} className="relative">
+        <li key={index}>
           {slot ? (
-            <>
-              <CharacterItem
-                character={slot}
-                status={characters?.[slot.id]?.status}
-                size="sm"
-                selected={isSlotSelected(index)}
-                onClick={() => onClickSlot(index)}
-              />
-              <IconButton
-                tooltip={t('general.action.clear')}
-                size="xs"
-                floating
-                className="-top-xs-2 -right-xs-2 absolute! z-10"
-                onClick={(event) => onClickClearSlot(index, event)}
-              >
-                <XIcon aria-hidden className="h-xs-6 w-xs-6" />
-              </IconButton>
-            </>
+            <CharacterItem
+              character={slot}
+              status={characters?.[slot.id]?.status}
+              size="sm"
+              selected={isSlotSelected(index)}
+              onClick={() => onClickSlot(index)}
+            />
           ) : (
             <Card
+              tooltip={t('general.label.emptySlot')}
               state={isSlotSelected(index) ? 'selected' : 'active'}
               classNames={{ surface: 'p-px!' }}
               onClick={() => onClickSlot(index)}

@@ -1,11 +1,10 @@
-import { create } from 'zustand'
 import { z } from 'zod'
+import { create } from 'zustand'
 import { type GenshinElement, type GenshinNation, type GenshinWeaponType } from '../data'
 import { type UserAssets } from './types'
 import { USER_ASSETS } from './user-assets/data'
 import {
   getCharacterBanners,
-  getCharacterCards,
   getCharacterIcons,
   getElementIcons,
   getGameBackgrounds,
@@ -26,7 +25,6 @@ interface UserAssetsStore {
   getWeaponIcons: () => Record<GenshinWeaponType, string[]>
   getNationIcons: () => Record<GenshinNation, string[]>
   getCharacterIcons: (characterId: string) => string[]
-  getCharacterCards: (characterId: string) => string[]
   getCharacterBanners: (characterId: string) => string[]
 }
 
@@ -69,10 +67,6 @@ const useUserAssetsStore = create<UserAssetsStore>((set, get) => ({
 
   getCharacterIcons(characterId) {
     return getCharacterIcons(characterId, get().userAssets)
-  },
-
-  getCharacterCards(characterId) {
-    return getCharacterCards(characterId, get().userAssets)
   },
 
   getCharacterBanners(characterId) {

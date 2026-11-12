@@ -1,7 +1,8 @@
-import { Card, TextField } from '@design-system'
+import { Card, Image, TextField } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
+import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data'
+import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
@@ -23,6 +24,7 @@ export const TeamCard = (props: TeamCardProps) => {
   const { team, opened = true, className, onClose, onDelete } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
+  const { getCharacterBanners } = useUserAssetsStore()
   const {
     draft,
     hasChanges,
@@ -122,12 +124,33 @@ export const TeamCard = (props: TeamCardProps) => {
     onDelete?.(team)
   }
 
+  const imageFilterClass = cx('pointer-events-none absolute inset-0 brightness-20')
+
   return (
     <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
         <CardBanner
-          banner={<div className="bg-color-grey-9 aspect-3/2 rounded-md object-cover" />}
+          banner={
+            <div className="relative flex aspect-5/3 overflow-hidden rounded-md">
+              {members
+                .filter((member) => member)
+                .map((member) => (
+                  <div
+                    key={member.id}
+                    className={cx(
+                      'relative h-full flex-1',
+                      !isEditing && 'duration-sm transition-[flex-grow] ease-in hover:grow-4',
+                    )}
+                    style={{ '--element-color': GENSHIN_ELEMENT_COLORS[member.element] }}
+                  >
+                    <div className={cx('bg-(--element-color)', imageFilterClass)} />
+                    <Image srcs={getCharacterBanners(member.id)} className="relative size-full object-cover" />
+                    <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
+                  </div>
+                ))}
+            </div>
+          }
           editing={isEditing}
           ratingValue={draft.rating}
           onChangeRating={handleRatingChange}

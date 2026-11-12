@@ -59,7 +59,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
     onClose?.()
   }
 
-  const imageFilterClass = cx('pointer-events-none absolute inset-0 rounded-md brightness-20')
+  const imageFilterClass = cx('pointer-events-none absolute inset-0 brightness-20')
 
   return (
     <Card
@@ -71,11 +71,17 @@ export const CharacterCard = (props: CharacterCardProps) => {
         {/* BANNER */}
         <CardBanner
           banner={
-            <>
+            <div className="relative flex aspect-4/3 overflow-hidden rounded-md">
               <div className={cx('bg-(--element-color)', imageFilterClass)} />
-              <Image srcs={bannerSrcs} className="pointer-events-none relative aspect-3/2 object-cover" />
+              <Image
+                srcs={bannerSrcs}
+                className={cx(
+                  'relative size-full object-cover',
+                  !isEditing && 'duration-sm transition-transform ease-in hover:scale-125',
+                )}
+              />
               <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
-            </>
+            </div>
           }
           editing={isEditing}
           ratingValue={draft.rating}

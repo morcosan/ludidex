@@ -61,7 +61,6 @@ const GenshinCharactersSchema_v0 = z.object({
   }),
   paths: z.object({
     icons: z.partialRecord(z.enum(GENSHIN_CHARACTER_IDS), PathsSchema_v0),
-    cards: z.partialRecord(z.enum(GENSHIN_CHARACTER_IDS), PathsSchema_v0),
     banners: z.partialRecord(z.enum(GENSHIN_CHARACTER_IDS), PathsSchema_v0),
   }),
 })

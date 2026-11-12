@@ -8,7 +8,7 @@ export const CSS_PREFIX__DURATION = '--ds-duration-'
 export const TOKENS__DURATION = {
   xs: { value: '0.1s' },
   sm: { value: '0.2s' },
-  md: { value: '0.4s' },
-  lg: { value: '0.6s' },
-  xl: { value: '1.0s' },
+  md: { value: '0.35s' },
+  lg: { value: '0.5s' },
+  xl: { value: '0.8s' },
 } as const

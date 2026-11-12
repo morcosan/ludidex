@@ -86,15 +86,11 @@ const getNationIcons = (userAssets?: UserAssets | null): Record<GenshinNation, s
 const getCharacterIcons = (characterId: string, userAssets?: UserAssets | null): string[] =>
   getNestedAssetSrcs(userAssets?.genshin?.characters, 'icons' satisfies UserAssetsCharacterKey, characterId)
 
-const getCharacterCards = (characterId: string, userAssets?: UserAssets | null): string[] =>
-  getNestedAssetSrcs(userAssets?.genshin?.characters, 'cards' satisfies UserAssetsCharacterKey, characterId)
-
 const getCharacterBanners = (characterId: string, userAssets?: UserAssets | null): string[] =>
   getNestedAssetSrcs(userAssets?.genshin?.characters, 'banners' satisfies UserAssetsCharacterKey, characterId)
 
 export {
   getCharacterBanners,
-  getCharacterCards,
   getCharacterIcons,
   getElementIcons,
   getGameBackgrounds,

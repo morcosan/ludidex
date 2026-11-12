@@ -259,7 +259,7 @@ export default {
   duration: {
     xs: { $value: '0.1s' },
     sm: { $value: '0.2s' },
-    md: { $value: '0.35s' },
+    md: { $value: '0.3s' },
     lg: { $value: '0.5s' },
     xl: { $value: '0.8s' },
   },

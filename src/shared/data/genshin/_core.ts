@@ -1,5 +1,5 @@
 export const GENSHIN_ELEMENTS = ['anemo', 'geo', 'electro', 'dendro', 'hydro', 'pyro', 'cryo'] as const
-export const GENSHIN_WEAPONS = ['sword', 'claymore', 'polearm', 'bow', 'catalyst'] as const
+export const GENSHIN_WEAPONS = ['sword', 'claymore', 'polearm', 'catalyst', 'bow'] as const
 export const GENSHIN_NATIONS = [
   'mondstadt',
   'liyue',
@@ -9,7 +9,7 @@ export const GENSHIN_NATIONS = [
   'natlan',
   'nodkrai',
   'snezhnaya',
-  'none',
+  'other',
 ] as const
 
 export type GenshinElement = (typeof GENSHIN_ELEMENTS)[number]

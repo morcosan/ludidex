@@ -1,4 +1,5 @@
 import { Card, Image, TextField } from '@design-system'
+import { GlobeIcon } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_ELEMENT_COLORS, TIER_LIST_LABELS } from '../../data'
@@ -113,6 +114,11 @@ export const CharacterCard = (props: CharacterCardProps) => {
             <CharacterTrait
               label={t(`game.nations.${character.nation}`)}
               iconSrcs={nationIcons[character.nation]}
+              icon={
+                character.nation === 'other' ? (
+                  <GlobeIcon aria-hidden className="h-xs-7 w-xs-7 text-color-text-subtle" />
+                ) : undefined
+              }
               classNames={{ icon: 'brightness-40' }}
             />
           </div>

@@ -3,7 +3,7 @@ import { type BaseButtonState, type LinkType } from '../_shared/types'
 
 export type IconButtonState = BaseButtonState
 export type IconButtonVariant = 'primary' | 'secondary' | 'default' | 'optional' | 'danger' | 'caution'
-export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
+export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface IconButtonProps extends HtmlDataProps {
   /**

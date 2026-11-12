@@ -131,12 +131,12 @@ export default function Page() {
         <IconButton
           tooltip={t('general.action.createNewTeam')}
           variant="primary"
-          size="lg"
+          size="xl"
           floating
           className="bottom-xs-3 right-xs-8 z-sticky absolute!"
           onClick={handleClickNewTeam}
         >
-          <PlusIcon aria-hidden className="h-sm-0 w-sm-0" />
+          <PlusIcon aria-hidden className="h-sm-1 w-sm-1" />
         </IconButton>
       </div>
 

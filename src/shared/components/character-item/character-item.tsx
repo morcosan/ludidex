@@ -16,7 +16,6 @@ export interface CharacterItemProps extends ReactProps {
   tooltip?: string
   labelTop?: string | null
   labelBottom?: string | null
-  slotDigit?: string
   className?: string
   onClick?: (character: GenshinCharacter) => void
 }
@@ -31,7 +30,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
     tooltip,
     labelTop,
     labelBottom,
-    slotDigit,
+    children,
     className,
     onClick,
   } = props
@@ -91,24 +90,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
         </span>
       )}
 
-      {slotDigit && (
-        <span
-          aria-hidden
-          className={cx(
-            'pointer-events-none absolute -top-px -right-px z-10',
-            'size-sm-3 flex justify-end overflow-hidden rounded-tr-md px-[5px] py-[4px]',
-            'text-size-xs font-weight-lg font-family-mono text-color-text-selection leading-1',
-          )}
-        >
-          <span
-            className={cx(
-              'absolute top-[-82%] right-[-82%] -z-10 size-[150%] rotate-45',
-              'border-color-border-selection bg-color-yellow-4 border',
-            )}
-          />
-          {slotDigit}
-        </span>
-      )}
+      {children}
     </Card>
   )
 }

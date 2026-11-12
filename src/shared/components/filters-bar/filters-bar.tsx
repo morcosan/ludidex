@@ -10,13 +10,14 @@ export const FiltersBar = (props: FiltersBarProps) => {
     surface,
     onChange,
   })
+  const filterClass = cx('rounded-max! gap-xs-0! py-0!')
 
   return (
     <div className={cx('gap-xs-5 flex flex-wrap items-center', className)}>
-      {renderElements('auto', 'rounded-max!')}
-      {renderStatuses('auto', 'rounded-max!')}
-      {renderWeapons('auto', 'rounded-max!')}
-      {renderNations('auto', 'rounded-max!')}
+      {renderElements('auto', filterClass)}
+      {renderStatuses('auto', filterClass)}
+      {renderWeapons('auto', filterClass)}
+      {renderNations('auto', filterClass)}
       {renderSearch()}
     </div>
   )

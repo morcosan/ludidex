@@ -21,7 +21,7 @@ export const SidePanel = (props: SideFiltersProps) => {
 
       <ViewsSection viewType={viewType} viewOptions={viewOptions} onChangeView={onChangeView} />
 
-      <AppearanceSection className="pb-sm-9" />
+      <AppearanceSection type="characters" className="pb-sm-9" />
     </div>
   )
 }

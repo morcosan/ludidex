@@ -6,8 +6,10 @@ const meta: Meta = {
   title: 'App / Components / Appearance Section',
   ...defineMeta(AppearanceSection, {
     props: {
+      type: 'characters',
       className: '',
     },
+    inlineRadios: ['type'],
   }),
 }
 

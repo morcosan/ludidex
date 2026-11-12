@@ -1,3 +1,4 @@
+import { GlobeIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -71,7 +72,7 @@ export const useFilters = (props: FiltersProps) => {
         id="filters-search"
         value={filters.search}
         label={type === 'teams' ? t('general.action.searchTeams') : t('general.action.searchCharacters')}
-        size="lg"
+        size="md"
         className={cx('w-xl-0', surface === 'glass' && 'bg-color-bg-region')}
         onChange={(search) => onChange?.({ ...filters, search })}
       />
@@ -138,7 +139,9 @@ export const useFilters = (props: FiltersProps) => {
         ariaLabel={t('game.label.nation')}
         renderLabel={(nation) => t(`game.nations.${nation}`)}
         renderIcon={(nation) =>
-          nation === 'none' ? null : (
+          nation === 'other' ? (
+            <GlobeIcon aria-hidden className="h-xs-7 w-xs-7 mr-xs-1 text-color-text-subtle" />
+          ) : (
             <img src={nationIcons[nation][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-40" />
           )
         }

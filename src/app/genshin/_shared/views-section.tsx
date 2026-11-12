@@ -14,7 +14,7 @@ export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) =>
   const { t } = useTranslation()
 
   return (
-    <PageSection title={t('general.label.view')} className={className} classNames={{ body: 'gap-xs-0' }}>
+    <PageSection title={t('general.label.views')} className={className} classNames={{ body: 'gap-xs-0' }}>
       {viewOptions.map((option) => (
         <Button
           key={option.value}

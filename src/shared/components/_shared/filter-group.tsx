@@ -34,7 +34,7 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
       role="group"
       aria-label={ariaLabel}
       className={cx(
-        'gap-xs-0 p-xs-0 min-h-button-h-lg flex flex-wrap items-center',
+        'gap-xs-1 p-xs-1 min-h-field-h-md flex flex-wrap items-center',
         'rounded-xl border',
         surface === 'glass'
           ? 'bg-color-bg-region border-color-border-inset'
@@ -47,8 +47,10 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
           <Button
             key={item}
             size="sm"
+            variant="menu-default"
             state={selection.includes(item) ? 'selected' : 'active'}
-            classNames={{ surface: 'pl-xs-3! pr-xs-4!', content: 'justify-start!' }}
+            className="rounded-xl!"
+            classNames={{ surface: 'pl-xs-2! pr-xs-3! rounded-xl!' }}
             onClick={() => onToggle?.(item)}
           >
             {renderIcon?.(item)}

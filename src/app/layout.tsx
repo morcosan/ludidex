@@ -101,7 +101,7 @@ export default function Layout() {
             <Button
               linkHref="/settings"
               variant="menu-default"
-              size="sm"
+              size="md"
               className="w-full"
               onClick={() => setIsQuickSettingsOpen(false)}
             >

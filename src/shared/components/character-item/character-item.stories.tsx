@@ -6,6 +6,9 @@ import { CharacterItem } from './character-item'
 const meta: Meta = {
   title: 'App / Components / Character Item',
   ...defineMeta(CharacterItem, {
+    slots: {
+      children: '',
+    },
     props: {
       character: GENSHIN_CHARACTERS.find((character) => character.id === 'vodyanitsa'),
       status: 'main',
@@ -15,7 +18,6 @@ const meta: Meta = {
       tooltip: '',
       labelTop: '',
       labelBottom: '',
-      slotDigit: '',
     },
     events: ['onClick'],
     inlineRadios: ['status', 'size'],

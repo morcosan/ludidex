@@ -1,4 +1,5 @@
 import { Card } from '@design-system'
+import { GlobeIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { type CharacterStatus, type GenshinCharacter } from '../../../data'
 import { useUserAssetsStore } from '../../../state/use-user-assets'
@@ -51,6 +52,11 @@ export const MemberItem = ({ character, status, editing, onClick }: MemberItemPr
                 />
                 <CharacterTrait
                   label={t(`game.nations.${character.nation}`)}
+                  icon={
+                    character.nation === 'other' ? (
+                      <GlobeIcon aria-hidden className="h-xs-5 w-xs-5 text-color-text-subtle" />
+                    ) : undefined
+                  }
                   iconSrcs={nationIcons[character.nation]}
                   classNames={{ icon: 'brightness-40' }}
                   small

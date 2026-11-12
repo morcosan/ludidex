@@ -47,11 +47,11 @@ const GenshinWeaponsSchema_v0 = z.object({
   paths: createPathsSchema(GENSHIN_WEAPONS),
 })
 
-type GenshinNationWithIcon = Exclude<GenshinNation, 'none'>
+type GenshinNationWithIcon = Exclude<GenshinNation, 'other'>
 
 const GenshinNationsSchema_v0 = z.object({
   hosts: HostsSchema_v0,
-  paths: createPathsSchema(GENSHIN_NATIONS.filter((nation): nation is GenshinNationWithIcon => nation !== 'none')),
+  paths: createPathsSchema(GENSHIN_NATIONS.filter((nation): nation is GenshinNationWithIcon => nation !== 'other')),
 })
 
 const GenshinCharactersSchema_v0 = z.object({

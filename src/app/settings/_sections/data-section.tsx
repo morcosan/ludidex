@@ -130,15 +130,6 @@ export const DataSection = (props: SectionProps) => {
       classNames={{ body: 'pt-xs-5 gap-xs-4 min-h-lg-0 flex flex-col' }}
     >
       <div className="flex items-center">
-        <TextHighlight text={t('general.label.exportData')} keyword={keyword} />:
-        <Button state={isExporting ? 'loading' : 'active'} className="ml-xs-3" onClick={handleClickExport}>
-          <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
-          <TextHighlight text={t('general.action.download')} keyword={keyword} />
-        </Button>
-        {renderMessage(exportMessage)}
-      </div>
-
-      <div className="flex items-center">
         <TextHighlight text={t('general.label.importData')} keyword={keyword} />:
         <Button
           state={isImporting ? 'loading' : 'active'}
@@ -149,6 +140,15 @@ export const DataSection = (props: SectionProps) => {
           <TextHighlight text={t('general.action.upload')} keyword={keyword} />
         </Button>
         {renderMessage(importMessage)}
+      </div>
+
+      <div className="flex items-center">
+        <TextHighlight text={t('general.label.exportData')} keyword={keyword} />:
+        <Button state={isExporting ? 'loading' : 'active'} className="ml-xs-3" onClick={handleClickExport}>
+          <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
+          <TextHighlight text={t('general.action.download')} keyword={keyword} />
+        </Button>
+        {renderMessage(exportMessage)}
       </div>
 
       <input

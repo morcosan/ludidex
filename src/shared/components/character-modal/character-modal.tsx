@@ -10,6 +10,7 @@ import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
 import { EMPTY_FILTERS, FiltersSection, type Filters } from '../filters-section/filters-section'
 import { SelectionSlots, type CharacterModalSelection } from './_partials/selection-slots'
+import { SlotCorner } from './_partials/slot-corner'
 
 export { type CharacterModalSelection }
 
@@ -91,12 +92,12 @@ export const CharacterModal = (props: CharacterModalProps) => {
 
         <div className="pr-xs-0 gap-sm-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
           <FiltersSection filters={filters} surface="paper" onChange={setFilters} />
-          <AppearanceSection className="pb-xs-9" />
+          <AppearanceSection type="characters" className="pb-xs-9" />
         </div>
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-x-hidden overflow-y-auto">
         {characters.length === 0 ? (
           <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
         ) : (
@@ -109,12 +110,13 @@ export const CharacterModal = (props: CharacterModalProps) => {
                     character={character}
                     status={userData?.characters?.[character.id]?.status}
                     selected={slotIndex > -1}
-                    slotDigit={slotIndex > -1 ? String(slotIndex + 1) : undefined}
                     size={userSettings.charItemSize}
                     labelTop={userSettings.charLabelTop && getLabel(character, userSettings.charLabelTop)}
                     labelBottom={userSettings.charLabelBottom && getLabel(character, userSettings.charLabelBottom)}
                     onClick={onClickOption}
-                  />
+                  >
+                    {slotIndex > -1 && <SlotCorner digit={String(slotIndex + 1)} variant="item" />}
+                  </CharacterItem>
                 </li>
               )
             })}

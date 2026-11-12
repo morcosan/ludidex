@@ -23,6 +23,7 @@ export const useButtonStyles = ({ state, size, variant, floating }: Props) => {
     if (size === 'sm') return tokens.spacing['button-h-sm']
     if (size === 'md') return tokens.spacing['button-h-md']
     if (size === 'lg') return tokens.spacing['button-h-lg']
+    if (size === 'xl') return tokens.spacing['button-h-xl']
     return ''
   })()
   const paddingX = (() => {
@@ -32,12 +33,14 @@ export const useButtonStyles = ({ state, size, variant, floating }: Props) => {
     if (size === 'sm') return `calc(${tokens.spacing['button-px-sm']} - 1px)`
     if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
     if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
+    if (size === 'xl') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
   })()
   const spinnerSize = (() => {
     if (size === 'xs') return tokens.spacing['xs-5']
     if (size === 'sm') return tokens.spacing['xs-7']
     if (size === 'md') return tokens.spacing['xs-9']
     if (size === 'lg') return tokens.spacing['sm-0']
+    if (size === 'xl') return tokens.spacing['sm-0']
     return ''
   })()
   const fontSize = (() => {
@@ -46,6 +49,7 @@ export const useButtonStyles = ({ state, size, variant, floating }: Props) => {
     if (size === 'sm') return tokens.fontSize['sm']
     if (size === 'md') return tokens.fontSize['md']
     if (size === 'lg') return tokens.fontSize['lg']
+    if (size === 'xl') return tokens.fontSize['xl']
   })()
   const fontWeight = isMenuItem ? tokens.fontWeight['sm'] : tokens.fontWeight['md']
 

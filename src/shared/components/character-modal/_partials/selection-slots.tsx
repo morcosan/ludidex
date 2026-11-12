@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { type GenshinCharacter } from '../../../data'
 import { useUserDataStore } from '../../../state/use-user-data'
 import { CharacterItem } from '../../character-item/character-item'
+import { SlotCorner } from './slot-corner'
 
 export interface CharacterModalSelection {
   slots: (GenshinCharacter | null)[]
@@ -27,6 +28,14 @@ export const SelectionSlots = (props: SelectionSlotsProps) => {
     onClearSlot?.(slotIndex)
   }
 
+  const getSlotTooltip = (slot: GenshinCharacter | null, slotIndex: number) => {
+    return t('game.format.memberSlot', {
+      count: slotIndex + 1,
+      ordinal: true,
+      value: slot?.name ?? t('general.label.empty'),
+    })
+  }
+
   return (
     <ul className="py-xs-0 gap-xs-5 flex">
       {selection.slots.map((slot, index) => (
@@ -37,13 +46,16 @@ export const SelectionSlots = (props: SelectionSlotsProps) => {
               status={characters?.[slot.id]?.status}
               size="sm"
               selected={isSlotSelected(index)}
+              tooltip={getSlotTooltip(slot, index)}
               onClick={() => onClickSlot(index)}
-            />
+            >
+              <SlotCorner digit={String(index + 1)} variant={isSlotSelected(index) ? 'item' : 'slot'} />
+            </CharacterItem>
           ) : (
             <Card
-              tooltip={t('general.label.emptySlot')}
+              tooltip={getSlotTooltip(slot, index)}
               state={isSlotSelected(index) ? 'selected' : 'active'}
-              classNames={{ surface: 'p-px!' }}
+              classNames={{ surface: 'p-px!', content: 'relative' }}
               onClick={() => onClickSlot(index)}
             >
               <div
@@ -52,6 +64,7 @@ export const SelectionSlots = (props: SelectionSlotsProps) => {
                   isSlotSelected(index) ? 'bg-color-black-alpha-3' : 'bg-color-black-alpha-5',
                 )}
               />
+              <SlotCorner digit={String(index + 1)} variant={isSlotSelected(index) ? 'item' : 'slot'} />
             </Card>
           )}
         </li>

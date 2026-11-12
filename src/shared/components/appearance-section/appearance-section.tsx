@@ -4,8 +4,12 @@ import { type CharacterLabel, type ItemSize } from '../../state/types'
 import { useUserSettingsStore } from '../../state/use-user-settings'
 import { PageSection } from '../page-section/page-section'
 
-export const AppearanceSection = (props: ReactProps) => {
-  const { className } = props
+export interface AppearanceSectionProps extends ReactProps {
+  type: 'characters' | 'teams'
+}
+
+export const AppearanceSection = (props: AppearanceSectionProps) => {
+  const { type, className } = props
   const { t } = useTranslation()
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const updateUserSettings = useUserSettingsStore((state) => state.updateUserSettings)
@@ -30,46 +34,70 @@ export const AppearanceSection = (props: ReactProps) => {
     { value: 'critDmg', label: t('game.stats.critDmg') },
   ]
 
-  const settingClass = cx('gap-xs-2 flex items-center justify-between')
-  const fieldClass = cx('w-md-8')
+  const rowClass = cx('gap-xs-2 flex items-center justify-between')
+  const charFieldClass = cx('w-md-8')
+  const charFieldClassNames = { option: 'text-size-xs!' }
 
   return (
     <PageSection title={t('general.label.appearance')} className={className} classNames={{ body: 'gap-xs-3' }}>
-      <div className={settingClass}>
-        <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
-        <SelectField
-          id="char-label-top"
-          value={userSettings.charLabelTop ?? ''}
-          options={charLabelOptions}
-          size="xs"
-          clearable={Boolean(userSettings.charLabelTop)}
-          className={fieldClass}
-          onChange={(value) => updateUserSettings({ charLabelTop: value ? (value as CharacterLabel) : null })}
-        />
-      </div>
-      <div className={settingClass}>
-        <span className="text-size-sm">{t('general.label.labelOnBottom')}</span>
-        <SelectField
-          id="char-label-bottom"
-          value={userSettings.charLabelBottom ?? ''}
-          options={charLabelOptions}
-          size="xs"
-          clearable={Boolean(userSettings.charLabelBottom)}
-          className={fieldClass}
-          onChange={(value) => updateUserSettings({ charLabelBottom: value ? (value as CharacterLabel) : null })}
-        />
-      </div>
-      <div className={settingClass}>
-        <span className="text-size-sm">{t('general.label.itemSize')}</span>
-        <SelectField
-          id="char-item-size"
-          value={userSettings.charItemSize}
-          options={itemSizeOptions}
-          size="xs"
-          className={fieldClass}
-          onChange={(value) => value && updateUserSettings({ charItemSize: value as ItemSize })}
-        />
-      </div>
+      {type === 'characters' && (
+        <>
+          <div className={rowClass}>
+            <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
+            <SelectField
+              id="char-label-top"
+              value={userSettings.charLabelTop ?? ''}
+              options={charLabelOptions}
+              size="xs"
+              clearable={Boolean(userSettings.charLabelTop)}
+              className={charFieldClass}
+              classNames={charFieldClassNames}
+              onChange={(value) => updateUserSettings({ charLabelTop: value ? (value as CharacterLabel) : null })}
+            />
+          </div>
+          <div className={rowClass}>
+            <span className="text-size-sm">{t('general.label.labelOnBottom')}</span>
+            <SelectField
+              id="char-label-bottom"
+              value={userSettings.charLabelBottom ?? ''}
+              options={charLabelOptions}
+              size="xs"
+              clearable={Boolean(userSettings.charLabelBottom)}
+              className={charFieldClass}
+              classNames={charFieldClassNames}
+              onChange={(value) => updateUserSettings({ charLabelBottom: value ? (value as CharacterLabel) : null })}
+            />
+          </div>
+          <div className={rowClass}>
+            <span className="text-size-sm">{t('general.label.itemSize')}</span>
+            <SelectField
+              id="item-size"
+              value={userSettings.charItemSize}
+              options={itemSizeOptions}
+              size="xs"
+              className={charFieldClass}
+              classNames={charFieldClassNames}
+              onChange={(value) => value && updateUserSettings({ charItemSize: value as ItemSize })}
+            />
+          </div>
+        </>
+      )}
+
+      {type === 'teams' && (
+        <>
+          <div className={rowClass}>
+            <span className="text-size-sm">{t('general.label.itemSize')}</span>
+            <SelectField
+              id="item-size"
+              value={userSettings.teamItemSize}
+              options={itemSizeOptions}
+              size="xs"
+              className="w-md-4"
+              onChange={(value) => value && updateUserSettings({ teamItemSize: value as ItemSize })}
+            />
+          </div>
+        </>
+      )}
     </PageSection>
   )
 }

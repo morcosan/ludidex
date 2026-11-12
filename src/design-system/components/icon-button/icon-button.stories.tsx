@@ -66,6 +66,9 @@ const Variants: StoryObj<typeof IconButton> = {
               <IconButton tooltip={variant + ' lg'} variant={variant} size="lg">
                 {svg}
               </IconButton>
+              <IconButton tooltip={variant + ' xl'} variant={variant} size="xl">
+                {svg}
+              </IconButton>
             </div>
           ))}
         </div>

@@ -40,7 +40,7 @@
       "dataSize": "Data size",
       "dataValues": "Data values",
       "default": "Default",
-      "emptySlot": "Empty slot",
+      "empty": "Empty",
       "exportData": "Export data",
       "filters": "Filters",
       "home": "Home",
@@ -54,6 +54,7 @@
       "modeDark": "Dark",
       "modeLight": "Light",
       "newTeam": "New team",
+      "noActiveFilters": "No active filters",
       "none": "None",
       "preferences": "Preferences",
       "rating": "Rating",
@@ -65,7 +66,7 @@
       "teams": "Teams",
       "tierListLabels": "Tier list labels",
       "uploaded": "Uploaded",
-      "view": "View"
+      "views": "Views"
     },
     "format": {
       "withFilters_one": "with {count} filter",
@@ -129,7 +130,11 @@
       "er": "ER: {value}",
       "hp": "HP: {value}",
       "level": "Lv: {value}",
-      "rating": "{value} - {label}"
+      "rating": "{value} - {label}",
+      "memberSlot_ordinal_one": "{count}st member: {value}",
+      "memberSlot_ordinal_two": "{count}nd member: {value}",
+      "memberSlot_ordinal_few": "{count}rd member: {value}",
+      "memberSlot_ordinal_other": "{count}th member: {value}"
     },
     "placeholder": {
       "tags": "Tag, tag..."
@@ -157,7 +162,7 @@
       "mondstadt": "Mondstadt",
       "natlan": "Natlan",
       "nodkrai": "Nod-Krai",
-      "none": "N/A",
+      "other": "Other",
       "snezhnaya": "Snezhnaya",
       "sumeru": "Sumeru"
     },

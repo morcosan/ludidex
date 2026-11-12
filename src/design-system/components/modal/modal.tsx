@@ -63,7 +63,7 @@ export const Modal = (props: ModalProps) => {
               <IconButton
                 tooltip={translate('ds.action.close')}
                 variant="optional"
-                size="sm"
+                size="md"
                 className="absolute!"
                 css={{ top: cssVars.modalContentPY, right: cssVars.modalContentPY }}
                 onClick={onClose}

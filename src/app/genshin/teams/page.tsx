@@ -1,38 +1,31 @@
 import { Breadcrumb, FiltersBar, TeamCard, type Filters } from '@app-shared/components'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
-import { unpackTeamId } from '@app-shared/state/utils'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
-import { useFilterParams } from '@app-shared/utils/use-filter-params'
+import { useTeamListing } from '@app-shared/utils/use-team-listing'
+import { useUrlFilters } from '@app-shared/utils/use-url-filters'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
-import { sortByName } from '@app-shared/utils/various'
+import { countFilters } from '@app-shared/utils/various'
 import { IconButton } from '@design-system'
 import { PlusIcon } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PreviewDrawer } from '../_shared/preview-drawer'
-import { useFilterUtils } from '../_shared/use-filter-utils'
 import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_partials/config'
 import { SidePanel } from './_partials/side-panel'
 import { TeamListing } from './_partials/team-listing'
 
 export default function Page() {
   const { t } = useTranslation()
-  const teamData = useUserDataStore((state) => state.userData?.genshin?.teams)
-  const { countFilters, filterTeams } = useFilterUtils()
-  const userTeams = useMemo((): GenshinTeam[] => {
-    return Object.entries(teamData ?? {})
-      .map(([id, team]): GenshinTeam => ({ ...team, id, charIds: unpackTeamId(id) }))
-      .sort(sortByName)
-  }, [teamData])
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const { filters, handleFiltersChange: updateFilterParams } = useFilterParams(TEAM_FILTERS)
   const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(TEAM_VIEW_TYPES, 'default')
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [emptyTeams, setEmptyTeams] = useState<GenshinTeam[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
   const canScrollRef = useRef(false)
+  const [filters, setFilters] = useUrlFilters(TEAM_FILTERS)
+  const { allTeams, listedTeams } = useTeamListing(filters)
 
   useClickOutside({
     enabled: isPreviewOpen,
@@ -40,15 +33,15 @@ export default function Page() {
     callback: () => setIsPreviewOpen(false),
   })
 
-  const previewTeam = [...userTeams, ...emptyTeams].find((team) => team.id === previewTeamId)
+  const previewTeam = [...allTeams, ...emptyTeams].find((team) => team.id === previewTeamId)
   const isEmptyPreview = emptyTeams.some((team) => team.id === previewTeamId)
-  const currTeams = [...filterTeams(userTeams, filters), ...emptyTeams]
+  const currTeams = [...listedTeams, ...emptyTeams]
   const filtersCount = countFilters(filters)
   const topBarFilters: Filters = { search: filters.search, elements: filters.elements }
   const sectionFilters: Filters = { statuses: filters.statuses, weapons: filters.weapons, nations: filters.nations }
 
   const handleFiltersChange = (newFilters: Filters) => {
-    updateFilterParams({ ...filters, ...newFilters })
+    setFilters({ ...filters, ...newFilters })
   }
 
   const handleClickTeam = (team: GenshinTeam) => {

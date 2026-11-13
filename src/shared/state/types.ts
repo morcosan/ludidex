@@ -7,9 +7,10 @@ import {
   type UserAssetsGroup_v0,
 } from './user-assets/v0'
 import { type GenshinCharacter_v0, type GenshinTeam_v0, UserDataSchema_v0 } from './user-data/v0'
-import { CharacterLabelSchema, ItemSizeSchema, UserSettingsSchema } from './user-settings'
+import { CharacterLabelSchema, CharacterSortingSchema, ItemSizeSchema, UserSettingsSchema } from './user-settings'
 
 type CharacterLabel = z.infer<typeof CharacterLabelSchema>
+type CharacterSorting = z.infer<typeof CharacterSortingSchema>
 type GenshinCharacterUserData = GenshinCharacter_v0
 type GenshinTeamUserData = GenshinTeam_v0
 type ItemSize = z.infer<typeof ItemSizeSchema>
@@ -29,6 +30,7 @@ interface GenshinTeam extends GenshinTeamUserData {
 
 export {
   type CharacterLabel,
+  type CharacterSorting,
   type GenshinCharacterUserData,
   type GenshinTeam,
   type GenshinTeamUserData,

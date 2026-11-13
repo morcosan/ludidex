@@ -66,7 +66,7 @@ export const MemberItem = ({ character, status, editing, onClick }: MemberItemPr
           </>
         ) : (
           <>
-            <span className="bg-color-grey-3 h-sm-5 w-sm-5 rounded-md" />
+            <span className="bg-color-bg-skeleton h-sm-5 w-sm-5 rounded-md" />
             <span className="text-size-sm text-color-text-placeholder leading-1">--</span>
           </>
         )}

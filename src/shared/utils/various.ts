@@ -1,3 +1,5 @@
+import { type Filters } from '../components/_shared/use-filters'
+
 const getDateAsYYYYMMDD = (date: Date): string => {
   return [
     date.getFullYear(),
@@ -47,6 +49,15 @@ const parseTags = (value: string) => {
 
 const sortByName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)
 
+const countFilters = (filters: Filters) => {
+  return (
+    (filters.elements?.length ?? 0) +
+    (filters.statuses?.length ?? 0) +
+    (filters.weapons?.length ?? 0) +
+    (filters.nations?.length ?? 0)
+  )
+}
+
 const toNumber = (value: string) => {
   if (!value.trim()) return undefined
   const parsed = Number(value)
@@ -61,6 +72,7 @@ const formatUserInput = (value: string) =>
     .trim()
 
 export {
+  countFilters,
   formatFileSize,
   formatInteger,
   formatPercent,

@@ -10,7 +10,7 @@ export const useCharacterLabel = () => {
   const { t } = useTranslation()
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
 
-  const getLabel = (character: GenshinCharacter, label: CharacterLabel | null): string | undefined => {
+  const getCharLabel = (character: GenshinCharacter, label: CharacterLabel | null): string | undefined => {
     if (!label) return undefined
 
     const data = userData?.characters?.[character.id]
@@ -32,5 +32,5 @@ export const useCharacterLabel = () => {
     return t(`game.format.${label}`, { value: formatted })
   }
 
-  return { getLabel }
+  return { getCharLabel }
 }

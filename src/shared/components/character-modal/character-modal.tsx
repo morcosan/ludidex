@@ -1,11 +1,11 @@
-import { sortByName } from '@app-shared/utils/various'
 import { Modal } from '@design-system'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS, type GenshinCharacter } from '../../data'
+import { type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
 import { useUserSettingsStore } from '../../state/use-user-settings'
 import { useCharacterLabel } from '../../utils/use-character-label'
+import { useCharacterListing } from '../../utils/use-character-listing'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
 import { EMPTY_FILTERS, FiltersSection, type Filters } from '../filters-section/filters-section'
@@ -32,25 +32,12 @@ export interface CharacterModalProps {
 export const CharacterModal = (props: CharacterModalProps) => {
   const { opened, title, selection } = props
   const { onSelect, onChangeSlot, onClose } = props
-  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const userSettings = useUserSettingsStore((state) => state.userSettings)
-  const { getLabel } = useCharacterLabel()
-
-  const lcSearch = (filters.search ?? '').trim().toLocaleLowerCase()
-
-  const characters = GENSHIN_CHARACTERS.filter((character) => {
-    const status = userData?.characters?.[character.id]?.status
-    const hasSearch = character.name.toLocaleLowerCase().includes(lcSearch)
-    return (
-      hasSearch &&
-      (!filters.elements?.length || filters.elements.includes(character.element)) &&
-      (!filters.statuses?.length || (status && filters.statuses.includes(status))) &&
-      (!filters.weapons?.length || filters.weapons.includes(character.weapon)) &&
-      (!filters.nations?.length || filters.nations.includes(character.nation))
-    )
-  }).sort(sortByName)
+  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
+  const { getCharLabel } = useCharacterLabel()
+  const { listedCharacters } = useCharacterListing(filters)
 
   const getCharSlotIndex = (char: GenshinCharacter) => selection?.slots.findIndex((slot) => slot?.id === char.id) ?? -1
 
@@ -98,11 +85,11 @@ export const CharacterModal = (props: CharacterModalProps) => {
 
       {/* RIGHT SIDE */}
       <div className="flex-1 overflow-x-hidden overflow-y-auto">
-        {characters.length === 0 ? (
+        {listedCharacters.length === 0 ? (
           <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
         ) : (
           <ul className="gap-xs-3 py-xs-0 flex flex-wrap">
-            {characters.map((character) => {
+            {listedCharacters.map((character) => {
               const slotIndex = getCharSlotIndex(character)
               return (
                 <li key={character.id} className="relative">
@@ -111,8 +98,8 @@ export const CharacterModal = (props: CharacterModalProps) => {
                     status={userData?.characters?.[character.id]?.status}
                     selected={slotIndex > -1}
                     size={userSettings.charItemSize}
-                    labelTop={userSettings.charLabelTop && getLabel(character, userSettings.charLabelTop)}
-                    labelBottom={userSettings.charLabelBottom && getLabel(character, userSettings.charLabelBottom)}
+                    labelTop={userSettings.charLabelTop && getCharLabel(character, userSettings.charLabelTop)}
+                    labelBottom={userSettings.charLabelBottom && getCharLabel(character, userSettings.charLabelBottom)}
                     onClick={onClickOption}
                   >
                     {slotIndex > -1 && <SlotCorner digit={String(slotIndex + 1)} variant="item" />}

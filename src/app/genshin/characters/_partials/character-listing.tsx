@@ -43,7 +43,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const userSettings = useUserSettingsStore((state) => state.userSettings)
-  const { getLabel } = useCharacterLabel()
+  const { getCharLabel } = useCharacterLabel()
 
   const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
@@ -94,10 +94,10 @@ export const CharacterListing = (props: CharacterListingProps) => {
         size={userSettings.charItemSize}
         labelTop={
           userSettings.charLabelTop
-            ? getLabel(character, userSettings.charLabelTop)
+            ? getCharLabel(character, userSettings.charLabelTop)
             : getSortLabel(character, userSettings.charLabelBottom)
         }
-        labelBottom={getLabel(character, userSettings.charLabelBottom)}
+        labelBottom={getCharLabel(character, userSettings.charLabelBottom)}
         selected={selectedItemId === character.id}
         onClick={onClickItem}
       />

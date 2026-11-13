@@ -27,8 +27,10 @@ export interface SearchFieldProps extends ReactProps {
 export const SearchField = (props: SearchFieldProps) => {
   const { id, value, label, size = 'md', disabled, onChange, onBlur, className, style } = props
   const { t } = useTranslation()
-  const [query, setQuery] = useState(value)
-  const debouncedRef = useRef<ReturnType<typeof debounce>>(null)
+  const [innerValue, setInnerValue] = useState(value)
+  const debouncedFnRef = useRef<ReturnType<typeof debounce>>(null)
+  const onChangeRef = useRef(onChange)
+  const isPendingRef = useRef(false)
 
   const iconClass = ((): string => {
     if (size === 'xs') return 'ml-xs-1 -mr-xs-0 text-size-xs'
@@ -49,22 +51,31 @@ export const SearchField = (props: SearchFieldProps) => {
   })()
 
   const handleQueryChange = useCallback((value: string) => {
-    setQuery(value)
-    debouncedRef.current?.(value)
+    setInnerValue(value)
+    isPendingRef.current = true
+    debouncedFnRef.current?.(value)
   }, [])
 
   useEffect(() => {
-    debouncedRef.current = debounce(onChange || (() => {}), 300)
-    return () => debouncedRef.current?.cancel()
-  }, [onChange])
+    debouncedFnRef.current = debounce((value: string) => {
+      isPendingRef.current = false
+      onChangeRef.current?.(value)
+    }, 300)
+    return () => debouncedFnRef.current?.cancel()
+  }, [])
 
   useEffect(() => {
-    setQuery(value)
+    if (isPendingRef.current) return
+    setInnerValue(value)
   }, [value])
+
+  useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
 
   return (
     <TextField
-      value={query}
+      value={innerValue}
       disabled={disabled}
       id={id}
       size={size}
@@ -72,7 +83,7 @@ export const SearchField = (props: SearchFieldProps) => {
       ariaLabel={label}
       prefix={<FontAwesomeIcon icon={faMagnifyingGlass} className={cx(iconClass, disabled && 'opacity-40')} />}
       suffix={
-        query && (
+        innerValue && (
           <IconButton
             tooltip={t('general.action.clearSearch')}
             state={disabled ? 'disabled' : 'active'}

@@ -58,12 +58,7 @@ export const SelectionSlots = (props: SelectionSlotsProps) => {
               classNames={{ surface: 'p-px!', content: 'relative' }}
               onClick={() => onClickSlot(index)}
             >
-              <div
-                className={cx(
-                  'w-md-1 aspect-square rounded-md',
-                  isSlotSelected(index) ? 'bg-color-black-alpha-3' : 'bg-color-black-alpha-5',
-                )}
-              />
+              <div className="w-md-1 bg-color-bg-skeleton aspect-square rounded-md" />
               <SlotCorner digit={String(index + 1)} variant={isSlotSelected(index) ? 'item' : 'slot'} />
             </Card>
           )}

@@ -132,7 +132,7 @@ export const TeamCard = (props: TeamCardProps) => {
         {/* BANNER */}
         <CardBanner
           banner={
-            <div className="relative flex aspect-5/3 overflow-hidden rounded-md">
+            <div className="bg-color-bg-skeleton relative flex aspect-5/3 overflow-hidden rounded-md">
               {members
                 .filter((member) => member)
                 .map((member) => (
@@ -160,7 +160,8 @@ export const TeamCard = (props: TeamCardProps) => {
         <div
           ref={nameRef}
           className={cx(
-            'my-xs-2 px-xs-8 py-xs-2 bg-color-bg-card -top-xs-0 sticky z-10 transition-[padding] ease-in-out',
+            'my-xs-2 -top-xs-0 px-xs-8 py-xs-2 sticky z-10',
+            'bg-color-bg-card rounded-t-md transition-[padding] ease-in-out',
             isNameSticky && 'border-color-border-subtle shadow-below-sm',
           )}
         >

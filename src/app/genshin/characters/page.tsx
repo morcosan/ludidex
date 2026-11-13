@@ -1,15 +1,15 @@
 import { Breadcrumb, CharacterCard, FiltersBar, type Filters } from '@app-shared/components'
-import { GENSHIN_CHARACTERS, type GenshinCharacter } from '@app-shared/data'
+import { type GenshinCharacter } from '@app-shared/data'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
+import { useCharacterListing } from '@app-shared/utils/use-character-listing'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
-import { useFilterParams } from '@app-shared/utils/use-filter-params'
+import { useUrlFilters } from '@app-shared/utils/use-url-filters'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
-import { sortByName } from '@app-shared/utils/various'
+import { countFilters } from '@app-shared/utils/various'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PreviewDrawer } from '../_shared/preview-drawer'
-import { useFilterUtils } from '../_shared/use-filter-utils'
 import { CharacterListing } from './_partials/character-listing'
 import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_partials/config'
 import { SidePanel } from './_partials/side-panel'
@@ -17,19 +17,17 @@ import { SidePanel } from './_partials/side-panel'
 export default function Page() {
   const { t } = useTranslation()
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
-  const { filters, handleFiltersChange: updateFilterParams } = useFilterParams(CHARACTER_FILTERS)
-  const { countFilters, filterCharacters } = useFilterUtils()
   const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(CHARACTER_VIEW_TYPES, 'default')
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [filters, setFilters] = useUrlFilters(CHARACTER_FILTERS)
+  const { listedCharacters } = useCharacterListing(filters)
 
   useClickOutside({
     enabled: isPreviewOpen,
     allowlist: ['[data-character-item]', '[data-preview-drawer]'],
     callback: () => setIsPreviewOpen(false),
   })
-
-  const characters = filterCharacters(GENSHIN_CHARACTERS, filters).sort(sortByName)
 
   const filtersCount = countFilters(filters)
   const topBarFilters: Filters = {
@@ -43,7 +41,7 @@ export default function Page() {
   }
 
   const handleFiltersChange = (newFilters: Filters) => {
-    updateFilterParams({ ...filters, ...newFilters })
+    setFilters({ ...filters, ...newFilters })
   }
 
   const handleClickCharacter = (character: GenshinCharacter) => {
@@ -72,7 +70,7 @@ export default function Page() {
 
         <h1 className="flex">
           <Breadcrumb first>
-            {t('general.label.characters')} ({characters.length})
+            {t('general.label.characters')} ({listedCharacters.length})
           </Breadcrumb>
           <Breadcrumb>{viewLabel}</Breadcrumb>
           {filtersCount > 0 && <Breadcrumb>{t('general.format.withFilters', { count: filtersCount })}</Breadcrumb>}
@@ -80,7 +78,7 @@ export default function Page() {
         </h1>
 
         <CharacterListing
-          characters={characters}
+          characters={listedCharacters}
           viewType={viewType}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}

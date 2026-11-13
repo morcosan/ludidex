@@ -3,6 +3,7 @@ import type { GenshinElement, GenshinNation, GenshinWeaponType } from './_core'
 export interface GenshinCharacter {
   id: string
   name: string
+  fullName: string
   element: GenshinElement
   weapon: GenshinWeaponType
   nation: GenshinNation
@@ -14,6 +15,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'aino',
     name: 'Aino',
+    fullName: 'Aino',
     element: 'hydro',
     weapon: 'claymore',
     nation: 'nodkrai',
@@ -23,6 +25,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'albedo',
     name: 'Albedo',
+    fullName: 'Albedo',
     element: 'geo',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -32,6 +35,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'alhaitham',
     name: 'Alhaitham',
+    fullName: 'Alhaitham',
     element: 'dendro',
     weapon: 'sword',
     nation: 'sumeru',
@@ -41,6 +45,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'alyosha',
     name: 'Alyosha',
+    fullName: 'Alyosha',
     element: 'electro',
     weapon: 'polearm',
     nation: 'snezhnaya',
@@ -50,6 +55,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'amber',
     name: 'Amber',
+    fullName: 'Amber',
     element: 'pyro',
     weapon: 'bow',
     nation: 'mondstadt',
@@ -59,6 +65,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'arlecchino',
     name: 'Arlecchino',
+    fullName: 'Arlecchino / Father / The Knave',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'snezhnaya',
@@ -68,6 +75,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ayaka',
     name: 'Ayaka',
+    fullName: 'Kamisato Ayaka',
     element: 'cryo',
     weapon: 'sword',
     nation: 'inazuma',
@@ -77,6 +85,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ayato',
     name: 'Ayato',
+    fullName: 'Kamisato Ayato',
     element: 'hydro',
     weapon: 'sword',
     nation: 'inazuma',
@@ -86,6 +95,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'baizhu',
     name: 'Baizhu',
+    fullName: 'Baizhu',
     element: 'dendro',
     weapon: 'catalyst',
     nation: 'liyue',
@@ -95,6 +105,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'barbara',
     name: 'Barbara',
+    fullName: 'Barbara Pegg',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -104,6 +115,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'beidou',
     name: 'Beidou',
+    fullName: 'Beidou',
     element: 'electro',
     weapon: 'claymore',
     nation: 'liyue',
@@ -113,6 +125,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'bennett',
     name: 'Bennett',
+    fullName: 'Bennett',
     element: 'pyro',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -122,6 +135,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'candace',
     name: 'Candace',
+    fullName: 'Candace',
     element: 'hydro',
     weapon: 'polearm',
     nation: 'sumeru',
@@ -131,6 +145,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'charlotte',
     name: 'Charlotte',
+    fullName: 'Charlotte',
     element: 'cryo',
     weapon: 'catalyst',
     nation: 'fontaine',
@@ -140,6 +155,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'chasca',
     name: 'Chasca',
+    fullName: 'Chasca "Vuka"',
     element: 'anemo',
     weapon: 'bow',
     nation: 'natlan',
@@ -149,6 +165,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'chevreuse',
     name: 'Chevreuse',
+    fullName: 'Chevreuse',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'fontaine',
@@ -158,6 +175,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'tartaglia',
     name: 'Tartaglia',
+    fullName: 'Ajax / Tartaglia / Childe',
     element: 'hydro',
     weapon: 'bow',
     nation: 'snezhnaya',
@@ -167,6 +185,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'chiori',
     name: 'Chiori',
+    fullName: 'Chiori',
     element: 'geo',
     weapon: 'sword',
     nation: 'inazuma',
@@ -176,6 +195,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'chongyun',
     name: 'Chongyun',
+    fullName: 'Chongyun',
     element: 'cryo',
     weapon: 'claymore',
     nation: 'liyue',
@@ -185,6 +205,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'citlali',
     name: 'Citlali',
+    fullName: 'Citlali "Ukumbuko"',
     element: 'cryo',
     weapon: 'catalyst',
     nation: 'natlan',
@@ -194,6 +215,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'clorinde',
     name: 'Clorinde',
+    fullName: 'Clorinde',
     element: 'electro',
     weapon: 'sword',
     nation: 'fontaine',
@@ -203,6 +225,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'collei',
     name: 'Collei',
+    fullName: 'Collei',
     element: 'dendro',
     weapon: 'bow',
     nation: 'sumeru',
@@ -212,6 +235,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'columbina',
     name: 'Columbina',
+    fullName: 'Columbina Hyposelenia',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'nodkrai',
@@ -221,6 +245,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'cyno',
     name: 'Cyno',
+    fullName: 'Cyno',
     element: 'electro',
     weapon: 'polearm',
     nation: 'sumeru',
@@ -230,6 +255,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'dahlia',
     name: 'Dahlia',
+    fullName: 'Dahlia',
     element: 'hydro',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -239,6 +265,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'dehya',
     name: 'Dehya',
+    fullName: 'Dehya',
     element: 'pyro',
     weapon: 'claymore',
     nation: 'sumeru',
@@ -248,6 +275,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'diluc',
     name: 'Diluc',
+    fullName: 'Diluc Ragnvindr',
     element: 'pyro',
     weapon: 'claymore',
     nation: 'mondstadt',
@@ -257,6 +285,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'diona',
     name: 'Diona',
+    fullName: 'Diona Kätzlein',
     element: 'cryo',
     weapon: 'bow',
     nation: 'mondstadt',
@@ -266,6 +295,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'dori',
     name: 'Dori',
+    fullName: 'Dori Sangemah Bay',
     element: 'electro',
     weapon: 'claymore',
     nation: 'sumeru',
@@ -275,6 +305,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'durin',
     name: 'Durin',
+    fullName: 'Durin',
     element: 'pyro',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -284,6 +315,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'emilie',
     name: 'Emilie',
+    fullName: 'Emilie',
     element: 'dendro',
     weapon: 'polearm',
     nation: 'fontaine',
@@ -293,6 +325,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'escoffier',
     name: 'Escoffier',
+    fullName: 'Escoffier',
     element: 'cryo',
     weapon: 'polearm',
     nation: 'fontaine',
@@ -302,6 +335,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'eula',
     name: 'Eula',
+    fullName: 'Eula Lawrence',
     element: 'cryo',
     weapon: 'claymore',
     nation: 'mondstadt',
@@ -311,6 +345,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'faruzan',
     name: 'Faruzan',
+    fullName: 'Faruzan',
     element: 'anemo',
     weapon: 'bow',
     nation: 'sumeru',
@@ -320,6 +355,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'fischl',
     name: 'Fischl',
+    fullName: 'Fischl von Luftschloss Narfidort',
     element: 'electro',
     weapon: 'bow',
     nation: 'mondstadt',
@@ -329,6 +365,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'flins',
     name: 'Flins',
+    fullName: 'Kyryll Chudomirovich Flins',
     element: 'electro',
     weapon: 'polearm',
     nation: 'nodkrai',
@@ -338,6 +375,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'freminet',
     name: 'Freminet',
+    fullName: 'Freminet Snezhevich',
     element: 'cryo',
     weapon: 'claymore',
     nation: 'fontaine',
@@ -347,6 +385,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'furina',
     name: 'Furina',
+    fullName: 'Furina de Fontaine',
     element: 'hydro',
     weapon: 'sword',
     nation: 'fontaine',
@@ -356,6 +395,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'gaming',
     name: 'Gaming',
+    fullName: 'Yip Gaming',
     element: 'pyro',
     weapon: 'claymore',
     nation: 'liyue',
@@ -365,6 +405,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ganyu',
     name: 'Ganyu',
+    fullName: 'Ganyu',
     element: 'cryo',
     weapon: 'bow',
     nation: 'liyue',
@@ -374,6 +415,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'gorou',
     name: 'Gorou',
+    fullName: 'Gorou',
     element: 'geo',
     weapon: 'bow',
     nation: 'inazuma',
@@ -383,6 +425,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'heizou',
     name: 'Heizou',
+    fullName: 'Shikanoin Heizou',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'inazuma',
@@ -392,6 +435,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'hu-tao',
     name: 'Hu Tao',
+    fullName: 'Hu Tao',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'liyue',
@@ -401,6 +445,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'iansan',
     name: 'Iansan',
+    fullName: 'Iansan "Uwezo"',
     element: 'electro',
     weapon: 'polearm',
     nation: 'natlan',
@@ -410,6 +455,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ifa',
     name: 'Ifa',
+    fullName: 'Ifa',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'natlan',
@@ -419,6 +465,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'illuga',
     name: 'Illuga',
+    fullName: 'Illuga',
     element: 'geo',
     weapon: 'polearm',
     nation: 'nodkrai',
@@ -428,6 +475,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ineffa',
     name: 'Ineffa',
+    fullName: "Ineffa / Ix Raq'lapuj Chue'q Buluk Ch'ule-L",
     element: 'electro',
     weapon: 'polearm',
     nation: 'nodkrai',
@@ -437,6 +485,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'itto',
     name: 'Itto',
+    fullName: 'Arataki Itto',
     element: 'geo',
     weapon: 'claymore',
     nation: 'inazuma',
@@ -446,6 +495,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'jahoda',
     name: 'Jahoda',
+    fullName: 'Jahoda',
     element: 'anemo',
     weapon: 'bow',
     nation: 'nodkrai',
@@ -455,6 +505,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'jean',
     name: 'Jean',
+    fullName: 'Jean Gunnhildr',
     element: 'anemo',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -464,6 +515,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kachina',
     name: 'Kachina',
+    fullName: 'Kachina "Uthabiti"',
     element: 'geo',
     weapon: 'polearm',
     nation: 'natlan',
@@ -473,6 +525,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kaeya',
     name: 'Kaeya',
+    fullName: 'Kaeya Alberich',
     element: 'cryo',
     weapon: 'sword',
     nation: 'mondstadt',
@@ -482,6 +535,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kaveh',
     name: 'Kaveh',
+    fullName: 'Kaveh',
     element: 'dendro',
     weapon: 'claymore',
     nation: 'sumeru',
@@ -491,6 +545,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kazuha',
     name: 'Kazuha',
+    fullName: 'Kaedehara Kazuha',
     element: 'anemo',
     weapon: 'sword',
     nation: 'inazuma',
@@ -500,6 +555,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'keqing',
     name: 'Keqing',
+    fullName: 'Keqing',
     element: 'electro',
     weapon: 'sword',
     nation: 'liyue',
@@ -509,6 +565,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kinich',
     name: 'Kinich',
+    fullName: 'Kinich "Malipo"',
     element: 'dendro',
     weapon: 'claymore',
     nation: 'natlan',
@@ -518,6 +575,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kirara',
     name: 'Kirara',
+    fullName: 'Kirara',
     element: 'dendro',
     weapon: 'sword',
     nation: 'inazuma',
@@ -527,6 +585,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'klee',
     name: 'Klee',
+    fullName: 'Klee',
     element: 'pyro',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -536,6 +595,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'kokomi',
     name: 'Kokomi',
+    fullName: 'Sangonomiya Kokomi',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'inazuma',
@@ -544,7 +604,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'shinobu',
-    name: 'Kuki Shinobu',
+    name: 'Shinobu',
+    fullName: 'Kuki Shinobu',
     element: 'electro',
     weapon: 'sword',
     nation: 'inazuma',
@@ -554,6 +615,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lan-yan',
     name: 'Lan Yan',
+    fullName: 'Lan Yan',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'liyue',
@@ -563,6 +625,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lauma',
     name: 'Lauma',
+    fullName: 'Lauma',
     element: 'dendro',
     weapon: 'catalyst',
     nation: 'nodkrai',
@@ -572,6 +635,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'layla',
     name: 'Layla',
+    fullName: 'Layla',
     element: 'cryo',
     weapon: 'sword',
     nation: 'sumeru',
@@ -581,6 +645,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lisa',
     name: 'Lisa',
+    fullName: 'Lisa Minci',
     element: 'electro',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -590,6 +655,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lynette',
     name: 'Lynette',
+    fullName: 'Lynette Snezhevna',
     element: 'anemo',
     weapon: 'sword',
     nation: 'fontaine',
@@ -599,6 +665,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lyney',
     name: 'Lyney',
+    fullName: 'Lyney Snezhevich',
     element: 'pyro',
     weapon: 'bow',
     nation: 'fontaine',
@@ -608,6 +675,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mavuika',
     name: 'Mavuika',
+    fullName: 'Mavuika "Kiongozi"',
     element: 'pyro',
     weapon: 'claymore',
     nation: 'natlan',
@@ -617,6 +685,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mika',
     name: 'Mika',
+    fullName: 'Mika Schmidt',
     element: 'cryo',
     weapon: 'polearm',
     nation: 'mondstadt',
@@ -626,6 +695,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mitya',
     name: 'Mitya',
+    fullName: 'Mitya',
     element: 'electro',
     weapon: 'catalyst',
     nation: 'snezhnaya',
@@ -635,6 +705,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mizuki',
     name: 'Mizuki',
+    fullName: 'Yumemizuki Mizuki',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'inazuma',
@@ -644,6 +715,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mona',
     name: 'Mona',
+    fullName: 'Mona Megistus',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -653,6 +725,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'mualani',
     name: 'Mualani',
+    fullName: 'Mualani "Umoja"',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'natlan',
@@ -662,6 +735,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'nahida',
     name: 'Nahida',
+    fullName: 'Nahida / Lesser Lord Kusanali',
     element: 'dendro',
     weapon: 'catalyst',
     nation: 'sumeru',
@@ -671,6 +745,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'navia',
     name: 'Navia',
+    fullName: 'Navia Caspar',
     element: 'geo',
     weapon: 'claymore',
     nation: 'fontaine',
@@ -680,6 +755,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'nefer',
     name: 'Nefer',
+    fullName: 'Nefer',
     element: 'dendro',
     weapon: 'catalyst',
     nation: 'nodkrai',
@@ -689,6 +765,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'neuvillette',
     name: 'Neuvillette',
+    fullName: 'Neuvillette',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'fontaine',
@@ -698,6 +775,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'nilou',
     name: 'Nilou',
+    fullName: 'Nilou',
     element: 'hydro',
     weapon: 'sword',
     nation: 'sumeru',
@@ -707,6 +785,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ningguang',
     name: 'Ningguang',
+    fullName: 'Ningguang',
     element: 'geo',
     weapon: 'catalyst',
     nation: 'liyue',
@@ -716,6 +795,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'noelle',
     name: 'Noelle',
+    fullName: 'Noelle',
     element: 'geo',
     weapon: 'claymore',
     nation: 'mondstadt',
@@ -725,6 +805,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'odette',
     name: 'Odette',
+    fullName: 'Odette Spessiva',
     element: 'cryo',
     weapon: 'sword',
     nation: 'snezhnaya',
@@ -734,6 +815,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'ororon',
     name: 'Ororon',
+    fullName: 'Ororon "Bidii"',
     element: 'electro',
     weapon: 'bow',
     nation: 'natlan',
@@ -743,6 +825,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'qiqi',
     name: 'Qiqi',
+    fullName: 'Qiqi',
     element: 'cryo',
     weapon: 'sword',
     nation: 'liyue',
@@ -752,6 +835,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'raiden',
     name: 'Raiden',
+    fullName: 'Raiden Shogun / Raiden Ei',
     element: 'electro',
     weapon: 'polearm',
     nation: 'inazuma',
@@ -761,6 +845,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'razor',
     name: 'Razor',
+    fullName: 'Razor',
     element: 'electro',
     weapon: 'claymore',
     nation: 'mondstadt',
@@ -770,6 +855,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'rosaria',
     name: 'Rosaria',
+    fullName: 'Rosaria',
     element: 'cryo',
     weapon: 'polearm',
     nation: 'mondstadt',
@@ -779,6 +865,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sandrone',
     name: 'Sandrone',
+    fullName: 'Sandrone',
     element: 'cryo',
     weapon: 'claymore',
     nation: 'snezhnaya',
@@ -787,7 +874,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'sara',
-    name: 'Kujou Sara',
+    name: 'Sara',
+    fullName: 'Kujou Sara',
     element: 'electro',
     weapon: 'bow',
     nation: 'inazuma',
@@ -797,6 +885,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sayu',
     name: 'Sayu',
+    fullName: 'Sayu',
     element: 'anemo',
     weapon: 'claymore',
     nation: 'inazuma',
@@ -806,6 +895,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sethos',
     name: 'Sethos',
+    fullName: 'Sethos',
     element: 'electro',
     weapon: 'bow',
     nation: 'sumeru',
@@ -815,6 +905,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'shenhe',
     name: 'Shenhe',
+    fullName: 'Shenhe',
     element: 'cryo',
     weapon: 'polearm',
     nation: 'liyue',
@@ -824,6 +915,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sigewinne',
     name: 'Sigewinne',
+    fullName: 'Sigewinne',
     element: 'hydro',
     weapon: 'bow',
     nation: 'fontaine',
@@ -833,6 +925,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'skirk',
     name: 'Skirk',
+    fullName: 'Skirk',
     element: 'cryo',
     weapon: 'sword',
     nation: 'other',
@@ -842,6 +935,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sucrose',
     name: 'Sucrose',
+    fullName: 'Sucrose',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -851,6 +945,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'thoma',
     name: 'Thoma',
+    fullName: 'Thoma',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'inazuma',
@@ -860,6 +955,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'tighnari',
     name: 'Tighnari',
+    fullName: 'Tighnari',
     element: 'dendro',
     weapon: 'bow',
     nation: 'sumeru',
@@ -868,7 +964,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-anemo',
-    name: 'Traveler (Anemo)',
+    name: 'Anemo Traveler',
+    fullName: 'Traveler (Anemo) / Aether / Lumine',
     element: 'anemo',
     weapon: 'sword',
     nation: 'other',
@@ -877,7 +974,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-cryo',
-    name: 'Traveler (Cryo)',
+    name: 'Cryo Traveler',
+    fullName: 'Traveler (Cryo) / Aether / Lumine',
     element: 'cryo',
     weapon: 'sword',
     nation: 'other',
@@ -886,7 +984,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-dendro',
-    name: 'Traveler (Dendro)',
+    name: 'Dendro Traveler',
+    fullName: 'Traveler (Dendro) / Aether / Lumine',
     element: 'dendro',
     weapon: 'sword',
     nation: 'other',
@@ -895,7 +994,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-electro',
-    name: 'Traveler (Electro)',
+    name: 'Electro Traveler',
+    fullName: 'Traveler (Electro) / Aether / Lumine',
     element: 'electro',
     weapon: 'sword',
     nation: 'other',
@@ -904,7 +1004,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-geo',
-    name: 'Traveler (Geo)',
+    name: 'Geo Traveler',
+    fullName: 'Traveler (Geo) / Aether / Lumine',
     element: 'geo',
     weapon: 'sword',
     nation: 'other',
@@ -913,7 +1014,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-hydro',
-    name: 'Traveler (Hydro)',
+    name: 'Hydro Traveler',
+    fullName: 'Traveler (Hydro) / Aether / Lumine',
     element: 'hydro',
     weapon: 'sword',
     nation: 'other',
@@ -922,7 +1024,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
   {
     id: 'traveler-pyro',
-    name: 'Traveler (Pyro)',
+    name: 'Pyro Traveler',
+    fullName: 'Traveler (Pyro) / Aether / Lumine',
     element: 'pyro',
     weapon: 'sword',
     nation: 'other',
@@ -932,6 +1035,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'valeriy',
     name: 'Valeriy',
+    fullName: 'Valeriy Ivanovich Denisov',
     element: 'electro',
     weapon: 'sword',
     nation: 'snezhnaya',
@@ -941,6 +1045,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'varesa',
     name: 'Varesa',
+    fullName: 'Varesa',
     element: 'electro',
     weapon: 'catalyst',
     nation: 'natlan',
@@ -950,6 +1055,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'varka',
     name: 'Varka',
+    fullName: 'Varka',
     element: 'anemo',
     weapon: 'claymore',
     nation: 'mondstadt',
@@ -959,6 +1065,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'venti',
     name: 'Venti',
+    fullName: 'Venti / Barbatos',
     element: 'anemo',
     weapon: 'bow',
     nation: 'mondstadt',
@@ -968,6 +1075,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'vesna',
     name: 'Vesna',
+    fullName: 'Vesna',
     element: 'anemo',
     weapon: 'sword',
     nation: 'snezhnaya',
@@ -977,6 +1085,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'vodyanitsa',
     name: 'Vodyanitsa',
+    fullName: 'Vodyanitsa',
     element: 'hydro',
     weapon: 'catalyst',
     nation: 'snezhnaya',
@@ -986,6 +1095,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'wanderer',
     name: 'Wanderer',
+    fullName: 'Wanderer / Scaramouche / The Balladeer',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'sumeru',
@@ -995,6 +1105,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'wriothesley',
     name: 'Wriothesley',
+    fullName: 'Wriothesley',
     element: 'cryo',
     weapon: 'catalyst',
     nation: 'fontaine',
@@ -1004,6 +1115,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xiangling',
     name: 'Xiangling',
+    fullName: 'Mao Xiangling',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'liyue',
@@ -1013,6 +1125,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xianyun',
     name: 'Xianyun',
+    fullName: 'Xianyun',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'liyue',
@@ -1022,6 +1135,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xiao',
     name: 'Xiao',
+    fullName: 'Xiao',
     element: 'anemo',
     weapon: 'polearm',
     nation: 'liyue',
@@ -1031,6 +1145,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xilonen',
     name: 'Xilonen',
+    fullName: 'Xilonen "Baraka"',
     element: 'geo',
     weapon: 'sword',
     nation: 'natlan',
@@ -1040,6 +1155,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xingqiu',
     name: 'Xingqiu',
+    fullName: 'Xingqiu',
     element: 'hydro',
     weapon: 'sword',
     nation: 'liyue',
@@ -1049,6 +1165,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'xinyan',
     name: 'Xinyan',
+    fullName: 'Xinyan',
     element: 'pyro',
     weapon: 'claymore',
     nation: 'liyue',
@@ -1058,6 +1175,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yae-miko',
     name: 'Yae Miko',
+    fullName: 'Yae Miko',
     element: 'electro',
     weapon: 'catalyst',
     nation: 'inazuma',
@@ -1067,6 +1185,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yanfei',
     name: 'Yanfei',
+    fullName: 'Yanfei',
     element: 'pyro',
     weapon: 'catalyst',
     nation: 'liyue',
@@ -1076,6 +1195,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yaoyao',
     name: 'Yaoyao',
+    fullName: 'Yaoyao',
     element: 'dendro',
     weapon: 'polearm',
     nation: 'liyue',
@@ -1085,6 +1205,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yelan',
     name: 'Yelan',
+    fullName: 'Yelan',
     element: 'hydro',
     weapon: 'bow',
     nation: 'liyue',
@@ -1094,6 +1215,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yoimiya',
     name: 'Yoimiya',
+    fullName: 'Naganohara Yoimiya',
     element: 'pyro',
     weapon: 'bow',
     nation: 'inazuma',
@@ -1103,6 +1225,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'yun-jin',
     name: 'Yun Jin',
+    fullName: 'Yun Jin',
     element: 'geo',
     weapon: 'polearm',
     nation: 'liyue',
@@ -1112,6 +1235,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'zhongli',
     name: 'Zhongli',
+    fullName: 'Zhongli / Morax / Rex Lapis',
     element: 'geo',
     weapon: 'polearm',
     nation: 'liyue',
@@ -1121,6 +1245,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'zibai',
     name: 'Zibai',
+    fullName: 'Zibai',
     element: 'geo',
     weapon: 'sword',
     nation: 'liyue',
@@ -1130,6 +1255,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'linnea',
     name: 'Linnea',
+    fullName: 'Linnea',
     element: 'geo',
     weapon: 'bow',
     nation: 'nodkrai',
@@ -1139,6 +1265,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'nicole',
     name: 'Nicole',
+    fullName: 'Nicole Reeyn',
     element: 'pyro',
     weapon: 'catalyst',
     nation: 'other',
@@ -1148,6 +1275,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'prune',
     name: 'Prune',
+    fullName: 'Prune',
     element: 'anemo',
     weapon: 'catalyst',
     nation: 'mondstadt',
@@ -1157,6 +1285,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'lohen',
     name: 'Lohen',
+    fullName: 'Lohen',
     element: 'cryo',
     weapon: 'polearm',
     nation: 'mondstadt',

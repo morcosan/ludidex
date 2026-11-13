@@ -1,6 +1,6 @@
 import { SelectField, type SelectOption } from '@design-system'
 import { useTranslation } from 'react-i18next'
-import { type CharacterLabel, type ItemSize } from '../../state/types'
+import { type CharacterLabel, type CharacterSorting, type ItemSize } from '../../state/types'
 import { useUserSettingsStore } from '../../state/use-user-settings'
 import { PageSection } from '../page-section/page-section'
 
@@ -18,6 +18,13 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
     { value: 'sm', label: t('general.label.small') },
     { value: 'md', label: t('general.label.medium') },
     { value: 'lg', label: t('general.label.large') },
+  ]
+
+  const charSortingOptions: SelectOption<CharacterSorting>[] = [
+    { value: 'name', label: t('general.label.name') },
+    { value: 'level', label: t('game.label.level') },
+    { value: 'rating', label: t('general.label.rating') },
+    { value: 'status', label: t('general.label.status') },
   ]
 
   const charLabelOptions: SelectOption<CharacterLabel | ''>[] = [
@@ -42,6 +49,18 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
     <PageSection title={t('general.label.appearance')} className={className} classNames={{ body: 'gap-xs-3' }}>
       {type === 'characters' && (
         <>
+          <div className={rowClass}>
+            <span className="text-size-sm">{t('general.label.sorting')}</span>
+            <SelectField
+              id="char-sorting"
+              value={userSettings.charSorting}
+              options={charSortingOptions}
+              size="xs"
+              className={charFieldClass}
+              classNames={charFieldClassNames}
+              onChange={(value) => value && updateUserSettings({ charSorting: value as CharacterSorting })}
+            />
+          </div>
           <div className={rowClass}>
             <span className="text-size-sm">{t('general.label.labelOnTop')}</span>
             <SelectField

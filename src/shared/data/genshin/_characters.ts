@@ -65,7 +65,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'arlecchino',
     name: 'Arlecchino',
-    fullName: 'Arlecchino / Father / The Knave',
+    fullName: 'Peruere / Arlecchino / Father / The Knave',
     element: 'pyro',
     weapon: 'polearm',
     nation: 'snezhnaya',
@@ -865,7 +865,7 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   {
     id: 'sandrone',
     name: 'Sandrone',
-    fullName: 'Sandrone',
+    fullName: 'Marionette Guillotin / Sandrone',
     element: 'cryo',
     weapon: 'claymore',
     nation: 'snezhnaya',

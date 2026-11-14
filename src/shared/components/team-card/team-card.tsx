@@ -1,7 +1,8 @@
 import { Card, Image, TextField } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data'
+import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter, type TagColor } from '../../data'
+import { USER_TAGS } from '../../state/types'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
@@ -12,6 +13,7 @@ import { CardBanner } from '../_shared/card-banner'
 import { CardSection } from '../_shared/card-section'
 import { CharacterModal, type CharacterModalSelection } from '../character-modal/character-modal'
 import { Tag } from '../tag/tag'
+import { TagsField } from '../tags-field/tags-field'
 import { ErrorNotice } from './_partials/error-notice'
 import { MemberItem } from './_partials/member-item'
 import { TeamDeleteModal } from './_partials/team-delete-modal'
@@ -45,6 +47,17 @@ export const TeamCard = (props: TeamCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [hasChangedName, setHasChangedName] = useState(false)
   const [hasChangedMembers, setHasChangedMembers] = useState(false)
+
+  const tagOptions = [
+    ...new Set([
+      ...Object.keys(USER_TAGS),
+      ...Object.values(userData?.teams ?? {}).flatMap((userTeam) => userTeam.tags ?? []),
+      ...Object.values(userData?.characters ?? {}).flatMap((character) => character?.tags ?? []),
+    ]),
+  ]
+  const tagColors: Record<string, TagColor> = Object.fromEntries(
+    Object.entries(USER_TAGS).map(([tag, { color }]) => [tag, color]),
+  )
 
   const teamName = formatUserInput(draft.name).toLowerCase()
   const hasInvalidTeamName = (() => {
@@ -208,18 +221,17 @@ export const TeamCard = (props: TeamCardProps) => {
           {/* TAGS */}
           <CardSection title={t('game.label.tags')}>
             {isEditing ? (
-              <TextField
+              <TagsField
                 id="team-card-tags"
-                size="xs"
                 value={draft.tags}
-                placeholder={t('game.placeholder.tags')}
-                multiline
+                options={tagOptions}
+                colors={tagColors}
                 onChange={handleTagsChange}
               />
             ) : team.tags?.length ? (
               <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
                 {team.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <Tag key={tag} value={tag} />
                 ))}
               </div>
             ) : (

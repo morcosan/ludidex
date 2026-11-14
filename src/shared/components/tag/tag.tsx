@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { type TagColor } from '../../data'
 
 export interface TagProps extends ReactProps {
-  value: string
+  value?: string
   color?: TagColor
   onRemove?: () => void
 }
@@ -28,7 +28,7 @@ export const Tag = (props: TagProps) => {
         <button
           type="button"
           title={t('general.action.remove')}
-          className="flex-center size-xs-8 hover:bg-color-hover-text-default cursor-pointer rounded-full"
+          className="-ml-xs-2 flex-center size-xs-8 hover:bg-color-hover-text-default cursor-pointer rounded-full"
           onMouseDown={(event) => event.preventDefault()}
           onClick={onRemove}
         >

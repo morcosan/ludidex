@@ -47,6 +47,15 @@ const parseTags = (value: string) => {
     .filter(Boolean)
 }
 
+const formatTag = (value: string) => {
+  return value
+    .normalize('NFC')
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toLocaleUpperCase() + word.slice(1))
+    .join('-')
+}
+
 const sortByName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)
 
 const countFilters = (filters: Filters) => {
@@ -76,6 +85,7 @@ export {
   formatFileSize,
   formatInteger,
   formatPercent,
+  formatTag,
   formatUserInput,
   getDataSize,
   getDateAsYYYYMMDD,

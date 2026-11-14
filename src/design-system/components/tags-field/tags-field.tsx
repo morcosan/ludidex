@@ -27,9 +27,9 @@ export const TagsField = (props: TagsFieldProps) => {
   const { chevronCss, classNames, styles } = useStyles(props)
   const [searchValue, setSearchValue] = useState('')
 
-  const normalizeTags = (tags?: string[]) => {
+  const normalizeTags = (tags: string[]) => {
     const normalized = new Map<string, string>()
-    for (const tag of tags ?? []) {
+    for (const tag of tags) {
       const parsed = parseTag(tag)
       const key = parsed.toLowerCase()
       if (parsed && !normalized.has(key)) normalized.set(key, parsed)

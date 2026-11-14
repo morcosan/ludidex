@@ -47,13 +47,11 @@ const parseTags = (value: string) => {
     .filter(Boolean)
 }
 
-const formatTag = (value: string) => {
+const parseTag = (value: string) => {
   return value
     .normalize('NFC')
-    .split(/[^\p{L}\p{N}]+/u)
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toLocaleUpperCase() + word.slice(1))
-    .join('-')
+    .replace(/[^\p{L}\p{N}-]+/gu, '-')
+    .replace(/^-+|-+$/g, '')
 }
 
 const sortByName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)
@@ -85,12 +83,12 @@ export {
   formatFileSize,
   formatInteger,
   formatPercent,
-  formatTag,
   formatUserInput,
   getDataSize,
   getDateAsYYYYMMDD,
   getTimeAsHHMMSS,
   isPathUnderSegment,
+  parseTag,
   parseTags,
   roundValue,
   sortByName,

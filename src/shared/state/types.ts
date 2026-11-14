@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { RATING_LABELS, TIER_LIST_LABELS } from '../data'
+import { RATING_LABELS, type TagColor, TIER_LIST_LABELS } from '../data'
 import {
   type UserAssets_v0,
   type UserAssetsCharacterKey_v0,
@@ -28,7 +28,19 @@ interface GenshinTeam extends GenshinTeamUserData {
   charIds: string[]
 }
 
+interface UserTag {
+  color: TagColor
+}
+const USER_TAGS: Record<string, UserTag> = {
+  'main-dps': { color: 'red' },
+  'sub-dps': { color: 'blue' },
+  support: { color: 'green' },
+  story: { color: 'yellow' },
+  combat: { color: 'red' },
+} as const
+
 export {
+  USER_TAGS,
   type CharacterLabel,
   type CharacterSorting,
   type GenshinCharacterUserData,
@@ -43,4 +55,5 @@ export {
   type UserAssetsGroup,
   type UserData,
   type UserSettings,
+  type UserTag,
 }

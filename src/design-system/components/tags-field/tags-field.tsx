@@ -9,6 +9,8 @@ import { Tag, type TagColor } from '../tag/tag'
 import { type TagsFieldProps } from './_types'
 import { useStyles } from './_use-styles'
 
+export { type TagsFieldProps }
+
 export const TagsField = (props: TagsFieldProps) => {
   const {
     id,

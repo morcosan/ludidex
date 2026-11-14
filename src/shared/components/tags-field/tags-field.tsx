@@ -1,4 +1,4 @@
-import type { TagColor } from '@app-shared/data'
+import { type TextFieldSize } from '@design-system'
 import { TagsInput as MantineTagsInput } from '@mantine/core'
 import '@mantine/core/styles/Combobox.css'
 import '@mantine/core/styles/Input.css'
@@ -6,6 +6,7 @@ import '@mantine/core/styles/Popover.css'
 import '@mantine/core/styles/ScrollArea.css'
 import { ChevronDownIcon } from 'lucide-react'
 import { useState } from 'react'
+import { type TagColor } from '../../data'
 import { parseTag } from '../../utils/various'
 import { Tag } from '../tag/tag'
 import { useStyles } from './_use-styles'
@@ -14,6 +15,7 @@ export interface TagsFieldProps extends ReactProps {
   id: string
   value?: string[]
   options?: string[]
+  size?: TextFieldSize
   colors?: Record<string, TagColor>
   disabled?: boolean
   className?: string

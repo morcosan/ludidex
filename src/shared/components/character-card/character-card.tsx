@@ -147,7 +147,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
             ) : userData?.tags?.length ? (
               <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
                 {userData.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <Tag key={tag} value={tag} />
                 ))}
               </div>
             ) : (

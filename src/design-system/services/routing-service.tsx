@@ -33,5 +33,5 @@ const RoutingService = ({ navigate, children }: Props) => {
 /**
  * Export
  */
-/* eslint-disable react-refresh/only-export-components */
+// eslint-disable-next-line react-refresh/only-export-components
 export { RoutingService, useRoutingService }

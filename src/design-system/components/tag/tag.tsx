@@ -2,10 +2,12 @@ import { XIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 export type TagColor = 'blue' | 'green' | 'red' | 'yellow'
-export const TAG_COLORS = ['blue', 'green', 'red', 'yellow'] as const
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const TAG_COLORS: TagColor[] = ['blue', 'green', 'red', 'yellow'] as const
 
 export interface TagProps extends ReactProps {
-  value?: string
+  value: string
   color?: TagColor
   onRemove?: () => void
 }

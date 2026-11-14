@@ -60,7 +60,7 @@ export const TagsField = (props: TagsFieldProps) => {
       maxTags={100}
       rightSection={<ChevronDownIcon aria-hidden css={chevronCss} />}
       renderOption={({ option }) => <Tag value={option.value} color={getTagColor(option.value)} />}
-      renderPill={({ value, onRemove }) => (
+      renderPill={({ value = '', onRemove }) => (
         <Tag key={value} value={value} color={getTagColor(value)} onRemove={disabled ? undefined : onRemove} />
       )}
       className={className}

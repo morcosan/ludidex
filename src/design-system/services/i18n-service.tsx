@@ -37,5 +37,5 @@ const I18nService = ({ translate, loading, children }: Props) => {
 /**
  * Export
  */
-/* eslint-disable react-refresh/only-export-components */
+// eslint-disable-next-line react-refresh/only-export-components
 export { I18nService, useI18nService }

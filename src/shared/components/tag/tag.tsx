@@ -22,7 +22,7 @@ export const Tag = (props: TagProps) => {
 
   return (
     <span className={cx('flex-center min-h-xs-8 flex rounded-sm border', colorClass, className)}>
-      <span className="px-xs-2 text-size-xs">{value}</span>
+      <span className="px-xs-2 text-size-xs max-w-lg-5 truncate">{value}</span>
 
       {onRemove && (
         <button

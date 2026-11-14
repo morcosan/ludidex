@@ -3,25 +3,25 @@ import { useEffect, useState } from 'react'
 import { MAX_TEAM_SIZE, RATING_VALUES, type RatingValue } from '../../../data'
 import { type GenshinTeam, type GenshinTeamUserData } from '../../../state/types'
 import { packTeamId } from '../../../state/utils'
-import { formatUserInput, parseTags } from '../../../utils/various'
+import { formatUserInput, parseTag } from '../../../utils/various'
 import { type TeamCardProps } from '../_types'
 
 interface TeamDraft {
   charIds: (string | null)[]
   name: string
   rating?: RatingValue
-  tags: string
+  tags: string[]
 }
 
 const createDraft = (team: GenshinTeam): TeamDraft => ({
   charIds: Array.from({ length: MAX_TEAM_SIZE }, (_, index) => team.charIds[index] ?? null),
   name: team.name,
   rating: RATING_VALUES.find((rating) => rating === team.rating),
-  tags: team.tags?.join(', ') ?? '',
+  tags: (team.tags ?? []).map(parseTag).filter(Boolean),
 })
 
 const buildTeamData = (draft: TeamDraft): GenshinTeamUserData => {
-  const tags = parseTags(draft.tags)
+  const tags = [...new Set(draft.tags.map(parseTag).filter(Boolean))]
 
   return {
     name: draft.name,
@@ -56,7 +56,7 @@ export const useDraft = (props: TeamCardProps) => {
     })
   }
 
-  const handleTagsChange = (tags: string) => {
+  const handleTagsChange = (tags: string[]) => {
     setDraft((state) => ({ ...state, tags }))
   }
 

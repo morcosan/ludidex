@@ -1,19 +1,19 @@
-import { Card, Image, TextField } from '@design-system'
+import { Card, Image, type TagColor, TextField } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter, type TagColor } from '../../data'
+import { Tag } from '../../../design-system/components/tag/tag'
+import { TagsField } from '../../../design-system/components/tags-field/tags-field'
+import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data'
 import { USER_TAGS } from '../../state/types'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
-import { formatUserInput } from '../../utils/various'
+import { formatUserInput, parseTag } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
 import { CardSection } from '../_shared/card-section'
 import { CharacterModal, type CharacterModalSelection } from '../character-modal/character-modal'
-import { Tag } from '../tag/tag'
-import { TagsField } from '../tags-field/tags-field'
 import { ErrorNotice } from './_partials/error-notice'
 import { MemberItem } from './_partials/member-item'
 import { TeamDeleteModal } from './_partials/team-delete-modal'
@@ -227,6 +227,7 @@ export const TeamCard = (props: TeamCardProps) => {
                 value={draft.tags}
                 options={tagOptions}
                 colors={tagColors}
+                parseTag={parseTag}
                 onChange={handleTagsChange}
               />
             ) : team.tags?.length ? (

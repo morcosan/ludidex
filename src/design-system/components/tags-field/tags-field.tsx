@@ -1,4 +1,3 @@
-import { type TextFieldSize } from '@design-system'
 import { TagsInput as MantineTagsInput } from '@mantine/core'
 import '@mantine/core/styles/Combobox.css'
 import '@mantine/core/styles/Input.css'
@@ -6,24 +5,36 @@ import '@mantine/core/styles/Popover.css'
 import '@mantine/core/styles/ScrollArea.css'
 import { ChevronDownIcon } from 'lucide-react'
 import { useState } from 'react'
-import { type TagColor } from '../../data'
-import { parseTag } from '../../utils/various'
-import { Tag } from '../tag/tag'
+import { Tag, type TagColor } from '../tag/tag'
 import { useStyles } from './_use-styles'
+
+export type TagsFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface TagsFieldProps extends ReactProps {
   id: string
   value?: string[]
   options?: string[]
-  size?: TextFieldSize
+  size?: TagsFieldSize
   colors?: Record<string, TagColor>
   disabled?: boolean
   className?: string
+  parseTag?: (value: string) => string
   onChange?: (value: string[]) => void
 }
 
 export const TagsField = (props: TagsFieldProps) => {
-  const { id, value, options, size = 'md', colors = {}, disabled, className, style, onChange } = props
+  const {
+    id,
+    value,
+    options,
+    size = 'md',
+    colors = {},
+    disabled,
+    className,
+    style,
+    parseTag = (tag: string) => tag,
+    onChange,
+  } = props
   const { chevronCss, classNames, styles } = useStyles({ size })
   const [searchValue, setSearchValue] = useState('')
 

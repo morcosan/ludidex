@@ -89,9 +89,6 @@ const STATUS_COLORS = {
 
 const MAX_TEAM_SIZE = 4
 
-type TagColor = 'blue' | 'green' | 'red' | 'yellow'
-const TAG_COLORS = ['blue', 'green', 'red', 'yellow'] as const
-
 export * from './genshin/_artifacts'
 export * from './genshin/_characters'
 export * from './genshin/_core'
@@ -106,7 +103,6 @@ export {
   RATING_LABELS,
   RATING_VALUES,
   STATUS_COLORS,
-  TAG_COLORS,
   TIER_LIST_COLORS,
   TIER_LIST_LABELS,
   TIER_LIST_VALUES,
@@ -114,6 +110,5 @@ export {
   type Game,
   type GameId,
   type RatingValue,
-  type TagColor,
   type TierListValue,
 }

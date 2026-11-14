@@ -1,7 +1,6 @@
-import { TAG_COLORS } from '@app-shared/data'
 import { defineMeta, DocsPage } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { Tag } from './tag'
+import { Tag, TAG_COLORS } from './tag'
 
 const meta: Meta = {
   title: 'App / Components / Tag',

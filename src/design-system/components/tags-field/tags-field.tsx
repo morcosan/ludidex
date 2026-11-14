@@ -6,21 +6,8 @@ import '@mantine/core/styles/ScrollArea.css'
 import { ChevronDownIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Tag, type TagColor } from '../tag/tag'
+import { type TagsFieldProps } from './_types'
 import { useStyles } from './_use-styles'
-
-export type TagsFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-
-export interface TagsFieldProps extends ReactProps {
-  id: string
-  value?: string[]
-  options?: string[]
-  size?: TagsFieldSize
-  colors?: Record<string, TagColor>
-  disabled?: boolean
-  className?: string
-  parseTag?: (value: string) => string
-  onChange?: (value: string[]) => void
-}
 
 export const TagsField = (props: TagsFieldProps) => {
   const {
@@ -35,7 +22,7 @@ export const TagsField = (props: TagsFieldProps) => {
     parseTag = (tag: string) => tag,
     onChange,
   } = props
-  const { chevronCss, classNames, styles } = useStyles({ size })
+  const { chevronCss, classNames, styles } = useStyles(props)
   const [searchValue, setSearchValue] = useState('')
 
   const normalizeTags = (tags?: string[]) => {

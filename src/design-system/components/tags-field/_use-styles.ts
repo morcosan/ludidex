@@ -1,12 +1,10 @@
-import { useThemeService, type TextFieldSize } from '@design-system'
-import type { CSSObject } from '@emotion/react'
+import { useThemeService } from '@design-system'
+import { type CSSObject } from '@emotion/react'
 import { type CSSProperties } from '@mantine/core'
+import { type TagsFieldProps } from './_types'
 
-interface UseStylesProps {
-  size?: TextFieldSize
-}
-
-export const useStyles = ({ size = 'xs' }: UseStylesProps = {}) => {
+export const useStyles = (props: TagsFieldProps) => {
+  const { size } = props
   const { tokens } = useThemeService()
 
   const fieldHeight = (() => {

@@ -21,14 +21,14 @@ export const Tag = (props: TagProps) => {
   })()
 
   return (
-    <span className={cx('flex-center min-h-xs-8 flex rounded-sm border', colorClass, className)}>
+    <span className={cx('flex-center h-xs-9 flex rounded-sm border', colorClass, className)}>
       <span className="px-xs-2 text-size-xs max-w-lg-5 truncate">{value}</span>
 
       {onRemove && (
         <button
           type="button"
           title={t('general.action.remove')}
-          className="-ml-xs-2 flex-center size-xs-8 hover:bg-color-hover-text-default cursor-pointer rounded-full"
+          className="-ml-xs-1 flex-center size-xs-8 hover:bg-color-hover-text-default cursor-pointer rounded-full"
           onMouseDown={(event) => event.preventDefault()}
           onClick={onRemove}
         >

@@ -8,8 +8,9 @@ const meta: Meta = {
   ...defineMeta(TagsField, {
     props: {
       id: 'example-id',
-      value: ['Tag-Example-Test', 'story', 'COMBAT'],
+      value: [],
       options: ['story', 'combat', 'support', 'main', 'sub-dps', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6'],
+      size: 'md',
       colors: {
         story: 'red',
         combat: 'blue',
@@ -20,6 +21,7 @@ const meta: Meta = {
       className: 'w-xl-0',
     },
     events: ['onChange'],
+    inlineRadios: ['size'],
 
     render: (props: TagsFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks

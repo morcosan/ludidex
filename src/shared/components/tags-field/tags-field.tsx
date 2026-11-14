@@ -23,8 +23,8 @@ export interface TagsFieldProps extends ReactProps {
 }
 
 export const TagsField = (props: TagsFieldProps) => {
-  const { id, value, options, colors = {}, disabled, className, style, onChange } = props
-  const { classNames, styles } = useStyles()
+  const { id, value, options, size = 'md', colors = {}, disabled, className, style, onChange } = props
+  const { chevronCss, classNames, styles } = useStyles({ size })
   const [searchValue, setSearchValue] = useState('')
 
   const normalizeTags = (tags?: string[]) => {
@@ -52,13 +52,13 @@ export const TagsField = (props: TagsFieldProps) => {
   return (
     <MantineTagsInput
       id={id}
-      size="xs"
+      size={size}
       value={normalizeTags(value)}
       data={normalizeTags(options)}
       disabled={disabled}
       searchValue={searchValue}
       maxTags={100}
-      rightSection={<ChevronDownIcon aria-hidden className="h-xs-7 w-xs-7" />}
+      rightSection={<ChevronDownIcon aria-hidden css={chevronCss} />}
       renderOption={({ option }) => <Tag value={option.value} color={getTagColor(option.value)} />}
       renderPill={({ value, onRemove }) => (
         <Tag key={value} value={value} color={getTagColor(value)} onRemove={disabled ? undefined : onRemove} />

@@ -223,6 +223,7 @@ export const TeamCard = (props: TeamCardProps) => {
             {isEditing ? (
               <TagsField
                 id="team-card-tags"
+                size="xs"
                 value={draft.tags}
                 options={tagOptions}
                 colors={tagColors}

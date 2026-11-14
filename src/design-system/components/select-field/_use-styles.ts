@@ -76,18 +76,16 @@ export const useStyles = (props: SelectFieldProps) => {
     },
   }
   const chevronSize = (() => {
-    if (size === 'xs') return tokens.fontSize['sm']
-    if (size === 'sm') return tokens.fontSize['sm']
-    if (size === 'md') return tokens.fontSize['lg']
-    if (size === 'lg') return tokens.fontSize['lg']
-    if (size === 'xl') return tokens.fontSize['lg']
+    if (size === 'xs') return tokens.spacing['xs-6']
+    if (size === 'sm') return tokens.spacing['xs-6']
+    if (size === 'md') return tokens.spacing['xs-7']
+    if (size === 'lg') return tokens.spacing['xs-7']
+    if (size === 'xl') return tokens.spacing['xs-7']
     return ''
   })()
   const chevronCss: CSSObject = {
-    display: 'block',
     width: chevronSize,
     height: chevronSize,
-    flex: '0 0 auto',
   }
   const optionCss: CSSObject = {
     position: 'relative',

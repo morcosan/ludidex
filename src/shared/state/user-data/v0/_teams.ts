@@ -4,13 +4,7 @@ import { GENSHIN_CHARACTER_IDS } from '../../../data'
 const unpackTeamId_v0 = (id: string): string[] => id.split('_')
 const packTeamId_v0 = (charIds: string[]): string => charIds.join('_')
 
-const GenshinTeamSchema_v0 = z.object({
-  name: z.string(),
-  rating: z.number().optional(),
-  tags: z.array(z.string()).optional(),
-})
-
-const GenshinTeamsSchema_v0 = z.record(z.string(), GenshinTeamSchema_v0).superRefine((teams, ctx) => {
+const refineTeam_v0 = <T>(teams: Record<string, T>, ctx: z.core.$RefinementCtx<Record<string, T>>) => {
   for (const teamId of Object.keys(teams)) {
     const characterIds = unpackTeamId_v0(teamId)
     if (characterIds.length < 1 || characterIds.length > 4) {
@@ -23,6 +17,14 @@ const GenshinTeamsSchema_v0 = z.record(z.string(), GenshinTeamSchema_v0).superRe
       ctx.addIssue({ code: 'custom', message: 'Team character IDs must be unique', path: [teamId] })
     }
   }
+}
+
+const GenshinTeamSchema_v0 = z.object({
+  name: z.string(),
+  rating: z.number().optional(),
+  tags: z.array(z.string()).optional(),
 })
 
-export { GenshinTeamSchema_v0, GenshinTeamsSchema_v0, packTeamId_v0, unpackTeamId_v0 }
+const GenshinTeamsSchema_v0 = z.record(z.string(), GenshinTeamSchema_v0).superRefine(refineTeam_v0)
+
+export { GenshinTeamSchema_v0, GenshinTeamsSchema_v0, packTeamId_v0, refineTeam_v0, unpackTeamId_v0 }

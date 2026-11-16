@@ -5,6 +5,7 @@ import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useCharacterListing } from '@app-shared/utils/use-character-listing'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useUrlFilters } from '@app-shared/utils/use-url-filters'
+import { useUserTags } from '@app-shared/utils/use-user-tags'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
 import { countFilters } from '@app-shared/utils/various'
 import { useState } from 'react'
@@ -18,9 +19,10 @@ export default function Page() {
   const { t } = useTranslation()
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
   const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(CHARACTER_VIEW_TYPES, 'default')
+  const { tagOptions } = useUserTags()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [filters, setFilters] = useUrlFilters(CHARACTER_FILTERS)
+  const [filters, setFilters] = useUrlFilters({ ...CHARACTER_FILTERS, tags: tagOptions })
   const { listedCharacters } = useCharacterListing(filters)
 
   useClickOutside({
@@ -38,6 +40,7 @@ export default function Page() {
     statuses: filters.statuses,
     weapons: filters.weapons,
     nations: filters.nations,
+    tags: filters.tags,
   }
 
   const handleFiltersChange = (newFilters: Filters) => {

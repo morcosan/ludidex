@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { RATING_LABELS, TIER_LIST_LABELS } from '../data'
+import { RATING_LABELS, TIER_LIST_LABELS, type TagColor } from '../data'
 import {
   type UserAssets_v0,
   type UserAssetsCharacterKey_v0,
@@ -15,6 +15,7 @@ type GenshinCharacterUserData = GenshinCharacter_v0
 type GenshinTeamUserData = GenshinTeam_v0
 type ItemSize = z.infer<typeof ItemSizeSchema>
 type RatingLabels = Record<keyof typeof RATING_LABELS, string>
+type TagColors = Record<string, TagColor>
 type TierListLabels = Record<keyof typeof TIER_LIST_LABELS, string>
 type UserAssets = UserAssets_v0
 type UserAssetsGameKey = UserAssetsGameKey_v0
@@ -36,6 +37,7 @@ export {
   type GenshinTeamUserData,
   type ItemSize,
   type RatingLabels,
+  type TagColors,
   type TierListLabels,
   type UserAssets,
   type UserAssetsCharacterKey,

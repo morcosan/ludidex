@@ -12,6 +12,7 @@ const meta: Meta = {
         statuses: [],
         weapons: [],
         nations: [],
+        tags: [],
         search: '',
       },
       className: '',

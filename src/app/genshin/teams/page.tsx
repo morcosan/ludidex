@@ -4,6 +4,7 @@ import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useTeamListing } from '@app-shared/utils/use-team-listing'
 import { useUrlFilters } from '@app-shared/utils/use-url-filters'
+import { useUserTags } from '@app-shared/utils/use-user-tags'
 import { useViewOptions } from '@app-shared/utils/use-view-options'
 import { countFilters } from '@app-shared/utils/various'
 import { IconButton } from '@design-system'
@@ -19,12 +20,13 @@ export default function Page() {
   const { t } = useTranslation()
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
   const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(TEAM_VIEW_TYPES, 'default')
+  const { tagOptions } = useUserTags()
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [emptyTeams, setEmptyTeams] = useState<GenshinTeam[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
   const canScrollRef = useRef(false)
-  const [filters, setFilters] = useUrlFilters(TEAM_FILTERS)
+  const [filters, setFilters] = useUrlFilters({ ...TEAM_FILTERS, tags: tagOptions })
   const { allTeams, listedTeams } = useTeamListing(filters)
 
   useClickOutside({
@@ -38,7 +40,12 @@ export default function Page() {
   const currTeams = [...listedTeams, ...emptyTeams]
   const filtersCount = countFilters(filters)
   const topBarFilters: Filters = { search: filters.search, elements: filters.elements }
-  const sectionFilters: Filters = { statuses: filters.statuses, weapons: filters.weapons, nations: filters.nations }
+  const sectionFilters: Filters = {
+    statuses: filters.statuses,
+    weapons: filters.weapons,
+    nations: filters.nations,
+    tags: filters.tags,
+  }
 
   const handleFiltersChange = (newFilters: Filters) => {
     setFilters({ ...filters, ...newFilters })

@@ -4,4 +4,5 @@ export interface SectionProps extends ReactProps {
   id: string
   title: ReactNode
   keyword: string
+  classNames?: { label?: string }
 }

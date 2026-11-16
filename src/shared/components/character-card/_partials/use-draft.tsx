@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { RATING_VALUES, type CharacterStatus, type RatingValue, type TierListValue } from '../../../data'
 import { type GenshinCharacterUserData } from '../../../state/types'
 import { useUserDataStore } from '../../../state/use-user-data'
-import { parseTags, toNumber } from '../../../utils/various'
+import { parseTag } from '../../../utils/use-user-tags'
+import { toNumber } from '../../../utils/various'
 import {
   type CharacterCardProps,
   type GenshinStats,
@@ -25,7 +26,7 @@ const TALENT_FIELDS = ['conLv', 'attackLv', 'skillLv', 'burstLv'] as const satis
 interface CharacterDraft {
   rating?: RatingValue
   status?: CharacterStatus
-  tags: string
+  tags: string[]
   tierLists: Record<keyof GenshinTierScores, TierListValue | undefined>
   stats: Record<keyof GenshinStats, string>
   talents: Record<keyof GenshinTalents, string>
@@ -74,7 +75,7 @@ const createDraft = (userData?: GenshinCharacterUserData): CharacterDraft => {
   return {
     rating: RATING_VALUES.find((rating) => rating === userData?.rating),
     status: userData?.status,
-    tags: userData?.tags?.join(', ') ?? '',
+    tags: userData?.tags ?? [],
     tierLists,
     stats: createNumberDraft(STAT_FIELDS, userData?.stats),
     talents: createNumberDraft(TALENT_FIELDS, userData?.talents),
@@ -82,7 +83,7 @@ const createDraft = (userData?: GenshinCharacterUserData): CharacterDraft => {
 }
 
 const buildCharacter = (draft: CharacterDraft): GenshinCharacterUserData => {
-  const tags = parseTags(draft.tags)
+  const tags = [...new Set(draft.tags.map(parseTag).filter(Boolean))]
   const tierLists = buildTierLists(draft.tierLists)
   const stats = buildNumberRecord(STAT_FIELDS, draft.stats)
   const talents = buildNumberRecord(TALENT_FIELDS, draft.talents)
@@ -112,7 +113,7 @@ export const useDraft = (props: CharacterCardProps) => {
     setDraft((state) => ({ ...state, status }))
   }
 
-  const handleTagsChange = (tags: string) => {
+  const handleTagsChange = (tags: string[]) => {
     setDraft((state) => ({ ...state, tags }))
   }
 

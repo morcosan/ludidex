@@ -103,6 +103,7 @@ export default function Page() {
                 title={<TextHighlight text={t(labelKey)} keyword={keyword} />}
                 keyword={keyword}
                 className="min-h-lg-0"
+                classNames={{ label: 'min-w-md-5' }}
               />
             ))}
           </div>

@@ -10,8 +10,16 @@ export type FiltersSectionProps = FiltersProps
 export const FiltersSection = (props: FiltersSectionProps) => {
   const { surface = 'glass', className } = props
   const { t } = useTranslation()
-  const { hasFilters, handleClearFilters, renderElements, renderNations, renderSearch, renderStatuses, renderWeapons } =
-    useFilters(props)
+  const {
+    hasFilters,
+    handleClearFilters,
+    renderElements,
+    renderNations,
+    renderSearch,
+    renderStatuses,
+    renderTags,
+    renderWeapons,
+  } = useFilters(props)
 
   return (
     <PageSection
@@ -32,6 +40,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
     >
       {renderSearch()}
       {renderElements()}
+      {renderTags()}
       {renderStatuses()}
       {renderWeapons()}
       {renderNations()}

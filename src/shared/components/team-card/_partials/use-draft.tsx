@@ -3,26 +3,26 @@ import { useEffect, useState } from 'react'
 import { MAX_TEAM_SIZE, RATING_VALUES, type RatingValue } from '../../../data'
 import { type GenshinTeam, type GenshinTeamUserData } from '../../../state/types'
 import { packTeamId } from '../../../state/utils'
-import { formatUserInput, parseTags } from '../../../utils/various'
+import { parseTag } from '../../../utils/use-user-tags'
+import { parseUserInput } from '../../../utils/various'
 import { type TeamCardProps } from '../_types'
 
 interface TeamDraft {
   charIds: (string | null)[]
   name: string
   rating?: RatingValue
-  tags: string
+  tags: string[]
 }
 
 const createDraft = (team: GenshinTeam): TeamDraft => ({
   charIds: Array.from({ length: MAX_TEAM_SIZE }, (_, index) => team.charIds[index] ?? null),
   name: team.name,
   rating: RATING_VALUES.find((rating) => rating === team.rating),
-  tags: team.tags?.join(', ') ?? '',
+  tags: (team.tags ?? []).map(parseTag).filter(Boolean),
 })
 
 const buildTeamData = (draft: TeamDraft): GenshinTeamUserData => {
-  const tags = parseTags(draft.tags)
-
+  const tags = [...new Set(draft.tags.map(parseTag).filter(Boolean))]
   return {
     name: draft.name,
     ...(draft.rating === undefined ? {} : { rating: draft.rating }),
@@ -32,9 +32,8 @@ const buildTeamData = (draft: TeamDraft): GenshinTeamUserData => {
 
 export const useDraft = (props: TeamCardProps) => {
   const { team, editing, onSave } = props
-  const [draft, setDraft] = useState<TeamDraft>(() => createDraft(team))
   const [isEditing, setIsEditing] = useState(Boolean(editing))
-
+  const [draft, setDraft] = useState<TeamDraft>(() => createDraft(team))
   const characterIds = [...new Set(draft.charIds.filter((id) => id !== null))]
   const hasFieldChanges = !isEqual(buildTeamData(draft), buildTeamData(createDraft(team)))
   const hasMemberChanges = !isEqual(characterIds, team.charIds)
@@ -56,7 +55,7 @@ export const useDraft = (props: TeamCardProps) => {
     })
   }
 
-  const handleTagsChange = (tags: string) => {
+  const handleTagsChange = (tags: string[]) => {
     setDraft((state) => ({ ...state, tags }))
   }
 
@@ -78,7 +77,7 @@ export const useDraft = (props: TeamCardProps) => {
     }
     onSave?.({
       ...buildTeamData(draft),
-      name: formatUserInput(draft.name),
+      name: parseUserInput(draft.name),
       id: packTeamId(characterIds),
       charIds: characterIds,
     })
@@ -87,18 +86,19 @@ export const useDraft = (props: TeamCardProps) => {
   useEffect(() => {
     setIsEditing(Boolean(editing))
     setDraft(createDraft(team))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [team, editing])
 
   return {
     draft,
     hasChanges,
     isEditing,
+    handleClickDiscard,
+    handleClickEdit,
     handleMemberChange,
     handleNameChange,
     handleRatingChange,
     handleTagsChange,
-    handleClickEdit,
-    handleClickDiscard,
     saveChanges,
   }
 }

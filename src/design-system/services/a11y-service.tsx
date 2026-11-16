@@ -93,5 +93,5 @@ const isA11yModePointer = () => {
 /**
  * Export
  */
-/* eslint-disable react-refresh/only-export-components */
+// eslint-disable-next-line react-refresh/only-export-components
 export { A11yService, ATTR_KEY__A11Y_MODE, isA11yModeDefault, isA11yModePointer, useA11yService, type A11yMode }

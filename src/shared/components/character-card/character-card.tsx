@@ -1,18 +1,19 @@
-import { Card, Image, TextField } from '@design-system'
+import { Card, Tag, TagsField, TextField } from '@design-system'
 import { GlobeIcon } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_ELEMENT_COLORS, TIER_LIST_LABELS } from '../../data'
+import { TIER_LIST_LABELS } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
+import { parseInput, parseTag, useUserTags } from '../../utils/use-user-tags'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
 import { CardSection, type SectionItem } from '../_shared/card-section'
 import { CharacterTrait } from '../_shared/character-trait'
-import { CharacterAvatar } from '../character-avatar/character-avatar'
-import { Tag } from '../tag/tag'
 import { TierListField } from '../tier-list-field/tier-list-field'
+import { BannerImage } from './_partials/banner-image'
+import { CharacterName } from './_partials/character-name'
 import { useData } from './_partials/use-data'
 import { useDraft } from './_partials/use-draft'
 import { type CharacterCardProps } from './_types'
@@ -24,11 +25,10 @@ export const CharacterCard = (props: CharacterCardProps) => {
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin?.characters?.[character.id])
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
-  const { getElementIcons, getWeaponIcons, getNationIcons, getCharacterBanners } = useUserAssetsStore()
+  const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
   const elementIcons = getElementIcons()
   const weaponIcons = getWeaponIcons()
   const nationIcons = getNationIcons()
-  const bannerSrcs = getCharacterBanners(character.id)
   const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
   const { statSections, tierFields } = useData(props)
   const {
@@ -45,6 +45,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
     handleClickEdit,
     handleClickSave,
   } = useDraft(props)
+  const { getTagStyle, tagOptions } = useUserTags()
   const scrollRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
@@ -59,30 +60,12 @@ export const CharacterCard = (props: CharacterCardProps) => {
     onClose?.()
   }
 
-  const imageFilterClass = cx('pointer-events-none absolute inset-0 brightness-20')
-
   return (
-    <Card
-      className={cx('w-character-card', className)}
-      classNames={{ surface: 'p-0!', content: 'flex flex-col' }}
-      style={{ '--element-color': GENSHIN_ELEMENT_COLORS[character.element] }}
-    >
+    <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
         <CardBanner
-          banner={
-            <div className="relative flex aspect-4/3 overflow-hidden rounded-md">
-              <div className={cx('bg-(--element-color)', imageFilterClass)} />
-              <Image
-                srcs={bannerSrcs}
-                className={cx(
-                  'relative size-full object-cover',
-                  !isEditing && 'duration-sm transition-transform ease-in hover:scale-125',
-                )}
-              />
-              <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
-            </div>
-          }
+          banner={<BannerImage character={character} editing={isEditing} />}
           editing={isEditing}
           ratingValue={draft.rating}
           statusValue={draft.status}
@@ -91,22 +74,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
         />
 
         {/* NAME */}
-        <div
-          ref={nameRef}
-          className={cx(
-            'my-xs-2 -top-xs-0 px-xs-8 py-xs-2 sticky z-10',
-            'bg-color-bg-card rounded-t-md transition-[padding] ease-in-out',
-            isNameSticky && 'border-color-border-subtle shadow-below-sm pl-sm-4!',
-          )}
-        >
-          {isNameSticky && (
-            <CharacterAvatar character={character} className="top-xs-5 left-xs-4 h-sm-0 w-sm-0 absolute!" />
-          )}
-          <h3 className="text-size-xl font-weight-lg h-field-h-md flex items-center">{character.name}</h3>
-          {!isNameSticky && (
-            <div className="text-size-xs text-color-text-subtle pb-xs-4 px-px leading-1">{character.fullName}</div>
-          )}
-        </div>
+        <CharacterName ref={nameRef} character={character} sticky={isNameSticky} />
 
         {/* CONTENT */}
         <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex flex-col">
@@ -134,24 +102,26 @@ export const CharacterCard = (props: CharacterCardProps) => {
           </div>
 
           {/* TAGS */}
-          <CardSection title={t('game.label.tags')}>
+          <CardSection title={t('game.label.tags')} classNames={{ body: 'min-h-field-h-sm' }}>
             {isEditing ? (
-              <TextField
+              <TagsField
                 id="character-card-tags"
-                size="xs"
+                size="sm"
                 value={draft.tags}
-                placeholder={t('game.placeholder.tags')}
-                multiline
+                options={tagOptions}
+                getTagStyle={getTagStyle}
+                parseTag={parseTag}
+                parseInput={parseInput}
                 onChange={handleTagsChange}
               />
             ) : userData?.tags?.length ? (
-              <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
+              <div className="gap-xs-1 flex flex-wrap">
                 {userData.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <Tag key={tag} value={tag} style={getTagStyle(tag)} />
                 ))}
               </div>
             ) : (
-              <span className="text-size-sm min-h-field-h-xs">--</span>
+              <span className="text-size-sm">--</span>
             )}
           </CardSection>
 

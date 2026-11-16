@@ -81,7 +81,6 @@ export const useStyles = (props: Props) => {
     display: noFooter ? 'none' : 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginTop: tokens.spacing['xs-5'],
   }
   const actionsCss: CSSObject = {
     display: 'flex',

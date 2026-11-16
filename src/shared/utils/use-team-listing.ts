@@ -17,19 +17,22 @@ export const useTeamListing = (filters: Filters) => {
   }, [teamData])
 
   const search = filters.search?.trim().toLocaleLowerCase()
-  const { elements, weapons, nations, statuses } = filters
 
   const listedTeams = allTeams.filter((team) => {
-    const characters = team.charIds.map((id) => GENSHIN_CHARACTERS_BY_ID[id]).filter(Boolean)
+    const members = team.charIds.map((id) => GENSHIN_CHARACTERS_BY_ID[id]).filter(Boolean)
     const matchesSearch =
       !search ||
       team.name.toLocaleLowerCase().includes(search) ||
-      characters.some((char) => char.fullName.toLocaleLowerCase().includes(search))
+      members.some((member) => member.fullName.toLocaleLowerCase().includes(search))
     const matchesFilters =
-      (elements ?? []).every((element) => characters.some((char) => char.element === element)) &&
-      (weapons ?? []).every((weapon) => characters.some((char) => char.weapon === weapon)) &&
-      (nations ?? []).every((nation) => characters.some((char) => char.nation === nation)) &&
-      (statuses ?? []).every((status) => characters.some((char) => charData?.[char.id]?.status === status))
+      (filters.elements ?? []).every((element) => members.some((member) => member.element === element)) &&
+      (filters.weapons ?? []).every((weapon) => members.some((member) => member.weapon === weapon)) &&
+      (filters.nations ?? []).every((nation) => members.some((member) => member.nation === nation)) &&
+      (filters.statuses ?? []).every((status) => members.some((member) => charData?.[member.id]?.status === status)) &&
+      (!filters.tags?.length ||
+        filters.tags.every(
+          (tag) => team.tags?.includes(tag) || members.some((member) => charData?.[member.id]?.tags?.includes(tag)),
+        ))
 
     return matchesSearch && matchesFilters
   })

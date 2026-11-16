@@ -54,7 +54,7 @@ export const TeamItem = (props: TeamItemProps) => {
 
       <span
         className={cx(
-          'translate-y-xs-0 min-h-lh rounded-md',
+          'translate-y-xs-0 min-h-lh rounded-b-md',
           'text-size-xs truncate text-center leading-1',
           classNames.label,
         )}

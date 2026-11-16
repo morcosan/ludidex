@@ -1,20 +1,23 @@
-import { Card, Image, TextField } from '@design-system'
+import { Card } from '@design-system'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../data'
-import { useUserAssetsStore } from '../../state/use-user-assets'
+import { Tag } from '../../../design-system/components/tag/tag'
+import { TagsField } from '../../../design-system/components/tags-field/tags-field'
+import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
-import { formatUserInput } from '../../utils/various'
+import { parseInput, parseTag, useUserTags } from '../../utils/use-user-tags'
+import { parseUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
 import { CardSection } from '../_shared/card-section'
 import { CharacterModal, type CharacterModalSelection } from '../character-modal/character-modal'
-import { Tag } from '../tag/tag'
+import { BannerImage } from './_partials/banner-image'
 import { ErrorNotice } from './_partials/error-notice'
 import { MemberItem } from './_partials/member-item'
 import { TeamDeleteModal } from './_partials/team-delete-modal'
+import { TeamName } from './_partials/team-name'
 import { useDraft } from './_partials/use-draft'
 import { type TeamCardProps } from './_types'
 
@@ -24,19 +27,19 @@ export const TeamCard = (props: TeamCardProps) => {
   const { team, opened = true, className, onClose, onDelete } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
-  const { getCharacterBanners } = useUserAssetsStore()
   const {
     draft,
     hasChanges,
     isEditing,
+    handleClickDiscard,
+    handleClickEdit,
     handleMemberChange,
     handleNameChange,
     handleRatingChange,
     handleTagsChange,
-    handleClickDiscard,
-    handleClickEdit,
     saveChanges,
   } = useDraft(props)
+  const { getTagStyle, tagOptions } = useUserTags()
   const scrollRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
@@ -46,7 +49,7 @@ export const TeamCard = (props: TeamCardProps) => {
   const [hasChangedName, setHasChangedName] = useState(false)
   const [hasChangedMembers, setHasChangedMembers] = useState(false)
 
-  const teamName = formatUserInput(draft.name).toLowerCase()
+  const teamName = parseUserInput(draft.name).toLowerCase()
   const hasInvalidTeamName = (() => {
     return (
       teamName.length === 0 ||
@@ -124,66 +127,28 @@ export const TeamCard = (props: TeamCardProps) => {
     onDelete?.(team)
   }
 
-  const imageFilterClass = cx('pointer-events-none absolute inset-0 brightness-20')
-
   return (
     <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
         {/* BANNER */}
         <CardBanner
-          banner={
-            <div className="bg-color-bg-skeleton relative flex aspect-5/3 overflow-hidden rounded-md">
-              {members
-                .filter((member) => member)
-                .map((member) => (
-                  <div
-                    key={member.id}
-                    className={cx(
-                      'relative h-full flex-1',
-                      !isEditing && 'duration-sm transition-[flex-grow] ease-in hover:grow-4',
-                    )}
-                    style={{ '--element-color': GENSHIN_ELEMENT_COLORS[member.element] }}
-                  >
-                    <div className={cx('bg-(--element-color)', imageFilterClass)} />
-                    <Image srcs={getCharacterBanners(member.id)} className="relative size-full object-cover" />
-                    <div className={cx('shadow-[inset_0_0_1rem_var(--element-color)]', imageFilterClass)} />
-                  </div>
-                ))}
-            </div>
-          }
+          banner={<BannerImage members={members} editing={isEditing} />}
           editing={isEditing}
           ratingValue={draft.rating}
           onChangeRating={handleRatingChange}
         />
 
         {/* NAME */}
-        <div
+        <TeamName
           ref={nameRef}
-          className={cx(
-            'my-xs-2 -top-xs-0 px-xs-8 py-xs-2 sticky z-10',
-            'bg-color-bg-card rounded-t-md transition-[padding] ease-in-out',
-            isNameSticky && 'border-color-border-subtle shadow-below-sm',
-          )}
-        >
-          {isEditing ? (
-            <TextField
-              id="team-card-name"
-              size="md"
-              value={draft.name}
-              invalid={hasChangedName && hasInvalidTeamName}
-              ariaDescribedBy={hasChangedName && hasInvalidTeamName ? 'team-card-name-error' : undefined}
-              onChange={handleNameChange}
-              onBlur={() => setHasChangedName(true)}
-            />
-          ) : (
-            <h3 className="text-size-xl font-weight-lg h-field-h-md flex items-center">
-              {team.name || <span className="text-color-text-placeholder">{t('general.label.newTeam')}</span>}
-            </h3>
-          )}
-          {isEditing && hasChangedName && hasInvalidTeamName && (
-            <ErrorNotice id="team-card-name-error" text={t('general.notice.invalidTeamName')} className="mt-xs-1" />
-          )}
-        </div>
+          name={team.name}
+          value={draft.name}
+          sticky={isNameSticky}
+          editing={isEditing}
+          invalid={hasChangedName && hasInvalidTeamName}
+          onChange={handleNameChange}
+          onBlur={() => setHasChangedName(true)}
+        />
 
         {/* CONTENT */}
         <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex min-h-[1200px] flex-col">
@@ -206,24 +171,26 @@ export const TeamCard = (props: TeamCardProps) => {
           </div>
 
           {/* TAGS */}
-          <CardSection title={t('game.label.tags')}>
+          <CardSection title={t('game.label.tags')} classNames={{ body: 'min-h-field-h-sm' }}>
             {isEditing ? (
-              <TextField
+              <TagsField
                 id="team-card-tags"
-                size="xs"
+                size="sm"
                 value={draft.tags}
-                placeholder={t('game.placeholder.tags')}
-                multiline
+                options={tagOptions}
+                getTagStyle={getTagStyle}
+                parseTag={parseTag}
+                parseInput={parseInput}
                 onChange={handleTagsChange}
               />
             ) : team.tags?.length ? (
-              <div className="gap-xs-1 min-h-field-h-xs flex flex-wrap">
+              <div className="gap-xs-1 flex flex-wrap">
                 {team.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <Tag key={tag} value={tag} style={getTagStyle(tag)} />
                 ))}
               </div>
             ) : (
-              <span className="text-size-sm min-h-field-h-xs">--</span>
+              <span className="text-size-sm">--</span>
             )}
           </CardSection>
         </div>

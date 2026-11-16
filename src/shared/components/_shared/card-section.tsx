@@ -9,15 +9,18 @@ export interface SectionItem {
 interface Props extends ReactProps {
   title: string
   items?: SectionItem[]
+  classNames?: {
+    body?: string
+  }
 }
 
-export const CardSection = ({ title, items, children }: Props) => {
+export const CardSection = ({ title, items, children, classNames }: Props) => {
   return (
     <PageSection
       surface="paper"
       title={title}
-      classNames={{ body: 'pt-0!' }}
       className={cx(!items?.length && 'divide-none!')}
+      classNames={{ body: cx('pt-0!', classNames?.body) }}
     >
       {items?.length && (
         <dl className="divide-color-border-subtle flex flex-col divide-y">

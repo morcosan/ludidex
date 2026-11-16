@@ -11,12 +11,26 @@ interface FilterGroupProps<T extends string> {
   ariaLabel?: string
   renderLabel?: (item: T) => string
   renderIcon?: (item: T) => ReactNode
+  renderItem?: (item: T) => ReactNode
+  footer?: ReactNode
   className?: string
   onToggle?: (item: T) => void
 }
 
 export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
-  const { ariaLabel, items, selection, order, surface = 'glass', renderIcon, renderLabel, className, onToggle } = props
+  const {
+    ariaLabel,
+    items,
+    selection,
+    order,
+    surface = 'glass',
+    renderLabel,
+    renderIcon,
+    renderItem,
+    footer,
+    className,
+    onToggle,
+  } = props
 
   const getItemLabel = (item: T) => renderLabel?.(item) || item
   const sortedItems = (() => {
@@ -50,14 +64,21 @@ export const FilterGroup = <T extends string>(props: FilterGroupProps<T>) => {
             variant="menu-default"
             state={selection.includes(item) ? 'selected' : 'active'}
             className="rounded-xl!"
-            classNames={{ surface: 'pl-xs-2! pr-xs-3! rounded-xl!' }}
+            classNames={{ surface: cx(renderItem ? 'px-xs-1!' : 'pl-xs-2! pr-xs-3!', 'rounded-xl!') }}
             onClick={() => onToggle?.(item)}
           >
-            {renderIcon?.(item)}
-            <span className="min-w-0 truncate">{getItemLabel(item)}</span>
+            {renderItem ? (
+              renderItem(item)
+            ) : (
+              <>
+                {renderIcon?.(item)}
+                <span className="min-w-0 truncate">{getItemLabel(item)}</span>
+              </>
+            )}
           </Button>
         )
       })}
+      {footer && <div className="mt-xs-0 flex basis-full justify-center">{footer}</div>}
     </div>
   )
 }

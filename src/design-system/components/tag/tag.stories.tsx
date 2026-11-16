@@ -3,14 +3,17 @@ import { type Meta, type StoryObj } from '@storybook/react-vite'
 import { Tag } from './tag'
 
 const meta: Meta = {
-  title: 'App / Components / Tag',
+  title: 'Design System / Components / Tag',
   ...defineMeta(Tag, {
-    slots: {
-      children: 'DPS',
-    },
     props: {
+      value: 'DPS',
+      size: 'sm',
+      removable: false,
       className: '',
+      style: {},
     },
+    events: ['onRemove'],
+    inlineRadios: ['size'],
   }),
 }
 

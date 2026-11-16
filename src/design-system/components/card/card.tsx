@@ -113,6 +113,7 @@ export const Card = (props: CardProps) => {
     width: '100%',
     height: '100%',
     minHeight: 0,
+    minWidth: 0,
     opacity: state === 'loading' ? 0 : 1,
     fill: 'currentColor',
     stroke: 'currentColor',

@@ -5,6 +5,7 @@ import {
   type GenshinCharacterUserData,
   type GenshinTeamUserData,
   type RatingLabels,
+  type TagColors,
   type TierListLabels,
   type UserData,
 } from './types'
@@ -13,6 +14,8 @@ import { EMPTY_USER_DATA } from './utils'
 
 const USER_DATA_COOKIE_KEY = 'app-user-data'
 
+type ObjectsWithTags = Partial<Record<string, { tags?: string[] }>>
+
 interface UserDataStore {
   userData: UserData | null
   loadUserData: () => void
@@ -20,6 +23,7 @@ interface UserDataStore {
   replaceUserData: (userData: UserData) => void
   setRatingLabels: (ratingLabels: Partial<RatingLabels>) => void
   setTierListLabels: (tierListLabels: Partial<TierListLabels>) => void
+  updateTags: (tagColors: TagColors, renamedTags: Record<string, string>) => void
   setGenshinCharacter: (characterId: string, data: GenshinCharacterUserData | null) => void
   setGenshinTeam: (teamId: string, data: GenshinTeamUserData | null) => void
 }
@@ -71,6 +75,37 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
         userData: {
           ...userData,
           preferences: { ...userData.preferences, tierListLabels: getLabelOverrides(labels, TIER_LIST_LABELS) },
+        },
+      }
+    })
+    get().saveUserData()
+  },
+
+  updateTags(tagColors: TagColors, tagLabels: Record<string, string>) {
+    set((state) => {
+      const userData = state.userData ?? EMPTY_USER_DATA
+      const hasRenames = Object.keys(tagLabels).length > 0
+      const replaceTags = (tags: string[]) => [...new Set(tags.map((tag) => tagLabels[tag] ?? tag).filter(Boolean))]
+      const withNewTags = <T extends ObjectsWithTags>(items: T): T => {
+        return Object.fromEntries(
+          Object.entries(items).map(([id, item]) => [
+            id,
+            item ? { ...item, tags: item.tags ? replaceTags(item.tags) : undefined } : item,
+          ]),
+        ) as T
+      }
+
+      return {
+        userData: {
+          ...userData,
+          preferences: { ...userData.preferences, tagColors },
+          ...(hasRenames && {
+            genshin: {
+              ...userData.genshin,
+              teams: withNewTags(userData.genshin?.teams ?? {}),
+              characters: withNewTags(userData.genshin?.characters ?? {}),
+            },
+          }),
         },
       }
     })

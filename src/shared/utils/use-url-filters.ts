@@ -1,5 +1,5 @@
-import { type Filters } from '@app-shared/components'
 import { useSearchParams } from 'react-router'
+import { type Filters } from '../components'
 
 type Params = URLSearchParams
 type FilterKey = keyof Omit<Filters, 'search'>

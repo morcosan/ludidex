@@ -40,13 +40,6 @@ const roundValue = (value: number, direction: 'up' | 'down', step: number) => {
   return round(value / step) * step
 }
 
-const parseTags = (value: string) => {
-  return value
-    .split(/[,\n]/)
-    .map((tag) => tag.trim())
-    .filter(Boolean)
-}
-
 const sortByName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)
 
 const countFilters = (filters: Filters) => {
@@ -54,7 +47,8 @@ const countFilters = (filters: Filters) => {
     (filters.elements?.length ?? 0) +
     (filters.statuses?.length ?? 0) +
     (filters.weapons?.length ?? 0) +
-    (filters.nations?.length ?? 0)
+    (filters.nations?.length ?? 0) +
+    (filters.tags?.length ?? 0)
   )
 }
 
@@ -64,7 +58,7 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
-const formatUserInput = (value: string) =>
+const parseUserInput = (value: string) =>
   value
     .normalize('NFC')
     .replace(/[^\p{L}\p{M}\p{N}\p{Sc}\s\x21-\x7E]/gu, '')
@@ -76,12 +70,11 @@ export {
   formatFileSize,
   formatInteger,
   formatPercent,
-  formatUserInput,
   getDataSize,
   getDateAsYYYYMMDD,
   getTimeAsHHMMSS,
   isPathUnderSegment,
-  parseTags,
+  parseUserInput,
   roundValue,
   sortByName,
   toNumber,

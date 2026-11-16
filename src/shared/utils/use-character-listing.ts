@@ -1,4 +1,4 @@
-import { type Filters } from '@app-shared/components'
+import { type Filters } from '../components'
 import { CHARACTER_STATUSES, GENSHIN_CHARACTERS } from '../data'
 import { useUserDataStore } from '../state/use-user-data'
 import { useUserSettingsStore } from '../state/use-user-settings'
@@ -18,7 +18,8 @@ export const useCharacterListing = (filters: Filters) => {
       (!filters.elements?.length || filters.elements.includes(character.element)) &&
       (!filters.statuses?.length || (status !== undefined && filters.statuses.includes(status))) &&
       (!filters.weapons?.length || filters.weapons.includes(character.weapon)) &&
-      (!filters.nations?.length || filters.nations.includes(character.nation))
+      (!filters.nations?.length || filters.nations.includes(character.nation)) &&
+      (!filters.tags?.length || filters.tags.every((tag) => charData?.[character.id]?.tags?.includes(tag)))
     )
   })
 

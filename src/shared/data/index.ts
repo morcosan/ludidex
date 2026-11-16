@@ -89,6 +89,25 @@ const STATUS_COLORS = {
 
 const MAX_TEAM_SIZE = 4
 
+type TagStyle = {
+  bg: string
+  text: string
+  border: string
+}
+type TagColor = 'red' | 'orange' | 'yellow' | 'lime' | 'green' | 'cyan' | 'blue' | 'purple' | 'pink'
+const TAG_COLORS: TagColor[] = ['red', 'orange', 'yellow', 'lime', 'green', 'cyan', 'blue', 'purple', 'pink'] as const
+const TAG_STYLES: Record<TagColor, TagStyle> = {
+  red: { bg: '#FEE2E2', text: '#991B1B', border: '#EF4444' },
+  orange: { bg: '#FFEDD5', text: '#9A3412', border: '#FB923C' },
+  yellow: { bg: '#FEF9C3', text: '#854D0E', border: '#FACC15' },
+  lime: { bg: '#ECFCCB', text: '#3F6212', border: '#A3E635' },
+  green: { bg: '#DAF5D3', text: '#1B5E20', border: '#5CCB4A' },
+  cyan: { bg: '#CFFAFE', text: '#155E75', border: '#22D3EE' },
+  blue: { bg: '#DBEAFE', text: '#1E40AF', border: '#60A5FA' },
+  purple: { bg: '#EDE9FE', text: '#5B21B6', border: '#A78BFA' },
+  pink: { bg: '#FBE4F6', text: '#9D174D', border: '#F062D8' },
+}
+
 export * from './genshin/_artifacts'
 export * from './genshin/_characters'
 export * from './genshin/_core'
@@ -103,6 +122,8 @@ export {
   RATING_LABELS,
   RATING_VALUES,
   STATUS_COLORS,
+  TAG_COLORS,
+  TAG_STYLES,
   TIER_LIST_COLORS,
   TIER_LIST_LABELS,
   TIER_LIST_VALUES,
@@ -110,5 +131,7 @@ export {
   type Game,
   type GameId,
   type RatingValue,
+  type TagColor,
+  type TagStyle,
   type TierListValue,
 }

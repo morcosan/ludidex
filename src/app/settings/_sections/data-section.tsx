@@ -16,7 +16,7 @@ interface Message {
 }
 
 export const DataSection = (props: SectionProps) => {
-  const { id, title, keyword, className } = props
+  const { id, title, keyword, className, classNames } = props
   const { t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const replaceUserData = useUserDataStore((state) => state.replaceUserData)
@@ -129,8 +129,13 @@ export const DataSection = (props: SectionProps) => {
       className={className}
       classNames={{ body: 'pt-xs-5 gap-xs-4 min-h-lg-0 flex flex-col' }}
     >
+      {/* UPLOAD */}
       <div className="flex items-center">
-        <TextHighlight text={t('general.label.importData')} keyword={keyword} />:
+        <TextHighlight
+          text={`${t('general.label.importData')}:`}
+          keyword={keyword}
+          className={classNames?.label}
+        />
         <Button
           state={isImporting ? 'loading' : 'active'}
           className="ml-xs-3"
@@ -142,8 +147,13 @@ export const DataSection = (props: SectionProps) => {
         {renderMessage(importMessage)}
       </div>
 
+      {/* DOWNLOAD */}
       <div className="flex items-center">
-        <TextHighlight text={t('general.label.exportData')} keyword={keyword} />:
+        <TextHighlight
+          text={`${t('general.label.exportData')}:`}
+          keyword={keyword}
+          className={classNames?.label}
+        />
         <Button state={isExporting ? 'loading' : 'active'} className="ml-xs-3" onClick={handleClickExport}>
           <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
           <TextHighlight text={t('general.action.download')} keyword={keyword} />

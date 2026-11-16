@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { RATING_LABELS, TIER_LIST_LABELS } from '../../../data'
+import { RATING_LABELS, TAG_COLORS, TIER_LIST_LABELS } from '../../../data'
 import { GenshinCharacterSchema_v0, GenshinCharactersSchema_v0 } from './_characters'
-import { GenshinTeamSchema_v0, GenshinTeamsSchema_v0, packTeamId_v0, unpackTeamId_v0 } from './_teams'
+import { GenshinTeamSchema_v0, GenshinTeamsSchema_v0, packTeamId_v0, refineTeam_v0, unpackTeamId_v0 } from './_teams'
 
 const USER_DATA_VERSION_V0 = 'v0.4'
 
@@ -21,6 +21,7 @@ const UserDataSchema_v0 = z.object({
       tierListLabels: z
         .object(Object.fromEntries(Object.keys(TIER_LIST_LABELS).map((key) => [key, z.string().optional()])))
         .optional(),
+      tagColors: z.record(z.string(), z.enum(TAG_COLORS)).optional(),
     })
     .optional(),
 })
@@ -30,9 +31,12 @@ type GenshinCharacter_v0 = z.infer<typeof GenshinCharacterSchema_v0>
 type GenshinTeam_v0 = z.infer<typeof GenshinTeamSchema_v0>
 
 export {
+  GenshinCharacterSchema_v0,
   GenshinCharactersSchema_v0,
+  GenshinTeamSchema_v0,
   GenshinTeamsSchema_v0,
   packTeamId_v0,
+  refineTeam_v0,
   unpackTeamId_v0,
   USER_DATA_VERSION_V0,
   UserDataSchema_v0,

@@ -5,7 +5,9 @@ const SECTION_TRANSLATION_KEYS: Record<string, ParseKeys[]> = {
   prefs: [
     //
     'general.action.editLabels',
+    'general.action.editTags',
     'general.label.ratingLabels',
+    'general.label.tags',
     'general.label.tierListLabels',
     'general.label.preferences',
   ],

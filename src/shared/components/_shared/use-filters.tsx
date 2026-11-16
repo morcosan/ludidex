@@ -1,3 +1,4 @@
+import { Button, Tag } from '@design-system'
 import { GlobeIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +13,7 @@ import {
   type GenshinWeaponType,
 } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
+import { useUserTags } from '../../utils/use-user-tags'
 import { SearchField } from '../search-field/search-field'
 import { StatusIcon } from '../status-icon/status-icon'
 import { FilterGroup, type FilterGroupOrder } from './filter-group'
@@ -21,11 +23,12 @@ export interface Filters {
   statuses?: CharacterStatus[]
   weapons?: GenshinWeaponType[]
   nations?: GenshinNation[]
+  tags?: string[]
   search?: string
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const EMPTY_FILTERS: Filters = { elements: [], statuses: [], weapons: [], nations: [], search: '' }
+export const EMPTY_FILTERS: Filters = { elements: [], statuses: [], weapons: [], nations: [], tags: [], search: '' }
 
 export interface FiltersProps extends ReactProps {
   filters: Filters
@@ -42,7 +45,9 @@ export const useFilters = (props: FiltersProps) => {
   const elementIcons = getElementIcons()
   const weaponIcons = getWeaponIcons()
   const nationIcons = getNationIcons()
+  const { getTagStyle, tagOptions, tagOptionsWithColor, tagOptionsWithoutColor } = useUserTags()
   const [remountKey, setRemountKey] = useState(0) // To handle clear value while debouncing
+  const [showMoreTags, setShowMoreTags] = useState(false)
 
   const hasActiveFilters = (filters?: Filters) => {
     return (
@@ -50,7 +55,8 @@ export const useFilters = (props: FiltersProps) => {
       Boolean(filters?.elements?.length) ||
       Boolean(filters?.statuses?.length) ||
       Boolean(filters?.weapons?.length) ||
-      Boolean(filters?.nations?.length)
+      Boolean(filters?.nations?.length) ||
+      Boolean(filters?.tags?.length)
     )
   }
 
@@ -73,7 +79,7 @@ export const useFilters = (props: FiltersProps) => {
         value={filters.search}
         label={type === 'teams' ? t('general.action.searchTeams') : t('general.action.searchCharacters')}
         size="md"
-        className={cx('w-xl-0', surface === 'glass' && 'bg-color-bg-region')}
+        className={cx('max-w-xl-0 w-full', surface === 'glass' && 'bg-color-bg-region')}
         onChange={(search) => onChange?.({ ...filters, search })}
       />
     ) : null
@@ -151,6 +157,37 @@ export const useFilters = (props: FiltersProps) => {
     ) : null
   }
 
+  const renderTags = (className?: string) => {
+    const SHOW_ALL_COUNT = 10
+    const hasColoredTags = tagOptionsWithColor.length > 0
+    const isCollapsible = hasColoredTags && tagOptionsWithoutColor.length > 0 && tagOptions.length > SHOW_ALL_COUNT
+    const showAllTags = !isCollapsible || showMoreTags
+
+    return filters.tags && tagOptions.length > 0 ? (
+      <FilterGroup
+        items={[
+          ...tagOptionsWithColor,
+          ...(showAllTags
+            ? tagOptionsWithoutColor
+            : tagOptionsWithoutColor.filter((tag) => filters.tags?.includes(tag))),
+        ]}
+        selection={filters.tags}
+        surface={surface}
+        ariaLabel={t('game.label.tags')}
+        renderItem={(tag) => <Tag value={tag} size="xs" style={getTagStyle(tag)} />}
+        className={className}
+        footer={
+          isCollapsible ? (
+            <Button size="xs" variant="optional" onClick={() => setShowMoreTags((expanded) => !expanded)}>
+              {showMoreTags ? t('general.action.showLess') : t('general.action.showMore')}
+            </Button>
+          ) : undefined
+        }
+        onToggle={(tag) => onChange?.({ ...filters, tags: toggleFilter(filters.tags!, tag) })}
+      />
+    ) : null
+  }
+
   return {
     hasFilters,
     handleClearFilters,
@@ -158,6 +195,7 @@ export const useFilters = (props: FiltersProps) => {
     renderNations,
     renderSearch,
     renderStatuses,
+    renderTags,
     renderWeapons,
   }
 }

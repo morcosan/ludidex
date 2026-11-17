@@ -22,9 +22,18 @@ const countDataValues = (value: unknown): number => {
   return Object.values(value).reduce((count, child) => count + countDataValues(child), 0)
 }
 
+const getUniqueTags = (data: UserData): string[] => {
+  const tags = [
+    ...Object.values(data.genshin?.teams ?? {}).flatMap((team) => team.tags ?? []),
+    ...Object.values(data.genshin?.characters ?? {}).flatMap((character) => character?.tags ?? []),
+  ]
+  return [...new Set(tags.filter(Boolean))]
+}
+
 const getDataSummary = (data: UserData) => ({
   characters: Object.values(data.genshin?.characters ?? {}).filter((char) => countDataValues(char) > 0).length,
   teams: Object.keys(data.genshin?.teams ?? {}).length,
+  tags: getUniqueTags(data).length,
   preferences: countDataValues(data.preferences),
   values: countDataValues({ genshin: data.genshin }),
   size: getDataSize(data),
@@ -94,6 +103,12 @@ export const ImportModal = (props: DataImportModalProps) => {
               <td className="py-xs-2">{currentSummary.teams}</td>
               <td className="py-xs-2">{renderArrow(importSummary.teams - currentSummary.teams)}</td>
               <td className="py-xs-2">{importSummary.teams}</td>
+            </tr>
+            <tr>
+              <td className="py-xs-2">{t('general.label.tags')}</td>
+              <td className="py-xs-2">{currentSummary.tags}</td>
+              <td className="py-xs-2">{renderArrow(importSummary.tags - currentSummary.tags)}</td>
+              <td className="py-xs-2">{importSummary.tags}</td>
             </tr>
             <tr>
               <td className="py-xs-2">{t('general.label.preferences')}</td>

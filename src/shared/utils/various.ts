@@ -58,12 +58,13 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
-const parseUserInput = (value: string) =>
-  value
+const parseUserInput = (value: string) => {
+  return value
     .normalize('NFC')
-    .replace(/[^\p{L}\p{M}\p{N}\p{Sc}\s\x21-\x7E]/gu, '')
+    .replace(/[\p{Cf}\p{Cc}]/gu, (c) => (/\s/.test(c) ? ' ' : ''))
     .replace(/\s+/g, ' ')
     .trim()
+}
 
 export {
   countFilters,

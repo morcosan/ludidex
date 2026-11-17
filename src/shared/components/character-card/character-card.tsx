@@ -6,7 +6,7 @@ import { TIER_LIST_LABELS } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
-import { parseInput, parseTag, useUserTags } from '../../utils/use-user-tags'
+import { useUserTags } from '../../utils/use-user-tags'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
 import { CardSection, type SectionItem } from '../_shared/card-section'
@@ -45,7 +45,7 @@ export const CharacterCard = (props: CharacterCardProps) => {
     handleClickEdit,
     handleClickSave,
   } = useDraft(props)
-  const { getTagStyle, tagOptions } = useUserTags()
+  const { getTagStyle, sortTags, tagOptions } = useUserTags()
   const scrollRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
@@ -110,13 +110,11 @@ export const CharacterCard = (props: CharacterCardProps) => {
                 value={draft.tags}
                 options={tagOptions}
                 getTagStyle={getTagStyle}
-                parseTag={parseTag}
-                parseInput={parseInput}
                 onChange={handleTagsChange}
               />
             ) : userData?.tags?.length ? (
               <div className="gap-xs-1 flex flex-wrap">
-                {userData.tags.map((tag) => (
+                {sortTags(userData.tags).map((tag) => (
                   <Tag key={tag} value={tag} style={getTagStyle(tag)} />
                 ))}
               </div>

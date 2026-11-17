@@ -10,7 +10,5 @@ export interface TagsFieldProps extends ReactProps {
   disabled?: boolean
   className?: string
   getTagStyle?: (value: string) => CSSProperties | undefined
-  parseTag?: (value: string) => string
-  parseInput?: (value: string) => string
   onChange?: (value: string[]) => void
 }

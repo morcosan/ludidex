@@ -32,21 +32,23 @@ export const Tag = (props: TagProps) => {
     if (size === 'md') return tokens.spacing['xs-4']
     return ''
   })()
-  const rootCss: CSSObject = {
+  const tagCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
-    width: 'fit-content',
     height,
+    width: 'fit-content',
+    minWidth: 0,
     backgroundColor: tokens.color['grey-3'],
     border: `1px solid ${tokens.color['grey-6']}`,
     borderRadius: tokens.radius.max,
     color: tokens.color['text-default'],
   }
   const valueCss: CSSObject = {
-    padding: `0 ${padding}`,
     maxWidth: tokens.spacing['lg-5'],
-    overflow: 'hidden',
+    padding: `0 ${padding}`,
     fontSize: tokens.fontSize.xs,
+    lineHeight: `calc(${height} - 2px)`,
+    overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   }
@@ -69,7 +71,7 @@ export const Tag = (props: TagProps) => {
   }
 
   return (
-    <span className={className} style={style} css={rootCss}>
+    <span css={tagCss} className={className} style={style}>
       <span css={valueCss}>{value}</span>
 
       {removable && (

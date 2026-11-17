@@ -17,7 +17,7 @@ const meta: Meta = {
     props: {
       id: 'example-id',
       value: ['story', 'combat', 'support'],
-      options: ['story', 'combat', 'support', 'main-dps', 'sub-dps', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6'],
+      options: ['story', 'combat', 'support', 'main-dps', 'sub-dps', 'tag1', 'tag2', 'tag3', 'tag4', 'tag 5', 'tag 6'],
       size: 'md',
       disabled: false,
       className: 'w-xl-0',

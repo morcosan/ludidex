@@ -175,7 +175,6 @@ export const useFilters = (props: FiltersProps) => {
         surface={surface}
         ariaLabel={t('game.label.tags')}
         renderItem={(tag) => <Tag value={tag} size="xs" style={getTagStyle(tag)} />}
-        className={className}
         footer={
           isCollapsible ? (
             <Button size="xs" variant="optional" onClick={() => setShowMoreTags((expanded) => !expanded)}>
@@ -183,6 +182,7 @@ export const useFilters = (props: FiltersProps) => {
             </Button>
           ) : undefined
         }
+        className={className}
         onToggle={(tag) => onChange?.({ ...filters, tags: toggleFilter(filters.tags!, tag) })}
       />
     ) : null

@@ -4,7 +4,7 @@ import '@mantine/core/styles/Input.css'
 import '@mantine/core/styles/Popover.css'
 import '@mantine/core/styles/ScrollArea.css'
 import { ChevronDownIcon } from 'lucide-react'
-import { useState } from 'react'
+import { type ClipboardEvent, useState } from 'react'
 import { Tag } from '../tag/tag'
 import { type TagsFieldProps } from './_types'
 import { useStyles } from './_use-styles'
@@ -12,42 +12,42 @@ import { useStyles } from './_use-styles'
 export { type TagsFieldProps }
 
 export const TagsField = (props: TagsFieldProps) => {
-  const {
-    id,
-    value,
-    options,
-    size = 'md',
-    disabled,
-    className,
-    style,
-    getTagStyle,
-    parseTag = (v: string) => v,
-    parseInput = (v: string) => v,
-    onChange,
-  } = props
+  const { id, value, options, size = 'md', disabled, className, style, getTagStyle, onChange } = props
   const { chevronCss, classNames, styles } = useStyles(props)
   const [searchValue, setSearchValue] = useState('')
   const tagSize = size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : 'md'
 
-  const normalizeTags = (tags: string[]) => {
-    const normalized = new Map<string, string>()
+  const dedupeTags = (tags: string[]) => {
+    const deduped = new Map<string, string>()
     for (const tag of tags) {
-      const parsed = parseTag(tag)
-      const key = parsed.toLowerCase()
-      if (parsed && !normalized.has(key)) normalized.set(key, parsed)
+      const key = tag.toLowerCase()
+      if (tag && !deduped.has(key)) deduped.set(key, tag)
     }
-    return [...normalized.values()]
+    return [...deduped.values()]
+  }
+
+  const handlePaste = (event: ClipboardEvent<HTMLInputElement>) => {
+    // Disable creating new tag on paste and fix paste action
+    event.preventDefault()
+    event.stopPropagation()
+    const { selectionStart, selectionEnd, value: currentValue } = event.currentTarget
+    const start = selectionStart ?? currentValue.length
+    const end = selectionEnd ?? start
+    const pastedText = event.clipboardData.getData('text/plain')
+    setSearchValue((value) => value.slice(0, start) + pastedText + value.slice(end))
   }
 
   return (
     <MantineTagsInput
       id={id}
       size={size}
-      value={normalizeTags(value)}
-      data={normalizeTags(options)}
+      value={dedupeTags(value)}
+      data={dedupeTags(options)}
       disabled={disabled}
       searchValue={searchValue}
       maxTags={100}
+      splitChars={[]} // Only Enter key creates new tag
+      acceptValueOnBlur={false} // Only Enter key creates new tag
       rightSection={<ChevronDownIcon aria-hidden css={chevronCss} />}
       renderOption={({ option }) => <Tag value={option.value} size="xs" style={getTagStyle?.(option.value)} />}
       renderPill={({ value = '', onRemove }) => (
@@ -64,8 +64,9 @@ export const TagsField = (props: TagsFieldProps) => {
       classNames={classNames}
       style={style}
       styles={styles}
-      onChange={(nextTags) => onChange?.(normalizeTags(nextTags))}
-      onSearchChange={(nextValue) => setSearchValue(parseInput(nextValue))}
+      onChange={(tags) => onChange?.(dedupeTags(tags))}
+      onSearchChange={setSearchValue}
+      onPasteCapture={handlePaste}
     />
   )
 }

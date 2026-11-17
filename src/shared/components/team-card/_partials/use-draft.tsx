@@ -1,37 +1,14 @@
 import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { MAX_TEAM_SIZE, RATING_VALUES, type RatingValue } from '../../../data'
-import { type GenshinTeam, type GenshinTeamUserData } from '../../../state/types'
+import { type RatingValue } from '../../../data'
 import { packTeamId } from '../../../state/utils'
-import { parseTag } from '../../../utils/use-user-tags'
 import { parseUserInput } from '../../../utils/various'
 import { type TeamCardProps } from '../_types'
-
-interface TeamDraft {
-  charIds: (string | null)[]
-  name: string
-  rating?: RatingValue
-  tags: string[]
-}
-
-const createDraft = (team: GenshinTeam): TeamDraft => ({
-  charIds: Array.from({ length: MAX_TEAM_SIZE }, (_, index) => team.charIds[index] ?? null),
-  name: team.name,
-  rating: RATING_VALUES.find((rating) => rating === team.rating),
-  tags: (team.tags ?? []).map(parseTag).filter(Boolean),
-})
-
-const buildTeamData = (draft: TeamDraft): GenshinTeamUserData => {
-  const tags = [...new Set(draft.tags.map(parseTag).filter(Boolean))]
-  return {
-    name: draft.name,
-    ...(draft.rating === undefined ? {} : { rating: draft.rating }),
-    ...(tags.length === 0 ? {} : { tags }),
-  }
-}
+import { useDraftUtils, type TeamDraft } from './use-draft-utils'
 
 export const useDraft = (props: TeamCardProps) => {
   const { team, editing, onSave } = props
+  const { createDraft, buildTeamData } = useDraftUtils()
   const [isEditing, setIsEditing] = useState(Boolean(editing))
   const [draft, setDraft] = useState<TeamDraft>(() => createDraft(team))
   const characterIds = [...new Set(draft.charIds.filter((id) => id !== null))]
@@ -56,7 +33,7 @@ export const useDraft = (props: TeamCardProps) => {
   }
 
   const handleTagsChange = (tags: string[]) => {
-    setDraft((state) => ({ ...state, tags }))
+    setDraft((state) => ({ ...state, tags: tags.map(parseUserInput) }))
   }
 
   const handleClickEdit = () => {

@@ -7,7 +7,7 @@ import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
-import { parseInput, parseTag, useUserTags } from '../../utils/use-user-tags'
+import { useUserTags } from '../../utils/use-user-tags'
 import { parseUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
 import { CardBanner } from '../_shared/card-banner'
@@ -39,7 +39,7 @@ export const TeamCard = (props: TeamCardProps) => {
     handleTagsChange,
     saveChanges,
   } = useDraft(props)
-  const { getTagStyle, tagOptions } = useUserTags()
+  const { getTagStyle, sortTags, tagOptions } = useUserTags()
   const scrollRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
@@ -179,13 +179,11 @@ export const TeamCard = (props: TeamCardProps) => {
                 value={draft.tags}
                 options={tagOptions}
                 getTagStyle={getTagStyle}
-                parseTag={parseTag}
-                parseInput={parseInput}
                 onChange={handleTagsChange}
               />
             ) : team.tags?.length ? (
               <div className="gap-xs-1 flex flex-wrap">
-                {team.tags.map((tag) => (
+                {sortTags(team.tags).map((tag) => (
                   <Tag key={tag} value={tag} style={getTagStyle(tag)} />
                 ))}
               </div>

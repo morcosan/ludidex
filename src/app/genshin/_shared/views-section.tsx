@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 interface ViewsSectionProps<T extends ViewType> extends ReactProps {
   viewType: T
   viewOptions: readonly ViewOption<T>[]
-  onChangeView: (viewType: T) => void
+  onChangeView?: (viewType: T) => void
 }
 
 export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) => {
@@ -22,7 +22,7 @@ export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) =>
           size="md"
           state={viewType === option.value ? 'selected' : 'active'}
           className="w-full"
-          onClick={() => onChangeView(option.value)}
+          onClick={() => onChangeView?.(option.value)}
         >
           <span className="mr-xs-2 w-sm-0 flex-center flex">{option.icon}</span>
           {option.label}

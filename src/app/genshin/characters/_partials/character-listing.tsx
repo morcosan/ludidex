@@ -105,7 +105,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
   )
 
   return (
-    <div className={cx('pr-xs-3 flex min-h-0 flex-1 overflow-y-auto', className)}>
+    <div className={cx('pr-xs-3 pb-xs-5 flex min-h-0 flex-1 overflow-y-auto', className)}>
       {characters.length === 0 && !isSortingView ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
       ) : isTierListView ? (

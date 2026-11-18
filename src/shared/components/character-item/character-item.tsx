@@ -80,7 +80,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
       {hasName && (
         <span
           className={cx(
-            'translate-y-xs-0 rounded-md',
+            'translate-y-xs-0 rounded-b-md',
             'text-size-xs truncate text-center leading-1',
             classNames.size,
             classNames.name,

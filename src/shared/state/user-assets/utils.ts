@@ -83,15 +83,22 @@ const getNationIcons = (userAssets?: UserAssets | null): Record<GenshinNation, s
   ) as Record<GenshinNation, string[]>
 }
 
-const getCharacterIcons = (characterId: string, userAssets?: UserAssets | null): string[] =>
-  getNestedAssetSrcs(userAssets?.genshin?.characters, 'icons' satisfies UserAssetsCharacterKey, characterId)
+const getCharacterIcons = (characterId: string, userAssets?: UserAssets | null): string[] => {
+  return getNestedAssetSrcs(userAssets?.genshin?.characters, 'icons' satisfies UserAssetsCharacterKey, characterId)
+}
 
-const getCharacterBanners = (characterId: string, userAssets?: UserAssets | null): string[] =>
-  getNestedAssetSrcs(userAssets?.genshin?.characters, 'banners' satisfies UserAssetsCharacterKey, characterId)
+const getCharacterBanners = (characterId: string, userAssets?: UserAssets | null): string[] => {
+  return getNestedAssetSrcs(userAssets?.genshin?.characters, 'banners' satisfies UserAssetsCharacterKey, characterId)
+}
+
+const getDomainImages = (domainId: string, userAssets?: UserAssets | null): string[] => {
+  return getAssetSrcs(userAssets?.genshin?.domains, domainId)
+}
 
 export {
   getCharacterBanners,
   getCharacterIcons,
+  getDomainImages,
   getElementIcons,
   getGameBackgrounds,
   getGameBanners,

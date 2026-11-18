@@ -111,6 +111,7 @@ const TAG_STYLES: Record<TagColor, TagStyle> = {
 export * from './genshin/_artifacts'
 export * from './genshin/_characters'
 export * from './genshin/_core'
+export * from './genshin/_domains'
 export * from './genshin/_weapons'
 export {
   BACKGROUND_SWAP_DURATION,

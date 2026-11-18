@@ -7,6 +7,7 @@ const meta: Meta = {
   title: 'App / Components / Filters Section',
   ...defineMeta(FiltersSection, {
     props: {
+      type: 'characters',
       filters: {
         elements: [],
         statuses: [],
@@ -15,10 +16,12 @@ const meta: Meta = {
         tags: [],
         search: '',
       },
+      otherFilters: {},
+      surface: 'glass',
       className: '',
     },
     events: ['onChange'],
-    clearDefaults: ['filters'],
+    clearDefaults: ['type', 'filters', 'otherFilters', 'surface'],
 
     render: (props: FiltersSectionProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -1,17 +1,15 @@
-import { Card } from '@design-system'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Tag } from '../../../design-system/components/tag/tag'
 import { TagsField } from '../../../design-system/components/tags-field/tags-field'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
 import { packTeamId } from '../../state/utils'
-import { useStickyOnTop } from '../../utils/use-sticky-on-top'
 import { useUserTags } from '../../utils/use-user-tags'
 import { parseUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
-import { CardBanner } from '../_shared/card-banner'
 import { CardSection } from '../_shared/card-section'
+import { CardTemplate } from '../_shared/card-template'
 import { CharacterModal, type CharacterModalSelection } from '../character-modal/character-modal'
 import { BannerImage } from './_partials/banner-image'
 import { ErrorNotice } from './_partials/error-notice'
@@ -40,9 +38,6 @@ export const TeamCard = (props: TeamCardProps) => {
     saveChanges,
   } = useDraft(props)
   const { getTagStyle, sortTags, tagOptions } = useUserTags()
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const nameRef = useRef<HTMLDivElement>(null)
-  const isNameSticky = useStickyOnTop({ scrollRef, stickyRef: nameRef })
   const [memberIndex, setMemberIndex] = useState(0)
   const [isCharModalOpen, setIsCharModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -128,71 +123,20 @@ export const TeamCard = (props: TeamCardProps) => {
   }
 
   return (
-    <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
-      <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
-        {/* BANNER */}
-        <CardBanner
-          banner={<BannerImage members={members} editing={isEditing} />}
-          editing={isEditing}
-          ratingValue={draft.rating}
-          onChangeRating={handleRatingChange}
-        />
-
-        {/* NAME */}
+    <CardTemplate
+      editing={isEditing}
+      banner={<BannerImage members={members} editing={isEditing} />}
+      title={
         <TeamName
-          ref={nameRef}
           name={team.name}
           value={draft.name}
-          sticky={isNameSticky}
           editing={isEditing}
           invalid={hasChangedName && hasInvalidTeamName}
           onChange={handleNameChange}
           onBlur={() => setHasChangedName(true)}
         />
-
-        {/* CONTENT */}
-        <div className="px-xs-8 pb-xs-4 gap-y-sm-2 flex min-h-[1200px] flex-col">
-          {/* MEMBERS */}
-          <div>
-            <ul className={cx('divide-color-border-subtle flex flex-col divide-y', isEditing && 'divide-transparent!')}>
-              {members.map((character, index) => (
-                <MemberItem
-                  key={index}
-                  character={character || undefined}
-                  status={character ? userData?.characters?.[character.id]?.status : undefined}
-                  editing={isEditing}
-                  onClick={() => handleClickMember(index)}
-                />
-              ))}
-            </ul>
-            {isEditing && hasChangedMembers && hasInvalidTeamId && (
-              <ErrorNotice text={t('general.notice.invalidTeamId')} className="mt-xs-2" />
-            )}
-          </div>
-
-          {/* TAGS */}
-          <CardSection title={t('game.label.tags')} classNames={{ body: 'min-h-field-h-sm' }}>
-            {isEditing ? (
-              <TagsField
-                id="team-card-tags"
-                size="sm"
-                value={draft.tags}
-                options={tagOptions}
-                getTagStyle={getTagStyle}
-                onChange={handleTagsChange}
-              />
-            ) : team.tags?.length ? (
-              <div className="gap-xs-1 flex flex-wrap">
-                {sortTags(team.tags).map((tag) => (
-                  <Tag key={tag} value={tag} style={getTagStyle(tag)} />
-                ))}
-              </div>
-            ) : (
-              <span className="text-size-sm">--</span>
-            )}
-          </CardSection>
-        </div>
-
+      }
+      actions={
         <CardActions
           editing={isEditing}
           hasChanges={hasChanges}
@@ -202,26 +146,70 @@ export const TeamCard = (props: TeamCardProps) => {
           onEdit={handleClickEdit}
           onDelete={handleClickDelete}
         />
+      }
+      modals={[
+        <CharacterModal
+          key="character-modal"
+          opened={isCharModalOpen}
+          title={t('general.action.selectTeamMembers')}
+          selection={memberSelection}
+          onSelect={handleSelectMember}
+          onChangeSlot={setMemberIndex}
+          onClose={() => {
+            setIsCharModalOpen(false)
+            setHasChangedMembers(true)
+          }}
+        />,
+        <TeamDeleteModal
+          key="team-delete-modal"
+          opened={isDeleteModalOpen}
+          team={team}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+        />,
+      ]}
+      ratingValue={draft.rating}
+      className={className}
+      classNames={{ content: 'min-h-[1200px]' }}
+      onChangeRating={handleRatingChange}
+    >
+      <div>
+        <ul className={cx('divide-color-border-subtle flex flex-col divide-y', isEditing && 'divide-transparent!')}>
+          {members.map((character, index) => (
+            <MemberItem
+              key={index}
+              character={character || undefined}
+              status={character ? userData?.characters?.[character.id]?.status : undefined}
+              editing={isEditing}
+              onClick={() => handleClickMember(index)}
+            />
+          ))}
+        </ul>
+        {isEditing && hasChangedMembers && hasInvalidTeamId && (
+          <ErrorNotice text={t('general.notice.invalidTeamId')} className="mt-xs-2" />
+        )}
       </div>
 
-      <CharacterModal
-        opened={isCharModalOpen}
-        title={t('general.action.selectTeamMembers')}
-        selection={memberSelection}
-        onSelect={handleSelectMember}
-        onChangeSlot={setMemberIndex}
-        onClose={() => {
-          setIsCharModalOpen(false)
-          setHasChangedMembers(true)
-        }}
-      />
-
-      <TeamDeleteModal
-        opened={isDeleteModalOpen}
-        team={team}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-      />
-    </Card>
+      <CardSection title={t('game.label.tags')} classNames={{ body: 'min-h-field-h-sm' }}>
+        {isEditing ? (
+          <TagsField
+            id="team-card-tags"
+            size="sm"
+            value={draft.tags}
+            options={tagOptions}
+            getTagStyle={getTagStyle}
+            onChange={handleTagsChange}
+          />
+        ) : team.tags?.length ? (
+          <div className="gap-xs-1 flex flex-wrap">
+            {sortTags(team.tags).map((tag) => (
+              <Tag key={tag} value={tag} style={getTagStyle(tag)} />
+            ))}
+          </div>
+        ) : (
+          <span className="text-size-sm">--</span>
+        )}
+      </CardSection>
+    </CardTemplate>
   )
 }

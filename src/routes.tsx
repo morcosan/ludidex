@@ -3,6 +3,7 @@ import { type ParseKeys } from 'i18next'
 import { type ReactElement } from 'react'
 import { type RouteObject } from 'react-router'
 import CharactersPage from './app/genshin/characters/page'
+import DomainsPage from './app/genshin/domains/page'
 import TeamsPage from './app/genshin/teams/page'
 import Layout from './app/layout'
 import HomePage from './app/page'
@@ -18,6 +19,7 @@ const appRoutes: AppRoute[] = [
   { to: '/', labelKey: 'general.label.home', element: <HomePage /> },
   { to: '/genshin/characters', labelKey: 'general.label.characters', element: <CharactersPage /> },
   { to: '/genshin/teams', labelKey: 'general.label.teams', element: <TeamsPage /> },
+  { to: '/genshin/domains', labelKey: 'general.label.domains', element: <DomainsPage /> },
   { to: '/settings', labelKey: 'general.label.settings', element: <SettingsPage /> },
 ]
 

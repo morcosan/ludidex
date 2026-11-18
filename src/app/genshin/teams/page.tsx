@@ -1,4 +1,4 @@
-import { Breadcrumb, FiltersBar, TeamCard, type Filters } from '@app-shared/components'
+import { TeamCard, type Filters } from '@app-shared/components'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
@@ -11,9 +11,9 @@ import { IconButton } from '@design-system'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PageTemplate } from '../_shared/page-template'
 import { PreviewDrawer } from '../_shared/preview-drawer'
 import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_partials/config'
-import { SidePanel } from './_partials/side-panel'
 import { TeamListing } from './_partials/team-listing'
 
 export default function Page() {
@@ -47,9 +47,8 @@ export default function Page() {
     tags: filters.tags,
   }
 
-  const handleFiltersChange = (newFilters: Filters) => {
-    setFilters({ ...filters, ...newFilters })
-  }
+  const handleClosePreview = () => setIsPreviewOpen(false)
+  const handleFiltersChange = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
 
   const handleClickTeam = (team: GenshinTeam) => {
     if (isPreviewOpen && previewTeamId === team.id) {
@@ -58,10 +57,6 @@ export default function Page() {
     }
     setPreviewTeamId(team.id)
     setIsPreviewOpen(true)
-  }
-
-  const handleClosePreview = () => {
-    setIsPreviewOpen(false)
   }
 
   const handleSaveTeam = (team: GenshinTeam) => {
@@ -98,61 +93,41 @@ export default function Page() {
   }, [emptyTeams])
 
   return (
-    <div className="flex h-full">
-      {/* LEFT SIDE */}
-      <div className="relative flex h-full flex-1 flex-col">
-        <FiltersBar
-          filters={topBarFilters}
-          type="teams"
-          className="mb-xs-5 justify-between"
-          onChange={handleFiltersChange}
-        />
+    <PageTemplate
+      type="teams"
+      title={t('general.label.teams')}
+      itemsCount={currTeams.length}
+      filtersCount={filtersCount}
+      topBarFilters={topBarFilters}
+      sectionFilters={sectionFilters}
+      search={filters.search}
+      viewLabel={viewLabel}
+      viewType={viewType}
+      viewOptions={viewOptions}
+      leftSide={
+        <>
+          <TeamListing
+            teams={currTeams}
+            viewType={viewType}
+            selectedTeamId={isPreviewOpen ? previewTeamId : undefined}
+            scrollRef={scrollRef}
+            className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
+            onClickItem={handleClickTeam}
+          />
 
-        <h1 className="flex">
-          <Breadcrumb first>
-            {t('general.label.teams')} ({currTeams.length})
-          </Breadcrumb>
-          <Breadcrumb>{viewLabel}</Breadcrumb>
-          {filtersCount > 0 && <Breadcrumb>{t('general.format.withFilters', { count: filtersCount })}</Breadcrumb>}
-          {filters.search && <Breadcrumb>{t('general.format.withSearch', { keyword: filters.search })}</Breadcrumb>}
-        </h1>
-
-        {/* LISTING */}
-        <TeamListing
-          teams={currTeams}
-          viewType={viewType}
-          selectedTeamId={isPreviewOpen ? previewTeamId : undefined}
-          scrollRef={scrollRef}
-          className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
-          onClickItem={handleClickTeam}
-        />
-
-        {/* NEW TEAM BUTTON */}
-        <IconButton
-          tooltip={t('general.action.createNewTeam')}
-          variant="primary"
-          size="xl"
-          floating
-          className="bottom-xs-3 right-xs-8 z-sticky absolute!"
-          onClick={handleClickNewTeam}
-        >
-          <PlusIcon aria-hidden className="h-sm-1 w-sm-1" />
-        </IconButton>
-      </div>
-
-      {/* RIGHT SIDE */}
-      <div className="w-character-card mx-xs-3 relative h-full">
-        <SidePanel
-          filters={sectionFilters}
-          otherFilters={topBarFilters}
-          viewType={viewType}
-          viewOptions={viewOptions}
-          className="-mr-xs-3 pr-xs-3 h-full overflow-y-auto"
-          onChangeFilters={handleFiltersChange}
-          onChangeView={handleViewChange}
-        />
-
-        {/* TEAM PREVIEW */}
+          <IconButton
+            tooltip={t('general.action.createNewTeam')}
+            variant="primary"
+            size="xl"
+            floating
+            className="bottom-xs-3 right-xs-8 z-sticky absolute!"
+            onClick={handleClickNewTeam}
+          >
+            <PlusIcon aria-hidden className="h-sm-1 w-sm-1" />
+          </IconButton>
+        </>
+      }
+      rightSide={
         <PreviewDrawer opened={isPreviewOpen}>
           {previewTeam && (
             <TeamCard
@@ -166,7 +141,9 @@ export default function Page() {
             />
           )}
         </PreviewDrawer>
-      </div>
-    </div>
+      }
+      onChangeFilters={handleFiltersChange}
+      onChangeView={handleViewChange}
+    />
   )
 }

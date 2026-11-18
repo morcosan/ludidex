@@ -50,11 +50,16 @@ export const SearchField = (props: SearchFieldProps) => {
     return 'xs'
   })()
 
-  const handleQueryChange = useCallback((value: string) => {
+  const handleChange = useCallback((value: string) => {
     setInnerValue(value)
     isPendingRef.current = true
     debouncedFnRef.current?.(value)
   }, [])
+
+  const handleBlur = () => {
+    debouncedFnRef.current?.flush()
+    onBlur?.()
+  }
 
   useEffect(() => {
     debouncedFnRef.current = debounce((value: string) => {
@@ -65,8 +70,9 @@ export const SearchField = (props: SearchFieldProps) => {
   }, [])
 
   useEffect(() => {
-    if (isPendingRef.current) return
-    setInnerValue(value)
+    if (!isPendingRef.current) {
+      setInnerValue(value)
+    }
   }, [value])
 
   useEffect(() => {
@@ -89,7 +95,7 @@ export const SearchField = (props: SearchFieldProps) => {
             state={disabled ? 'disabled' : 'active'}
             variant="optional"
             size={clearButtonSize}
-            onClick={() => handleQueryChange('')}
+            onClick={() => handleChange('')}
           >
             <FontAwesomeIcon icon={faXmark} className="h-xs-7" />
           </IconButton>
@@ -97,8 +103,8 @@ export const SearchField = (props: SearchFieldProps) => {
       }
       className={className}
       style={style}
-      onChange={handleQueryChange}
-      onBlur={onBlur}
+      onChange={handleChange}
+      onBlur={handleBlur}
     />
   )
 }

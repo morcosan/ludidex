@@ -27,6 +27,7 @@
       "save": "Save",
       "saveChanges": "Save changes",
       "searchCharacters": "Search characters",
+      "searchDomains": "Search domains",
       "searchSettings": "Search settings",
       "searchTeams": "Search teams",
       "selectTeamMembers": "Select team members",
@@ -47,6 +48,7 @@
       "dataValues": "Data values",
       "default": "Default",
       "deleted": "Deleted",
+      "domains": "Domains",
       "empty": "Empty",
       "exportData": "Export data",
       "filters": "Filters",
@@ -103,6 +105,7 @@
       "invalidTeamId": "Team must be unique and have at least one member",
       "invalidTeamName": "Team name must be unique and not empty",
       "noCharacters": "No characters match the selected filters",
+      "noDomains": "No domains match the selected filters",
       "noTeams": "No teams match the selected filters"
     },
     "colors": {
@@ -142,6 +145,7 @@
       "talents": "Talents",
       "tierList": "Tier list",
       "tierLists": "Tier lists",
+      "trials": "Trials",
       "unused": "Unused",
       "weapon": "Weapon"
     },

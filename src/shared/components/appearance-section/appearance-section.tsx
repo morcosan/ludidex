@@ -5,7 +5,7 @@ import { useUserSettingsStore } from '../../state/use-user-settings'
 import { PageSection } from '../page-section/page-section'
 
 export interface AppearanceSectionProps extends ReactProps {
-  type: 'characters' | 'teams'
+  type: 'characters' | 'teams' | 'domains'
 }
 
 export const AppearanceSection = (props: AppearanceSectionProps) => {
@@ -42,9 +42,10 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
   ]
 
   const rowClass = cx('gap-xs-2 flex items-center justify-between')
-  const charFieldClass = cx('w-md-8')
-  const charFieldClassNames = { option: 'text-size-xs!' }
+  const fieldClass = cx('w-md-8')
+  const fieldClassNames = { option: 'text-size-xs!' }
 
+  if (type === 'domains') return null
   return (
     <PageSection title={t('general.label.appearance')} className={className} classNames={{ body: 'gap-xs-3' }}>
       {type === 'characters' && (
@@ -56,8 +57,8 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
               value={userSettings.charSorting}
               options={charSortingOptions}
               size="xs"
-              className={charFieldClass}
-              classNames={charFieldClassNames}
+              className={fieldClass}
+              classNames={fieldClassNames}
               onChange={(value) => value && updateUserSettings({ charSorting: value as CharacterSorting })}
             />
           </div>
@@ -69,8 +70,8 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
               options={charLabelOptions}
               size="xs"
               clearable={Boolean(userSettings.charLabelTop)}
-              className={charFieldClass}
-              classNames={charFieldClassNames}
+              className={fieldClass}
+              classNames={fieldClassNames}
               onChange={(value) => updateUserSettings({ charLabelTop: value ? (value as CharacterLabel) : null })}
             />
           </div>
@@ -82,8 +83,8 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
               options={charLabelOptions}
               size="xs"
               clearable={Boolean(userSettings.charLabelBottom)}
-              className={charFieldClass}
-              classNames={charFieldClassNames}
+              className={fieldClass}
+              classNames={fieldClassNames}
               onChange={(value) => updateUserSettings({ charLabelBottom: value ? (value as CharacterLabel) : null })}
             />
           </div>
@@ -94,8 +95,8 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
               value={userSettings.charItemSize}
               options={itemSizeOptions}
               size="xs"
-              className={charFieldClass}
-              classNames={charFieldClassNames}
+              className={fieldClass}
+              classNames={fieldClassNames}
               onChange={(value) => value && updateUserSettings({ charItemSize: value as ItemSize })}
             />
           </div>
@@ -111,7 +112,8 @@ export const AppearanceSection = (props: AppearanceSectionProps) => {
               value={userSettings.teamItemSize}
               options={itemSizeOptions}
               size="xs"
-              className="w-md-4"
+              className={fieldClass}
+              classNames={fieldClassNames}
               onChange={(value) => value && updateUserSettings({ teamItemSize: value as ItemSize })}
             />
           </div>

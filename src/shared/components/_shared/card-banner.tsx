@@ -17,6 +17,7 @@ export const CardBanner = (props: CardBannerProps) => {
   const { banner, editing, ratingValue, statusValue, onChangeRating, onChangeStatus } = props
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
+  const showRating = ratingValue !== undefined || onChangeRating !== undefined
   const showStatus = statusValue !== undefined || onChangeStatus !== undefined
 
   return (
@@ -24,15 +25,17 @@ export const CardBanner = (props: CardBannerProps) => {
       {banner}
 
       <div className="top-xs-0 left-xs-0 right-xs-0 gap-y-xs-0 absolute z-10 flex flex-col">
-        <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
-          <RatingField
-            value={ratingValue}
-            labels={ratingLabels}
-            readonly={!editing}
-            className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
-            onChange={onChangeRating}
-          />
-        </div>
+        {showRating && (
+          <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+            <RatingField
+              value={ratingValue}
+              labels={ratingLabels}
+              readonly={!editing}
+              className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+              onChange={onChangeRating}
+            />
+          </div>
+        )}
         {showStatus && (
           <div className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
             <StatusField

@@ -78,7 +78,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
         )}
 
         <div className="pr-xs-0 gap-sm-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
-          <FiltersSection filters={filters} surface="paper" onChange={setFilters} />
+          <FiltersSection type="characters" filters={filters} surface="paper" onChange={setFilters} />
           <AppearanceSection type="characters" className="pb-xs-9" />
         </div>
       </div>

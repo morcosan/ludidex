@@ -31,15 +31,15 @@ export interface Filters {
 export const EMPTY_FILTERS: Filters = { elements: [], statuses: [], weapons: [], nations: [], tags: [], search: '' }
 
 export interface FiltersProps extends ReactProps {
+  type: 'characters' | 'teams' | 'domains'
   filters: Filters
   otherFilters?: Filters
-  type?: 'characters' | 'teams'
   surface?: 'glass' | 'paper'
   onChange?: (filters: Filters) => void
 }
 
 export const useFilters = (props: FiltersProps) => {
-  const { filters, otherFilters, type = 'characters', surface = 'glass', onChange } = props
+  const { type, filters, otherFilters, surface = 'glass', onChange } = props
   const { t } = useTranslation()
   const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
   const elementIcons = getElementIcons()
@@ -72,12 +72,18 @@ export const useFilters = (props: FiltersProps) => {
   }
 
   const renderSearch = () => {
+    const searchLabel = (() => {
+      if (type === 'characters') return t('general.action.searchCharacters')
+      if (type === 'teams') return t('general.action.searchTeams')
+      if (type === 'domains') return t('general.action.searchDomains')
+      return ''
+    })()
     return filters.search !== undefined ? (
       <SearchField
         key={remountKey}
         id="filters-search"
         value={filters.search}
-        label={type === 'teams' ? t('general.action.searchTeams') : t('general.action.searchCharacters')}
+        label={searchLabel}
         size="md"
         className={cx('max-w-xl-0 w-full', surface === 'glass' && 'bg-color-bg-region')}
         onChange={(search) => onChange?.({ ...filters, search })}

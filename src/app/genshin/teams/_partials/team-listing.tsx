@@ -61,7 +61,7 @@ export const TeamListing = (props: TeamListingProps) => {
   )
 
   return (
-    <div ref={scrollRef} className={cx('pr-xs-3 flex min-h-0 flex-1 overflow-y-auto', className)}>
+    <div ref={scrollRef} className={cx('pb-xs-5 pr-xs-3 flex min-h-0 flex-1 overflow-y-auto', className)}>
       {teams.length === 0 ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTeams')}</p>
       ) : isTierListView ? (

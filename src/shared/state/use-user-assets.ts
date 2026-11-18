@@ -6,6 +6,7 @@ import { USER_ASSETS } from './user-assets/data'
 import {
   getCharacterBanners,
   getCharacterIcons,
+  getDomainImages,
   getElementIcons,
   getGameBackgrounds,
   getGameBanners,
@@ -26,6 +27,7 @@ interface UserAssetsStore {
   getNationIcons: () => Record<GenshinNation, string[]>
   getCharacterIcons: (characterId: string) => string[]
   getCharacterBanners: (characterId: string) => string[]
+  getDomainImages: (domainId: string) => string[]
 }
 
 const useUserAssetsStore = create<UserAssetsStore>((set, get) => ({
@@ -71,6 +73,10 @@ const useUserAssetsStore = create<UserAssetsStore>((set, get) => ({
 
   getCharacterBanners(characterId) {
     return getCharacterBanners(characterId, get().userAssets)
+  },
+
+  getDomainImages(domainId) {
+    return getDomainImages(domainId, get().userAssets)
   },
 }))
 

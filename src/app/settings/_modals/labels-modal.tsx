@@ -2,7 +2,8 @@ import { RatingField, TierListField } from '@app-shared/components'
 import { RATING_LABELS, RATING_VALUES, TIER_LIST_LABELS, TIER_LIST_VALUES, type TierListValue } from '@app-shared/data'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { Button, Modal, TextField } from '@design-system'
-import { type ReactNode, useEffect, useState } from 'react'
+import { type ReactNode, useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 type LabelsModalVariant = 'rating' | 'tier-list'
@@ -30,7 +31,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
   const tierListLabels = useUserDataStore((state) => state.userData?.preferences?.tierListLabels)
   const setRatingLabels = useUserDataStore((state) => state.setRatingLabels)
   const setTierListLabels = useUserDataStore((state) => state.setTierListLabels)
-  const [draft, setDraft] = useState<LabelValues>({})
+  const { control, handleSubmit, reset } = useForm<LabelValues>()
 
   const variantConfig: ModalConfig =
     variant === 'rating'
@@ -58,7 +59,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
 
   const { title, keys, defaultLabels, labels, renderLabel, setLabels } = variantConfig
 
-  const handleClickSave = () => {
+  const handleClickSave = handleSubmit((draft: LabelValues) => {
     const overrides: Record<string, string> = {}
     for (const key of keys) {
       const label = draft[key]
@@ -66,11 +67,11 @@ export const LabelsModal = (props: LabelsModalProps) => {
     }
     setLabels(overrides)
     onClose()
-  }
+  })
 
   useEffect(() => {
-    if (opened) setDraft({ ...labels })
-  }, [labels, opened])
+    if (opened) reset({ ...labels })
+  }, [labels, opened, reset])
 
   return (
     <Modal
@@ -89,12 +90,18 @@ export const LabelsModal = (props: LabelsModalProps) => {
           <div key={key} className="gap-x-xs-3 flex items-center">
             <span className="text-size-sm flex-1">{renderLabel(key)}</span>
 
-            <TextField
-              id={`label-${key}`}
-              value={draft[key] ?? ''}
-              ariaLabel={`${title} ${key}`}
-              className="w-lg-2"
-              onChange={(value) => setDraft((state) => ({ ...state, [key]: value }))}
+            <Controller
+              control={control}
+              name={key}
+              render={({ field }) => (
+                <TextField
+                  id={`label-${key}`}
+                  value={field.value ?? ''}
+                  ariaLabel={`${title} ${key}`}
+                  className="w-lg-2"
+                  onChange={field.onChange}
+                />
+              )}
             />
           </div>
         ))}

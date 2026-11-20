@@ -2,11 +2,11 @@ import { RATING_VALUES, type CharacterStatus, type RatingValue, type TierListVal
 import { type GenshinCharacterUserData } from '../../../state/types'
 import { useUserTags } from '../../../utils/use-user-tags'
 import { toNumber } from '../../../utils/various'
-import { type GenshinStats, type GenshinTalents, type GenshinTierScores } from '../_types'
+import { type GenshinStats, type GenshinTalents, type GenshinTierLists } from '../_types'
 
 const TIER_LIST_FIELDS = [
   ...['mainDps', 'subDps', 'support', 'exploration', 'outfit', 'personality'],
-] as const satisfies readonly (keyof GenshinTierScores)[]
+] as const satisfies readonly (keyof GenshinTierLists)[]
 
 const STAT_FIELDS = [
   ...['level', 'hp', 'atk', 'def', 'critDmg', 'critRate', 'elemDmg', 'em', 'er'],
@@ -14,11 +14,12 @@ const STAT_FIELDS = [
 
 const TALENT_FIELDS = ['conLv', 'attackLv', 'skillLv', 'burstLv'] as const satisfies readonly (keyof GenshinTalents)[]
 
+// In react-hook-form, undefined = default value, null = empty value
 export interface CharacterDraft {
-  rating?: RatingValue
-  status?: CharacterStatus
+  rating: RatingValue | null
+  status: CharacterStatus | null
   tags: string[]
-  tierLists: Record<keyof GenshinTierScores, TierListValue | undefined>
+  tierLists: Record<keyof GenshinTierLists, TierListValue | null>
   stats: Record<keyof GenshinStats, string>
   talents: Record<keyof GenshinTalents, string>
 }
@@ -51,11 +52,11 @@ export const useDraftUtils = () => {
     return result
   }
 
-  const buildTierLists = (tierLists: CharacterDraft['tierLists']): GenshinTierScores => {
-    const result: GenshinTierScores = {}
+  const buildTierLists = (tierLists: CharacterDraft['tierLists']): GenshinTierLists => {
+    const result: GenshinTierLists = {}
     for (const field of TIER_LIST_FIELDS) {
       const value = tierLists[field]
-      if (value !== undefined) result[field] = value
+      if (value !== null) result[field] = value
     }
     return result
   }
@@ -63,12 +64,12 @@ export const useDraftUtils = () => {
   const createDraft = (userData?: GenshinCharacterUserData): CharacterDraft => {
     const tierLists = {} as CharacterDraft['tierLists']
     for (const field of TIER_LIST_FIELDS) {
-      tierLists[field] = userData?.tierLists?.[field]
+      tierLists[field] = userData?.tierLists?.[field] ?? null
     }
 
     return {
-      rating: RATING_VALUES.find((rating) => rating === userData?.rating),
-      status: userData?.status,
+      rating: RATING_VALUES.find((rating) => rating === userData?.rating) ?? null,
+      status: userData?.status ?? null,
       tags: sortTags(userData?.tags ?? []),
       tierLists,
       stats: createNumberDraft(STAT_FIELDS, userData?.stats),
@@ -83,8 +84,8 @@ export const useDraftUtils = () => {
     const talents = buildNumberRecord(TALENT_FIELDS, draft.talents)
 
     return {
-      ...(draft.rating === undefined ? {} : { rating: draft.rating }),
-      ...(draft.status === undefined ? {} : { status: draft.status }),
+      ...(draft.rating === null ? {} : { rating: draft.rating }),
+      ...(draft.status === null ? {} : { status: draft.status }),
       ...(tags.length === 0 ? {} : { tags }),
       ...(Object.keys(tierLists).length === 0 ? {} : { tierLists }),
       ...(Object.keys(stats).length === 0 ? {} : { stats }),

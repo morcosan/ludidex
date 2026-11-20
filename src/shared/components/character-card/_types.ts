@@ -9,27 +9,23 @@ export interface CharacterCardProps extends ReactProps {
   onClose?: () => void
 }
 
-export type StatSectionPath = 'stats' | 'talents'
+export type DataBasePath = 'stats' | 'talents'
+export type DataFieldName = `stats.${keyof GenshinStats}` | `talents.${keyof GenshinTalents}`
 
-export interface StatRow {
+export interface DataRow<T = string> {
+  name: T
   label: string
   value?: string
-  field?: string
   percent?: boolean
 }
 
-export interface StatSection {
+export interface DataSection {
   label: string
-  rows: StatRow[]
-  path?: StatSectionPath
+  rows: DataRow[]
+  path?: DataBasePath
   mono?: boolean
-}
-
-export interface StatField {
-  label: string
-  percent?: boolean
 }
 
 export type GenshinStats = NonNullable<GenshinCharacterUserData['stats']>
 export type GenshinTalents = NonNullable<GenshinCharacterUserData['talents']>
-export type GenshinTierScores = NonNullable<GenshinCharacterUserData['tierLists']>
+export type GenshinTierLists = NonNullable<GenshinCharacterUserData['tierLists']>

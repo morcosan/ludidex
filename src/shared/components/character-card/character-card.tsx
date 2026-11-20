@@ -1,21 +1,23 @@
-import { Tag, TagsField, TextField } from '@design-system'
+import { TextField } from '@design-system'
 import { GlobeIcon } from 'lucide-react'
 import { useEffect } from 'react'
+import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { TIER_LIST_LABELS } from '../../data'
+import { TIER_LIST_LABELS, type TierListValue } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
-import { useUserTags } from '../../utils/use-user-tags'
 import { CardActions } from '../_shared/card-actions'
 import { CardSection, type SectionItem } from '../_shared/card-section'
 import { CardTemplate } from '../_shared/card-template'
 import { CharacterTrait } from '../_shared/character-trait'
+import { TagsSection } from '../_shared/tags-section'
+import { CharacterAvatar } from '../character-avatar/character-avatar'
 import { TierListField } from '../tier-list-field/tier-list-field'
 import { BannerImage } from './_partials/banner-image'
-import { CharacterName } from './_partials/character-name'
-import { useData } from './_partials/use-data'
+import { useDataRows } from './_partials/use-data-rows'
 import { useDraft } from './_partials/use-draft'
-import { type CharacterCardProps } from './_types'
+import { type CharacterDraft } from './_partials/use-draft-utils'
+import { type CharacterCardProps, type DataFieldName } from './_types'
 
 export { type CharacterCardProps }
 
@@ -29,22 +31,8 @@ export const CharacterCard = (props: CharacterCardProps) => {
   const weaponIcons = getWeaponIcons()
   const nationIcons = getNationIcons()
   const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
-  const { statSections, tierFields } = useData(props)
-  const {
-    draft,
-    hasChanges,
-    isEditing,
-    getStatValue,
-    handleRatingChange,
-    handleStatusChange,
-    handleTagsChange,
-    handleTierListChange,
-    handleStatChange,
-    handleClickDiscard,
-    handleClickEdit,
-    handleClickSave,
-  } = useDraft(props)
-  const { getTagStyle, sortTags, tagOptions } = useUserTags()
+  const { dataSections, tierListRows } = useDataRows(props)
+  const { control, hasChanges, isEditing, handleClickDiscard, handleClickEdit, handleClickSave } = useDraft(props)
 
   useEffect(() => {
     if (!opened && isEditing) handleClickDiscard()
@@ -59,8 +47,20 @@ export const CharacterCard = (props: CharacterCardProps) => {
   return (
     <CardTemplate
       editing={isEditing}
+      control={control}
+      fieldNames={['rating', 'status'] satisfies (keyof CharacterDraft)[]}
       banner={<BannerImage character={character} editing={isEditing} />}
-      title={(sticky) => <CharacterName character={character} sticky={sticky} />}
+      title={(sticky) => (
+        <>
+          {sticky && <CharacterAvatar character={character} className="top-xs-3 left-xs-2 size-sm-3 absolute! mt-px" />}
+          <div className={cx('transition-[padding] ease-out', sticky && '-ml-xs-8 pl-sm-6')}>
+            <h3>{character.name}</h3>
+            <div className="text-size-xs text-color-text-subtle pb-xs-0 truncate px-px leading-1">
+              {character.fullName}
+            </div>
+          </div>
+        </>
+      )}
       actions={
         <CardActions
           editing={isEditing}
@@ -71,12 +71,9 @@ export const CharacterCard = (props: CharacterCardProps) => {
           onEdit={handleClickEdit}
         />
       }
-      ratingValue={draft.rating}
-      statusValue={draft.status}
       className={className}
-      onChangeRating={handleRatingChange}
-      onChangeStatus={handleStatusChange}
     >
+      {/* TRAITS */}
       <div className="gap-x-xs-5 gap-y-xs-2 mt-xs-3 flex flex-wrap items-center justify-between">
         <CharacterTrait label={t(`game.elements.${character.element}`)} iconSrcs={elementIcons[character.element]} />
         <CharacterTrait
@@ -96,63 +93,59 @@ export const CharacterCard = (props: CharacterCardProps) => {
         />
       </div>
 
-      <CardSection title={t('game.label.tags')} classNames={{ body: 'min-h-field-h-sm' }}>
-        {isEditing ? (
-          <TagsField
-            id="character-card-tags"
-            size="sm"
-            value={draft.tags}
-            options={tagOptions}
-            getTagStyle={getTagStyle}
-            onChange={handleTagsChange}
-          />
-        ) : userData?.tags?.length ? (
-          <div className="gap-xs-1 flex flex-wrap">
-            {sortTags(userData.tags).map((tag) => (
-              <Tag key={tag} value={tag} style={getTagStyle(tag)} />
-            ))}
-          </div>
-        ) : (
-          <span className="text-size-sm">--</span>
-        )}
-      </CardSection>
+      {/* TAGS */}
+      <TagsSection editing={isEditing} control={control} tags={userData?.tags} />
 
+      {/* TIER LISTS */}
       <CardSection
         title={t('game.label.tierLists')}
-        items={tierFields.map(({ field, label }): SectionItem => {
+        items={tierListRows.map(({ name, label }): SectionItem => {
           return {
-            key: field,
+            key: name,
             label,
             value: (
-              <TierListField
-                value={draft.tierLists[field]}
-                labels={tierListLabels}
-                readonly={!isEditing}
-                iconPos="right"
-                className="w-md-6"
-                onChange={(value) => handleTierListChange(field, value)}
+              <Controller
+                control={control}
+                name={`tierLists.${name}`}
+                render={({ field: tierField }) => (
+                  <TierListField
+                    value={(tierField.value as TierListValue | null) ?? undefined}
+                    labels={tierListLabels}
+                    readonly={!isEditing}
+                    iconPos="right"
+                    className="w-md-6"
+                    onChange={(value) => tierField.onChange(value ?? null)}
+                  />
+                )}
               />
             ),
           }
         })}
       />
 
-      {statSections.map(({ label: sectionLabel, rows, path, mono }) => (
+      {/* STATS */}
+      {dataSections.map(({ label: sectionLabel, rows, path, mono }) => (
         <CardSection
           key={sectionLabel}
           title={sectionLabel}
-          items={rows.map(({ label, value, field, percent }): SectionItem => ({
-            key: field ?? label,
+          items={rows.map(({ name, label, value, percent }): SectionItem => ({
+            key: name ?? label,
             label,
             value:
-              isEditing && path && field ? (
-                <TextField
-                  id={`character-card-${path}-${field}`}
-                  size="xs"
-                  value={getStatValue(path, field)}
-                  suffix={percent && <span className="text-size-xs text-color-text-placeholder mr-xs-2">%</span>}
-                  className="w-md-1 [&_input]:font-family-mono"
-                  onChange={(value) => handleStatChange(path, field, value)}
+              isEditing && path && name ? (
+                <Controller
+                  control={control}
+                  name={`${path}.${name}` as DataFieldName}
+                  render={({ field: statField }) => (
+                    <TextField
+                      id={`character-card-${path}-${name}`}
+                      size="xs"
+                      value={statField.value ?? undefined}
+                      suffix={percent && <span className="text-size-xs text-color-text-placeholder mr-xs-2">%</span>}
+                      className="w-md-1 [&_input]:font-family-mono"
+                      onChange={statField.onChange}
+                    />
+                  )}
                 />
               ) : (
                 <span className="text-size-sm font-weight-md pr-xs-0">

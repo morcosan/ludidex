@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { GENSHIN_CHARACTERS_BY_ID } from '../../../data'
 import { type GenshinTeam } from '../../../state/types'
 import { CharacterAvatar } from '../../character-avatar/character-avatar'
-import { ErrorNotice } from './error-notice'
+import { ErrorNotice } from '../../_shared/error-notice'
 
 interface TeamDeleteModalProps {
   opened: boolean

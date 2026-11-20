@@ -8,4 +8,4 @@
 - all external scripts you temporarily use must be placed inside project root
 - avoid adding useless shrink-0
 - if an arrow function has multiple lines, always use {}
-- use only bash commands, no windows cmd
+- use only linux commands, no windows cmd

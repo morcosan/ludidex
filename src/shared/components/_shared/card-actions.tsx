@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next'
 
 interface ActionsProps {
   editing: boolean
-  hasChanges: boolean
-  onDiscard: () => void
-  onClose: () => void
-  onSave: () => void
-  onEdit: () => void
+  hasChanges?: boolean
+  onDiscard?: () => void
+  onClose?: () => void
+  onSave?: () => void
+  onEdit?: () => void
   onDelete?: () => void
 }
 

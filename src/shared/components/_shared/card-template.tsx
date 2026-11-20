@@ -1,38 +1,27 @@
 import { Card } from '@design-system'
 import { useRef, type ReactNode } from 'react'
-import { type CharacterStatus, type RatingValue } from '../../data'
+import { Controller, type Control, type FieldPath, type FieldValues } from 'react-hook-form'
+import { RATING_LABELS } from '../../data'
+import { useUserDataStore } from '../../state/use-user-data'
 import { useStickyOnTop } from '../../utils/use-sticky-on-top'
-import { CardBanner } from './card-banner'
+import { RatingField } from '../rating-field/rating-field'
+import { StatusField } from '../status-field/status-field'
 
-interface CardTemplateProps extends ReactProps {
+interface CardTemplateProps<T extends FieldValues> extends ReactProps {
   banner: ReactNode
   title: ReactNode | ((sticky: boolean) => ReactNode)
+  control?: Control<T>
   editing?: boolean
+  fieldNames?: (keyof T & ('rating' | 'status'))[]
   actions?: ReactNode
-  modals?: ReactNode
-  ratingValue?: RatingValue
-  statusValue?: CharacterStatus
   className?: string
   classNames?: { content?: string }
-  onChangeRating?: (value: RatingValue | undefined) => void
-  onChangeStatus?: (value: CharacterStatus | undefined) => void
 }
 
-export const CardTemplate = (props: CardTemplateProps) => {
-  const {
-    actions,
-    banner,
-    children,
-    className,
-    classNames,
-    editing,
-    modals,
-    ratingValue,
-    statusValue,
-    title,
-    onChangeRating,
-    onChangeStatus,
-  } = props
+export const CardTemplate = <T extends FieldValues>(props: CardTemplateProps<T>) => {
+  const { actions, banner, children, className, classNames, control, editing, fieldNames = [], title } = props
+  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
+  const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
   const scrollRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
   const isTitleSticky = useStickyOnTop({ scrollRef, stickyRef: titleRef })
@@ -40,14 +29,39 @@ export const CardTemplate = (props: CardTemplateProps) => {
   return (
     <Card className={cx('w-character-card', className)} classNames={{ surface: 'p-0!', content: 'flex flex-col' }}>
       <div ref={scrollRef} className="p-xs-0 pb-xs-2! flex h-full flex-col overflow-y-auto">
-        <CardBanner
-          banner={banner}
-          editing={editing}
-          ratingValue={ratingValue}
-          statusValue={statusValue}
-          onChangeRating={onChangeRating}
-          onChangeStatus={onChangeStatus}
-        />
+        <div className="relative">
+          {banner}
+
+          <div className="top-xs-0 left-xs-0 right-xs-0 gap-y-xs-0 absolute z-10 flex flex-col">
+            {control &&
+              fieldNames.map((fieldName) => (
+                <div key={fieldName} className="px-xs-2 py-xs-0 bg-color-white max-w-fit rounded-md">
+                  <Controller
+                    control={control}
+                    name={fieldName as FieldPath<T>}
+                    render={({ field }) =>
+                      fieldName === 'rating' ? (
+                        <RatingField
+                          value={field.value ?? undefined}
+                          labels={ratingLabels}
+                          readonly={!editing}
+                          className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+                          onChange={(value) => field.onChange(value ?? null)}
+                        />
+                      ) : (
+                        <StatusField
+                          value={field.value ?? undefined}
+                          readonly={!editing}
+                          className={cx(editing ? 'w-md-7 my-xs-1' : 'mr-xs-0')}
+                          onChange={(value) => field.onChange(value ?? null)}
+                        />
+                      )
+                    }
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
 
         <div
           ref={titleRef}
@@ -71,8 +85,6 @@ export const CardTemplate = (props: CardTemplateProps) => {
 
         {actions}
       </div>
-
-      {modals}
     </Card>
   )
 }

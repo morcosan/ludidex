@@ -1,14 +1,18 @@
 import { Image } from '@design-system'
-import { GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../../data'
+import { type Control, useWatch } from 'react-hook-form'
+import { GENSHIN_CHARACTERS_BY_ID, GENSHIN_ELEMENT_COLORS, type GenshinCharacter } from '../../../data'
 import { useUserAssetsStore } from '../../../state/use-user-assets'
+import { type TeamDraft } from './use-draft-utils'
 
 interface BannerImageProps {
-  members: (GenshinCharacter | null)[]
-  editing?: boolean
+  control: Control<TeamDraft>
+  editing: boolean
 }
 
-export const BannerImage = ({ members, editing }: BannerImageProps) => {
+export const BannerImage = ({ control, editing }: BannerImageProps) => {
   const { getCharacterBanners } = useUserAssetsStore()
+  const charIds = useWatch({ control, name: 'charIds' })
+  const members = charIds.map((id) => GENSHIN_CHARACTERS_BY_ID[id || ''] || null)
 
   const imageFilterClass = cx('pointer-events-none absolute inset-0 brightness-20')
 

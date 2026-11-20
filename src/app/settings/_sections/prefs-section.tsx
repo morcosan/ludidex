@@ -4,8 +4,8 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { LabelsModal } from '../_partials/labels-modal'
-import { TagsModal } from '../_partials/tags-modal'
+import { LabelsModal } from '../_modals/labels-modal'
+import { TagsModal } from '../_modals/tags-modal'
 import { TextHighlight } from '../_partials/text-highlight'
 import { type SectionProps } from '../_partials/types'
 
@@ -20,11 +20,7 @@ export const PrefsSection = (props: SectionProps) => {
     <PageSection id={id} title={title} className={className} classNames={{ body: 'pt-xs-5 gap-y-xs-3 flex flex-col' }}>
       {/* RATINGS */}
       <div className="flex items-center">
-        <TextHighlight
-          text={`${t('general.label.ratingLabels')}:`}
-          keyword={keyword}
-          className={classNames?.label}
-        />
+        <TextHighlight text={`${t('general.label.ratingLabels')}:`} keyword={keyword} className={classNames?.label} />
         <Button
           state={isEditingRating ? 'loading' : 'active'}
           className="ml-xs-3"
@@ -37,11 +33,7 @@ export const PrefsSection = (props: SectionProps) => {
 
       {/* TIER LISTS */}
       <div className="flex items-center">
-        <TextHighlight
-          text={`${t('general.label.tierListLabels')}:`}
-          keyword={keyword}
-          className={classNames?.label}
-        />
+        <TextHighlight text={`${t('general.label.tierListLabels')}:`} keyword={keyword} className={classNames?.label} />
         <Button
           state={isEditingTierList ? 'loading' : 'active'}
           className="ml-xs-3"
@@ -55,11 +47,7 @@ export const PrefsSection = (props: SectionProps) => {
       {/* TAGS */}
       <div className="flex items-center">
         <TextHighlight text={`${t('general.label.tags')}:`} keyword={keyword} className={classNames?.label} />
-        <Button
-          state={isEditingTags ? 'loading' : 'active'}
-          className="ml-xs-3"
-          onClick={() => setIsEditingTags(true)}
-        >
+        <Button state={isEditingTags ? 'loading' : 'active'} className="ml-xs-3" onClick={() => setIsEditingTags(true)}>
           <FontAwesomeIcon icon={faPenToSquare} aria-hidden className="text-size-md mr-xs-1" />
           <TextHighlight text={t('general.action.editTags')} keyword={keyword} />
         </Button>

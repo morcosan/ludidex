@@ -6,7 +6,7 @@ import { Button, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ImportModal } from '../_partials/import-modal'
+import { ImportModal } from '../_modals/import-modal'
 import { TextHighlight } from '../_partials/text-highlight'
 import { type SectionProps } from '../_partials/types'
 
@@ -131,11 +131,7 @@ export const DataSection = (props: SectionProps) => {
     >
       {/* UPLOAD */}
       <div className="flex items-center">
-        <TextHighlight
-          text={`${t('general.label.importData')}:`}
-          keyword={keyword}
-          className={classNames?.label}
-        />
+        <TextHighlight text={`${t('general.label.importData')}:`} keyword={keyword} className={classNames?.label} />
         <Button
           state={isImporting ? 'loading' : 'active'}
           className="ml-xs-3"
@@ -149,11 +145,7 @@ export const DataSection = (props: SectionProps) => {
 
       {/* DOWNLOAD */}
       <div className="flex items-center">
-        <TextHighlight
-          text={`${t('general.label.exportData')}:`}
-          keyword={keyword}
-          className={classNames?.label}
-        />
+        <TextHighlight text={`${t('general.label.exportData')}:`} keyword={keyword} className={classNames?.label} />
         <Button state={isExporting ? 'loading' : 'active'} className="ml-xs-3" onClick={handleClickExport}>
           <CloudDownloadIcon aria-hidden className="h-xs-9 mr-xs-1" />
           <TextHighlight text={t('general.action.download')} keyword={keyword} />

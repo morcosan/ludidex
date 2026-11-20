@@ -31,7 +31,7 @@ export interface Filters {
 export const EMPTY_FILTERS: Filters = { elements: [], statuses: [], weapons: [], nations: [], tags: [], search: '' }
 
 export interface FiltersProps extends ReactProps {
-  type: 'characters' | 'teams' | 'domains'
+  type: 'characters' | 'teams' | 'domains' | 'trials'
   filters: Filters
   otherFilters?: Filters
   surface?: 'glass' | 'paper'
@@ -76,6 +76,7 @@ export const useFilters = (props: FiltersProps) => {
       if (type === 'characters') return t('general.action.searchCharacters')
       if (type === 'teams') return t('general.action.searchTeams')
       if (type === 'domains') return t('general.action.searchDomains')
+      if (type === 'trials') return t('general.action.searchTrials')
       return ''
     })()
     return filters.search !== undefined ? (

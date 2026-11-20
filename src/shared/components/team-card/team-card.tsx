@@ -8,6 +8,7 @@ import { MemberSelector } from './_partials/member-selector'
 import { TeamName } from './_partials/team-name'
 import { useDraft } from './_partials/use-draft'
 import { type TeamDraft } from './_partials/use-draft-utils'
+import { TrialsSection } from './_partials/trials-section'
 import { type TeamCardProps } from './_types'
 
 export { type TeamCardProps }
@@ -66,6 +67,9 @@ export const TeamCard = (props: TeamCardProps) => {
 
       {/* TAGS */}
       <TagsSection editing={isEditing} control={control} tags={team.tags} />
+
+      {/* TRIALS */}
+      <TrialsSection editing={isEditing} control={control} />
 
       <TeamDeleteModal
         key="team-delete-modal"

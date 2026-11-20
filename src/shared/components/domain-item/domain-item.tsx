@@ -34,7 +34,7 @@ export const DomainItem = (props: DomainItemProps) => {
           <span
             className={cx(
               'px-xs-2 py-xs-0 flex items-center rounded-xs rounded-bl-sm!',
-              'text-size-xs font-weight-md bg-color-white-alpha-14 leading-1',
+              'text-size-xs font-weight-md bg-color-white-alpha-15 leading-1',
             )}
           >
             {domain.trials.length}

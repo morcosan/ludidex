@@ -44,7 +44,7 @@ export default function Page() {
   }
 
   const handleClosePreview = () => setIsPreviewOpen(false)
-  const handleFiltersChange = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
+  const handleChangeFilters = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
 
   const handleClickCharacter = (character: GenshinCharacter) => {
     if (isPreviewOpen && previewCharacter?.id === character.id) {
@@ -94,7 +94,7 @@ export default function Page() {
           )}
         </PreviewDrawer>
       }
-      onChangeFilters={handleFiltersChange}
+      onChangeFilters={handleChangeFilters}
       onChangeView={handleViewChange}
     />
   )

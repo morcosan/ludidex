@@ -33,7 +33,47 @@ const formatInteger = (value: number, compact = false) => {
   const formatFn = compact ? new Intl.NumberFormat('en-US', { notation: 'compact' }) : new Intl.NumberFormat('en-US')
   return formatFn.format(Math.floor(value))
 }
+
 const formatPercent = (value: number, compact = false) => `${formatInteger(value, compact)}%`
+
+const formatTime = (value?: number) => {
+  if (value === undefined) return undefined
+  if (!Number.isFinite(value) || value < 0) return String(value)
+
+  const hours = Math.floor(value / 3600)
+  const minutes = Math.floor((value % 3600) / 60)
+  const seconds = Math.floor(value % 60)
+    .toString()
+    .padStart(2, '0')
+
+  if (hours > 0) return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds}`
+  return `${minutes.toString().padStart(2, '0')}:${seconds}`
+}
+
+const parseTime = (value: string) => {
+  const intRegex = /^\d+$/
+  const floatRegex = /^\d+(?:\.\d+)?$/
+  const trimmed = value.trim()
+  if (!trimmed) return undefined
+
+  if (!trimmed.includes(':')) {
+    const parsed = Number(trimmed)
+    return Number.isFinite(parsed) ? parsed : undefined
+  }
+
+  const parts = (trimmed.startsWith(':') ? `0${trimmed}` : trimmed).split(':')
+  if (parts.length !== 2 && parts.length !== 3) return undefined
+  if (parts.some((part, index) => (index === parts.length - 1 ? !floatRegex.test(part) : !intRegex.test(part)))) {
+    return undefined
+  }
+
+  const values = parts.map(Number)
+  const [hours, minutes, seconds] = values.length === 2 ? [0, values[0], values[1]] : [values[0], values[1], values[2]]
+
+  return hours * 3600 + minutes * 60 + seconds
+}
+
+const isFailedTrial = (time?: number) => time !== undefined && time < 1 // 1 sec
 
 const roundValue = (value: number, direction: 'up' | 'down', step: number) => {
   const round = direction === 'up' ? Math.ceil : Math.floor
@@ -71,10 +111,13 @@ export {
   formatFileSize,
   formatInteger,
   formatPercent,
+  formatTime,
   getDataSize,
   getDateAsYYYYMMDD,
   getTimeAsHHMMSS,
+  isFailedTrial,
   isPathUnderSegment,
+  parseTime,
   parseUserInput,
   roundValue,
   sortByName,

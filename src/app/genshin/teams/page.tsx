@@ -31,7 +31,13 @@ export default function Page() {
 
   useClickOutside({
     enabled: isPreviewOpen,
-    allowlist: ['[data-team-item]', '[data-preview-drawer]', '[data-character-modal]', '[data-team-delete-modal]'],
+    allowlist: [
+      '[data-character-modal]',
+      '[data-team-delete-modal]',
+      '[data-team-item]',
+      '[data-trial-modal]',
+      '[data-preview-drawer]',
+    ],
     callback: () => setIsPreviewOpen(false),
   })
 
@@ -48,7 +54,7 @@ export default function Page() {
   }
 
   const handleClosePreview = () => setIsPreviewOpen(false)
-  const handleFiltersChange = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
+  const handleChangeFilters = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
 
   const handleClickTeam = (team: GenshinTeam) => {
     if (isPreviewOpen && previewTeamId === team.id) {
@@ -142,7 +148,7 @@ export default function Page() {
           )}
         </PreviewDrawer>
       }
-      onChangeFilters={handleFiltersChange}
+      onChangeFilters={handleChangeFilters}
       onChangeView={handleViewChange}
     />
   )

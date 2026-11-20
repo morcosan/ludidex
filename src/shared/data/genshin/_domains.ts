@@ -437,3 +437,14 @@ export const GENSHIN_DOMAINS: GenshinDomain[] = [
 ]
 
 export const GENSHIN_DOMAIN_IDS = [...new Set(GENSHIN_DOMAINS.map(({ id }) => id))] as const
+
+export const GENSHIN_DOMAIN_BY_TRIAL = {
+  ...GENSHIN_DOMAINS.reduce<Record<string, GenshinDomain>>((domainsByTrial, domain) => {
+    domain.trials.forEach(({ id }) => (domainsByTrial[id] = domain))
+    return domainsByTrial
+  }, {}),
+} as const
+
+export const GENSHIN_DOMAIN_TRIALS = [...GENSHIN_DOMAINS.flatMap(({ trials }) => trials)] as const
+
+export const GENSHIN_DOMAIN_TRIAL_IDS = [...new Set(GENSHIN_DOMAIN_TRIALS.map(({ id }) => id))] as const

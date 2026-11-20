@@ -28,7 +28,7 @@ export default function Page() {
   const topBarFilters: Filters = { search: filters.search }
   const sectionFilters: Filters = { nations: filters.nations }
 
-  const handleFiltersChange = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
+  const handleChangeFilters = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
 
   const handleClickDomain = (domain: GenshinDomain) => {
     if (isPreviewOpen && previewDomain?.id === domain.id) {
@@ -61,7 +61,7 @@ export default function Page() {
           {previewDomain && <DomainCard domain={previewDomain} className="h-full" />}
         </PreviewDrawer>
       }
-      onChangeFilters={handleFiltersChange}
+      onChangeFilters={handleChangeFilters}
     />
   )
 }

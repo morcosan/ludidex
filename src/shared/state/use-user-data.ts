@@ -135,8 +135,8 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
       const teams = { ...userData.genshin?.teams }
 
       if (data) {
-        const { name, rating, tags } = data
-        teams[teamId] = { name, rating, tags }
+        const { name, rating, tags, trials } = data
+        teams[teamId] = { name, rating, tags, trials }
       } else {
         delete teams[teamId]
       }

@@ -17,12 +17,10 @@ export { type CharacterModalSelection }
 export interface CharacterModalProps {
   // Slots
   title: ReactNode
-
   // Props
   opened: boolean
   selection?: CharacterModalSelection
   className?: string
-
   // Events
   onSelect?: (character: GenshinCharacter | null, slotIndex?: number) => void
   onChangeSlot?: (slotIndex: number) => void

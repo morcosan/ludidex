@@ -1294,8 +1294,8 @@ export const GENSHIN_CHARACTERS: GenshinCharacter[] = [
   },
 ] as const
 
-export const GENSHIN_CHARACTERS_BY_ID: Record<string, (typeof GENSHIN_CHARACTERS)[number]> = Object.fromEntries(
-  GENSHIN_CHARACTERS.map((character) => [character.id, character]),
-)
+export const GENSHIN_CHARACTERS_BY_ID = {
+  ...Object.fromEntries(GENSHIN_CHARACTERS.map((character) => [character.id, character])),
+} as const
 
 export const GENSHIN_CHARACTER_IDS = [...new Set(GENSHIN_CHARACTERS.map(({ id }) => id))] as const

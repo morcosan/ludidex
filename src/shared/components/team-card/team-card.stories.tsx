@@ -10,6 +10,7 @@ const team = {
   name: 'Stellar Sandrone DPS',
   rating: 10,
   tags: ['DPS', 'Main'],
+  trials: { purification1: 1, purification2: 3 },
 }
 
 const meta: Meta = {
@@ -36,7 +37,7 @@ const meta: Meta = {
             'yae-miko': { status: 'main' },
           },
           teams: {
-            [team.id]: { name: team.name, rating: team.rating, tags: team.tags },
+            [team.id]: { name: team.name, rating: team.rating, tags: team.tags, trials: team.trials },
           },
         },
       },

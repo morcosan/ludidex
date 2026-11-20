@@ -30,6 +30,8 @@
       "searchDomains": "Search domains",
       "searchSettings": "Search settings",
       "searchTeams": "Search teams",
+      "searchTrials": "Search trials",
+      "selectTrials": "Select trials",
       "selectTeamMembers": "Select team members",
       "showLess": "Show less",
       "showMore": "Show more",
@@ -52,6 +54,7 @@
       "empty": "Empty",
       "exportData": "Export data",
       "filters": "Filters",
+      "failed": "Failed",
       "home": "Home",
       "importData": "Import data",
       "invalid": "Invalid",
@@ -106,7 +109,8 @@
       "invalidTeamName": "Team name must be unique and not empty",
       "noCharacters": "No characters match the selected filters",
       "noDomains": "No domains match the selected filters",
-      "noTeams": "No teams match the selected filters"
+      "noTeams": "No teams match the selected filters",
+      "noTrials": "No trials match the selected filters"
     },
     "colors": {
       "red": "Red",

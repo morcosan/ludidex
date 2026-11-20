@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type Control, useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../../data'
@@ -21,7 +21,7 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const [memberIndex, setMemberIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { field: charIdsField, fieldState: charIdsFieldState } = useController({
+  const { field, fieldState } = useController({
     control,
     name: 'charIds',
     rules: {
@@ -32,8 +32,8 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
       },
     },
   })
-  const errorText = charIdsFieldState.error ? t('general.notice.invalidTeamId') : undefined
-  const charIds = charIdsField.value
+  const errorText = fieldState.error ? t('general.notice.invalidTeamId') : undefined
+  const charIds = field.value
   const members = charIds.map((id) => GENSHIN_CHARACTERS_BY_ID[id || ''] || null)
   const selection = { slots: members, index: memberIndex }
 
@@ -52,7 +52,7 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
   const handleSelectMember = (character: GenshinCharacter | null, slotIndex: number = memberIndex) => {
     const nextCharIds = [...charIds]
     nextCharIds[slotIndex] = character?.id || null
-    charIdsField.onChange(nextCharIds)
+    field.onChange(nextCharIds)
 
     if (character) {
       const updatedSlots = Object.assign([...members], { [slotIndex]: character })
@@ -63,8 +63,12 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
-    charIdsField.onBlur()
+    field.onBlur()
   }
+
+  useEffect(() => {
+    if (!editing) setIsModalOpen(false)
+  }, [editing])
 
   return (
     <>

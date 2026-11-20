@@ -10,24 +10,26 @@ export interface SectionItem {
 interface CardSectionProps extends ReactProps {
   title: string
   items?: SectionItem[]
+  actions?: ReactNode
   classNames?: {
     body?: string
   }
 }
 
-export const CardSection = ({ title, items, children, classNames }: CardSectionProps) => {
+export const CardSection = ({ title, items, actions, children, classNames }: CardSectionProps) => {
   return (
     <PageSection
       surface="paper"
       title={title}
+      actions={actions}
       className={cx(!items?.length && 'divide-none!')}
       classNames={{ body: cx('pt-0!', classNames?.body) }}
     >
-      {items?.length && (
+      {items && items?.length > 0 && (
         <dl className="divide-color-border-subtle flex flex-col divide-y">
           {items.map((item) => (
             <div key={item.key} className="gap-xs-2 py-xs-2 flex items-center justify-between">
-              <dt className="text-size-sm">{item.label}</dt>
+              <dt className="text-size-sm pr-xs-9">{item.label}</dt>
               <dd className="min-h-field-h-xs flex-center flex">{item.value}</dd>
             </div>
           ))}

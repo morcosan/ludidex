@@ -12,13 +12,14 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTemplate } from '../_shared/page-template'
 import { PreviewDrawer } from '../_shared/preview-drawer'
+import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_config'
 import { CharacterListing } from './_partials/character-listing'
-import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_partials/config'
 
 export default function Page() {
   const { t } = useTranslation()
   const setGenshinCharacter = useUserDataStore((state) => state.setGenshinCharacter)
-  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(CHARACTER_VIEW_TYPES, 'default')
+  const viewOptionsHook = useViewOptions({ viewTypes: CHARACTER_VIEW_TYPES, defaultView: 'default' })
+  const { viewType, viewOptions, viewLabel, handleViewChange } = viewOptionsHook
   const { tagOptions } = useUserTags()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)

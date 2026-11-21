@@ -434,7 +434,31 @@ export const GENSHIN_DOMAINS: GenshinDomain[] = [
     ],
     nation: 'snezhnaya',
   },
-]
+  {
+    id: 'stormterror',
+    name: 'Confront Stormterror',
+    trials: [
+      { id: 'storming1', name: 'Storming Terror I' },
+      { id: 'storming2', name: 'Storming Terror II' },
+      { id: 'storming3', name: 'Storming Terror III' },
+      { id: 'storming4', name: 'Storming Terror IV' },
+      { id: 'storming5', name: 'Storming Terror V' },
+      { id: 'storming6', name: 'Storming Terror VI' },
+    ],
+    nation: 'mondstadt',
+  },
+  {
+    id: 'dragonqueller',
+    name: 'Beneath the Dragon-Queller',
+    trials: [
+      { id: 'earthshaking1', name: 'Earthshaking Dragon I' },
+      { id: 'earthshaking2', name: 'Earthshaking Dragon II' },
+      { id: 'earthshaking3', name: 'Earthshaking Dragon III' },
+      { id: 'earthshaking4', name: 'Earthshaking Dragon IV' },
+    ],
+    nation: 'liyue',
+  },
+] as const
 
 export const GENSHIN_DOMAIN_IDS = [...new Set(GENSHIN_DOMAINS.map(({ id }) => id))] as const
 

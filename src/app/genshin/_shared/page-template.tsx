@@ -1,5 +1,6 @@
 import { FiltersBar, type Filters } from '@app-shared/components'
 import { type ViewOption, type ViewType } from '@app-shared/utils/use-view-options'
+import { Button } from '@design-system'
 import { type ReactNode } from 'react'
 import { PageHeader } from './page-header'
 import { SidePanel } from './side-panel'
@@ -15,9 +16,12 @@ interface PageTemplateProps<T extends ViewType> extends ReactProps {
   viewLabel?: string
   viewType?: T
   viewOptions?: readonly ViewOption<T>[]
+  tabOptions?: readonly { value: string; label: string }[]
+  activeTab?: string
   leftSide: ReactNode
   rightSide: ReactNode
   onChangeFilters?: (filters: Filters) => void
+  onChangeTab?: (value: string) => void
   onChangeView?: (viewType: T) => void
 }
 
@@ -29,6 +33,8 @@ export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) =>
     rightSide,
     search,
     sectionFilters,
+    tabOptions,
+    activeTab,
     title,
     topBarFilters,
     type,
@@ -36,6 +42,7 @@ export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) =>
     viewOptions,
     viewType,
     onChangeFilters,
+    onChangeTab,
     onChangeView,
   } = props
 
@@ -56,6 +63,21 @@ export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) =>
           filtersCount={filtersCount}
           search={search}
         />
+
+        {tabOptions && tabOptions.length > 0 && (
+          <div className="gap-xs-2 mb-xs-4 mt-sm-0 flex flex-wrap">
+            {tabOptions.map((option) => (
+              <Button
+                key={option.value}
+                size="sm"
+                state={activeTab === option.value ? 'selected' : 'active'}
+                onClick={() => onChangeTab?.(option.value)}
+              >
+                {option.label}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {leftSide}
       </div>

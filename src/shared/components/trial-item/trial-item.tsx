@@ -1,7 +1,5 @@
 import { Card, Image } from '@design-system'
-import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useTranslation } from 'react-i18next'
+import { FailureLabel } from '../failure-label/failure-label'
 import { GENSHIN_DOMAINS, type GenshinDomainTrial } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { formatTime, isFailedTrial } from '../../utils/various'
@@ -16,7 +14,6 @@ export interface TrialItemProps extends ReactProps {
 
 export const TrialItem = (props: TrialItemProps) => {
   const { trial, time, selected, className, onClick } = props
-  const { t } = useTranslation()
   const { getDomainImages } = useUserAssetsStore()
   const domain = GENSHIN_DOMAINS.find((item) => item.trials.some(({ id }) => id === trial.id))
 
@@ -44,14 +41,7 @@ export const TrialItem = (props: TrialItemProps) => {
                 'text-size-xs font-weight-md bg-color-white-alpha-15 leading-1',
               )}
             >
-              {isFailedTrial(time) ? (
-                <span className="text-size-xs font-family-sans font-weight-sm flex items-center">
-                  <FontAwesomeIcon icon={faSkullCrossbones} className="mr-xs-0 text-size-xxs -mt-px" />
-                  {t('general.label.failed')}
-                </span>
-              ) : (
-                formatTime(time)
-              )}
+              {isFailedTrial(time) ? <FailureLabel /> : formatTime(time)}
             </span>
           </span>
         )}

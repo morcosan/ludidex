@@ -9,7 +9,7 @@ import { formatInteger } from '@app-shared/utils/various'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
 import { SortingView } from '../../_shared/sorting-view'
-import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from './config'
+import { type CharacterViewType, type SortingViewType, VIEW_CONFIGS } from '../_config'
 
 export interface ItemSizeClass {
   list: string
@@ -45,7 +45,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const { getCharLabel } = useCharacterLabel()
 
-  const isTierListView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
+  const isRankingView = viewType.startsWith('tier-') || viewType === 'rating' || viewType === 'status'
   const isSortingView = viewType.startsWith('sort-')
   const sortingConfig = isSortingView ? VIEW_CONFIGS[viewType as SortingViewType] : undefined
 
@@ -65,7 +65,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
     return undefined
   }
 
-  const getSortLabel = (character: GenshinCharacter, existingLabel: CharacterLabel | null): string | undefined => {
+  const getSortCharLabel = (character: GenshinCharacter, existingLabel: CharacterLabel | null): string | undefined => {
     if (!viewType.startsWith('sort-')) return undefined
 
     const config = VIEW_CONFIGS[viewType as SortingViewType]
@@ -74,7 +74,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
     const value = config.getValue(character, userData?.characters?.[character.id])
     if (value === undefined) return undefined
 
-    const formattedValue = `${formatInteger(value, config.step >= 1_000)}${config.percent ? '%' : ''}`
+    const formattedValue = `${formatInteger(value, config.step >= 1_000)}${config.labelType === 'percent' ? '%' : ''}`
     if (viewType === 'sort-level') return t('game.format.level', { value: formattedValue })
     if (viewType === 'sort-hp') return t('game.format.hp', { value: formattedValue })
     if (viewType === 'sort-atk') return t('game.format.atk', { value: formattedValue })
@@ -95,7 +95,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
         labelTop={
           userSettings.charLabelTop
             ? getCharLabel(character, userSettings.charLabelTop)
-            : getSortLabel(character, userSettings.charLabelBottom)
+            : getSortCharLabel(character, userSettings.charLabelBottom)
         }
         labelBottom={getCharLabel(character, userSettings.charLabelBottom)}
         selected={selectedItemId === character.id}
@@ -104,11 +104,17 @@ export const CharacterListing = (props: CharacterListingProps) => {
     </li>
   )
 
+  const hasItems = sortingConfig
+    ? characters.some((char) => sortingConfig.getValue(char, userData?.characters?.[char.id]) !== undefined)
+    : isRankingView
+      ? characters.some((char) => getValue(char, viewType) !== undefined)
+      : characters.length > 0
+
   return (
     <div className={cx('pr-xs-3 pb-xs-5 flex min-h-0 flex-1 overflow-y-auto', className)}>
-      {characters.length === 0 && !isSortingView ? (
+      {!hasItems ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
-      ) : isTierListView ? (
+      ) : isRankingView ? (
         <RankingView
           items={characters}
           viewType={viewType}
@@ -125,14 +131,13 @@ export const CharacterListing = (props: CharacterListingProps) => {
           items={characters}
           itemsPool={GENSHIN_CHARACTERS}
           valueStep={sortingConfig.step}
-          percent={Boolean(sortingConfig.percent)}
-          emptyText={t('general.notice.noCharacters')}
+          getValue={(character) => sortingConfig.getValue(character, userData?.characters?.[character.id])}
+          renderItem={renderItem}
+          labelType={sortingConfig.labelType}
           classNames={{
             row: classNames.row,
             content: contentClass,
           }}
-          getValue={(character) => sortingConfig.getValue(character, userData?.characters?.[character.id])}
-          renderItem={renderItem}
         />
       ) : (
         <ul className={cx('m-0!', contentClass)}>{characters.map(renderItem)}</ul>

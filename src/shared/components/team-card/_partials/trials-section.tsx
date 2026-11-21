@@ -1,6 +1,4 @@
 import { Button, TextField } from '@design-system'
-import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SwordsIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Controller, useController, useWatch, type Control } from 'react-hook-form'
@@ -8,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { GENSHIN_DOMAIN_TRIALS } from '../../../data'
 import { formatTime, isFailedTrial, parseTime } from '../../../utils/various'
 import { CardSection, type SectionItem } from '../../_shared/card-section'
+import { FailureLabel } from '../../failure-label/failure-label'
 import { TrialModal } from '../../trial-modal/trial-modal'
 import { type TeamDraft } from './use-draft-utils'
 
@@ -56,10 +55,7 @@ export const TrialsSection = (props: TrialsSectionProps) => {
     ) : (
       <span className="text-size-sm font-weight-md pr-xs-0 font-family-mono">
         {isFailedTrial(parseTime(value)) ? (
-          <span className="text-size-xs font-family-sans font-weight-sm flex items-center">
-            <FontAwesomeIcon icon={faSkullCrossbones} className="mr-xs-0 text-size-xxs -mt-px" />
-            {t('general.label.failed')}
-          </span>
+          <FailureLabel />
         ) : (
           (formatTime(parseTime(value)) ?? '--')
         )}

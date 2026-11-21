@@ -15,7 +15,7 @@ import { withAlpha } from '@app-shared/utils/various'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-type RankValue = string | number | undefined
+type RankValue = string | number | null | undefined
 
 interface RankData<T> {
   key: string
@@ -47,7 +47,10 @@ export const RankingView = <T,>(props: RankingViewProps<T>) => {
   const getNoTierData = (key: string): RankData<T> => ({
     key,
     label: <span>--</span>,
-    items: items.filter((item) => getValue(item, viewType) === undefined),
+    items: items.filter((item) => {
+      const value = getValue(item, viewType)
+      return value === undefined || value === null
+    }),
   })
 
   const getRatingData = (): RankData<T>[] => [

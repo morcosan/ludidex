@@ -1,4 +1,5 @@
 import { TeamCard, type Filters } from '@app-shared/components'
+import { GENSHIN_DOMAINS } from '@app-shared/data'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
@@ -13,13 +14,14 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTemplate } from '../_shared/page-template'
 import { PreviewDrawer } from '../_shared/preview-drawer'
-import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_partials/config'
+import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_config'
 import { TeamListing } from './_partials/team-listing'
 
 export default function Page() {
   const { t } = useTranslation()
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const { viewType, viewOptions, viewLabel, handleViewChange } = useViewOptions(TEAM_VIEW_TYPES, 'default')
+  const viewOptionsHook = useViewOptions({ viewTypes: TEAM_VIEW_TYPES, defaultView: 'default' })
+  const { viewType, tabParam, viewOptions, viewLabel, handleViewChange, handleTabChange } = viewOptionsHook
   const { tagOptions } = useUserTags()
   const [previewTeamId, setPreviewTeamId] = useState<string | undefined>(undefined)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
@@ -28,6 +30,9 @@ export default function Page() {
   const canScrollRef = useRef(false)
   const [filters, setFilters] = useUrlFilters({ ...TEAM_FILTERS, tags: tagOptions })
   const { allTeams, listedTeams } = useTeamListing(filters)
+  const selectedDomain = GENSHIN_DOMAINS.find(({ id }) => id === viewType)
+  const selectedTrial = selectedDomain?.trials.find(({ id }) => id === tabParam) ?? selectedDomain?.trials[0]
+  const trialOptions = selectedDomain?.trials.map(({ id, name }) => ({ value: id, label: name }))
 
   useClickOutside({
     enabled: isPreviewOpen,
@@ -110,11 +115,15 @@ export default function Page() {
       viewLabel={viewLabel}
       viewType={viewType}
       viewOptions={viewOptions}
+      tabOptions={trialOptions}
+      activeTab={selectedTrial?.id}
       leftSide={
         <>
           <TeamListing
             teams={currTeams}
+            teamsPool={allTeams}
             viewType={viewType}
+            selectedTrialId={selectedTrial?.id}
             selectedTeamId={isPreviewOpen ? previewTeamId : undefined}
             scrollRef={scrollRef}
             className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
@@ -149,6 +158,7 @@ export default function Page() {
         </PreviewDrawer>
       }
       onChangeFilters={handleChangeFilters}
+      onChangeTab={handleTabChange}
       onChangeView={handleViewChange}
     />
   )

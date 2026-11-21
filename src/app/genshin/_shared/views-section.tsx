@@ -25,7 +25,7 @@ export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) =>
           onClick={() => onChangeView?.(option.value)}
         >
           <span className="mr-xs-2 w-sm-0 flex-center flex">{option.icon}</span>
-          {option.label}
+          <span className="truncate">{option.label}</span>
         </Button>
       ))}
     </PageSection>

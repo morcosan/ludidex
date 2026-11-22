@@ -75,6 +75,9 @@ const Variants: StoryObj<typeof Button> = {
               <Button variant={variant} size="lg">
                 lg
               </Button>
+              <Button variant={variant} size="xl">
+                xl
+              </Button>
             </div>
           ))}
         </div>

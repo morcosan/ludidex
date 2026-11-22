@@ -23,7 +23,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit, onDel
       {editing ? (
         <IconButton
           tooltip={t('general.action.discardChanges')}
-          size="md"
+          size="lg"
           floating
           className="-top-xs-5 -right-xs-5 absolute! z-20"
           onClick={onDiscard}
@@ -33,7 +33,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit, onDel
       ) : (
         <IconButton
           tooltip={t('ds.action.close')}
-          size="md"
+          size="lg"
           floating
           className="-top-xs-5 -right-xs-5 absolute! z-20"
           onClick={onClose}
@@ -46,7 +46,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit, onDel
         <IconButton
           tooltip={t('general.action.saveChanges')}
           variant="primary"
-          size="md"
+          size="lg"
           floating
           className="top-sm-4 -right-xs-5 absolute! z-20"
           onClick={onSave}
@@ -56,7 +56,7 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit, onDel
       ) : (
         <IconButton
           tooltip={t('general.action.edit')}
-          size="md"
+          size="lg"
           floating
           className="top-sm-4 -right-xs-5 absolute! z-20"
           onClick={onEdit}

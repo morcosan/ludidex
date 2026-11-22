@@ -66,6 +66,7 @@ export default function Page() {
             key={id}
             linkHref={`${searchParams.size ? `?${searchParams.toString()}` : ''}#${id}`}
             variant="menu-default"
+            size="lg"
             state={activeSections.some((section) => section.id === id) ? 'active' : 'disabled'}
           >
             {t(labelKey)}

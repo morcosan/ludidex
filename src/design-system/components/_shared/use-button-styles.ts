@@ -19,11 +19,11 @@ export const useButtonStyles = ({ state, size, variant, floating }: Props) => {
   const getBgImage = (color: string) => `repeating-linear-gradient(150deg, ${color} 0% 50%, transparent 50% 100%)`
 
   const height = (() => {
-    if (size === 'xs') return tokens.spacing['button-h-xs']
-    if (size === 'sm') return tokens.spacing['button-h-sm']
-    if (size === 'md') return tokens.spacing['button-h-md']
-    if (size === 'lg') return tokens.spacing['button-h-lg']
-    if (size === 'xl') return tokens.spacing['button-h-xl']
+    if (size === 'xs') return tokens.spacing['field-h-xs']
+    if (size === 'sm') return tokens.spacing['field-h-sm']
+    if (size === 'md') return tokens.spacing['field-h-md']
+    if (size === 'lg') return tokens.spacing['field-h-lg']
+    if (size === 'xl') return tokens.spacing['field-h-xl']
     return ''
   })()
   const paddingX = (() => {
@@ -33,7 +33,7 @@ export const useButtonStyles = ({ state, size, variant, floating }: Props) => {
     if (size === 'sm') return `calc(${tokens.spacing['button-px-sm']} - 1px)`
     if (size === 'md') return `calc(${tokens.spacing['button-px-md']} - 1px)`
     if (size === 'lg') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
-    if (size === 'xl') return `calc(${tokens.spacing['button-px-lg']} - 1px)`
+    if (size === 'xl') return `calc(${tokens.spacing['button-px-xl']} - 1px)`
   })()
   const spinnerSize = (() => {
     if (size === 'xs') return tokens.spacing['xs-5']

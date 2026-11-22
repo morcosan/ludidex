@@ -73,7 +73,7 @@ export const CardTemplate = <T extends FieldValues>(props: CardTemplateProps<T>)
         >
           <div
             className={cx(
-              'min-h-field-h-md text-size-xl leading-sm flex flex-col justify-center',
+              'min-h-field-h-lg text-size-xl leading-sm flex flex-col justify-center',
               !editing && 'font-weight-lg',
             )}
           >

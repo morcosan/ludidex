@@ -85,7 +85,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
       }
       onClose={onClose}
     >
-      <div className="gap-y-xs-3 flex flex-col">
+      <div className="gap-y-xs-4 flex flex-col">
         {keys.map((key) => (
           <div key={key} className="gap-x-xs-3 flex items-center">
             <span className="text-size-sm flex-1">{renderLabel(key)}</span>

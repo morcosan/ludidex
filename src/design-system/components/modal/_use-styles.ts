@@ -16,8 +16,10 @@ export const useStyles = (props: Props) => {
     modalOverlayBgColor: noDismiss ? tokens.color['modal-overlay-strong'] : tokens.color['modal-overlay-subtle'],
     modalOverlayBlur: noDismiss ? `blur(${tokens.blur['default']})` : `blur(${tokens.blur['subtle']})`,
     modalMargin: tokens.spacing['xs-9'],
-    modalContentPX: tokens.spacing['sm-0'],
-    modalContentPY: tokens.spacing['xs-8'],
+    modalCardPL: tokens.spacing['xs-9'],
+    modalCardPR: tokens.spacing['xs-7'],
+    modalCardPY: tokens.spacing['xs-5'],
+    modalCardGapY: tokens.spacing['xs-5'],
     modalZIndex: `calc(${tokens.zIndex['modal']} + ${stackIndex})`,
     modalWidth: (() => {
       if (width === 'xs') return tokens.spacing['modal-xs']
@@ -39,42 +41,43 @@ export const useStyles = (props: Props) => {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
+    gap: cssVars.modalCardGapY,
     minHeight: 0,
     width: '100%',
     maxWidth: cssVars.modalWidth,
     height: cssVars.modalHeight,
     maxHeight: '100%',
     margin: `0 auto`,
+    padding: cssVars.modalCardPY,
+    paddingLeft: cssVars.modalCardPL,
+    paddingRight: cssVars.modalCardPR,
     border: `1px solid ${tokens.color['border-shadow']}`,
     borderRadius: tokens.radius['lg'],
     backgroundColor: tokens.color['bg-sheet'],
     boxShadow: tokens.shadow['md'],
-  }
-  const modalContentCss: CSSObject = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: tokens.spacing['sm-0'],
-    minHeight: 0,
-    height: cssVars.modalHeight,
-    maxHeight: '100%',
-    padding: `${cssVars.modalContentPY} ${cssVars.modalContentPX}`,
-    backgroundColor: tokens.color['bg-sheet'],
     color: tokens.color['text-default'],
+    transform: isVisible ? 'translateY(0)' : `translateY(calc(-2 * ${cssVars.modalMargin}))`,
+    opacity: isVisible ? 1 : 0,
+    transition: isVisible
+      ? `transform ${ANIM_TIME.SHOW}ms ease-out, opacity ${ANIM_TIME.SHOW}ms ease-out`
+      : `transform ${ANIM_TIME.HIDE}ms ease-in, opacity ${ANIM_TIME.HIDE}ms ease-in`,
   }
-  const titleCss: CSSObject = {
+  const headerCss: CSSObject = {
     display: 'flex',
     alignItems: 'center',
-    minHeight: tokens.spacing['button-h-md'],
-    marginRight: tokens.spacing['button-h-md'],
+    minHeight: tokens.spacing['field-h-md'],
+    marginRight: tokens.spacing['field-h-md'],
     fontSize: tokens.fontSize['lg'],
     fontWeight: tokens.fontWeight['lg'],
+    lineHeight: 1,
   }
   const modalBodyCss: CSSObject = {
     flex: '1 1 0%',
-    margin: `0 calc(-1 * ${cssVars.modalContentPX})`,
+    marginLeft: `calc(-1 * ${cssVars.modalCardPL})`,
+    marginRight: `calc(-1 * ${cssVars.modalCardPR})`,
     padding: `${tokens.spacing['a11y-padding']} 0`,
-    paddingLeft: cssVars.modalContentPX,
-    paddingRight: `calc(${cssVars.modalContentPX} - ${tokens.spacing['scrollbar-w']})`,
+    paddingLeft: cssVars.modalCardPL,
+    paddingRight: `calc(${cssVars.modalCardPR} - ${tokens.spacing['scrollbar-w']})`,
     overflowY: 'scroll',
   }
   const footerCss: CSSObject = {
@@ -103,24 +106,15 @@ export const useStyles = (props: Props) => {
     opacity: isVisible ? 1 : 0,
     transition: isVisible ? `opacity ${ANIM_TIME.SHOW}ms ease-out` : `opacity ${ANIM_TIME.HIDE}ms ease-in`,
   }
-  const modalCss: CSSObject = {
-    ...modalCardCss,
-    ...modalContentCss,
-    transform: isVisible ? 'translateY(0)' : `translateY(calc(-2 * ${cssVars.modalMargin}))`,
-    opacity: isVisible ? 1 : 0,
-    transition: isVisible
-      ? `transform ${ANIM_TIME.SHOW}ms ease-out, opacity ${ANIM_TIME.SHOW}ms ease-out`
-      : `transform ${ANIM_TIME.HIDE}ms ease-in, opacity ${ANIM_TIME.HIDE}ms ease-in`,
-  }
 
   return {
     actionsCss,
     cssVars,
     footerCss,
+    headerCss,
     modalBodyCss,
-    modalCss,
+    modalCardCss,
     overlayCss,
     rootCss,
-    titleCss,
   }
 }

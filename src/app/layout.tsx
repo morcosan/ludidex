@@ -74,6 +74,7 @@ export default function Layout() {
             trigger={
               <IconButton
                 tooltip={t('general.label.settings')}
+                size="lg"
                 floating
                 className="mt-auto"
                 onClick={() => setIsQuickSettingsOpen((open) => !open)}
@@ -101,7 +102,7 @@ export default function Layout() {
             <Button
               linkHref="/settings"
               variant="menu-default"
-              size="md"
+              size="lg"
               className="w-full"
               onClick={() => setIsQuickSettingsOpen(false)}
             >
@@ -127,6 +128,7 @@ export default function Layout() {
                   linkHref={to}
                   state={location.pathname === to ? 'selected' : 'active'}
                   variant="menu-default"
+                  size="lg"
                 >
                   {t(labelKey)}
                 </Button>

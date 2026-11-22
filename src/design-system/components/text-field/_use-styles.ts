@@ -17,19 +17,19 @@ export const useStyles = (props: Props) => {
   const cssVars = {
     ...cssBaseVars,
     buttonPadding: (() => {
-      if (size === 'xs') return `calc((${tokens.spacing['field-h-xs']} - ${tokens.spacing['button-h-xs']}) / 2)`
-      if (size === 'sm') return `calc((${tokens.spacing['field-h-sm']} - ${tokens.spacing['button-h-xs']}) / 2)`
-      if (size === 'md') return `calc((${tokens.spacing['field-h-md']} - ${tokens.spacing['button-h-sm']}) / 2)`
-      if (size === 'lg') return `calc((${tokens.spacing['field-h-lg']} - ${tokens.spacing['button-h-sm']}) / 2)`
-      if (size === 'xl') return `calc((${tokens.spacing['field-h-xl']} - ${tokens.spacing['button-h-md']}) / 2)`
+      if (size === 'xs') return `calc((${tokens.spacing['field-h-xs']} - ${tokens.spacing['field-h-xs']}) / 2)`
+      if (size === 'sm') return `calc((${tokens.spacing['field-h-sm']} - ${tokens.spacing['field-h-xs']}) / 2)`
+      if (size === 'md') return `calc((${tokens.spacing['field-h-md']} - ${tokens.spacing['field-h-sm']}) / 2)`
+      if (size === 'lg') return `calc((${tokens.spacing['field-h-lg']} - ${tokens.spacing['field-h-sm']}) / 2)`
+      if (size === 'xl') return `calc((${tokens.spacing['field-h-xl']} - ${tokens.spacing['field-h-md']}) / 2)`
       return ''
     })(),
     textPaddingY: (() => {
       if (size === 'xs') return tokens.spacing['xs-1']
       if (size === 'sm') return tokens.spacing['xs-2']
-      if (size === 'md') return tokens.spacing['xs-3']
-      if (size === 'lg') return tokens.spacing['xs-5']
-      if (size === 'xl') return tokens.spacing['xs-7']
+      if (size === 'md') return tokens.spacing['xs-2']
+      if (size === 'lg') return tokens.spacing['xs-4']
+      if (size === 'xl') return tokens.spacing['xs-6']
       return ''
     })(),
     borderColor: invalid

@@ -37,7 +37,7 @@ export const TeamName = (props: TeamNameProps) => {
       {editing ? (
         <TextField
           id="team-card-name"
-          size="md"
+          size="lg"
           value={field.value}
           invalid={invalid}
           ariaDescribedBy={invalid ? 'team-card-name-error' : undefined}

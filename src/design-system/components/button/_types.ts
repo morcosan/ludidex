@@ -1,9 +1,9 @@
 import { type CSSProperties, type ReactNode, type Ref } from 'react'
-import { type BaseButtonState, type BaseButtonVariant, type LinkType } from '../_shared/types'
+import { type BaseButtonSize, type BaseButtonState, type BaseButtonVariant, type LinkType } from '../_shared/types'
 
 export type ButtonState = BaseButtonState
 export type ButtonVariant = BaseButtonVariant
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
+export type ButtonSize = BaseButtonSize
 
 export interface ButtonProps extends HtmlDataProps {
   /**
@@ -36,6 +36,7 @@ export interface ButtonProps extends HtmlDataProps {
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string
+  /** CSS class attributes for specific inner elements */
   classNames?: {
     surface?: string
     content?: string

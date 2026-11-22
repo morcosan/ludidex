@@ -61,7 +61,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
       width="xl"
       height="full"
       noFooter
-      classNames={{ body: 'gap-sm-1 flex h-full' }}
+      classNames={{ body: 'gap-sm-0 flex h-full overflow-y-auto! pr-0!' }}
       data-character-modal
       onClose={onClose}
     >

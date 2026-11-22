@@ -30,7 +30,7 @@ export const useFieldStyles = (props: FieldProps) => {
       if (size === 'xs') return tokens.spacing['xs-3']
       if (size === 'sm') return tokens.spacing['xs-4']
       if (size === 'md') return tokens.spacing['xs-5']
-      if (size === 'lg') return tokens.spacing['xs-7']
+      if (size === 'lg') return tokens.spacing['xs-6']
       if (size === 'xl') return tokens.spacing['xs-8']
       return ''
     })(),

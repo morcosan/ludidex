@@ -57,7 +57,6 @@
     "husky": "^9.1.7",
     "oxlint": "^1.93.0",
     "playwright": "latest",
-    "postcss-url": "^10.1.4",
     "prettier": "^3.10.1",
     "prettier-plugin-css-order": "^2.2.0",
     "prettier-plugin-organize-imports": "^4.3.0",

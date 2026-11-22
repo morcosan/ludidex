@@ -27,7 +27,7 @@ export const PageSection = (props: PageSectionProps) => {
 
   const rootClass = cx(surface === 'glass' ? 'divide-color-border-on-glass' : 'divide-color-border-subtle')
   const titleClass = cx(
-    'min-h-button-h-xs flex items-center',
+    'min-h-field-h-xs flex items-center',
     'text-size-xs min-w-0 tracking-wider uppercase',
     surface === 'glass' ? 'text-color-text-subtle' : 'text-color-text-placeholder',
   )

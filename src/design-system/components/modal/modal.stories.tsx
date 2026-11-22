@@ -8,7 +8,8 @@ const meta: Meta = {
     slots: {
       title: 'Modal title',
       children: loremLongText(20),
-      actions: '<button class="p-xs-3 bg-color-blue-9 text-color-text-inverse rounded-md">Submit</button>',
+      actions:
+        '<button class="h-field-h-md px-button-px-md bg-color-blue-9 text-color-text-inverse rounded-max">Submit</button>',
       extras: 'Extra content',
     },
     props: {

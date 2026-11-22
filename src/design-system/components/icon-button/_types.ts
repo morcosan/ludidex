@@ -1,9 +1,9 @@
 import { type CSSProperties, type ReactNode, type Ref } from 'react'
-import { type BaseButtonState, type LinkType } from '../_shared/types'
+import { type BaseButtonSize, type BaseButtonState, type LinkType } from '../_shared/types'
 
 export type IconButtonState = BaseButtonState
 export type IconButtonVariant = 'primary' | 'secondary' | 'default' | 'optional' | 'danger' | 'caution'
-export type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+export type IconButtonSize = BaseButtonSize
 
 export interface IconButtonProps extends HtmlDataProps {
   /**
@@ -38,6 +38,7 @@ export interface IconButtonProps extends HtmlDataProps {
   linkType?: LinkType
   /** CSS class attribute for the wrapper element */
   className?: string
+  /** CSS class attributes for specific inner elements */
   classNames?: {
     surface?: string
     content?: string

@@ -19,7 +19,7 @@ export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) =>
         <Button
           key={option.value}
           variant="menu-default"
-          size="md"
+          size="lg"
           state={viewType === option.value ? 'selected' : 'active'}
           className="w-full"
           onClick={() => onChangeView?.(option.value)}

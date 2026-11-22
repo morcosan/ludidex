@@ -85,7 +85,7 @@ export const useFilters = (props: FiltersProps) => {
         id="filters-search"
         value={filters.search}
         label={searchLabel}
-        size="md"
+        size="lg"
         className={cx('max-w-xl-0 w-full', surface === 'glass' && 'bg-color-bg-region')}
         onChange={(search) => onChange?.({ ...filters, search })}
       />

@@ -24,7 +24,7 @@ export const TagsModal = (props: TagsModalProps) => {
   const { t } = useTranslation()
   const { getTagColor, tagOptions } = useUserTags()
   const updateTags = useUserDataStore((state) => state.updateTags)
-  const { control, getValues, handleSubmit, reset, setValue } = useForm<Draft>({
+  const { control, formState, getValues, handleSubmit, reset, setFocus, setValue } = useForm<Draft>({
     defaultValues: { tags: [] },
   })
   const [showError, setShowError] = useState(false)
@@ -57,7 +57,11 @@ export const TagsModal = (props: TagsModalProps) => {
     setShowError(true)
 
     const validated = updateValidatedDraft(draft)
-    if (validated.tags.some(({ invalid }) => invalid)) return
+    const invalidIndex = validated.tags.findIndex(({ invalid }) => invalid)
+    if (invalidIndex !== -1) {
+      setFocus(`tags.${invalidIndex}.name`)
+      return
+    }
 
     const tagColors: Record<string, TagColor> = {}
     const renamedTags: Record<string, string> = {}
@@ -86,6 +90,7 @@ export const TagsModal = (props: TagsModalProps) => {
       opened={opened}
       title={t('general.action.editTags')}
       width="md"
+      noDismiss={formState.isDirty}
       actions={<TagsSaveButton control={control} onClick={handleClickSave} label={t('general.action.applyChanges')} />}
       onClose={onClose}
     >
@@ -97,7 +102,7 @@ export const TagsModal = (props: TagsModalProps) => {
             render={({ field }) =>
               field.value.some(({ invalid }) => invalid) ? (
                 <p role="alert" className="text-size-sm text-color-red-11 gap-xs-1 mb-xs-4 flex items-center">
-                  <FontAwesomeIcon aria-hidden icon={faTriangleExclamation} />
+                  <FontAwesomeIcon icon={faTriangleExclamation} aria-hidden />
                   {t('general.notice.invalidTagLabels')}
                 </p>
               ) : (

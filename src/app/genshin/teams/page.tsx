@@ -37,10 +37,10 @@ export default function Page() {
   useClickOutside({
     enabled: isPreviewOpen,
     allowlist: [
-      '[data-character-modal]',
+      '[data-characters-modal]',
       '[data-team-delete-modal]',
       '[data-team-item]',
-      '[data-trial-modal]',
+      '[data-trials-modal]',
       '[data-preview-drawer]',
     ],
     callback: () => setIsPreviewOpen(false),
@@ -126,6 +126,7 @@ export default function Page() {
             selectedTrialId={selectedTrial?.id}
             selectedTeamId={isPreviewOpen ? previewTeamId : undefined}
             scrollRef={scrollRef}
+            search={filters.search}
             className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
             onClickItem={handleClickTeam}
           />

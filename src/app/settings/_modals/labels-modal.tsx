@@ -9,6 +9,9 @@ import { useTranslation } from 'react-i18next'
 type LabelsModalVariant = 'rating' | 'tier-list'
 type LabelValues = Record<string, string | undefined>
 
+const RATING_KEYS = RATING_VALUES.map(String)
+const TIER_LIST_KEYS = [...TIER_LIST_VALUES]
+
 interface ModalConfig {
   title: string
   keys: string[]
@@ -31,13 +34,16 @@ export const LabelsModal = (props: LabelsModalProps) => {
   const tierListLabels = useUserDataStore((state) => state.userData?.preferences?.tierListLabels)
   const setRatingLabels = useUserDataStore((state) => state.setRatingLabels)
   const setTierListLabels = useUserDataStore((state) => state.setTierListLabels)
-  const { control, handleSubmit, reset } = useForm<LabelValues>()
+
+  const getDefaultValues = (keys: string[], labels?: LabelValues) => {
+    return Object.fromEntries(keys.map((key) => [key, labels?.[key] ?? '']))
+  }
 
   const variantConfig: ModalConfig =
     variant === 'rating'
       ? {
           title: t('general.label.ratingLabels'),
-          keys: RATING_VALUES.map(String),
+          keys: RATING_KEYS,
           defaultLabels: RATING_LABELS,
           labels: ratingLabels,
           setLabels: setRatingLabels,
@@ -47,7 +53,7 @@ export const LabelsModal = (props: LabelsModalProps) => {
         }
       : {
           title: t('general.label.tierListLabels'),
-          keys: TIER_LIST_VALUES,
+          keys: TIER_LIST_KEYS,
           defaultLabels: TIER_LIST_LABELS,
           labels: tierListLabels,
           setLabels: setTierListLabels,
@@ -58,6 +64,9 @@ export const LabelsModal = (props: LabelsModalProps) => {
         }
 
   const { title, keys, defaultLabels, labels, renderLabel, setLabels } = variantConfig
+  const { control, formState, handleSubmit, reset } = useForm<LabelValues>({
+    defaultValues: getDefaultValues(keys, labels),
+  })
 
   const handleClickSave = handleSubmit((draft: LabelValues) => {
     const overrides: Record<string, string> = {}
@@ -70,14 +79,15 @@ export const LabelsModal = (props: LabelsModalProps) => {
   })
 
   useEffect(() => {
-    if (opened) reset({ ...labels })
-  }, [labels, opened, reset])
+    if (opened) reset(getDefaultValues(keys, labels))
+  }, [keys, labels, opened, reset, variant])
 
   return (
     <Modal
       opened={opened}
       title={title}
       width="xs"
+      noDismiss={formState.isDirty}
       actions={
         <Button variant="primary" onClick={handleClickSave}>
           {t('general.action.save')}

@@ -8,7 +8,7 @@ interface ErrorNoticeProps extends ReactProps {
 export const ErrorNotice = ({ text, id, className }: ErrorNoticeProps) => {
   return (
     <p id={id} role="alert" className={cx('text-size-xs text-color-red-11 gap-xs-1 flex items-center', className)}>
-      <FontAwesomeIcon aria-hidden icon={faTriangleExclamation} />
+      <FontAwesomeIcon icon={faTriangleExclamation} aria-hidden />
       {text}
     </p>
   )

@@ -27,6 +27,7 @@ export const useStyles = (props: Props) => {
       if (width === 'md') return tokens.spacing['modal-md']
       if (width === 'lg') return tokens.spacing['modal-lg']
       if (width === 'xl') return tokens.spacing['modal-xl']
+      if (width === 'xxl') return tokens.spacing['modal-xxl']
       if (width === 'full') return '100%'
       return ''
     })(),

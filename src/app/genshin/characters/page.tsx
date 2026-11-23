@@ -78,6 +78,7 @@ export default function Page() {
           characters={listedCharacters}
           viewType={viewType}
           selectedItemId={isPreviewOpen ? previewCharacter?.id : undefined}
+          search={filters.search}
           className={viewType === 'default' ? 'mt-xs-9' : 'mt-xs-7'}
           onClickItem={handleClickCharacter}
         />

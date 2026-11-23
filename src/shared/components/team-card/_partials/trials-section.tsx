@@ -1,127 +1,96 @@
-import { Button, TextField } from '@design-system'
+import { Button } from '@design-system'
+import { faSkullCrossbones, faTrophy } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SwordsIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { Controller, useController, useWatch, type Control } from 'react-hook-form'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_DOMAIN_TRIALS } from '../../../data'
-import { formatTime, isFailedTrial, parseTime } from '../../../utils/various'
+import { type GenshinTeam } from '../../../state/types'
+import { isFailedTrial } from '../../../utils/various'
 import { CardSection, type SectionItem } from '../../_shared/card-section'
-import { FailureLabel } from '../../failure-label/failure-label'
-import { TrialModal } from '../../trial-modal/trial-modal'
-import { type TeamDraft } from './use-draft-utils'
+import { TrialsModal } from '../../trials-modal/trials-modal'
 
 interface TrialsSectionProps {
-  editing: boolean
-  control: Control<TeamDraft>
+  team: GenshinTeam
 }
 
 export const TrialsSection = (props: TrialsSectionProps) => {
-  const { editing, control } = props
+  const { team } = props
   const { t } = useTranslation()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [invalidTrials, setInvalidTrials] = useState<Record<string, boolean>>({})
-  const { field } = useController({ control, name: 'trials' })
-  const trials = useWatch({ control, name: 'trials' }) ?? {}
-
-  const selection = Object.fromEntries(Object.entries(trials).map(([trialId, value]) => [trialId, parseTime(value)]))
-
-  const renderValue = (value: string, trialId: string) => {
-    return editing ? (
-      <Controller
-        control={control}
-        name={`trials.${trialId}`}
-        render={({ field }) => (
-          <TextField
-            id={`team-card-trials-${trialId}`}
-            size="xs"
-            value={field.value}
-            invalid={Boolean(invalidTrials[trialId] && !isFailedTrial(parseTime(field.value)))}
-            className="w-md-1 [&_input]:font-family-mono"
-            onChange={(nextValue) => field.onChange(nextValue)}
-            onBlur={() => {
-              field.onBlur()
-              const time = parseTime(field.value)
-              setInvalidTrials((current) => ({
-                ...current,
-                [trialId]: field.value.trim() !== '' && time === undefined,
-              }))
-              if (time !== undefined && !isFailedTrial(time)) {
-                field.onChange(formatTime(time) ?? '')
-              }
-            }}
-          />
-        )}
-      />
-    ) : (
-      <span className="text-size-sm font-weight-md pr-xs-0 font-family-mono">
-        {isFailedTrial(parseTime(value)) ? (
-          <FailureLabel />
-        ) : (
-          (formatTime(parseTime(value)) ?? '--')
-        )}
-      </span>
-    )
-  }
-
-  const items: SectionItem[] = Object.entries(trials)
-    .sort(([trialIdA], [trialIdB]) => {
-      const nameA = GENSHIN_DOMAIN_TRIALS.find(({ id }) => id === trialIdA)?.name ?? trialIdA
-      const nameB = GENSHIN_DOMAIN_TRIALS.find(({ id }) => id === trialIdB)?.name ?? trialIdB
-      return nameA.localeCompare(nameB)
-    })
-    .map(([trialId, value]) => {
-      const isInvalid = invalidTrials[trialId] && !isFailedTrial(parseTime(value))
-      return {
-        key: trialId,
-        label: (
-          <span className={cx('gap-xs-2 flex items-center leading-1', isInvalid && 'text-color-red-11')}>
-            <SwordsIcon
-              aria-hidden
-              className={cx('size-xs-7', isInvalid ? 'text-color-red-11' : 'text-color-text-subtle')}
-            />
-            {GENSHIN_DOMAIN_TRIALS.find(({ id }) => id === trialId)?.name ?? trialId}
-          </span>
-        ),
-        value: renderValue(value, trialId),
-      }
-    })
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    field.onBlur()
-  }
-
-  useEffect(() => {
-    if (!editing) {
-      setIsModalOpen(false)
-      setInvalidTrials({})
-    }
-  }, [editing])
+  const trials = Object.values(team.trials ?? {})
+  const completedTrials = trials.filter((time) => !isFailedTrial(time)).length
+  const failedTrials = trials.filter(isFailedTrial).length
+  const pendingTrials = GENSHIN_DOMAIN_TRIALS.length - completedTrials - failedTrials
+  const items: SectionItem[] = [
+    {
+      key: 'completed',
+      label: (
+        <span className="gap-xs-2 flex items-center leading-1">
+          <FontAwesomeIcon icon={faTrophy} aria-hidden className="size-xs-7 text-color-text-subtle" />
+          {t('game.label.completed')}
+        </span>
+      ),
+      value: completedTrials,
+    },
+    {
+      key: 'failed',
+      label: (
+        <span className="gap-xs-2 flex items-center leading-1">
+          <FontAwesomeIcon icon={faSkullCrossbones} aria-hidden className="size-xs-7 text-color-text-subtle" />
+          {t('game.label.failed')}
+        </span>
+      ),
+      value: failedTrials,
+    },
+    {
+      key: 'pending',
+      label: (
+        <span className="gap-xs-2 flex items-center leading-1">
+          <SwordsIcon strokeWidth={2.5} aria-hidden className="size-xs-7 text-color-text-subtle" />
+          {t('game.label.pending')}
+        </span>
+      ),
+      value: pendingTrials,
+    },
+  ]
 
   return (
     <>
       <CardSection
-        title={t('game.label.trials')}
+        title={t('game.label.domainTrials')}
         items={items}
-        actions={
-          editing && (
-            <Button size="xs" variant="secondary" onClick={() => setIsModalOpen(true)}>
-              {t('general.action.selectTrials')}
-            </Button>
-          )
-        }
+        classNames={{ value: 'text-size-sm font-weight-md pr-xs-0' }}
       >
-        {!items.length && <span className="text-size-sm">--</span>}
+        <div className="mt-xs-1 mb-xs-3 h-xs-9 rounded-max relative flex overflow-hidden" aria-hidden>
+          <div className="rounded-max shadow-inset-sm absolute inset-0 z-10" />
+          {[
+            { key: 'completed', count: completedTrials, className: 'bg-color-green-8 text-color-white px-xs-1' },
+            { key: 'failed', count: failedTrials, className: 'bg-color-red-8 text-color-white px-xs-0' },
+            { key: 'pending', count: pendingTrials, className: 'bg-color-grey-4 text-color-black px-xs-1' },
+          ]
+            .filter(({ count }) => count > 0)
+            .map(({ key, count, className }) => (
+              <div
+                key={key}
+                className={cx('flex-center text-size-xxs min-w-fit leading-0 text-shadow-md', className)}
+                style={{ width: `${(count / GENSHIN_DOMAIN_TRIALS.length) * 100}%` }}
+              >
+                {count}
+              </div>
+            ))}
+        </div>
+
+        <Button size="xs" onClick={() => setIsModalOpen(true)}>
+          {t('general.action.editTrials')}
+        </Button>
       </CardSection>
 
-      <TrialModal
+      <TrialsModal
         opened={isModalOpen}
-        title={t('general.action.selectTrials')}
-        selection={selection}
-        onSelect={(trialIds) =>
-          field.onChange(Object.fromEntries(trialIds.map((trialId) => [trialId, trials[trialId] ?? ''])))
-        }
-        onClose={handleCloseModal}
+        title={t('general.action.editTrials')}
+        teamId={team.id}
+        onClose={() => setIsModalOpen(false)}
       />
     </>
   )

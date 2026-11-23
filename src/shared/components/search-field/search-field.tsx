@@ -87,7 +87,9 @@ export const SearchField = (props: SearchFieldProps) => {
       size={size}
       placeholder={t('general.placeholder.search')}
       ariaLabel={label}
-      prefix={<FontAwesomeIcon icon={faMagnifyingGlass} className={cx(iconClass, disabled && 'opacity-40')} />}
+      prefix={
+        <FontAwesomeIcon icon={faMagnifyingGlass} aria-hidden className={cx(iconClass, disabled && 'opacity-40')} />
+      }
       suffix={
         innerValue && (
           <IconButton
@@ -97,7 +99,7 @@ export const SearchField = (props: SearchFieldProps) => {
             size={clearButtonSize}
             onClick={() => handleChange('')}
           >
-            <FontAwesomeIcon icon={faXmark} className="h-xs-7" />
+            <FontAwesomeIcon icon={faXmark} aria-hidden className="h-xs-7" />
           </IconButton>
         )
       }

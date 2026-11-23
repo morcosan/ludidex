@@ -17,6 +17,7 @@ export * from './components/select-field/select-field'
 export * from './components/tag/tag'
 export * from './components/tags-field/tags-field'
 export * from './components/text-field/text-field'
+export * from './components/text-highlight/text-highlight'
 
 /**
  * Services

@@ -6,7 +6,7 @@ import { type GenshinTeam } from '../../../state/types'
 import { useUserDataStore } from '../../../state/use-user-data'
 import { packTeamId } from '../../../state/utils'
 import { ErrorNotice } from '../../_shared/error-notice'
-import { CharacterModal } from '../../character-modal/character-modal'
+import { CharactersModal } from '../../characters-modal/characters-modal'
 import { MemberItem } from './member-item'
 import { type TeamDraft } from './use-draft-utils'
 
@@ -87,7 +87,7 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
         {editing && errorText && <ErrorNotice text={errorText} className="mt-xs-2" />}
       </div>
 
-      <CharacterModal
+      <CharactersModal
         opened={isModalOpen}
         title={t('general.action.selectTeamMembers')}
         selection={selection}

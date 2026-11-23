@@ -1,4 +1,5 @@
-import { TextField } from '@design-system'
+import { TextField, type TextFieldHandle } from '@design-system'
+import { useCallback } from 'react'
 import { useController, useWatch, type Control } from 'react-hook-form'
 import { type Draft } from './tag-types'
 
@@ -12,6 +13,7 @@ export const TagNameField = (props: TagNameFieldProps) => {
   const { control, index, onBlur } = props
   const { field } = useController({ control, name: `tags.${index}.name` })
   const invalid = useWatch({ control, name: `tags.${index}.invalid` })
+  const setFieldRef = useCallback((handle: TextFieldHandle | null) => field.ref(handle), [field])
 
   return (
     <TextField
@@ -20,6 +22,7 @@ export const TagNameField = (props: TagNameFieldProps) => {
       size="xs"
       invalid={invalid}
       ariaDescribedBy={`tag-${index}`}
+      ref={setFieldRef}
       onBlur={() => {
         field.onBlur()
         onBlur()

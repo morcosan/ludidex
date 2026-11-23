@@ -1,5 +1,7 @@
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CheckCheckIcon, Undo2Icon } from 'lucide-react'
 import { useId } from 'react'
 import { useI18nService } from '../../services/i18n-service'
 import { useDataProps } from '../../utilities/react-utils'
@@ -17,6 +19,8 @@ export const Modal = (props: ModalProps) => {
   const {
     actions,
     children,
+    editable,
+    editing,
     extras,
     height = 'fit',
     noClose,
@@ -25,6 +29,9 @@ export const Modal = (props: ModalProps) => {
     title,
     width = 'md',
     classNames,
+    onEdit,
+    onSave,
+    onDiscard,
   } = props
   const { translate } = useI18nService()
   const { focusTrap1Ref, focusTrap2Ref, isMounted, isVisible, modalRef, stackIndex } = useEvents({
@@ -67,16 +74,38 @@ export const Modal = (props: ModalProps) => {
                 {title}
               </h1>
 
-              {/* CLOSE BUTTON */}
+              {/* EDIT / SAVE BUTTON */}
+              {editable && (
+                <IconButton
+                  tooltip={editing ? translate('ds.action.saveChanges') : translate('ds.action.edit')}
+                  variant={editing ? 'primary' : 'default'}
+                  size="lg"
+                  floating
+                  className="-top-xs-5 right-sm-4 absolute!"
+                  onClick={editing ? onSave : onEdit}
+                >
+                  {editing ? (
+                    <CheckCheckIcon aria-hidden className="size-sm-0 p-px" />
+                  ) : (
+                    <FontAwesomeIcon icon={faPenToSquare} aria-hidden className="text-size-md mb-px ml-px" />
+                  )}
+                </IconButton>
+              )}
+
+              {/* CLOSE / DISCARD BUTTON */}
               {!noClose && (
                 <IconButton
-                  tooltip={translate('ds.action.close')}
+                  tooltip={editing ? translate('ds.action.discardChanges') : translate('ds.action.close')}
                   size="lg"
                   floating
                   className="-top-xs-5 -right-xs-5 absolute!"
-                  onClick={onClose}
+                  onClick={editing ? onDiscard : onClose}
                 >
-                  <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md" />
+                  {editing ? (
+                    <Undo2Icon aria-hidden className="h-xs-9 w-xs-9" />
+                  ) : (
+                    <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md" />
+                  )}
                 </IconButton>
               )}
 

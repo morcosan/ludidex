@@ -5,13 +5,13 @@ import { useUserDataStore } from '../../../state/use-user-data'
 import { CharacterItem } from '../../character-item/character-item'
 import { SlotCorner } from './slot-corner'
 
-export interface CharacterModalSelection {
+export interface CharactersModalSelection {
   slots: (GenshinCharacter | null)[]
   index: number
 }
 
 interface SelectionSlotsProps {
-  selection: CharacterModalSelection
+  selection: CharactersModalSelection
   onChangeSlot?: (slotIndex: number) => void
   onClearSlot?: (slotIndex: number) => void
 }

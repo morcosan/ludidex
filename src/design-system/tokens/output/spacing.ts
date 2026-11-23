@@ -99,5 +99,6 @@ export const TOKENS__SPACING = {
   'modal-md': { ref: '{spacing.xl-9}', value: '720px' },
   'modal-lg': { ref: '{spacing.xxl-2}', value: '960px' },
   'modal-xl': { ref: '{spacing.xxl-5}', value: '1200px' },
+  'modal-xxl': { ref: '{spacing.xxl-9}', value: '1520px' },
   'character-card': { ref: '{spacing.xl-0}', value: '360px' },
 } as const

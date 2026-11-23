@@ -35,11 +35,12 @@ interface CharacterListingProps extends ReactProps {
   characters: GenshinCharacter[]
   viewType: CharacterViewType
   selectedItemId?: string
+  search?: string
   onClickItem: (character: GenshinCharacter) => void
 }
 
 export const CharacterListing = (props: CharacterListingProps) => {
-  const { characters, viewType, selectedItemId, className, onClickItem } = props
+  const { characters, viewType, selectedItemId, search, className, onClickItem } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const userSettings = useUserSettingsStore((state) => state.userSettings)
@@ -90,6 +91,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
     <li key={character.id}>
       <CharacterItem
         character={character}
+        search={search}
         status={userData?.characters?.[character.id]?.status}
         size={userSettings.charItemSize}
         labelTop={

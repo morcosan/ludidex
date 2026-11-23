@@ -7,7 +7,7 @@ export const FailureLabel = () => {
 
   return (
     <span className="text-size-xs font-family-sans font-weight-sm flex items-center">
-      <FontAwesomeIcon icon={faSkullCrossbones} className="mr-xs-0 text-size-xxs -mt-px" />
+      <FontAwesomeIcon icon={faSkullCrossbones} aria-hidden className="mr-xs-0 text-size-xxs -mt-px" />
       {t('general.label.failed')}
     </span>
   )

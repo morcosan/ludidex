@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 
-export type ModalWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+export type ModalWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'full'
 export type ModalHeight = 'fit' | 'full'
 
 export interface ModalProps extends HtmlDataProps {
@@ -25,6 +25,10 @@ export interface ModalProps extends HtmlDataProps {
   width?: ModalWidth
   /** Property that determines height and max-height for modal */
   height?: ModalHeight
+  /** */
+  editable?: boolean
+  /** */
+  editing?: boolean
   /**
    - Flag for disabling the overlay click and `Escape` key
    - It also increases the background contrast
@@ -46,6 +50,12 @@ export interface ModalProps extends HtmlDataProps {
   onClose?: () => void
   /** Event emitted when modal is closed (after the transition animation) */
   onClosed?: () => void
+  /** */
+  onEdit?: () => void
+  /** */
+  onSave?: () => void
+  /** */
+  onDiscard?: () => void
 }
 
 export const ANIM_TIME = {

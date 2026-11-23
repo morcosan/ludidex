@@ -2,12 +2,11 @@ import { PageSection } from '@app-shared/components'
 import { type UserData } from '@app-shared/state/types'
 import { parseUserData, USER_DATA_COOKIE_KEY, useUserDataStore } from '@app-shared/state/use-user-data'
 import { getDateAsYYYYMMDD, getTimeAsHHMMSS } from '@app-shared/utils/various'
-import { Button, wait } from '@design-system'
+import { Button, TextHighlight, wait } from '@design-system'
 import { CircleCheckIcon, CircleXIcon, CloudDownloadIcon, CloudUploadIcon } from 'lucide-react'
 import { type ChangeEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ImportModal } from '../_modals/import-modal'
-import { TextHighlight } from '../_partials/text-highlight'
 import { type SectionProps } from '../_partials/types'
 
 interface Message {

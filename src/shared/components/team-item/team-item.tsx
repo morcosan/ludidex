@@ -1,4 +1,4 @@
-import { Card } from '@design-system'
+import { Card, TextHighlight } from '@design-system'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { type GenshinTeam } from '../../state/types'
@@ -14,12 +14,13 @@ export interface TeamItemProps extends ReactProps {
   team: GenshinTeam
   size?: 'sm' | 'md' | 'lg'
   selected?: boolean
+  search?: string
   className?: string
   onClick?: (team: GenshinTeam) => void
 }
 
 export const TeamItem = (props: TeamItemProps) => {
-  const { team, size = 'md', selected, className, onClick } = props
+  const { team, size = 'md', selected, search, className, onClick } = props
   const { t } = useTranslation()
 
   const classNames = ((): ClassNames => {
@@ -59,7 +60,11 @@ export const TeamItem = (props: TeamItemProps) => {
           classNames.label,
         )}
       >
-        {team.name || <span className="text-color-text-placeholder">{t('general.label.newTeam')}</span>}
+        {team.name ? (
+          <TextHighlight text={team.name} keyword={search} />
+        ) : (
+          <span className="text-color-text-placeholder">{t('general.label.newTeam')}</span>
+        )}
       </span>
     </Card>
   )

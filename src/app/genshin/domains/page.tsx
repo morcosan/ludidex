@@ -52,6 +52,7 @@ export default function Page() {
         <DomainListing
           domains={listedDomains}
           selectedItemId={isPreviewOpen ? previewDomain?.id : undefined}
+          search={filters.search}
           className="mt-xs-9"
           onClickItem={handleClickDomain}
         />

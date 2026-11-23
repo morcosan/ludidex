@@ -1,12 +1,11 @@
 import { PageSection } from '@app-shared/components'
-import { Button } from '@design-system'
+import { Button, TextHighlight } from '@design-system'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LabelsModal } from '../_modals/labels-modal'
 import { TagsModal } from '../_modals/tags-modal'
-import { TextHighlight } from '../_partials/text-highlight'
 import { type SectionProps } from '../_partials/types'
 
 export const PrefsSection = (props: SectionProps) => {

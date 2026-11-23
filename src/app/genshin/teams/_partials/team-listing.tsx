@@ -33,6 +33,7 @@ const SIZE_CLASSES: Record<ItemSize, ItemSizeClass> = {
 interface TeamListingProps extends ReactProps {
   teams: GenshinTeam[]
   teamsPool: GenshinTeam[]
+  search?: string
   viewType: TeamViewType
   selectedTrialId?: string
   selectedTeamId?: string
@@ -41,7 +42,8 @@ interface TeamListingProps extends ReactProps {
 }
 
 export const TeamListing = (props: TeamListingProps) => {
-  const { teams, teamsPool, viewType, selectedTrialId, selectedTeamId, scrollRef, className, onClickItem } = props
+  const { teams, teamsPool, viewType, selectedTrialId, selectedTeamId, scrollRef, search, className } = props
+  const { onClickItem } = props
   const { t } = useTranslation()
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const classNames = SIZE_CLASSES[userSettings.teamItemSize]
@@ -63,6 +65,7 @@ export const TeamListing = (props: TeamListingProps) => {
     <li key={team.id}>
       <TeamItem
         team={team}
+        search={search}
         size={userSettings.teamItemSize}
         selected={team.id === selectedTeamId}
         onClick={onClickItem}

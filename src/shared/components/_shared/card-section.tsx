@@ -13,6 +13,8 @@ interface CardSectionProps extends ReactProps {
   actions?: ReactNode
   classNames?: {
     body?: string
+    label?: string
+    value?: string
   }
 }
 
@@ -29,8 +31,8 @@ export const CardSection = ({ title, items, actions, children, classNames }: Car
         <dl className="divide-color-border-subtle flex flex-col divide-y">
           {items.map((item) => (
             <div key={item.key} className="gap-xs-2 py-xs-2 flex items-center justify-between">
-              <dt className="text-size-sm pr-xs-9">{item.label}</dt>
-              <dd className="min-h-field-h-xs flex-center flex">{item.value}</dd>
+              <dt className={cx('text-size-sm pr-xs-9', classNames?.label)}>{item.label}</dt>
+              <dd className={cx('min-h-field-h-xs flex-center flex', classNames?.value)}>{item.value}</dd>
             </div>
           ))}
         </dl>

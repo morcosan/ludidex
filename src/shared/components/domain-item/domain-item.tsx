@@ -1,4 +1,4 @@
-import { Card, Image } from '@design-system'
+import { Card, Image, TextHighlight } from '@design-system'
 import { SwordsIcon } from 'lucide-react'
 import { type GenshinDomain } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
@@ -6,12 +6,13 @@ import { useUserAssetsStore } from '../../state/use-user-assets'
 export interface DomainItemProps extends ReactProps {
   domain: GenshinDomain
   selected?: boolean
+  search?: string
   className?: string
   onClick?: (domain: GenshinDomain) => void
 }
 
 export const DomainItem = (props: DomainItemProps) => {
-  const { domain, selected, className, onClick } = props
+  const { domain, selected, search, className, onClick } = props
   const { getDomainImages } = useUserAssetsStore()
 
   const sizeClass = cx('w-lg-2')
@@ -50,7 +51,7 @@ export const DomainItem = (props: DomainItemProps) => {
           sizeClass,
         )}
       >
-        {domain.name}
+        <TextHighlight text={domain.name} keyword={search} />
       </span>
     </Card>
   )

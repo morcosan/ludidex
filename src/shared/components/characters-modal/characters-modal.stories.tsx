@@ -5,16 +5,14 @@ import { useEffect, useState } from 'react'
 import { GENSHIN_CHARACTERS_BY_ID, type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
 import { EMPTY_USER_DATA } from '../../state/utils'
-import { CharacterModal, type CharacterModalProps, type CharacterModalSelection } from './character-modal'
+import { CharactersModal, type CharactersModalProps, type CharactersModalSelection } from './characters-modal'
 
 const meta: Meta = {
-  title: 'App / Components / Character Modal',
-  ...defineMeta(CharacterModal, {
-    slots: {
-      title: 'Select characters',
-    },
+  title: 'App / Components / Characters Modal',
+  ...defineMeta(CharactersModal, {
     props: {
       opened: false,
+      title: 'Select characters',
       selection: {
         slots: [GENSHIN_CHARACTERS_BY_ID['sandrone'], null, GENSHIN_CHARACTERS_BY_ID['vodyanitsa'], null],
         index: 1,
@@ -24,11 +22,11 @@ const meta: Meta = {
     events: ['onSelect', 'onChangeSlot', 'onClose'],
     clearDefaults: ['title', 'selection'],
 
-    render: (props: CharacterModalProps) => {
+    render: (props: CharactersModalProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [opened, setOpened] = useState(props.opened)
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [selection, setSelection] = useState<CharacterModalSelection | undefined>(props.selection)
+      const [selection, setSelection] = useState<CharactersModalSelection | undefined>(props.selection)
 
       const handleSelect = (character: GenshinCharacter | null, slotIndex?: number) => {
         if (slotIndex !== undefined) {
@@ -63,7 +61,7 @@ const meta: Meta = {
             Open modal
           </Button>
 
-          <CharacterModal
+          <CharactersModal
             {...props}
             opened={opened}
             selection={selection}
@@ -96,7 +94,7 @@ const meta: Meta = {
   },
 }
 
-const Default: StoryObj<typeof CharacterModal> = {
+const Default: StoryObj<typeof CharactersModal> = {
   tags: ['autodocs', 'controls'],
 }
 

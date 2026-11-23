@@ -20,50 +20,36 @@ export const CardActions = ({ editing, onDiscard, onClose, onSave, onEdit, onDel
 
   return (
     <>
-      {editing ? (
-        <IconButton
-          tooltip={t('general.action.discardChanges')}
-          size="lg"
-          floating
-          className="-top-xs-5 -right-xs-5 absolute! z-20"
-          onClick={onDiscard}
-        >
+      {/* CLOSE / DISCARD BUTTON */}
+      <IconButton
+        tooltip={editing ? t('ds.action.discardChanges') : t('ds.action.close')}
+        size="lg"
+        floating
+        className="-top-xs-5 -right-xs-5 absolute! z-20"
+        onClick={editing ? onDiscard : onClose}
+      >
+        {editing ? (
           <Undo2Icon aria-hidden className="h-xs-9 w-xs-9" />
-        </IconButton>
-      ) : (
-        <IconButton
-          tooltip={t('ds.action.close')}
-          size="lg"
-          floating
-          className="-top-xs-5 -right-xs-5 absolute! z-20"
-          onClick={onClose}
-        >
+        ) : (
           <FontAwesomeIcon icon={faXmark} aria-hidden className="text-size-md" />
-        </IconButton>
-      )}
+        )}
+      </IconButton>
 
-      {editing ? (
-        <IconButton
-          tooltip={t('general.action.saveChanges')}
-          variant="primary"
-          size="lg"
-          floating
-          className="top-sm-4 -right-xs-5 absolute! z-20"
-          onClick={onSave}
-        >
-          <CheckCheckIcon aria-hidden className="h-sm-0 w-sm-0" />
-        </IconButton>
-      ) : (
-        <IconButton
-          tooltip={t('general.action.edit')}
-          size="lg"
-          floating
-          className="top-sm-4 -right-xs-5 absolute! z-20"
-          onClick={onEdit}
-        >
-          <FontAwesomeIcon icon={faPenToSquare} aria-hidden className="text-size-md" />
-        </IconButton>
-      )}
+      {/* EDIT / SAVE BUTTON */}
+      <IconButton
+        tooltip={editing ? t('ds.action.saveChanges') : t('ds.action.edit')}
+        variant={editing ? 'primary' : 'default'}
+        size="lg"
+        floating
+        className="top-sm-4 -right-xs-5 absolute! z-20"
+        onClick={editing ? onSave : onEdit}
+      >
+        {editing ? (
+          <CheckCheckIcon aria-hidden className="size-sm-0 p-px" />
+        ) : (
+          <FontAwesomeIcon icon={faPenToSquare} aria-hidden className="text-size-md mb-px ml-px" />
+        )}
+      </IconButton>
 
       {editing && onDelete && (
         <IconButton

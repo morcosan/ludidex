@@ -1,5 +1,5 @@
 import { Modal } from '@design-system'
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type GenshinCharacter } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
@@ -9,25 +9,22 @@ import { useCharacterListing } from '../../utils/use-character-listing'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
 import { EMPTY_FILTERS, FiltersSection, type Filters } from '../filters-section/filters-section'
-import { SelectionSlots, type CharacterModalSelection } from './_partials/selection-slots'
+import { SelectionSlots, type CharactersModalSelection } from './_partials/selection-slots'
 import { SlotCorner } from './_partials/slot-corner'
 
-export { type CharacterModalSelection }
+export { type CharactersModalSelection }
 
-export interface CharacterModalProps {
-  // Slots
-  title: ReactNode
-  // Props
+export interface CharactersModalProps {
   opened: boolean
-  selection?: CharacterModalSelection
+  title: string
+  selection?: CharactersModalSelection
   className?: string
-  // Events
   onSelect?: (character: GenshinCharacter | null, slotIndex?: number) => void
   onChangeSlot?: (slotIndex: number) => void
   onClose?: () => void
 }
 
-export const CharacterModal = (props: CharacterModalProps) => {
+export const CharactersModal = (props: CharactersModalProps) => {
   const { opened, title, selection } = props
   const { onSelect, onChangeSlot, onClose } = props
   const { t } = useTranslation()
@@ -62,7 +59,7 @@ export const CharacterModal = (props: CharacterModalProps) => {
       height="full"
       noFooter
       classNames={{ body: 'gap-sm-0 flex h-full overflow-y-auto! pr-0!' }}
-      data-character-modal
+      data-characters-modal
       onClose={onClose}
     >
       {/* LEFT SIDE */}

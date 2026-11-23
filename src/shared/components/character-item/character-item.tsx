@@ -1,4 +1,4 @@
-import { Card } from '@design-system'
+import { Card, TextHighlight } from '@design-system'
 import { type CharacterStatus, type GenshinCharacter } from '../../data'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
 
@@ -16,6 +16,7 @@ export interface CharacterItemProps extends ReactProps {
   tooltip?: string
   labelTop?: string | null
   labelBottom?: string | null
+  search?: string
   className?: string
   onClick?: (character: GenshinCharacter) => void
 }
@@ -30,8 +31,9 @@ export const CharacterItem = (props: CharacterItemProps) => {
     tooltip,
     labelTop,
     labelBottom,
-    children,
+    search,
     className,
+    children,
     onClick,
   } = props
   const hasName = size !== 'sm'
@@ -86,7 +88,7 @@ export const CharacterItem = (props: CharacterItemProps) => {
             classNames.name,
           )}
         >
-          {character.name}
+          <TextHighlight text={character.name} keyword={search} />
         </span>
       )}
 

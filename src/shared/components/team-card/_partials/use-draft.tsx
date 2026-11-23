@@ -26,7 +26,7 @@ export const useDraft = (props: TeamCardProps) => {
   const handleClickSave = handleSubmit((values) => {
     setIsEditing(false)
     if (!hasChanges) return
-    onSave?.(buildTeam(values))
+    onSave?.(buildTeam(values, team))
   })
 
   useEffect(() => {

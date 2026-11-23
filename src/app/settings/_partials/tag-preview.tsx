@@ -28,12 +28,12 @@ export const TagPreview = (props: TagPreviewProps) => {
       <MoveRightIcon strokeWidth={1.5} aria-hidden className="size-xs-6 min-w-xs-6" />
       {invalid && name !== tag ? (
         <span className="text-color-red-12 text-size-xs flex items-center">
-          <FontAwesomeIcon aria-hidden icon={faTriangleExclamation} className="mr-xs-0" />
+          <FontAwesomeIcon icon={faTriangleExclamation} aria-hidden className="mr-xs-0" />
           {t('general.label.invalid')}
         </span>
       ) : name === '' ? (
         <span className="text-color-red-12 text-size-xs flex items-center">
-          <FontAwesomeIcon icon={faTrashCan} className="mr-xs-0" />
+          <FontAwesomeIcon icon={faTrashCan} aria-hidden className="mr-xs-0" />
           {t('general.label.deleted')}
         </span>
       ) : (

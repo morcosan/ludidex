@@ -69,7 +69,7 @@ export const TeamCard = (props: TeamCardProps) => {
       <TagsSection editing={isEditing} control={control} tags={team.tags} />
 
       {/* TRIALS */}
-      <TrialsSection editing={isEditing} control={control} />
+      <TrialsSection team={team} />
 
       <TeamDeleteModal
         key="team-delete-modal"

@@ -1,5 +1,7 @@
 import { Button, Tag } from '@design-system'
-import { GlobeIcon } from 'lucide-react'
+import { faSkullCrossbones, faTrophy, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { GlobeIcon, SwordsIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -7,10 +9,14 @@ import {
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
   GENSHIN_WEAPONS,
+  TEAM_SIZES,
+  TRIAL_STATES,
   type CharacterStatus,
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
+  type TeamSize,
+  type TrialState,
 } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserTags } from '../../utils/use-user-tags'
@@ -23,12 +29,23 @@ export interface Filters {
   statuses?: CharacterStatus[]
   weapons?: GenshinWeaponType[]
   nations?: GenshinNation[]
+  teamSizes?: TeamSize[]
+  trialStates?: TrialState[]
   tags?: string[]
   search?: string
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const EMPTY_FILTERS: Filters = { elements: [], statuses: [], weapons: [], nations: [], tags: [], search: '' }
+export const EMPTY_FILTERS: Filters = {
+  elements: [],
+  statuses: [],
+  weapons: [],
+  nations: [],
+  teamSizes: [],
+  trialStates: [],
+  tags: [],
+  search: '',
+}
 
 export interface FiltersProps extends ReactProps {
   type: 'characters' | 'teams' | 'domains' | 'trials'
@@ -51,12 +68,14 @@ export const useFilters = (props: FiltersProps) => {
 
   const hasActiveFilters = (filters?: Filters) => {
     return (
-      Boolean(filters?.search) ||
       Boolean(filters?.elements?.length) ||
       Boolean(filters?.statuses?.length) ||
       Boolean(filters?.weapons?.length) ||
       Boolean(filters?.nations?.length) ||
-      Boolean(filters?.tags?.length)
+      Boolean(filters?.teamSizes?.length) ||
+      Boolean(filters?.trialStates?.length) ||
+      Boolean(filters?.tags?.length) ||
+      Boolean(filters?.search)
     )
   }
 
@@ -164,6 +183,43 @@ export const useFilters = (props: FiltersProps) => {
     ) : null
   }
 
+  const renderTeamSizes = () => {
+    const teamSizeIcons = { solo: faUser, duo: faUserGroup, trio: faUsers, quad: faUsers }
+    return filters.teamSizes ? (
+      <FilterGroup
+        items={TEAM_SIZES}
+        selection={filters.teamSizes}
+        surface={surface}
+        ariaLabel={t('game.label.teamSize')}
+        renderLabel={(teamSize) => t(`game.label.${teamSize}`)}
+        renderIcon={(teamSize) => (
+          <FontAwesomeIcon icon={teamSizeIcons[teamSize]} aria-hidden className="ml-xs-0 mr-xs-1 text-size-xs" />
+        )}
+        onToggle={(teamSize) => onChange?.({ ...filters, teamSizes: toggleFilter(filters.teamSizes!, teamSize) })}
+      />
+    ) : null
+  }
+
+  const renderTrialStates = (className?: string) => {
+    const iconClass = 'size-xs-7 mr-xs-1 text-color-text-subtle'
+    return filters.trialStates ? (
+      <FilterGroup
+        items={TRIAL_STATES}
+        selection={filters.trialStates}
+        surface={surface}
+        ariaLabel={t('game.label.trialState')}
+        renderLabel={(trialState) => t(`game.label.${trialState}`)}
+        renderIcon={(state) => {
+          if (state === 'completed') return <FontAwesomeIcon icon={faTrophy} aria-hidden className={iconClass} />
+          if (state === 'failed') return <FontAwesomeIcon icon={faSkullCrossbones} aria-hidden className={iconClass} />
+          if (state === 'pending') return <SwordsIcon strokeWidth={2.5} aria-hidden className={iconClass} />
+        }}
+        className={className}
+        onToggle={(state) => onChange?.({ ...filters, trialStates: toggleFilter(filters.trialStates!, state) })}
+      />
+    ) : null
+  }
+
   const renderTags = (className?: string) => {
     const SHOW_ALL_COUNT = 10
     const hasColoredTags = tagOptionsWithColor.length > 0
@@ -203,6 +259,8 @@ export const useFilters = (props: FiltersProps) => {
     renderSearch,
     renderStatuses,
     renderTags,
+    renderTeamSizes,
+    renderTrialStates,
     renderWeapons,
   }
 }

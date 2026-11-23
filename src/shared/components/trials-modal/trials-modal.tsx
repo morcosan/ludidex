@@ -2,9 +2,9 @@ import { Modal } from '@design-system'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_DOMAIN_BY_TRIAL, GENSHIN_DOMAIN_TRIALS } from '../../data'
+import { GENSHIN_DOMAIN_BY_TRIAL, GENSHIN_DOMAIN_TRIALS, type GenshinNation, type TrialState } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
-import { formatTime, parseTime } from '../../utils/various'
+import { formatTime, isTimerFailed, parseTime } from '../../utils/various'
 import { FiltersSection, type Filters } from '../filters-section/filters-section'
 import { TrialItem } from './_partials/trial-item'
 
@@ -20,9 +20,9 @@ export interface TrialsModalProps {
 export const TrialsModal = (props: TrialsModalProps) => {
   const { opened, title, teamId, onClose } = props
   const { t } = useTranslation()
-  const trials = useUserDataStore((state) => state.userData?.genshin?.teams?.[teamId]?.trials)
+  const userTrials = useUserDataStore((state) => state.userData?.genshin?.teams?.[teamId]?.trials)
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const [filters, setFilters] = useState<Filters>({ search: '', nations: [] })
+  const [filters, setFilters] = useState<Filters>({ search: '', nations: [], trialStates: [] })
   const [editing, setEditing] = useState(false)
   const { control, formState, handleSubmit, reset } = useForm<Record<string, string>>({
     defaultValues: {},
@@ -31,31 +31,46 @@ export const TrialsModal = (props: TrialsModalProps) => {
 
   const listedTrials = useMemo(() => {
     const search = filters.search?.trim().toLocaleLowerCase()
+    const matchesSearch = (trialName: string, domainName?: string) => {
+      return (
+        !search ||
+        trialName.toLocaleLowerCase().includes(search) ||
+        Boolean(domainName?.toLocaleLowerCase().includes(search))
+      )
+    }
+    const matchesNation = (nation?: GenshinNation) => {
+      return !filters.nations?.length || Boolean(nation && filters.nations.includes(nation))
+    }
+    const matchesTrialState = (time?: number) => {
+      const trialState: TrialState = time === undefined ? 'pending' : isTimerFailed(time) ? 'failed' : 'completed'
+      return !filters.trialStates?.length || filters.trialStates.includes(trialState)
+    }
 
     return SORTED_TRIALS.filter(({ id, name }) => {
       const domain = GENSHIN_DOMAIN_BY_TRIAL[id]
-      const matchesSearch =
-        !search ||
-        name.toLocaleLowerCase().includes(search) ||
-        Boolean(domain?.name.toLocaleLowerCase().includes(search))
-      const matchesNation = !filters.nations?.length || Boolean(domain && filters.nations.includes(domain.nation))
-      return matchesSearch && matchesNation
+      return matchesSearch(name, domain?.name) && matchesNation(domain?.nation) && matchesTrialState(userTrials?.[id])
     })
-  }, [filters])
+  }, [filters, userTrials])
 
-  const getEmptyValues = () => Object.fromEntries(SORTED_TRIALS.map(({ id }) => [id, formatTime(trials?.[id]) ?? '']))
+  const getDefaultValues = () => {
+    return Object.fromEntries(SORTED_TRIALS.map(({ id }) => [id, formatTime(userTrials?.[id]) ?? '']))
+  }
 
   const handleChangeFilters = (nextFilters: Filters) => {
-    setFilters({ search: nextFilters.search ?? '', nations: nextFilters.nations ?? [] })
+    setFilters({
+      search: nextFilters.search ?? '',
+      nations: nextFilters.nations ?? [],
+      trialStates: nextFilters.trialStates ?? [],
+    })
   }
 
   const handleEdit = () => {
-    reset(getEmptyValues())
+    reset(getDefaultValues())
     setEditing(true)
   }
 
   const handleDiscard = () => {
-    reset(getEmptyValues())
+    reset(getDefaultValues())
     setEditing(false)
   }
 
@@ -116,7 +131,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
                 <TrialItem
                   trial={trial}
                   control={control}
-                  time={trials?.[trial.id]}
+                  time={userTrials?.[trial.id]}
                   editing={editing}
                   search={filters.search}
                   className="w-xl-0"

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { type Filters } from '../components'
-import { GENSHIN_CHARACTERS_BY_ID } from '../data'
+import { GENSHIN_CHARACTERS_BY_ID, TEAM_SIZES } from '../data'
 import { type GenshinTeam } from '../state/types'
 import { useUserDataStore } from '../state/use-user-data'
 import { unpackTeamId } from '../state/utils'
@@ -29,6 +29,8 @@ export const useTeamListing = (filters: Filters) => {
       (filters.weapons ?? []).every((weapon) => members.some((member) => member.weapon === weapon)) &&
       (filters.nations ?? []).every((nation) => members.some((member) => member.nation === nation)) &&
       (filters.statuses ?? []).every((status) => members.some((member) => charData?.[member.id]?.status === status)) &&
+      (!filters.teamSizes?.length ||
+        filters.teamSizes.some((teamSize) => TEAM_SIZES.indexOf(teamSize) + 1 === team.charIds.length)) &&
       (!filters.tags?.length ||
         filters.tags.every(
           (tag) => team.tags?.includes(tag) || members.some((member) => charData?.[member.id]?.tags?.includes(tag)),

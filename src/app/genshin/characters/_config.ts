@@ -23,7 +23,7 @@ const CHARACTER_VIEW_TYPES = VIEW_TYPES
 interface ViewConfig {
   step: number
   getValue: (character: GenshinCharacter, userData?: GenshinCharacterUserData) => number | undefined
-  labelType?: 'percent'
+  type: 'default' | 'percent'
   label?: CharacterLabel
 }
 
@@ -32,15 +32,15 @@ const getStatValueFn = (stat: keyof NonNullable<GenshinCharacterUserData['stats'
 }
 
 const VIEW_CONFIGS: Record<SortingViewType, ViewConfig> = {
-  'sort-level': { step: 5, getValue: getStatValueFn('level'), label: 'level' },
-  'sort-hp': { step: 5000, getValue: getStatValueFn('hp'), label: 'hp' },
-  'sort-atk': { step: 100, getValue: getStatValueFn('atk'), label: 'atk' },
-  'sort-def': { step: 100, getValue: getStatValueFn('def'), label: 'def' },
-  'sort-em': { step: 100, getValue: getStatValueFn('em'), label: 'em' },
-  'sort-er': { step: 10, getValue: getStatValueFn('er'), labelType: 'percent', label: 'er' },
-  'sort-crit-rate': { step: 10, getValue: getStatValueFn('critRate'), labelType: 'percent', label: 'critRate' },
-  'sort-crit-dmg': { step: 10, getValue: getStatValueFn('critDmg'), labelType: 'percent', label: 'critDmg' },
-  'sort-base-attack': { step: 10, getValue: (char) => char.na1HitDmg[1] || undefined, labelType: 'percent' },
+  'sort-level': { step: 5, getValue: getStatValueFn('level'), label: 'level', type: 'default' },
+  'sort-hp': { step: 5000, getValue: getStatValueFn('hp'), label: 'hp', type: 'default' },
+  'sort-atk': { step: 100, getValue: getStatValueFn('atk'), label: 'atk', type: 'default' },
+  'sort-def': { step: 100, getValue: getStatValueFn('def'), label: 'def', type: 'default' },
+  'sort-em': { step: 100, getValue: getStatValueFn('em'), label: 'em', type: 'default' },
+  'sort-er': { step: 10, getValue: getStatValueFn('er'), type: 'percent', label: 'er' },
+  'sort-crit-rate': { step: 10, getValue: getStatValueFn('critRate'), type: 'percent', label: 'critRate' },
+  'sort-crit-dmg': { step: 10, getValue: getStatValueFn('critDmg'), type: 'percent', label: 'critDmg' },
+  'sort-base-attack': { step: 10, getValue: (char) => char.na1HitDmg[1] || undefined, type: 'percent' },
 }
 
 export { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES, VIEW_CONFIGS, type CharacterViewType, type SortingViewType }

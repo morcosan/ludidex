@@ -73,7 +73,7 @@ const parseTime = (value: string) => {
   return hours * 3600 + minutes * 60 + seconds
 }
 
-const isFailedTrial = (time?: number) => time !== undefined && time < 1 // 1 sec
+const isTimerFailed = (time?: number) => time !== undefined && time < 1 // 1 sec
 
 const roundValue = (value: number, direction: 'up' | 'down', step: number) => {
   const round = direction === 'up' ? Math.ceil : Math.floor
@@ -88,7 +88,9 @@ const countFilters = (filters: Filters) => {
     (filters.statuses?.length ?? 0) +
     (filters.weapons?.length ?? 0) +
     (filters.nations?.length ?? 0) +
-    (filters.tags?.length ?? 0)
+    (filters.tags?.length ?? 0) +
+    (filters.teamSizes?.length ?? 0) +
+    (filters.trialStates?.length ?? 0)
   )
 }
 
@@ -115,8 +117,8 @@ export {
   getDataSize,
   getDateAsYYYYMMDD,
   getTimeAsHHMMSS,
-  isFailedTrial,
   isPathUnderSegment,
+  isTimerFailed,
   parseTime,
   parseUserInput,
   roundValue,

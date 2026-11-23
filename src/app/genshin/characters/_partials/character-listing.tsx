@@ -75,7 +75,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
     const value = config.getValue(character, userData?.characters?.[character.id])
     if (value === undefined) return undefined
 
-    const formattedValue = `${formatInteger(value, config.step >= 1_000)}${config.labelType === 'percent' ? '%' : ''}`
+    const formattedValue = `${formatInteger(value, config.step >= 1_000)}${config.type === 'percent' ? '%' : ''}`
     if (viewType === 'sort-level') return t('game.format.level', { value: formattedValue })
     if (viewType === 'sort-hp') return t('game.format.hp', { value: formattedValue })
     if (viewType === 'sort-atk') return t('game.format.atk', { value: formattedValue })
@@ -107,7 +107,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
   )
 
   const hasItems = sortingConfig
-    ? characters.some((char) => sortingConfig.getValue(char, userData?.characters?.[char.id]) !== undefined)
+    ? characters.length > 0
     : isRankingView
       ? characters.some((char) => getValue(char, viewType) !== undefined)
       : characters.length > 0
@@ -130,12 +130,12 @@ export const CharacterListing = (props: CharacterListingProps) => {
         />
       ) : sortingConfig ? (
         <SortingView
+          type={sortingConfig.type}
           items={characters}
           itemsPool={GENSHIN_CHARACTERS}
           valueStep={sortingConfig.step}
           getValue={(character) => sortingConfig.getValue(character, userData?.characters?.[character.id])}
           renderItem={renderItem}
-          labelType={sortingConfig.labelType}
           classNames={{
             row: classNames.row,
             content: contentClass,

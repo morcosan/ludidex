@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GENSHIN_DOMAIN_TRIALS } from '../../../data'
 import { type GenshinTeam } from '../../../state/types'
-import { isFailedTrial } from '../../../utils/various'
+import { isTimerFailed } from '../../../utils/various'
 import { CardSection, type SectionItem } from '../../_shared/card-section'
 import { TrialsModal } from '../../trials-modal/trials-modal'
 
@@ -19,8 +19,8 @@ export const TrialsSection = (props: TrialsSectionProps) => {
   const { t } = useTranslation()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const trials = Object.values(team.trials ?? {})
-  const completedTrials = trials.filter((time) => !isFailedTrial(time)).length
-  const failedTrials = trials.filter(isFailedTrial).length
+  const completedTrials = trials.filter((time) => !isTimerFailed(time)).length
+  const failedTrials = trials.filter(isTimerFailed).length
   const pendingTrials = GENSHIN_DOMAIN_TRIALS.length - completedTrials - failedTrials
   const items: SectionItem[] = [
     {

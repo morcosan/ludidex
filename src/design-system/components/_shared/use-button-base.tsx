@@ -95,7 +95,7 @@ export const useButtonBase = (props: BaseButtonProps) => {
       position: 'absolute',
       inset: '-1px',
       content: '""',
-      borderRadius: tokens.radius[isIcon ? 'full' : isMenuItem ? 'sm' : 'max'],
+      borderRadius: 'inherit',
       opacity: isPressed ? 1 : 0,
       transition: `all ${tokens.duration['sm']} ease`,
     },

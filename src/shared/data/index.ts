@@ -108,6 +108,12 @@ const TAG_STYLES: Record<TagColor, TagStyle> = {
   pink: { bg: '#FBE4F6', text: '#9D174D', border: '#F062D8' },
 }
 
+type TeamSize = 'solo' | 'duo' | 'trio' | 'quad'
+const TEAM_SIZES: TeamSize[] = ['solo', 'duo', 'trio', 'quad'] as const
+
+type TrialState = 'completed' | 'failed' | 'pending'
+const TRIAL_STATES: TrialState[] = ['completed', 'failed', 'pending'] as const
+
 export * from './genshin/_artifacts'
 export * from './genshin/_characters'
 export * from './genshin/_core'
@@ -125,14 +131,18 @@ export {
   STATUS_COLORS,
   TAG_COLORS,
   TAG_STYLES,
+  TEAM_SIZES,
   TIER_LIST_COLORS,
   TIER_LIST_LABELS,
   TIER_LIST_VALUES,
+  TRIAL_STATES,
   type CharacterStatus,
   type Game,
   type GameId,
   type RatingValue,
   type TagColor,
   type TagStyle,
+  type TeamSize,
   type TierListValue,
+  type TrialState,
 }

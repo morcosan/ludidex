@@ -18,6 +18,8 @@ export const FiltersSection = (props: FiltersSectionProps) => {
     renderSearch,
     renderStatuses,
     renderTags,
+    renderTeamSizes,
+    renderTrialStates,
     renderWeapons,
   } = useFilters(props)
 
@@ -41,6 +43,8 @@ export const FiltersSection = (props: FiltersSectionProps) => {
       {renderSearch()}
       {renderElements()}
       {renderTags()}
+      {renderTeamSizes()}
+      {renderTrialStates()}
       {renderStatuses()}
       {renderWeapons()}
       {renderNations()}

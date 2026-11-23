@@ -1,9 +1,8 @@
-import { FailureLabel, TeamItem } from '@app-shared/components'
+import { TeamItem } from '@app-shared/components'
 import { GENSHIN_DOMAIN_IDS } from '@app-shared/data'
 import { type GenshinTeam, type ItemSize } from '@app-shared/state/types'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { type ViewType } from '@app-shared/utils/use-view-options'
-import { isFailedTrial } from '@app-shared/utils/various'
 import { type RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
@@ -55,8 +54,7 @@ export const TeamListing = (props: TeamListingProps) => {
   const getValue = (team: GenshinTeam, viewType: ViewType) => {
     if (viewType === 'rating') return team.rating
     if (isSortingView) {
-      const time = selectedTrialId ? team.trials?.[selectedTrialId] : undefined
-      return time === undefined ? undefined : isFailedTrial(time) ? null : time
+      return selectedTrialId ? team.trials?.[selectedTrialId] : undefined
     }
     return undefined
   }
@@ -74,7 +72,7 @@ export const TeamListing = (props: TeamListingProps) => {
   )
 
   const hasItems = isSortingView
-    ? teams.some((team) => getValue(team, viewType) !== undefined)
+    ? teams.length > 0
     : isRankingView
       ? teams.some((team) => getValue(team, viewType) !== undefined)
       : teams.length > 0
@@ -97,12 +95,11 @@ export const TeamListing = (props: TeamListingProps) => {
         />
       ) : isSortingView ? (
         <SortingView
+          type="timer"
           items={teams}
           itemsPool={teamsPool}
           valueStep={DOMAIN_VIEW_STEP}
           getValue={(team) => getValue(team, viewType)}
-          labelType="time"
-          nullLabel={<FailureLabel />}
           renderItem={renderItem}
           sortOrder="asc"
           classNames={{

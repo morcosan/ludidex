@@ -55,6 +55,7 @@ export default function Page() {
     statuses: filters.statuses,
     weapons: filters.weapons,
     nations: filters.nations,
+    teamSizes: filters.teamSizes,
     tags: filters.tags,
   }
 

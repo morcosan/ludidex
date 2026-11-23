@@ -2,7 +2,7 @@ import { Card, Image, TextField, TextHighlight } from '@design-system'
 import { Controller, type Control } from 'react-hook-form'
 import { GENSHIN_DOMAINS, type GenshinDomainTrial } from '../../../data'
 import { useUserAssetsStore } from '../../../state/use-user-assets'
-import { formatTime, isFailedTrial, parseTime } from '../../../utils/various'
+import { formatTime, isTimerFailed, parseTime } from '../../../utils/various'
 import { FailureLabel } from '../../failure-label/failure-label'
 
 export interface TrialItemProps extends ReactProps {
@@ -66,7 +66,7 @@ export const TrialItem = (props: TrialItemProps) => {
               onBlur={() => {
                 field.onBlur()
                 const parsedTime = parseTime(field.value)
-                if (parsedTime !== undefined && !isFailedTrial(parsedTime)) {
+                if (parsedTime !== undefined && !isTimerFailed(parsedTime)) {
                   field.onChange(formatTime(parsedTime) ?? '')
                 }
               }}
@@ -75,7 +75,7 @@ export const TrialItem = (props: TrialItemProps) => {
         />
       ) : (
         <span className="text-size-xs mr-xs-4 font-family-mono">
-          {time === undefined ? '--' : isFailedTrial(time) ? <FailureLabel /> : formatTime(time)}
+          {time === undefined ? '--' : isTimerFailed(time) ? <FailureLabel /> : formatTime(time)}
         </span>
       )}
     </Card>

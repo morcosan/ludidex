@@ -30,7 +30,8 @@ export const useDataRows = (props: CharacterCardProps) => {
     { name: 'subDps', label: t('game.label.subDps') },
     { name: 'support', label: t('game.label.support') },
     { name: 'exploration', label: t('game.label.exploration') },
-    { name: 'outfit', label: t('game.label.outfit') },
+    { name: 'story', label: t('game.label.story') },
+    { name: 'aesthetic', label: t('game.label.aesthetic') },
     { name: 'personality', label: t('game.label.personality') },
   ]
 

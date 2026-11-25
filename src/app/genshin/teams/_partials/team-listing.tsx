@@ -47,15 +47,16 @@ export const TeamListing = (props: TeamListingProps) => {
   const userSettings = useUserSettingsStore((state) => state.userSettings)
   const classNames = SIZE_CLASSES[userSettings.teamItemSize]
 
-  const isRankingView = viewType === 'rating'
+  const isRankingView = viewType === 'rating' || viewType.startsWith('tier-')
   const isSortingView = GENSHIN_DOMAIN_IDS.includes(viewType)
   const contentClass = cx('py-xs-0 flex h-fit flex-1 flex-wrap', classNames.list)
 
   const getValue = (team: GenshinTeam, viewType: ViewType) => {
     if (viewType === 'rating') return team.rating
-    if (isSortingView) {
-      return selectedTrialId ? team.trials?.[selectedTrialId] : undefined
-    }
+    if (viewType === 'tier-synergy') return team.tierLists?.synergy
+    if (viewType === 'tier-story') return team.tierLists?.story
+    if (viewType === 'tier-aesthetic') return team.tierLists?.aesthetic
+    if (viewType === 'tier-affinity') return team.tierLists?.affinity
     return undefined
   }
 
@@ -71,15 +72,9 @@ export const TeamListing = (props: TeamListingProps) => {
     </li>
   )
 
-  const hasItems = isSortingView
-    ? teams.length > 0
-    : isRankingView
-      ? teams.some((team) => getValue(team, viewType) !== undefined)
-      : teams.length > 0
-
   return (
     <div ref={scrollRef} className={cx('pb-xs-5 pr-xs-3 flex min-h-0 flex-1 overflow-y-auto', className)}>
-      {!hasItems ? (
+      {teams.length === 0 ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTeams')}</p>
       ) : isRankingView ? (
         <RankingView
@@ -99,7 +94,7 @@ export const TeamListing = (props: TeamListingProps) => {
           items={teams}
           itemsPool={teamsPool}
           valueStep={DOMAIN_VIEW_STEP}
-          getValue={(team) => getValue(team, viewType)}
+          getValue={(team) => (selectedTrialId ? team.trials?.[selectedTrialId] : undefined)}
           renderItem={renderItem}
           sortOrder="asc"
           classNames={{

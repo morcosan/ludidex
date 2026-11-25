@@ -3,16 +3,16 @@ import { GlobeIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { TIER_LIST_LABELS, type TierListValue } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { CardActions } from '../_shared/card-actions'
 import { CardSection, type SectionItem } from '../_shared/card-section'
 import { CardTemplate } from '../_shared/card-template'
 import { CharacterTrait } from '../_shared/character-trait'
+import { NotesSection } from '../_shared/notes-section'
 import { TagsSection } from '../_shared/tags-section'
+import { TierListsSection } from '../_shared/tier-lists-section'
 import { CharacterAvatar } from '../character-avatar/character-avatar'
-import { TierListField } from '../tier-list-field/tier-list-field'
 import { BannerImage } from './_partials/banner-image'
 import { useDataRows } from './_partials/use-data-rows'
 import { useDraft } from './_partials/use-draft'
@@ -25,12 +25,10 @@ export const CharacterCard = (props: CharacterCardProps) => {
   const { character, opened = true, className, onClose } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin?.characters?.[character.id])
-  const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
   const elementIcons = getElementIcons()
   const weaponIcons = getWeaponIcons()
   const nationIcons = getNationIcons()
-  const tierListLabels = { ...TIER_LIST_LABELS, ...userPrefs?.tierListLabels }
   const { dataSections, tierListRows } = useDataRows(props)
   const { control, hasChanges, isEditing, handleClickDiscard, handleClickEdit, handleClickSave } = useDraft(props)
 
@@ -96,32 +94,11 @@ export const CharacterCard = (props: CharacterCardProps) => {
       {/* TAGS */}
       <TagsSection editing={isEditing} control={control} tags={userData?.tags} />
 
+      {/* THOUGHTS */}
+      <NotesSection editing={isEditing} control={control} notes={userData?.notes} />
+
       {/* TIER LISTS */}
-      <CardSection
-        title={t('game.label.tierLists')}
-        items={tierListRows.map(({ name, label }): SectionItem => {
-          return {
-            key: name,
-            label,
-            value: (
-              <Controller
-                control={control}
-                name={`tierLists.${name}`}
-                render={({ field: tierField }) => (
-                  <TierListField
-                    value={(tierField.value as TierListValue | null) ?? undefined}
-                    labels={tierListLabels}
-                    readonly={!isEditing}
-                    iconPos="right"
-                    className="w-md-6"
-                    onChange={(value) => tierField.onChange(value ?? null)}
-                  />
-                )}
-              />
-            ),
-          }
-        })}
-      />
+      <TierListsSection editing={isEditing} control={control} rows={tierListRows} />
 
       {/* STATS */}
       {dataSections.map(({ label: sectionLabel, rows, path, mono }) => (

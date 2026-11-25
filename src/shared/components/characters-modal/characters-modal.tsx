@@ -8,7 +8,7 @@ import { useCharacterLabel } from '../../utils/use-character-label'
 import { useCharacterListing } from '../../utils/use-character-listing'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
-import { EMPTY_FILTERS, FiltersSection, type Filters } from '../filters-section/filters-section'
+import { FiltersSection, type Filters } from '../filters-section/filters-section'
 import { SelectionSlots, type CharactersModalSelection } from './_partials/selection-slots'
 import { SlotCorner } from './_partials/slot-corner'
 
@@ -30,7 +30,14 @@ export const CharactersModal = (props: CharactersModalProps) => {
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const userSettings = useUserSettingsStore((state) => state.userSettings)
-  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
+  const [filters, setFilters] = useState<Filters>({
+    elements: [],
+    statuses: [],
+    weapons: [],
+    nations: [],
+    tags: [],
+    search: '',
+  })
   const { getCharLabel } = useCharacterLabel()
   const { listedCharacters } = useCharacterListing(filters)
 

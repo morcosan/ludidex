@@ -7,12 +7,23 @@ const migrate_vn1_to_v0 = (data: UserData_vn1): UserData_v0 => {
     genshin: {
       characters: Object.fromEntries(
         Object.entries(data.genshin?.characters || {}).map(
-          ([characterId, character]): [string, GenshinCharacter_v0] => [
-            characterId,
-            {
-              ...character,
-            },
-          ],
+          ([characterId, character]): [string, GenshinCharacter_v0] => {
+            const { outfit, ...tierLists } = character?.tierLists || {}
+            return [
+              characterId,
+              {
+                ...character,
+                ...(character?.tierLists
+                  ? {
+                      tierLists: {
+                        ...tierLists,
+                        ...(outfit === undefined ? {} : { aesthetic: outfit }),
+                      },
+                    }
+                  : {}),
+              },
+            ]
+          },
         ),
       ),
       teams: Object.fromEntries(

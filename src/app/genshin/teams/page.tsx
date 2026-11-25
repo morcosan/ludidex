@@ -1,5 +1,5 @@
 import { TeamCard, type Filters } from '@app-shared/components'
-import { GENSHIN_DOMAINS } from '@app-shared/data'
+import { GENSHIN_DOMAINS, GENSHIN_ELEMENTS, GENSHIN_NATIONS, GENSHIN_WEAPONS, TEAM_SIZES } from '@app-shared/data'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTemplate } from '../_shared/page-template'
 import { PreviewDrawer } from '../_shared/preview-drawer'
-import { TEAM_FILTERS, TEAM_VIEW_TYPES } from './_config'
+import { TEAM_VIEW_TYPES } from './_config'
 import { TeamListing } from './_partials/team-listing'
 
 export default function Page() {
@@ -28,7 +28,14 @@ export default function Page() {
   const [emptyTeams, setEmptyTeams] = useState<GenshinTeam[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
   const canScrollRef = useRef(false)
-  const [filters, setFilters] = useUrlFilters({ ...TEAM_FILTERS, tags: tagOptions })
+  const [filters, setFilters] = useUrlFilters({
+    elements: GENSHIN_ELEMENTS,
+    weapons: GENSHIN_WEAPONS,
+    nations: GENSHIN_NATIONS,
+    teamSizes: TEAM_SIZES,
+    tags: tagOptions,
+    search: '',
+  })
   const { allTeams, listedTeams } = useTeamListing(filters)
   const selectedDomain = GENSHIN_DOMAINS.find(({ id }) => id === viewType)
   const selectedTrial = selectedDomain?.trials.find(({ id }) => id === tabParam) ?? selectedDomain?.trials[0]

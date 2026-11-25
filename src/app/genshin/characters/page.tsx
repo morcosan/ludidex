@@ -1,5 +1,11 @@
 import { CharacterCard, type Filters } from '@app-shared/components'
-import { type GenshinCharacter } from '@app-shared/data'
+import {
+  CHARACTER_STATUSES,
+  GENSHIN_ELEMENTS,
+  GENSHIN_NATIONS,
+  GENSHIN_WEAPONS,
+  type GenshinCharacter,
+} from '@app-shared/data'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useCharacterListing } from '@app-shared/utils/use-character-listing'
@@ -12,7 +18,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PageTemplate } from '../_shared/page-template'
 import { PreviewDrawer } from '../_shared/preview-drawer'
-import { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES } from './_config'
+import { CHARACTER_VIEW_TYPES } from './_config'
 import { CharacterListing } from './_partials/character-listing'
 
 export default function Page() {
@@ -23,7 +29,14 @@ export default function Page() {
   const { tagOptions } = useUserTags()
   const [previewCharacter, setPreviewCharacter] = useState<GenshinCharacter | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [filters, setFilters] = useUrlFilters({ ...CHARACTER_FILTERS, tags: tagOptions })
+  const [filters, setFilters] = useUrlFilters({
+    elements: GENSHIN_ELEMENTS,
+    statuses: CHARACTER_STATUSES,
+    weapons: GENSHIN_WEAPONS,
+    nations: GENSHIN_NATIONS,
+    tags: tagOptions,
+    search: '',
+  })
   const { listedCharacters } = useCharacterListing(filters)
 
   useClickOutside({

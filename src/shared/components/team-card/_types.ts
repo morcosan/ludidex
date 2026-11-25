@@ -1,4 +1,4 @@
-import type { GenshinTeam } from '../../state/types'
+import type { GenshinTeam, GenshinTeamUserData } from '../../state/types'
 
 export interface TeamCardProps extends ReactProps {
   team: GenshinTeam
@@ -8,3 +8,5 @@ export interface TeamCardProps extends ReactProps {
   onSave?: (team: GenshinTeam) => void
   onDelete?: (team: GenshinTeam) => void
 }
+
+export type GenshinTierLists = NonNullable<GenshinTeamUserData['tierLists']>

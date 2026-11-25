@@ -18,8 +18,11 @@ export const VIEW_TYPES = [
   'tier-sub-dps',
   'tier-support',
   'tier-exploration',
-  'tier-outfit',
+  'tier-story',
   'tier-personality',
+  'tier-synergy',
+  'tier-aesthetic',
+  'tier-affinity',
   'sort-level',
   'sort-hp',
   'sort-atk',
@@ -31,10 +34,8 @@ export const VIEW_TYPES = [
   'sort-base-attack',
 ] as const
 
-type BaseViewType = (typeof VIEW_TYPES)[number]
-type DomainViewType = (typeof GENSHIN_DOMAIN_IDS)[number]
-
-export type ViewType = BaseViewType | DomainViewType
+export type DomainViewType = (typeof GENSHIN_DOMAIN_IDS)[number]
+export type ViewType = (typeof VIEW_TYPES)[number] | DomainViewType
 
 export interface ViewOption<T extends ViewType> {
   value: T
@@ -60,7 +61,7 @@ export const useViewOptions = <T extends ViewType>(props: UseViewOptionsProps<T>
   const tierIcon = <TierListIcon value="S" />
   const sortIcon = <ArrowDownWideNarrowIcon strokeWidth={1.5} aria-hidden className="h-xs-9 w-xs-9" />
 
-  const baseViewOptions: ViewOption<BaseViewType>[] = [
+  const baseViewOptions: ViewOption<ViewType>[] = [
     {
       value: 'default',
       label: `${t('general.label.listing')} (${t('general.label.default')})`,
@@ -72,8 +73,11 @@ export const useViewOptions = <T extends ViewType>(props: UseViewOptionsProps<T>
     { value: 'tier-sub-dps', label: getTierLabel(t('game.label.subDps')), icon: tierIcon },
     { value: 'tier-support', label: getTierLabel(t('game.label.support')), icon: tierIcon },
     { value: 'tier-exploration', label: getTierLabel(t('game.label.exploration')), icon: tierIcon },
-    { value: 'tier-outfit', label: getTierLabel(t('game.label.outfit')), icon: tierIcon },
+    { value: 'tier-synergy', label: getTierLabel(t('game.label.synergy')), icon: tierIcon },
+    { value: 'tier-story', label: getTierLabel(t('game.label.story')), icon: tierIcon },
+    { value: 'tier-aesthetic', label: getTierLabel(t('game.label.aesthetic')), icon: tierIcon },
     { value: 'tier-personality', label: getTierLabel(t('game.label.personality')), icon: tierIcon },
+    { value: 'tier-affinity', label: getTierLabel(t('game.label.affinity')), icon: tierIcon },
     { value: 'sort-level', label: getSortLabel(t('game.label.level')), icon: sortIcon },
     { value: 'sort-hp', label: getSortLabel(t('game.stats.hp')), icon: sortIcon },
     { value: 'sort-atk', label: getSortLabel(t('game.stats.atk')), icon: sortIcon },

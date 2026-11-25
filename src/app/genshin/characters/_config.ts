@@ -1,24 +1,31 @@
-import {
-  CHARACTER_STATUSES,
-  GENSHIN_ELEMENTS,
-  GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
-  type GenshinCharacter,
-} from '@app-shared/data'
+import { type GenshinCharacter } from '@app-shared/data'
 import { type CharacterLabel, type GenshinCharacterUserData } from '@app-shared/state/types'
-import { VIEW_TYPES } from '@app-shared/utils/use-view-options'
+import { type ViewType } from '@app-shared/utils/use-view-options'
 
 type CharacterViewType = (typeof CHARACTER_VIEW_TYPES)[number]
 type SortingViewType = Extract<CharacterViewType, `sort-${string}`>
 
-const CHARACTER_FILTERS = {
-  elements: GENSHIN_ELEMENTS,
-  statuses: CHARACTER_STATUSES,
-  weapons: GENSHIN_WEAPONS,
-  nations: GENSHIN_NATIONS,
-}
-
-const CHARACTER_VIEW_TYPES = VIEW_TYPES
+const CHARACTER_VIEW_TYPES = [
+  'default',
+  'rating',
+  'status',
+  'tier-main-dps',
+  'tier-sub-dps',
+  'tier-support',
+  'tier-exploration',
+  'tier-story',
+  'tier-aesthetic',
+  'tier-personality',
+  'sort-level',
+  'sort-hp',
+  'sort-atk',
+  'sort-def',
+  'sort-em',
+  'sort-er',
+  'sort-crit-rate',
+  'sort-crit-dmg',
+  'sort-base-attack',
+] as const satisfies readonly ViewType[]
 
 interface ViewConfig {
   step: number
@@ -40,7 +47,7 @@ const VIEW_CONFIGS: Record<SortingViewType, ViewConfig> = {
   'sort-er': { step: 10, getValue: getStatValueFn('er'), type: 'percent', label: 'er' },
   'sort-crit-rate': { step: 10, getValue: getStatValueFn('critRate'), type: 'percent', label: 'critRate' },
   'sort-crit-dmg': { step: 10, getValue: getStatValueFn('critDmg'), type: 'percent', label: 'critDmg' },
-  'sort-base-attack': { step: 10, getValue: (char) => char.na1HitDmg[1] || undefined, type: 'percent' },
+  'sort-base-attack': { step: 10, getValue: (c: GenshinCharacter) => c.na1HitDmg[1] || undefined, type: 'percent' },
 }
 
-export { CHARACTER_FILTERS, CHARACTER_VIEW_TYPES, VIEW_CONFIGS, type CharacterViewType, type SortingViewType }
+export { CHARACTER_VIEW_TYPES, VIEW_CONFIGS, type CharacterViewType, type SortingViewType }

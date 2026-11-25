@@ -6,12 +6,18 @@ import {
   type UserAssetsGameKey_v0,
   type UserAssetsGroup_v0,
 } from './user-assets/v0'
-import { type GenshinCharacter_v0, type GenshinTeam_v0, UserDataSchema_v0 } from './user-data/v0'
+import {
+  type GenshinCharacter_v0,
+  type GenshinDomain_v0,
+  type GenshinTeam_v0,
+  UserDataSchema_v0,
+} from './user-data/v0'
 import { CharacterLabelSchema, CharacterSortingSchema, ItemSizeSchema, UserSettingsSchema } from './user-settings'
 
 type CharacterLabel = z.infer<typeof CharacterLabelSchema>
 type CharacterSorting = z.infer<typeof CharacterSortingSchema>
 type GenshinCharacterUserData = GenshinCharacter_v0
+type GenshinDomainUserData = GenshinDomain_v0
 type GenshinTeamUserData = GenshinTeam_v0
 type ItemSize = z.infer<typeof ItemSizeSchema>
 type RatingLabels = Record<keyof typeof RATING_LABELS, string>
@@ -33,6 +39,7 @@ export {
   type CharacterLabel,
   type CharacterSorting,
   type GenshinCharacterUserData,
+  type GenshinDomainUserData,
   type GenshinTeam,
   type GenshinTeamUserData,
   type ItemSize,

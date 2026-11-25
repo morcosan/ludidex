@@ -13,7 +13,9 @@ const CHARACTER: GenshinCharacterUserData = {
     mainDps: 'F',
     subDps: 'D',
     support: 'C',
-    outfit: 'B',
+    exploration: 'A',
+    story: 'S',
+    aesthetic: 'B',
     personality: 'A',
   },
   stats: {
@@ -34,6 +36,7 @@ const CHARACTER: GenshinCharacterUserData = {
     burstLv: 10,
   },
   tags: ['DPS', 'Main'],
+  notes: 'A dependable choice for exploration and challenging content',
 }
 
 const meta: Meta = {

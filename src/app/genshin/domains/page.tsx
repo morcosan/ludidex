@@ -1,5 +1,7 @@
 import { DomainCard, type Filters } from '@app-shared/components'
 import { type GenshinDomain } from '@app-shared/data'
+import { type GenshinDomainUserData } from '@app-shared/state/types'
+import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
 import { useDomainListing } from '@app-shared/utils/use-domain-listing'
 import { useUrlFilters } from '@app-shared/utils/use-url-filters'
@@ -13,6 +15,7 @@ import { DomainListing } from './_partials/domain-listing'
 
 export default function Page() {
   const { t } = useTranslation()
+  const setGenshinDomain = useUserDataStore((state) => state.setGenshinDomain)
   const [previewDomain, setPreviewDomain] = useState<GenshinDomain | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [filters, setFilters] = useUrlFilters(DOMAIN_FILTERS)
@@ -28,6 +31,7 @@ export default function Page() {
   const topBarFilters: Filters = { search: filters.search }
   const sectionFilters: Filters = { nations: filters.nations }
 
+  const handleClosePreview = () => setIsPreviewOpen(false)
   const handleChangeFilters = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })
 
   const handleClickDomain = (domain: GenshinDomain) => {
@@ -37,6 +41,11 @@ export default function Page() {
     }
     setPreviewDomain(domain)
     setIsPreviewOpen(true)
+  }
+
+  const handleSaveDomain = (data: GenshinDomainUserData) => {
+    if (!previewDomain) return
+    setGenshinDomain(previewDomain.id, data.notes ? data : null)
   }
 
   return (
@@ -59,7 +68,15 @@ export default function Page() {
       }
       rightSide={
         <PreviewDrawer opened={isPreviewOpen}>
-          {previewDomain && <DomainCard domain={previewDomain} className="h-full" />}
+          {previewDomain && (
+            <DomainCard
+              domain={previewDomain}
+              opened={isPreviewOpen}
+              className="h-full"
+              onSave={handleSaveDomain}
+              onClose={handleClosePreview}
+            />
+          )}
         </PreviewDrawer>
       }
       onChangeFilters={handleChangeFilters}

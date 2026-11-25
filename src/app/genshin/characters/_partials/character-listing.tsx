@@ -61,7 +61,8 @@ export const CharacterListing = (props: CharacterListingProps) => {
     if (viewType === 'tier-sub-dps') return characterUserData?.tierLists?.subDps
     if (viewType === 'tier-support') return characterUserData?.tierLists?.support
     if (viewType === 'tier-exploration') return characterUserData?.tierLists?.exploration
-    if (viewType === 'tier-outfit') return characterUserData?.tierLists?.outfit
+    if (viewType === 'tier-story') return characterUserData?.tierLists?.story
+    if (viewType === 'tier-aesthetic') return characterUserData?.tierLists?.aesthetic
     if (viewType === 'tier-personality') return characterUserData?.tierLists?.personality
     return undefined
   }
@@ -106,15 +107,9 @@ export const CharacterListing = (props: CharacterListingProps) => {
     </li>
   )
 
-  const hasItems = sortingConfig
-    ? characters.length > 0
-    : isRankingView
-      ? characters.some((char) => getValue(char, viewType) !== undefined)
-      : characters.length > 0
-
   return (
     <div className={cx('pr-xs-3 pb-xs-5 flex min-h-0 flex-1 overflow-y-auto', className)}>
-      {!hasItems ? (
+      {characters.length === 0 ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
       ) : isRankingView ? (
         <RankingView

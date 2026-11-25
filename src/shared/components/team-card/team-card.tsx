@@ -1,22 +1,32 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CardActions } from '../_shared/card-actions'
 import { CardTemplate } from '../_shared/card-template'
+import { NotesSection } from '../_shared/notes-section'
 import { TagsSection } from '../_shared/tags-section'
+import { TierListsSection } from '../_shared/tier-lists-section'
 import { TeamDeleteModal } from './_modals/team-delete-modal'
 import { BannerImage } from './_partials/banner-image'
 import { MemberSelector } from './_partials/member-selector'
 import { TeamName } from './_partials/team-name'
+import { TrialsSection } from './_partials/trials-section'
 import { useDraft } from './_partials/use-draft'
 import { type TeamDraft } from './_partials/use-draft-utils'
-import { TrialsSection } from './_partials/trials-section'
-import { type TeamCardProps } from './_types'
+import { type GenshinTierLists, type TeamCardProps } from './_types'
 
 export { type TeamCardProps }
 
 export const TeamCard = (props: TeamCardProps) => {
   const { team, opened = true, className, onClose, onDelete } = props
+  const { t } = useTranslation()
   const { control, hasChanges, isEditing, handleClickDiscard, handleClickEdit, handleClickSave } = useDraft(props)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const tierListRows: { name: keyof GenshinTierLists; label: string }[] = [
+    { name: 'synergy', label: t('game.label.synergy') },
+    { name: 'story', label: t('game.label.story') },
+    { name: 'aesthetic', label: t('game.label.aesthetic') },
+    { name: 'affinity', label: t('game.label.affinity') },
+  ]
 
   useEffect(() => {
     if (!opened && isEditing) handleClickDiscard()
@@ -67,6 +77,12 @@ export const TeamCard = (props: TeamCardProps) => {
 
       {/* TAGS */}
       <TagsSection editing={isEditing} control={control} tags={team.tags} />
+
+      {/* THOUGHTS */}
+      <NotesSection editing={isEditing} control={control} notes={team.notes} />
+
+      {/* TIER LISTS */}
+      <TierListsSection editing={isEditing} control={control} rows={tierListRows} />
 
       {/* TRIALS */}
       <TrialsSection team={team} />

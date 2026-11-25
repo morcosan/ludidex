@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { GENSHIN_CHARACTER_IDS, GENSHIN_DOMAIN_TRIAL_IDS } from '../../../data'
+import { GENSHIN_CHARACTER_IDS, GENSHIN_DOMAIN_TRIAL_IDS, TIER_LIST_VALUES } from '../../../data'
 
 const unpackTeamId_v0 = (id: string): string[] => id.split('_')
 const packTeamId_v0 = (charIds: string[]): string => charIds.join('_')
@@ -23,6 +23,15 @@ const GenshinTeamSchema_v0 = z.object({
   name: z.string(),
   rating: z.number().optional(),
   tags: z.array(z.string()).optional(),
+  notes: z.string().optional(),
+  tierLists: z
+    .object({
+      synergy: z.enum(TIER_LIST_VALUES).optional(),
+      story: z.enum(TIER_LIST_VALUES).optional(),
+      aesthetic: z.enum(TIER_LIST_VALUES).optional(),
+      affinity: z.enum(TIER_LIST_VALUES).optional(),
+    })
+    .optional(),
   trials: z.partialRecord(z.enum(GENSHIN_DOMAIN_TRIAL_IDS), z.number()).optional(),
 })
 

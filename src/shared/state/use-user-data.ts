@@ -3,6 +3,7 @@ import { create } from 'zustand'
 import { RATING_LABELS, TIER_LIST_LABELS } from '../data'
 import {
   type GenshinCharacterUserData,
+  type GenshinDomainUserData,
   type GenshinTeamUserData,
   type RatingLabels,
   type TagColors,
@@ -25,6 +26,7 @@ interface UserDataStore {
   setTierListLabels: (tierListLabels: Partial<TierListLabels>) => void
   updateTags: (tagColors: TagColors, renamedTags: Record<string, string>) => void
   setGenshinCharacter: (characterId: string, data: GenshinCharacterUserData | null) => void
+  setGenshinDomain: (domainId: string, data: GenshinDomainUserData | null) => void
   setGenshinTeam: (teamId: string, data: GenshinTeamUserData | null) => void
 }
 
@@ -118,13 +120,29 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
       const characters = { ...userData.genshin?.characters }
 
       if (data) {
-        const { rating, status, tierLists, stats, talents, tags } = data
-        characters[characterId] = { rating, status, tierLists, stats, talents, tags }
+        const { rating, status, tierLists, stats, talents, tags, notes } = data
+        characters[characterId] = { rating, status, tierLists, stats, talents, tags, notes }
       } else {
         delete characters[characterId]
       }
 
       return { userData: { ...userData, genshin: { ...userData.genshin, characters } } }
+    })
+    get().saveUserData()
+  },
+
+  setGenshinDomain(domainId: string, data: GenshinDomainUserData | null) {
+    set((state) => {
+      const userData = state.userData ?? EMPTY_USER_DATA
+      const domains = { ...userData.genshin?.domains }
+
+      if (data) {
+        domains[domainId] = data
+      } else {
+        delete domains[domainId]
+      }
+
+      return { userData: { ...userData, genshin: { ...userData.genshin, domains } } }
     })
     get().saveUserData()
   },
@@ -135,8 +153,8 @@ const useUserDataStore = create<UserDataStore>((set, get) => ({
       const teams = { ...userData.genshin?.teams }
 
       if (data) {
-        const { name, rating, tags, trials } = data
-        teams[teamId] = { name, rating, tags, trials }
+        const { name, rating, tags, notes, tierLists, trials } = data
+        teams[teamId] = { name, rating, tags, notes, tierLists, trials }
       } else {
         delete teams[teamId]
       }

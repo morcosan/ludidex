@@ -9,3 +9,4 @@
 - avoid adding useless shrink-0
 - if an arrow function has multiple lines, always use {}
 - use only linux commands, no windows cmd
+- use "char" instead of "character" in short arrow functions

@@ -4,13 +4,16 @@ import { CHARACTER_STATUSES, GENSHIN_CHARACTER_IDS, TIER_LIST_VALUES } from '../
 const GenshinCharacterSchema_v0 = z.object({
   rating: z.number().optional(),
   status: z.enum(CHARACTER_STATUSES).optional(),
+  tags: z.array(z.string()).optional(),
+  notes: z.string().optional(),
   tierLists: z
     .object({
       mainDps: z.enum(TIER_LIST_VALUES).optional(),
       subDps: z.enum(TIER_LIST_VALUES).optional(),
       support: z.enum(TIER_LIST_VALUES).optional(),
       exploration: z.enum(TIER_LIST_VALUES).optional(),
-      outfit: z.enum(TIER_LIST_VALUES).optional(),
+      story: z.enum(TIER_LIST_VALUES).optional(),
+      aesthetic: z.enum(TIER_LIST_VALUES).optional(),
       personality: z.enum(TIER_LIST_VALUES).optional(),
     })
     .optional(),
@@ -35,7 +38,6 @@ const GenshinCharacterSchema_v0 = z.object({
       burstLv: z.number().optional(),
     })
     .optional(),
-  tags: z.array(z.string()).optional(),
 })
 
 const GenshinCharactersSchema_v0 = z.partialRecord(z.enum(GENSHIN_CHARACTER_IDS), GenshinCharacterSchema_v0)

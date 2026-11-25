@@ -35,18 +35,6 @@ export interface Filters {
   search?: string
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const EMPTY_FILTERS: Filters = {
-  elements: [],
-  statuses: [],
-  weapons: [],
-  nations: [],
-  teamSizes: [],
-  trialStates: [],
-  tags: [],
-  search: '',
-}
-
 export interface FiltersProps extends ReactProps {
   type: 'characters' | 'teams' | 'domains' | 'trials'
   filters: Filters
@@ -86,7 +74,17 @@ export const useFilters = (props: FiltersProps) => {
   }
 
   const handleClearFilters = () => {
-    onChange?.(EMPTY_FILTERS)
+    const availableFilters = { ...otherFilters, ...filters }
+    onChange?.({
+      ...(availableFilters.elements !== undefined && { elements: [] }),
+      ...(availableFilters.statuses !== undefined && { statuses: [] }),
+      ...(availableFilters.weapons !== undefined && { weapons: [] }),
+      ...(availableFilters.nations !== undefined && { nations: [] }),
+      ...(availableFilters.teamSizes !== undefined && { teamSizes: [] }),
+      ...(availableFilters.trialStates !== undefined && { trialStates: [] }),
+      ...(availableFilters.tags !== undefined && { tags: [] }),
+      ...(availableFilters.search !== undefined && { search: '' }),
+    })
     setRemountKey((key) => key + 1)
   }
 

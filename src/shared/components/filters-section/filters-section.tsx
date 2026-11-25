@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useFilters, type FiltersProps } from '../_shared/use-filters'
 import { PageSection } from '../page-section/page-section'
 
-export { EMPTY_FILTERS, type Filters } from '../_shared/use-filters'
+export { type Filters } from '../_shared/use-filters'
 
 export type FiltersSectionProps = FiltersProps
 

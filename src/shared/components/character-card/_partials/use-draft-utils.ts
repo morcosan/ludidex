@@ -5,7 +5,7 @@ import { toNumber } from '../../../utils/various'
 import { type GenshinStats, type GenshinTalents, type GenshinTierLists } from '../_types'
 
 const TIER_LIST_FIELDS = [
-  ...['mainDps', 'subDps', 'support', 'exploration', 'outfit', 'personality'],
+  ...['mainDps', 'subDps', 'support', 'exploration', 'story', 'aesthetic', 'personality'],
 ] as const satisfies readonly (keyof GenshinTierLists)[]
 
 const STAT_FIELDS = [
@@ -19,6 +19,7 @@ export interface CharacterDraft {
   rating: RatingValue | null
   status: CharacterStatus | null
   tags: string[]
+  notes: string
   tierLists: Record<keyof GenshinTierLists, TierListValue | null>
   stats: Record<keyof GenshinStats, string>
   talents: Record<keyof GenshinTalents, string>
@@ -68,10 +69,11 @@ export const useDraftUtils = () => {
     }
 
     return {
+      tierLists,
       rating: RATING_VALUES.find((rating) => rating === userData?.rating) ?? null,
       status: userData?.status ?? null,
       tags: sortTags(userData?.tags ?? []),
-      tierLists,
+      notes: userData?.notes ?? '',
       stats: createNumberDraft(STAT_FIELDS, userData?.stats),
       talents: createNumberDraft(TALENT_FIELDS, userData?.talents),
     }
@@ -87,6 +89,7 @@ export const useDraftUtils = () => {
       ...(draft.rating === null ? {} : { rating: draft.rating }),
       ...(draft.status === null ? {} : { status: draft.status }),
       ...(tags.length === 0 ? {} : { tags }),
+      ...(draft.notes ? { notes: draft.notes } : {}),
       ...(Object.keys(tierLists).length === 0 ? {} : { tierLists }),
       ...(Object.keys(stats).length === 0 ? {} : { stats }),
       ...(Object.keys(talents).length === 0 ? {} : { talents }),

@@ -4,7 +4,7 @@ export type FiltersBarProps = FiltersProps
 
 export const FiltersBar = (props: FiltersBarProps) => {
   const { filters, type, surface = 'glass', className, onChange } = props
-  const { renderSearch, renderElements, renderStatuses, renderWeapons, renderNations } = useFilters({
+  const { renderSearch, renderElements, renderStatuses, renderWeaponTypes, renderNations } = useFilters({
     filters,
     type,
     surface,
@@ -16,7 +16,7 @@ export const FiltersBar = (props: FiltersBarProps) => {
     <div className={cx('gap-xs-5 flex flex-wrap items-center', className)}>
       {renderElements('auto', filterClass)}
       {renderStatuses('auto', filterClass)}
-      {renderWeapons('auto', filterClass)}
+      {renderWeaponTypes('auto', filterClass)}
       {renderNations('auto', filterClass)}
       {renderSearch()}
     </div>

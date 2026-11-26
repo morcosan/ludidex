@@ -17,8 +17,8 @@ export const useCharacterListing = (filters: Filters) => {
       matchesSearch &&
       (!filters.elements?.length || filters.elements.includes(character.element)) &&
       (!filters.statuses?.length || (status !== undefined && filters.statuses.includes(status))) &&
-      (!filters.weapons?.length || filters.weapons.includes(character.weapon)) &&
       (!filters.nations?.length || filters.nations.includes(character.nation)) &&
+      (!filters.weaponTypes?.length || filters.weaponTypes.includes(character.weapon)) &&
       (!filters.tags?.length || filters.tags.every((tag) => charData?.[character.id]?.tags?.includes(tag)))
     )
   })

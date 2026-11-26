@@ -86,11 +86,12 @@ const countFilters = (filters: Filters) => {
   return (
     (filters.elements?.length ?? 0) +
     (filters.statuses?.length ?? 0) +
-    (filters.weapons?.length ?? 0) +
     (filters.nations?.length ?? 0) +
-    (filters.tags?.length ?? 0) +
+    (filters.weaponTypes?.length ?? 0) +
+    (filters.domainTypes?.length ?? 0) +
     (filters.teamSizes?.length ?? 0) +
-    (filters.trialStates?.length ?? 0)
+    (filters.trialStates?.length ?? 0) +
+    (filters.tags?.length ?? 0)
   )
 }
 

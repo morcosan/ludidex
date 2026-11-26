@@ -74,6 +74,7 @@ export const useStyles = (props: Props) => {
   }
   const modalBodyCss: CSSObject = {
     flex: '1 1 0%',
+    minHeight: 0,
     marginLeft: `calc(-1 * ${cssVars.modalCardPL})`,
     marginRight: `calc(-1 * ${cssVars.modalCardPR})`,
     padding: `${tokens.spacing['a11y-padding']} 0`,

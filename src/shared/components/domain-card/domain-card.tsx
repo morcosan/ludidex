@@ -2,6 +2,7 @@ import { Image } from '@design-system'
 import { GlobeIcon, SwordsIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { getTrialName, getTrialNames } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserDataStore } from '../../state/use-user-data'
 import { CardActions } from '../_shared/card-actions'
@@ -75,16 +76,33 @@ export const DomainCard = (props: DomainCardProps) => {
       {/* TRIALS */}
       <CardSection
         title={t('game.label.trials')}
-        items={domain.trials.map((trial) => ({
-          key: trial.id,
-          label: (
-            <span className="gap-xs-2 flex items-center leading-1">
-              <SwordsIcon aria-hidden className="size-xs-7 text-color-text-subtle" />
-              {trial.name}
-            </span>
-          ),
-          value: '',
-        }))}
+        items={domain.trials.map((trial) => {
+          const currentName = getTrialName(trial)
+          const otherNames = [...new Set(getTrialNames(trial))].filter((name) => name !== currentName)
+          return {
+            key: trial.id,
+            label: (
+              <span className="gap-xs-2 flex leading-1">
+                <SwordsIcon aria-hidden className="size-xs-7 text-color-text-subtle" />
+                <span className="gap-xs-1 flex flex-col pt-px">
+                  {otherNames.length > 0 ? (
+                    <span className="gap-xs-2 flex flex-col">
+                      <span>{currentName}</span>
+                      {otherNames.map((name) => (
+                        <span key={name} className="text-color-text-subtle text-size-xs">
+                          {name}
+                        </span>
+                      ))}
+                    </span>
+                  ) : (
+                    currentName
+                  )}
+                </span>
+              </span>
+            ),
+            value: '',
+          }
+        })}
         className="mt-xs-5"
       />
     </CardTemplate>

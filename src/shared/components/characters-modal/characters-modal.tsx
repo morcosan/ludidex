@@ -6,9 +6,11 @@ import { useUserDataStore } from '../../state/use-user-data'
 import { useUserSettingsStore } from '../../state/use-user-settings'
 import { useCharacterLabel } from '../../utils/use-character-label'
 import { useCharacterListing } from '../../utils/use-character-listing'
+import { countFilters } from '../../utils/various'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
 import { FiltersSection, type Filters } from '../filters-section/filters-section'
+import { ListHeader } from '../list-header/list-header'
 import { SelectionSlots, type CharactersModalSelection } from './_partials/selection-slots'
 import { SlotCorner } from './_partials/slot-corner'
 
@@ -33,8 +35,8 @@ export const CharactersModal = (props: CharactersModalProps) => {
   const [filters, setFilters] = useState<Filters>({
     elements: [],
     statuses: [],
-    weapons: [],
     nations: [],
+    weaponTypes: [],
     tags: [],
     search: '',
   })
@@ -65,7 +67,7 @@ export const CharactersModal = (props: CharactersModalProps) => {
       width="xl"
       height="full"
       noFooter
-      classNames={{ body: 'gap-sm-0 flex h-full overflow-y-auto! pr-0!' }}
+      classNames={{ body: 'gap-sm-0 flex h-full overflow-visible! pr-0!' }}
       data-characters-modal
       onClose={onClose}
     >
@@ -86,31 +88,42 @@ export const CharactersModal = (props: CharactersModalProps) => {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex-1 overflow-x-hidden overflow-y-auto">
-        {listedCharacters.length === 0 ? (
-          <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
-        ) : (
-          <ul className="gap-xs-3 py-xs-0 flex flex-wrap">
-            {listedCharacters.map((character) => {
-              const slotIndex = getCharSlotIndex(character)
-              return (
-                <li key={character.id} className="relative">
-                  <CharacterItem
-                    character={character}
-                    status={userData?.characters?.[character.id]?.status}
-                    selected={slotIndex > -1}
-                    size={userSettings.charItemSize}
-                    labelTop={userSettings.charLabelTop && getCharLabel(character, userSettings.charLabelTop)}
-                    labelBottom={userSettings.charLabelBottom && getCharLabel(character, userSettings.charLabelBottom)}
-                    onClick={onClickOption}
-                  >
-                    {slotIndex > -1 && <SlotCorner digit={String(slotIndex + 1)} variant="item" />}
-                  </CharacterItem>
-                </li>
-              )
-            })}
-          </ul>
-        )}
+      <div className="relative flex-1">
+        <ListHeader
+          title={t('general.label.characters')}
+          itemsCount={listedCharacters.length}
+          filtersCount={countFilters(filters)}
+          search={filters.search}
+          surface="paper"
+          className="-top-xs-7 absolute left-0 z-10 -translate-y-full"
+        />
+
+        <div className="size-full overflow-x-hidden overflow-y-auto">
+          {listedCharacters.length === 0 ? (
+            <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
+          ) : (
+            <ul className="gap-xs-3 py-xs-0 flex flex-wrap">
+              {listedCharacters.map((character) => {
+                const slotIndex = getCharSlotIndex(character)
+                return (
+                  <li key={character.id} className="relative">
+                    <CharacterItem
+                      character={character}
+                      status={userData?.characters?.[character.id]?.status}
+                      selected={slotIndex > -1}
+                      size={userSettings.charItemSize}
+                      labelTop={userSettings.charLabelTop && getCharLabel(character, userSettings.charLabelTop)}
+                      labelBottom={userSettings.charLabelBottom && getCharLabel(character, userSettings.charLabelBottom)}
+                      onClick={onClickOption}
+                    >
+                      {slotIndex > -1 && <SlotCorner digit={String(slotIndex + 1)} variant="item" />}
+                    </CharacterItem>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </Modal>
   )

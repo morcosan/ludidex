@@ -9,11 +9,13 @@ const meta: Meta = {
       children: 'Title',
     },
     props: {
+      surface: 'glass',
       first: false,
       large: false,
       className: '',
       style: {},
     },
+    inlineRadios: ['surface'],
   }),
 }
 

@@ -15,7 +15,12 @@ export const ViewsSection = <T extends ViewType>(props: ViewsSectionProps<T>) =>
   const { t } = useTranslation()
   const [search, setSearch] = useState('')
   const searchTerm = search.toLocaleLowerCase()
-  const currOptions = viewOptions.filter((option) => option.label.toLocaleLowerCase().includes(searchTerm))
+  const currOptions = viewOptions.filter((option) => {
+    return (
+      option.label.toLocaleLowerCase().includes(searchTerm) ||
+      option.labels?.some((label) => label.toLocaleLowerCase().includes(searchTerm))
+    )
+  })
 
   return (
     <PageSection

@@ -1,17 +1,30 @@
 import { Button, Tag } from '@design-system'
-import { faSkullCrossbones, faTrophy, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBook,
+  faDice,
+  faDragon,
+  faFeatherPointed,
+  faHammer,
+  faSkullCrossbones,
+  faTrophy,
+  faUser,
+  faUserGroup,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GlobeIcon, SwordsIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CHARACTER_STATUSES,
+  DOMAIN_TYPES,
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
   GENSHIN_WEAPONS,
   TEAM_SIZES,
   TRIAL_STATES,
   type CharacterStatus,
+  type DomainType,
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
@@ -27,8 +40,9 @@ import { FilterGroup, type FilterGroupOrder } from './filter-group'
 export interface Filters {
   elements?: GenshinElement[]
   statuses?: CharacterStatus[]
-  weapons?: GenshinWeaponType[]
   nations?: GenshinNation[]
+  weaponTypes?: GenshinWeaponType[]
+  domainTypes?: DomainType[]
   teamSizes?: TeamSize[]
   trialStates?: TrialState[]
   tags?: string[]
@@ -58,8 +72,9 @@ export const useFilters = (props: FiltersProps) => {
     return (
       Boolean(filters?.elements?.length) ||
       Boolean(filters?.statuses?.length) ||
-      Boolean(filters?.weapons?.length) ||
       Boolean(filters?.nations?.length) ||
+      Boolean(filters?.weaponTypes?.length) ||
+      Boolean(filters?.domainTypes?.length) ||
       Boolean(filters?.teamSizes?.length) ||
       Boolean(filters?.trialStates?.length) ||
       Boolean(filters?.tags?.length) ||
@@ -78,8 +93,9 @@ export const useFilters = (props: FiltersProps) => {
     onChange?.({
       ...(availableFilters.elements !== undefined && { elements: [] }),
       ...(availableFilters.statuses !== undefined && { statuses: [] }),
-      ...(availableFilters.weapons !== undefined && { weapons: [] }),
       ...(availableFilters.nations !== undefined && { nations: [] }),
+      ...(availableFilters.weaponTypes !== undefined && { weaponTypes: [] }),
+      ...(availableFilters.domainTypes !== undefined && { domainTypes: [] }),
       ...(availableFilters.teamSizes !== undefined && { teamSizes: [] }),
       ...(availableFilters.trialStates !== undefined && { trialStates: [] }),
       ...(availableFilters.tags !== undefined && { tags: [] }),
@@ -141,11 +157,11 @@ export const useFilters = (props: FiltersProps) => {
     ) : null
   }
 
-  const renderWeapons = (order?: FilterGroupOrder, className?: string) => {
-    return filters.weapons ? (
+  const renderWeaponTypes = (order?: FilterGroupOrder, className?: string) => {
+    return filters.weaponTypes ? (
       <FilterGroup
         items={GENSHIN_WEAPONS}
-        selection={filters.weapons}
+        selection={filters.weaponTypes}
         order={order}
         surface={surface}
         ariaLabel={t('game.label.weapon')}
@@ -154,7 +170,7 @@ export const useFilters = (props: FiltersProps) => {
           <img src={weaponIcons[weapon][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1 brightness-90" />
         )}
         className={className}
-        onToggle={(weapon) => onChange?.({ ...filters, weapons: toggleFilter(filters.weapons!, weapon) })}
+        onToggle={(weapon) => onChange?.({ ...filters, weaponTypes: toggleFilter(filters.weaponTypes!, weapon) })}
       />
     ) : null
   }
@@ -181,8 +197,33 @@ export const useFilters = (props: FiltersProps) => {
     ) : null
   }
 
+  const renderDomainTypes = () => {
+    const icons = {
+      trounce: faDragon,
+      blessing: faFeatherPointed,
+      forgery: faHammer,
+      mastery: faBook,
+      onetime: faDice,
+    } as const
+    return filters.domainTypes ? (
+      <FilterGroup
+        items={DOMAIN_TYPES}
+        selection={filters.domainTypes}
+        surface={surface}
+        ariaLabel={t('game.label.domainType')}
+        renderLabel={(domainType) => t(`game.domains.${domainType}`)}
+        renderIcon={(domainType) => (
+          <FontAwesomeIcon icon={icons[domainType]} aria-hidden className="ml-xs-0 mr-xs-1 text-size-xs" />
+        )}
+        onToggle={(domainType) =>
+          onChange?.({ ...filters, domainTypes: toggleFilter(filters.domainTypes!, domainType) })
+        }
+      />
+    ) : null
+  }
+
   const renderTeamSizes = () => {
-    const teamSizeIcons = { solo: faUser, duo: faUserGroup, trio: faUsers, quad: faUsers }
+    const icons = { solo: faUser, duo: faUserGroup, trio: faUsers, quad: faUsers }
     return filters.teamSizes ? (
       <FilterGroup
         items={TEAM_SIZES}
@@ -191,7 +232,7 @@ export const useFilters = (props: FiltersProps) => {
         ariaLabel={t('game.label.teamSize')}
         renderLabel={(teamSize) => t(`game.label.${teamSize}`)}
         renderIcon={(teamSize) => (
-          <FontAwesomeIcon icon={teamSizeIcons[teamSize]} aria-hidden className="ml-xs-0 mr-xs-1 text-size-xs" />
+          <FontAwesomeIcon icon={icons[teamSize]} aria-hidden className="ml-xs-0 mr-xs-1 text-size-xs" />
         )}
         onToggle={(teamSize) => onChange?.({ ...filters, teamSizes: toggleFilter(filters.teamSizes!, teamSize) })}
       />
@@ -252,6 +293,7 @@ export const useFilters = (props: FiltersProps) => {
   return {
     hasFilters,
     handleClearFilters,
+    renderDomainTypes,
     renderElements,
     renderNations,
     renderSearch,
@@ -259,6 +301,6 @@ export const useFilters = (props: FiltersProps) => {
     renderTags,
     renderTeamSizes,
     renderTrialStates,
-    renderWeapons,
+    renderWeaponTypes,
   }
 }

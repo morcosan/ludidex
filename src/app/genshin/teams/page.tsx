@@ -1,5 +1,12 @@
 import { TeamCard, type Filters } from '@app-shared/components'
-import { GENSHIN_DOMAINS, GENSHIN_ELEMENTS, GENSHIN_NATIONS, GENSHIN_WEAPONS, TEAM_SIZES } from '@app-shared/data'
+import {
+  GENSHIN_DOMAINS,
+  GENSHIN_ELEMENTS,
+  GENSHIN_NATIONS,
+  GENSHIN_WEAPONS,
+  TEAM_SIZES,
+  getTrialName,
+} from '@app-shared/data'
 import { type GenshinTeam } from '@app-shared/state/types'
 import { useUserDataStore } from '@app-shared/state/use-user-data'
 import { useClickOutside } from '@app-shared/utils/use-click-outside'
@@ -30,8 +37,8 @@ export default function Page() {
   const canScrollRef = useRef(false)
   const [filters, setFilters] = useUrlFilters({
     elements: GENSHIN_ELEMENTS,
-    weapons: GENSHIN_WEAPONS,
     nations: GENSHIN_NATIONS,
+    weaponTypes: GENSHIN_WEAPONS,
     teamSizes: TEAM_SIZES,
     tags: tagOptions,
     search: '',
@@ -39,7 +46,7 @@ export default function Page() {
   const { allTeams, listedTeams } = useTeamListing(filters)
   const selectedDomain = GENSHIN_DOMAINS.find(({ id }) => id === viewType)
   const selectedTrial = selectedDomain?.trials.find(({ id }) => id === tabParam) ?? selectedDomain?.trials[0]
-  const trialOptions = selectedDomain?.trials.map(({ id, name }) => ({ value: id, label: name }))
+  const trialOptions = selectedDomain?.trials.map((trial) => ({ value: trial.id, label: getTrialName(trial) }))
 
   useClickOutside({
     enabled: isPreviewOpen,
@@ -60,8 +67,8 @@ export default function Page() {
   const topBarFilters: Filters = { search: filters.search, elements: filters.elements }
   const sectionFilters: Filters = {
     statuses: filters.statuses,
-    weapons: filters.weapons,
     nations: filters.nations,
+    weaponTypes: filters.weaponTypes,
     teamSizes: filters.teamSizes,
     tags: filters.tags,
   }

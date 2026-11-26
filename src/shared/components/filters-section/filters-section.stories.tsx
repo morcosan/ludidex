@@ -11,7 +11,7 @@ const meta: Meta = {
       filters: {
         elements: [],
         statuses: [],
-        weapons: [],
+        weaponTypes: [],
         nations: [],
         tags: [],
         search: '',
@@ -41,5 +41,9 @@ const Default: StoryObj<typeof FiltersSection> = {
   tags: ['autodocs', 'controls'],
 }
 
+const Domains: StoryObj<typeof FiltersSection> = {
+  args: { type: 'domains', filters: { domainTypes: [], nations: [] } },
+}
+
 export default meta
-export { Default }
+export { Default, Domains }

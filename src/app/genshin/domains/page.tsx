@@ -29,7 +29,10 @@ export default function Page() {
 
   const filtersCount = countFilters(filters)
   const topBarFilters: Filters = { search: filters.search }
-  const sectionFilters: Filters = { nations: filters.nations }
+  const sectionFilters: Filters = {
+    nations: filters.nations,
+    domainTypes: filters.domainTypes,
+  }
 
   const handleClosePreview = () => setIsPreviewOpen(false)
   const handleChangeFilters = (newFilters: Filters) => setFilters({ ...filters, ...newFilters })

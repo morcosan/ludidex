@@ -2,13 +2,24 @@ import { Modal } from '@design-system'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { GENSHIN_DOMAIN_BY_TRIAL, GENSHIN_DOMAIN_TRIALS, type GenshinNation, type TrialState } from '../../data'
+import {
+  GENSHIN_DOMAIN_BY_TRIAL,
+  GENSHIN_DOMAIN_TRIALS,
+  getTrialName,
+  getTrialNames,
+  type DomainType,
+  type GenshinNation,
+  type TrialState,
+} from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
-import { formatTime, isTimerFailed, parseTime } from '../../utils/various'
+import { countFilters, formatTime, isTimerFailed, parseTime } from '../../utils/various'
 import { FiltersSection, type Filters } from '../filters-section/filters-section'
+import { ListHeader } from '../list-header/list-header'
 import { TrialItem } from './_partials/trial-item'
 
-const SORTED_TRIALS = [...GENSHIN_DOMAIN_TRIALS].sort((trialA, trialB) => trialA.name.localeCompare(trialB.name))
+const SORTED_TRIALS = [...GENSHIN_DOMAIN_TRIALS].sort((trialA, trialB) => {
+  return getTrialName(trialA).localeCompare(getTrialName(trialB))
+})
 
 export interface TrialsModalProps {
   opened: boolean
@@ -22,19 +33,20 @@ export const TrialsModal = (props: TrialsModalProps) => {
   const { t } = useTranslation()
   const userTrials = useUserDataStore((state) => state.userData?.genshin?.teams?.[teamId]?.trials)
   const setGenshinTeam = useUserDataStore((state) => state.setGenshinTeam)
-  const [filters, setFilters] = useState<Filters>({ search: '', nations: [], trialStates: [] })
+  const [filters, setFilters] = useState<Filters>({ search: '', nations: [], trialStates: [], domainTypes: [] })
   const [editing, setEditing] = useState(false)
   const { control, formState, handleSubmit, reset } = useForm<Record<string, string>>({
     defaultValues: {},
     mode: 'onTouched',
   })
+  const filtersCount = countFilters(filters)
 
   const listedTrials = useMemo(() => {
     const search = filters.search?.trim().toLocaleLowerCase()
-    const matchesSearch = (trialName: string, domainName?: string) => {
+    const matchesSearch = (trialNames: string[], domainName?: string) => {
       return (
         !search ||
-        trialName.toLocaleLowerCase().includes(search) ||
+        trialNames.some((name) => name.toLocaleLowerCase().includes(search)) ||
         Boolean(domainName?.toLocaleLowerCase().includes(search))
       )
     }
@@ -45,10 +57,18 @@ export const TrialsModal = (props: TrialsModalProps) => {
       const trialState: TrialState = time === undefined ? 'pending' : isTimerFailed(time) ? 'failed' : 'completed'
       return !filters.trialStates?.length || filters.trialStates.includes(trialState)
     }
+    const matchesDomainType = (domainType?: DomainType) => {
+      return !filters.domainTypes?.length || Boolean(domainType && filters.domainTypes.includes(domainType))
+    }
 
-    return SORTED_TRIALS.filter(({ id, name }) => {
-      const domain = GENSHIN_DOMAIN_BY_TRIAL[id]
-      return matchesSearch(name, domain?.name) && matchesNation(domain?.nation) && matchesTrialState(userTrials?.[id])
+    return SORTED_TRIALS.filter((trial) => {
+      const domain = GENSHIN_DOMAIN_BY_TRIAL[trial.id]
+      return (
+        matchesSearch(getTrialNames(trial), domain?.name) &&
+        matchesNation(domain?.nation) &&
+        matchesTrialState(userTrials?.[trial.id]) &&
+        matchesDomainType(domain?.type)
+      )
     })
   }, [filters, userTrials])
 
@@ -61,6 +81,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
       search: nextFilters.search ?? '',
       nations: nextFilters.nations ?? [],
       trialStates: nextFilters.trialStates ?? [],
+      domainTypes: nextFilters.domainTypes ?? [],
     })
   }
 
@@ -106,7 +127,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
       editing={editing}
       noFooter
       noDismiss={formState.isDirty}
-      classNames={{ body: 'gap-xs-9 flex h-full overflow-auto! pr-0!' }}
+      classNames={{ body: 'gap-xs-9 flex h-full overflow-visible! pr-0!' }}
       data-trials-modal
       onEdit={handleEdit}
       onSave={handleSave}
@@ -121,25 +142,36 @@ export const TrialsModal = (props: TrialsModalProps) => {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex-1 overflow-x-hidden overflow-y-auto">
-        {listedTrials.length === 0 ? (
-          <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTrials')}</p>
-        ) : (
-          <ul className="gap-y-xs-5 gap-x-xs-9 py-xs-0 flex w-full flex-wrap">
-            {listedTrials.map((trial) => (
-              <li key={trial.id}>
-                <TrialItem
-                  trial={trial}
-                  control={control}
-                  time={userTrials?.[trial.id]}
-                  editing={editing}
-                  search={filters.search}
-                  className="w-xl-0"
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className="relative flex-1">
+        <ListHeader
+          title={t('game.label.trials')}
+          itemsCount={listedTrials.length}
+          filtersCount={filtersCount}
+          search={filters.search}
+          surface="paper"
+          className="-top-xs-7 absolute left-0 z-10 -translate-y-full"
+        />
+
+        <div className="size-full overflow-x-hidden overflow-y-auto">
+          {listedTrials.length === 0 ? (
+            <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTrials')}</p>
+          ) : (
+            <ul className="gap-y-xs-5 gap-x-xs-9 py-xs-0 flex w-full flex-wrap">
+              {listedTrials.map((trial) => (
+                <li key={trial.id}>
+                  <TrialItem
+                    trial={trial}
+                    control={control}
+                    time={userTrials?.[trial.id]}
+                    editing={editing}
+                    search={filters.search}
+                    className="w-xl-0"
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </Modal>
   )

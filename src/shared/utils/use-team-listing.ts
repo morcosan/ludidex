@@ -25,10 +25,10 @@ export const useTeamListing = (filters: Filters) => {
       team.name.toLocaleLowerCase().includes(search) ||
       members.some((member) => member.fullName.toLocaleLowerCase().includes(search))
     const matchesFilters =
-      (filters.elements ?? []).every((element) => members.some((member) => member.element === element)) &&
-      (filters.weapons ?? []).every((weapon) => members.some((member) => member.weapon === weapon)) &&
-      (filters.nations ?? []).every((nation) => members.some((member) => member.nation === nation)) &&
       (filters.statuses ?? []).every((status) => members.some((member) => charData?.[member.id]?.status === status)) &&
+      (filters.elements ?? []).every((element) => members.some((member) => member.element === element)) &&
+      (filters.nations ?? []).every((nation) => members.some((member) => member.nation === nation)) &&
+      (filters.weaponTypes ?? []).every((weapon) => members.some((member) => member.weapon === weapon)) &&
       (!filters.teamSizes?.length ||
         filters.teamSizes.some((teamSize) => TEAM_SIZES.indexOf(teamSize) + 1 === team.charIds.length)) &&
       (!filters.tags?.length ||

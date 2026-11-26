@@ -32,8 +32,8 @@ export default function Page() {
   const [filters, setFilters] = useUrlFilters({
     elements: GENSHIN_ELEMENTS,
     statuses: CHARACTER_STATUSES,
-    weapons: GENSHIN_WEAPONS,
     nations: GENSHIN_NATIONS,
+    weaponTypes: GENSHIN_WEAPONS,
     tags: tagOptions,
     search: '',
   })
@@ -52,8 +52,8 @@ export default function Page() {
   }
   const sectionFilters: Filters = {
     statuses: filters.statuses,
-    weapons: filters.weapons,
     nations: filters.nations,
+    weaponTypes: filters.weaponTypes,
     tags: filters.tags,
   }
 

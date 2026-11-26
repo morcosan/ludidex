@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router'
 import { RatingIcon } from '../components/rating-icon/rating-icon'
 import { StatusIcon } from '../components/status-icon/status-icon'
 import { TierListIcon } from '../components/tier-list-icon/tier-list-icon'
-import { GENSHIN_DOMAINS, GENSHIN_DOMAIN_IDS } from '../data'
+import { GENSHIN_DOMAINS, GENSHIN_DOMAIN_IDS, getTrialName } from '../data'
 
 export const VIEW_URL_KEY = 'view'
 export const TAB_URL_KEY = 'tab'
@@ -41,6 +41,7 @@ export interface ViewOption<T extends ViewType> {
   value: T
   label: string
   icon: ReactNode
+  labels?: string[]
 }
 
 interface UseViewOptionsProps<T extends ViewType> {
@@ -89,9 +90,10 @@ export const useViewOptions = <T extends ViewType>(props: UseViewOptionsProps<T>
     { value: 'sort-base-attack', label: getSortLabel(t('game.stats.baseAttackLv10')), icon: sortIcon },
   ]
 
-  const domainViewOptions: ViewOption<DomainViewType>[] = GENSHIN_DOMAINS.map(({ id, name }) => ({
+  const domainViewOptions = GENSHIN_DOMAINS.map(({ id, name, trials }): ViewOption<DomainViewType> => ({
     value: id,
     label: `Domain: ${name}`,
+    labels: trials.map((trial) => getTrialName(trial)),
     icon: <SwordsIcon strokeWidth={1.5} aria-hidden className="h-xs-8 w-xs-8" />,
   }))
 
@@ -99,7 +101,12 @@ export const useViewOptions = <T extends ViewType>(props: UseViewOptionsProps<T>
 
   const viewOptions = viewTypes.map((value): ViewOption<T> => {
     const option = allViewOptions.find((other) => other.value === value)
-    return { value, label: option?.label || '', icon: option?.icon }
+    return {
+      value,
+      label: option?.label || '',
+      labels: option?.labels,
+      icon: option?.icon,
+    }
   })
 
   const isValidView = (value: string | null): value is T => {

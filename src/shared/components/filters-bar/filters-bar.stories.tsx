@@ -10,7 +10,6 @@ const meta: Meta = {
       type: 'characters',
       filters: {
         elements: [],
-        weapons: [],
         nations: [],
       },
       otherFilters: {},

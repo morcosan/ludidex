@@ -113,6 +113,7 @@
       "invalidTagLabels": "Tag labels must be unique",
       "invalidTeamId": "Team must be unique and have at least one member",
       "invalidTeamName": "Team name must be unique and not empty",
+      "nameChangesDaily": "Name changes daily",
       "noCharacters": "No characters match the selected filters",
       "noDomains": "No domains match the selected filters",
       "noTeams": "No teams match the selected filters",
@@ -135,12 +136,16 @@
     "label": {
       "aesthetic": "Aesthetic",
       "affinity": "Affinity",
+      "artifacts": "Artifacts",
       "baseStats": "Base stats",
       "benched": "Benched",
+      "bosses": "Bosses",
       "building": "Building",
       "completed": "Completed",
       "domainTrials": "Domain trials",
+      "domainType": "Domain type",
       "duo": "Duo",
+      "dungeons": "Dungeons",
       "element": "Element",
       "exploration": "Exploration",
       "genshin": "Genshin Impact",
@@ -172,7 +177,8 @@
       "trials": "Trials",
       "trio": "Trio",
       "unused": "Unused",
-      "weapon": "Weapon"
+      "weapon": "Weapon",
+      "weapons": "Weapons"
     },
     "format": {
       "atk": "ATK: {value}",
@@ -219,6 +225,13 @@
       "other": "Other",
       "snezhnaya": "Snezhnaya",
       "sumeru": "Sumeru"
+    },
+    "domains": {
+      "trounce": "Trounce",
+      "blessing": "Blessing",
+      "forgery": "Forgery",
+      "mastery": "Mastery",
+      "onetime": "One-Time"
     },
     "stats": {
       "atk": "ATK",

@@ -1,8 +1,7 @@
-import { FiltersBar, type Filters } from '@app-shared/components'
+import { FiltersBar, ListHeader, type Filters } from '@app-shared/components'
 import { type ViewOption, type ViewType } from '@app-shared/utils/use-view-options'
 import { Button } from '@design-system'
 import { type ReactNode } from 'react'
-import { PageHeader } from './page-header'
 import { SidePanel } from './side-panel'
 
 interface PageTemplateProps<T extends ViewType> extends ReactProps {
@@ -56,9 +55,9 @@ export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) =>
           onChange={onChangeFilters}
         />
 
-        <PageHeader
+        <ListHeader
           title={title}
-          count={itemsCount}
+          itemsCount={itemsCount}
           viewLabel={viewLabel}
           filtersCount={filtersCount}
           search={search}

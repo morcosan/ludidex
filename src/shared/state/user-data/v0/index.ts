@@ -4,7 +4,7 @@ import { GenshinDomainSchema_v0, GenshinDomainsSchema_v0 } from './_domains'
 import { UserPreferencesSchema_v0 } from './_preferences'
 import { GenshinTeamSchema_v0, GenshinTeamsSchema_v0, packTeamId_v0, refineTeam_v0, unpackTeamId_v0 } from './_teams'
 
-const USER_DATA_VERSION_V0 = 'v0.5'
+const USER_DATA_VERSION_V0 = 'v0.6'
 
 const UserDataSchema_v0 = z.object({
   version: z.literal(USER_DATA_VERSION_V0),
@@ -34,8 +34,8 @@ export {
   refineTeam_v0,
   unpackTeamId_v0,
   USER_DATA_VERSION_V0,
-  UserPreferencesSchema_v0,
   UserDataSchema_v0,
+  UserPreferencesSchema_v0,
   type GenshinCharacter_v0,
   type GenshinDomain_v0,
   type GenshinTeam_v0,

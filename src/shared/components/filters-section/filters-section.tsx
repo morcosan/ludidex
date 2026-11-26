@@ -13,6 +13,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
   const {
     hasFilters,
     handleClearFilters,
+    renderDomainTypes,
     renderElements,
     renderNations,
     renderSearch,
@@ -20,7 +21,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
     renderTags,
     renderTeamSizes,
     renderTrialStates,
-    renderWeapons,
+    renderWeaponTypes,
   } = useFilters(props)
 
   return (
@@ -46,7 +47,8 @@ export const FiltersSection = (props: FiltersSectionProps) => {
       {renderTeamSizes()}
       {renderTrialStates()}
       {renderStatuses()}
-      {renderWeapons()}
+      {renderWeaponTypes()}
+      {renderDomainTypes()}
       {renderNations()}
     </PageSection>
   )

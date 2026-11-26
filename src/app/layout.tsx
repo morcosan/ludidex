@@ -13,6 +13,13 @@ import { Link, Outlet, useLocation } from 'react-router'
 import { Providers } from '../core/providers'
 import { appRoutes, gameRouteDefaults } from '../routes'
 
+interface GameHrefs {
+  [gameId: string]: {
+    game: string
+    pages: Record<string, string>
+  }
+}
+
 export default function Layout() {
   const { t } = useTranslation()
   const { getGameIcons, getGameBackgrounds } = useUserAssetsStore()
@@ -24,12 +31,21 @@ export default function Layout() {
   const currentGame = GAMES.find(({ id }) => isCurrentPath(id))
   const gameRoutes = currentGame ? appRoutes.filter(({ to }) => to.startsWith(`/${currentGame.id}/`)) : []
   const currentHref = `${location.pathname}${location.search}${location.hash}`
-  const [lastGameHref, setLastGameHref] = useState(() => (currentGame ? currentHref : ''))
+  const [gameHrefs, setGameHrefs] = useState<GameHrefs>({})
 
   useEffect(() => {
-    if (!currentGame) return
-    setLastGameHref(currentHref)
-  }, [currentHref, currentGame])
+    if (currentGame) {
+      setGameHrefs((hrefs) => {
+        return {
+          ...hrefs,
+          [currentGame.id]: {
+            game: currentHref,
+            pages: { ...hrefs[currentGame.id]?.pages, [location.pathname]: currentHref },
+          },
+        }
+      })
+    }
+  }, [currentHref, currentGame, location.pathname])
 
   return (
     <Providers>
@@ -57,7 +73,7 @@ export default function Layout() {
                 key={game.id}
                 state={isCurrentPath(game.id) ? 'selected' : 'active'}
                 size="sm"
-                linkHref={lastGameHref || gameRouteDefaults[game.id]}
+                linkHref={gameHrefs[game.id]?.game || gameRouteDefaults[game.id]}
                 tooltip={t(game.nameKey)}
                 classNames={{ surface: 'p-px!', content: 'flex-center h-full w-full' }}
               >
@@ -125,7 +141,7 @@ export default function Layout() {
               {gameRoutes.map(({ to, labelKey }) => (
                 <Button
                   key={to}
-                  linkHref={to}
+                  linkHref={(currentGame && gameHrefs[currentGame.id]?.pages[to]) || to}
                   state={location.pathname === to ? 'selected' : 'active'}
                   variant="menu-default"
                   size="lg"

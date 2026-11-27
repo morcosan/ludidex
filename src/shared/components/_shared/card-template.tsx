@@ -9,7 +9,8 @@ import { StatusField } from '../status-field/status-field'
 
 interface CardTemplateProps<T extends FieldValues> extends ReactProps {
   banner: ReactNode
-  title: ReactNode | ((sticky: boolean) => ReactNode)
+  title: ReactNode
+  titleIcon?: ReactNode
   control?: Control<T>
   editing?: boolean
   fieldNames?: (keyof T & ('rating' | 'status'))[]
@@ -19,7 +20,18 @@ interface CardTemplateProps<T extends FieldValues> extends ReactProps {
 }
 
 export const CardTemplate = <T extends FieldValues>(props: CardTemplateProps<T>) => {
-  const { actions, banner, children, className, classNames, control, editing, fieldNames = [], title } = props
+  const {
+    actions,
+    banner,
+    children,
+    className,
+    classNames,
+    control,
+    editing,
+    fieldNames = [],
+    title,
+    titleIcon,
+  } = props
   const userPrefs = useUserDataStore((state) => state.userData?.preferences)
   const ratingLabels = { ...RATING_LABELS, ...userPrefs?.ratingLabels }
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -72,12 +84,24 @@ export const CardTemplate = <T extends FieldValues>(props: CardTemplateProps<T>)
           )}
         >
           <div
-            className={cx(
-              'min-h-field-h-lg text-size-xl leading-sm flex flex-col justify-center',
-              !editing && 'font-weight-lg',
-            )}
+            className={cx('min-h-field-h-lg text-size-xl leading-xs flex items-center', !editing && 'font-weight-lg')}
           >
-            {typeof title === 'function' ? title(isTitleSticky) : title}
+            <div
+              className={cx(
+                '-ml-xs-5 pr-xs-5 transition-[width] ease-out has-[>:empty]:hidden',
+                isTitleSticky ? 'pr-xs-2! w-fit' : 'w-0',
+              )}
+            >
+              <div
+                className={cx(
+                  'origin-left transition-[scale,opacity] ease-out',
+                  isTitleSticky ? 'scale-100 opacity-100' : 'scale-0 opacity-0',
+                )}
+              >
+                {titleIcon}
+              </div>
+            </div>
+            <div className="flex-1">{title}</div>
           </div>
         </div>
 

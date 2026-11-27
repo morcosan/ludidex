@@ -255,7 +255,13 @@ export default {
     lg: { $value: 600 },
     xl: { $value: 700 },
   },
-  'line-height': { 0: { $value: 0 }, 1: { $value: 1 }, sm: { $value: 1.25 }, md: { $value: 1.5 } },
+  'line-height': {
+    0: { $value: 0 },
+    1: { $value: 1 },
+    xs: { $value: 1.1 },
+    sm: { $value: 1.25 },
+    md: { $value: 1.5 },
+  },
   duration: {
     xs: { $value: '0.1s' },
     sm: { $value: '0.2s' },

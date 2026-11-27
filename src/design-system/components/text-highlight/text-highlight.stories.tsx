@@ -12,6 +12,7 @@ const meta: Meta = {
       style: {},
     },
     clearDefaults: ['text', 'keyword'],
+    hasRef: true,
   }),
 }
 

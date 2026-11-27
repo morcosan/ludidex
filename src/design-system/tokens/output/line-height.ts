@@ -8,6 +8,7 @@ export const CSS_PREFIX__LINE_HEIGHT = '--ds-line-height-'
 export const TOKENS__LINE_HEIGHT = {
   '0': { value: 0 },
   '1': { value: 1 },
+  xs: { value: 1.1 },
   sm: { value: 1.25 },
   md: { value: 1.5 },
 } as const

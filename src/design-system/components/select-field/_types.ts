@@ -1,11 +1,11 @@
 import { type ComboboxItem } from '@mantine/core'
-import { type CSSProperties, type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
 export type SelectOption<T extends string = string> = ComboboxItem<T>
 export type SelectValue = string | null
 export type SelectFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
+export interface SelectFieldProps extends ReactProps {
   /**
    * Props
    */
@@ -34,4 +34,23 @@ export interface SelectFieldProps extends ReactProps<HTMLInputElement> {
    * Events
    */
   onChange?: (value: string | null) => void
+
+  /**
+   * Reference
+   */
+  /**
+   * Reference object with imperative methods
+   * @param setValue(value:SelectValue):void  - Sets the current value
+   * @param getValue():SelectValue            - Returns the current value
+   * @param focus():void                      - Triggers focus on the `<input>`
+   * @param blur():void                       - Triggers blur on the `<input>`
+   */
+  ref?: Ref<SelectFieldHandle>
+}
+
+export interface SelectFieldHandle extends HTMLDivElement {
+  setValue(value: SelectValue): void
+  getValue(): SelectValue
+  focus(): void
+  blur(): void
 }

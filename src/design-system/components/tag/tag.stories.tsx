@@ -14,6 +14,7 @@ const meta: Meta = {
     },
     events: ['onRemove'],
     inlineRadios: ['size'],
+    hasRef: true,
   }),
 }
 

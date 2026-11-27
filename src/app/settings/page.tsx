@@ -1,5 +1,5 @@
 import { Breadcrumb, SearchField } from '@app-shared/components'
-import { Button, TextHighlight } from '@design-system'
+import { Button, ScrollArea, TextHighlight } from '@design-system'
 import { type ParseKeys } from 'i18next'
 import { type ComponentType, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -94,7 +94,7 @@ export default function Page() {
         </div>
 
         {/* SECTIONS */}
-        <div className="mt-sm-0 min-h-0 flex-1 overflow-y-auto">
+        <ScrollArea className="mt-xs-9 flex-1">
           <div className="max-w-xxl-0 px-xs-1 gap-sm-0 mx-auto flex w-full flex-col">
             {activeSections.map(({ component: Section, id, labelKey }) => (
               <Section
@@ -107,7 +107,7 @@ export default function Page() {
               />
             ))}
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   )

@@ -40,12 +40,15 @@ export const TeamName = (props: TeamNameProps) => {
           size="lg"
           value={field.value}
           invalid={invalid}
+          placeholder={t('general.label.newTeam')}
           ariaDescribedBy={invalid ? 'team-card-name-error' : undefined}
           onChange={field.onChange}
           onBlur={field.onBlur}
         />
       ) : (
-        <h3 className={cx(!team.name && 'text-color-text-placeholder')}>{team.name || t('general.label.newTeam')}</h3>
+        <h3 className={cx('line-clamp-2', !team.name && 'text-color-text-placeholder')}>
+          {team.name || t('general.label.newTeam')}
+        </h3>
       )}
       {editing && invalid && (
         <ErrorNotice id="team-card-name-error" text={t('general.notice.invalidTeamName')} className="mt-xs-1" />

@@ -4,20 +4,10 @@ export type InputElement = HTMLInputElement & HTMLTextAreaElement
 export type TextFieldVariant = 'default' | 'primary' | 'secondary'
 export type TextFieldSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-export interface TextFieldProps extends HtmlDataProps {
+export interface TextFieldProps extends ReactProps {
   /**
    * Slots
    */
-  /** Text value displayed inside the field */
-  value?: string
-  /** Text displayed as placeholder when `value` prop is empty */
-  placeholder?: string
-  /** Text used by screen reader as label for the field */
-  ariaLabel?: string
-  /** Text used by screen reader as description for the field */
-  ariaDescription?: string
-  /** Element ID used by screen reader as description for the field */
-  ariaDescribedBy?: string
   /** Content to be rendered inside the field, on the left */
   prefix?: ReactNode
   /** Content to be rendered inside the field, on the right */
@@ -28,6 +18,10 @@ export interface TextFieldProps extends HtmlDataProps {
    */
   /** Unique id attribute for the `input` / `textarea` element */
   id: string
+  /** Text value displayed inside the field */
+  value?: string
+  /** Text displayed as placeholder when `value` prop is empty */
+  placeholder?: string
   /** Property that determines the height and padding for the field */
   size?: TextFieldSize
   /** Maximum number of characters allowed for `value` prop */
@@ -54,6 +48,12 @@ export interface TextFieldProps extends HtmlDataProps {
   disabled?: boolean
   /** Flag for displaying the error state */
   invalid?: boolean
+  /** Text used by screen reader as label for the field */
+  ariaLabel?: string
+  /** Text used by screen reader as description for the field */
+  ariaDescription?: string
+  /** Element ID used by screen reader as description for the field */
+  ariaDescribedBy?: string
   /** CSS class attribute for the wrapper element */
   className?: string
   /** CSS style attribute for the wrapper element */
@@ -85,7 +85,7 @@ export interface TextFieldProps extends HtmlDataProps {
   onBlur?: (event: ReactFocusEvent) => void
 
   /**
-   * Methods
+   * Reference
    */
   /**
    * Reference object with imperative methods

@@ -1,13 +1,11 @@
-import { type KeyboardEvent, useImperativeHandle, useRef, useState } from 'react'
+import { type KeyboardEvent, useRef, useState } from 'react'
 import { type SelectFieldProps } from './_types'
 
 export const useEvents = (props: SelectFieldProps) => {
-  const { disabled, onChange, options, ref, value } = props
+  const { disabled, onChange, options, value } = props
   const innerRef = useRef<HTMLInputElement>(null)
   const [opened, setOpened] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
-
-  useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
 
   const getNextEnabledIndex = (index: number, direction: 1 | -1) => {
     for (let nextIndex = index + direction; nextIndex >= 0 && nextIndex < options.length; nextIndex += direction) {

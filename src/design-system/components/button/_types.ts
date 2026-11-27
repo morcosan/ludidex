@@ -51,7 +51,7 @@ export interface ButtonProps extends HtmlDataProps {
   onClick?: (event: ReactMouseEvent) => void
 
   /**
-   * Methods
+   * Reference
    */
   ref?: Ref<HTMLButtonElement | HTMLAnchorElement>
 }

@@ -18,7 +18,7 @@ const meta: Meta = {
       className: 'w-xl-0 h-xl-0',
     },
     events: ['onLoading'],
-    hasMethods: true,
+    hasRef: true,
   }),
 }
 

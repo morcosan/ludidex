@@ -1,8 +1,9 @@
-import { Modal } from '@design-system'
+import { Modal, ScrollArea } from '@design-system'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import {
+  GENSHIN_CHARACTERS_BY_ID,
   GENSHIN_DOMAIN_BY_TRIAL,
   GENSHIN_DOMAIN_TRIALS,
   getTrialName,
@@ -12,7 +13,9 @@ import {
   type TrialState,
 } from '../../data'
 import { useUserDataStore } from '../../state/use-user-data'
+import { unpackTeamId } from '../../state/utils'
 import { countFilters, formatTime, isTimerFailed, parseTime } from '../../utils/various'
+import { ModalTitle } from '../_shared/modal-title'
 import { FiltersSection, type Filters } from '../filters-section/filters-section'
 import { ListHeader } from '../list-header/list-header'
 import { TrialItem } from './_partials/trial-item'
@@ -40,6 +43,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
     mode: 'onTouched',
   })
   const filtersCount = countFilters(filters)
+  const teamMembers = unpackTeamId(teamId).flatMap((id) => GENSHIN_CHARACTERS_BY_ID[id] ?? [])
 
   const listedTrials = useMemo(() => {
     const search = filters.search?.trim().toLocaleLowerCase()
@@ -117,10 +121,19 @@ export const TrialsModal = (props: TrialsModalProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened])
 
+  const leftWidthClass = cx('w-lg-9')
+
   return (
     <Modal
       opened={opened}
-      title={title}
+      title={
+        <ModalTitle
+          title={title}
+          subtitle={t('game.label.domainTrials')}
+          members={teamMembers}
+          className={leftWidthClass}
+        />
+      }
       width="xxl"
       height="full"
       editable
@@ -135,10 +148,10 @@ export const TrialsModal = (props: TrialsModalProps) => {
       onClose={onClose}
     >
       {/* LEFT SIDE */}
-      <div className="gap-sm-0 w-lg-9 flex min-h-0 flex-col">
-        <div className="pr-xs-0 gap-sm-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
+      <div className={cx(leftWidthClass, 'gap-sm-0 flex min-h-0 flex-col')}>
+        <ScrollArea className="gap-sm-2 flex flex-1 flex-col">
           <FiltersSection type="trials" filters={filters} surface="paper" onChange={handleChangeFilters} />
-        </div>
+        </ScrollArea>
       </div>
 
       {/* RIGHT SIDE */}
@@ -149,10 +162,10 @@ export const TrialsModal = (props: TrialsModalProps) => {
           filtersCount={filtersCount}
           search={filters.search}
           surface="paper"
-          className="-top-xs-7 absolute left-0 z-10 -translate-y-full"
+          className="-top-xs-4 absolute left-0 z-10 -translate-y-full"
         />
 
-        <div className="size-full overflow-x-hidden overflow-y-auto">
+        <ScrollArea className="h-full">
           {listedTrials.length === 0 ? (
             <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTrials')}</p>
           ) : (
@@ -171,7 +184,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
               ))}
             </ul>
           )}
-        </div>
+        </ScrollArea>
       </div>
     </Modal>
   )

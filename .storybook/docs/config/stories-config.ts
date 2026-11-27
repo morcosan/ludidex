@@ -38,7 +38,7 @@ type ArgsConfig<C> = {
   events?: PropKeys<C>
   inlineRadios?: PropKeys<C>
   clearDefaults?: PropKeys<C>
-  hasMethods?: boolean
+  hasRef?: boolean
   shortcuts?: StoryShortcut[]
   render?: (props: any) => ReactElement
 }
@@ -59,7 +59,7 @@ const defineArgType = ({ control, header, value }: ControlParam): InputType => (
 })
 
 const defineArgs = <C>(args: ArgsConfig<C>) => {
-  const { slots, props, events, hasMethods, clearDefaults, inlineRadios, shortcuts, render } = args
+  const { slots, props, events, hasRef, clearDefaults, inlineRadios, shortcuts, render } = args
   const argTypes: ArgTypes = {}
   const clearDefaultsKeys = [...(clearDefaults || []), 'id', 'className', 'classNames', 'style']
 
@@ -76,7 +76,7 @@ const defineArgs = <C>(args: ArgsConfig<C>) => {
     })
   })
   events?.forEach((key: keyof JsxProps<C>) => (argTypes[key as string] = defineArgType({ header: 'Events' })))
-  hasMethods && (argTypes['ref'] = defineArgType({ header: 'Methods', control: false }))
+  hasRef && (argTypes['ref'] = defineArgType({ header: 'Reference', control: false }))
 
   return {
     argTypes,

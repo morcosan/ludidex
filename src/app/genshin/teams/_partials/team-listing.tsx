@@ -3,6 +3,7 @@ import { GENSHIN_DOMAIN_IDS } from '@app-shared/data'
 import { type GenshinTeam, type ItemSize } from '@app-shared/state/types'
 import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { type ViewType } from '@app-shared/utils/use-view-options'
+import { ScrollArea } from '@design-system'
 import { type RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
@@ -73,7 +74,7 @@ export const TeamListing = (props: TeamListingProps) => {
   )
 
   return (
-    <div ref={scrollRef} className={cx('pb-xs-5 pr-xs-3 flex min-h-0 flex-1 overflow-y-auto', className)}>
+    <ScrollArea ref={scrollRef} className={cx('flex flex-1', className)}>
       {teams.length === 0 ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noTeams')}</p>
       ) : isRankingView ? (
@@ -105,6 +106,6 @@ export const TeamListing = (props: TeamListingProps) => {
       ) : (
         <ul className={cx('m-0! p-0!', contentClass)}>{teams.map(renderItem)}</ul>
       )}
-    </div>
+    </ScrollArea>
   )
 }

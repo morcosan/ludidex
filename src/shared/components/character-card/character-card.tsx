@@ -48,17 +48,15 @@ export const CharacterCard = (props: CharacterCardProps) => {
       control={control}
       fieldNames={['rating', 'status'] satisfies (keyof CharacterDraft)[]}
       banner={<BannerImage character={character} editing={isEditing} />}
-      title={(sticky) => (
-        <>
-          {sticky && <CharacterAvatar character={character} className="top-xs-3 left-xs-2 size-sm-3 absolute! mt-px" />}
-          <div className={cx('transition-[padding] ease-out', sticky && '-ml-xs-8 pl-sm-6')}>
-            <h3>{character.name}</h3>
-            <div className="text-size-xs text-color-text-subtle pb-xs-0 truncate px-px leading-1">
-              {character.fullName}
-            </div>
+      title={
+        <div className="leading-sm">
+          <h3>{character.name}</h3>
+          <div className="text-size-xs text-color-text-subtle pb-xs-0 truncate px-px leading-1">
+            {character.fullName}
           </div>
-        </>
-      )}
+        </div>
+      }
+      titleIcon={<CharacterAvatar character={character} className="size-sm-3" />}
       actions={
         <CardActions
           editing={isEditing}

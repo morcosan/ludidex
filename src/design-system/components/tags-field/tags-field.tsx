@@ -4,16 +4,19 @@ import '@mantine/core/styles/Input.css'
 import '@mantine/core/styles/Popover.css'
 import '@mantine/core/styles/ScrollArea.css'
 import { ChevronDownIcon } from 'lucide-react'
-import { type ClipboardEvent, useState } from 'react'
+import { type ClipboardEvent, useRef, useState } from 'react'
+import { useRefHandle } from '../../utilities/react-utils'
 import { Tag } from '../tag/tag'
 import { type TagsFieldProps } from './_types'
 import { useStyles } from './_use-styles'
 
-export { type TagsFieldProps }
+export type { TagsFieldHandle, TagsFieldProps, TagsFieldSize } from './_types'
 
 export const TagsField = (props: TagsFieldProps) => {
-  const { id, value, options, size = 'md', disabled, className, style, getTagStyle, onChange } = props
+  const { id, value, options, size = 'md', disabled, className, style, tagStyleFn, onChange, ref } = props
   const { chevronCss, classNames, styles } = useStyles(props)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const [searchValue, setSearchValue] = useState('')
   const tagSize = size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : 'md'
 
@@ -37,8 +40,22 @@ export const TagsField = (props: TagsFieldProps) => {
     setSearchValue((value) => value.slice(0, start) + pastedText + value.slice(end))
   }
 
+  useRefHandle(
+    ref,
+    wrapperRef,
+    {
+      getValue: () => dedupeTags(value),
+      setValue: (tags: string[]) => onChange?.(dedupeTags(tags)),
+      focus: () => inputRef.current?.focus(),
+      blur: () => inputRef.current?.blur(),
+    },
+    [value, onChange],
+  )
+
   return (
     <MantineTagsInput
+      ref={inputRef}
+      wrapperProps={{ ref: wrapperRef }}
       id={id}
       size={size}
       value={dedupeTags(value)}
@@ -49,14 +66,14 @@ export const TagsField = (props: TagsFieldProps) => {
       splitChars={[]} // Only Enter key creates new tag
       acceptValueOnBlur={false} // Only Enter key creates new tag
       rightSection={<ChevronDownIcon aria-hidden css={chevronCss} />}
-      renderOption={({ option }) => <Tag value={option.value} size="xs" style={getTagStyle?.(option.value)} />}
+      renderOption={({ option }) => <Tag value={option.value} size="xs" style={tagStyleFn?.(option.value)} />}
       renderPill={({ value = '', onRemove }) => (
         <Tag
           key={value}
           value={value}
           size={tagSize}
           removable={!disabled}
-          style={getTagStyle?.(value)}
+          style={tagStyleFn?.(value)}
           onRemove={onRemove}
         />
       )}

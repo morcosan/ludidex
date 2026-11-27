@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode, type Ref } from 'react'
 import { type LinkType } from '../_shared/types'
 
 export type CardState = 'static' | 'active' | 'pressed' | 'selected' | 'loading' | 'disabled'
@@ -45,4 +45,9 @@ export interface CardProps extends HtmlDataProps {
    */
   /** Event emitted when card is clicked, tapped or triggered via `Enter` / `Space` keys */
   onClick?: (event: ReactMouseEvent) => void
+
+  /**
+   * Reference
+   */
+  ref?: Ref<HTMLDivElement | HTMLButtonElement | HTMLAnchorElement>
 }

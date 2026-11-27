@@ -24,10 +24,11 @@ export const MemberItem = ({ character, status, editing, onClick }: MemberItemPr
     <li className="py-xs-0 flex">
       <Card
         state={editing ? 'active' : 'static'}
-        className="-mx-xs-1 h-fit! min-h-fit! w-full"
+        tooltip={editing ? t('general.action.selectTeamMembers') : undefined}
+        className="h-fit! min-h-fit! w-full"
         classNames={{
           surface: cx('p-0!', !editing && 'border-transparent! shadow-none!'),
-          content: 'p-xs-1 gap-xs-3 flex items-center',
+          content: cx('py-xs-1 gap-xs-3 flex items-center', editing && 'px-xs-1'),
         }}
         onClick={onClick}
       >

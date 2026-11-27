@@ -55,6 +55,7 @@ export default function Page() {
       '[data-team-delete-modal]',
       '[data-team-item]',
       '[data-trials-modal]',
+      '[data-new-team-button]',
       '[data-preview-drawer]',
     ],
     callback: () => setIsPreviewOpen(false),
@@ -152,6 +153,7 @@ export default function Page() {
             size="xl"
             floating
             className="bottom-xs-3 right-xs-8 z-sticky absolute!"
+            data-new-team-button
             onClick={handleClickNewTeam}
           >
             <PlusIcon aria-hidden className="h-sm-1 w-sm-1" />
@@ -165,6 +167,7 @@ export default function Page() {
               team={previewTeam}
               opened={isPreviewOpen}
               editing={isEmptyPreview}
+              unsaved={isEmptyPreview}
               className="h-full"
               onSave={handleSaveTeam}
               onClose={handleClosePreview}

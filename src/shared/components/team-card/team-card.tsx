@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { parseUserInput } from '../../utils/various'
 import { CardActions } from '../_shared/card-actions'
 import { CardTemplate } from '../_shared/card-template'
 import { NotesSection } from '../_shared/notes-section'
@@ -9,6 +10,7 @@ import { TeamDeleteModal } from './_modals/team-delete-modal'
 import { BannerImage } from './_partials/banner-image'
 import { MemberSelector } from './_partials/member-selector'
 import { TeamName } from './_partials/team-name'
+import { TeamNameIcon } from './_partials/team-name-icon'
 import { TrialsSection } from './_partials/trials-section'
 import { useDraft } from './_partials/use-draft'
 import { type TeamDraft } from './_partials/use-draft-utils'
@@ -17,10 +19,12 @@ import { type GenshinTierLists, type TeamCardProps } from './_types'
 export { type TeamCardProps }
 
 export const TeamCard = (props: TeamCardProps) => {
-  const { team, opened = true, className, onClose, onDelete } = props
+  const { team, opened = true, unsaved = false, className, onClose, onDelete } = props
   const { t } = useTranslation()
-  const { control, hasChanges, isEditing, handleClickDiscard, handleClickEdit, handleClickSave } = useDraft(props)
+  const { control, getValues, hasChanges, isEditing, handleClickDiscard, handleClickEdit, handleClickSave } =
+    useDraft(props)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const getTeamName = () => parseUserInput(getValues('name'))
   const tierListRows: { name: keyof GenshinTierLists; label: string }[] = [
     { name: 'synergy', label: t('game.label.synergy') },
     { name: 'story', label: t('game.label.story') },
@@ -58,6 +62,7 @@ export const TeamCard = (props: TeamCardProps) => {
       fieldNames={['rating'] satisfies (keyof TeamDraft)[]}
       banner={<BannerImage control={control} editing={isEditing} />}
       title={<TeamName team={team} control={control} editing={isEditing} />}
+      titleIcon={<TeamNameIcon control={control} className="h-sm-3" />}
       actions={
         <CardActions
           editing={isEditing}
@@ -73,7 +78,7 @@ export const TeamCard = (props: TeamCardProps) => {
       classNames={{ content: 'min-h-[1200px]' }}
     >
       {/* MEMBERS */}
-      <MemberSelector team={team} control={control} editing={isEditing} />
+      <MemberSelector editing={isEditing} control={control} team={team} getTeamName={getTeamName} />
 
       {/* TAGS */}
       <TagsSection editing={isEditing} control={control} tags={team.tags} />
@@ -85,7 +90,7 @@ export const TeamCard = (props: TeamCardProps) => {
       <TierListsSection editing={isEditing} control={control} rows={tierListRows} />
 
       {/* TRIALS */}
-      <TrialsSection team={team} />
+      <TrialsSection team={team} unsaved={unsaved} getTeamName={getTeamName} />
 
       <TeamDeleteModal
         key="team-delete-modal"

@@ -23,6 +23,7 @@ const meta: Meta = {
       team,
       opened: true,
       editing: false,
+      unsaved: false,
       className: 'h-xl-8',
     },
     events: ['onClose', 'onSave', 'onDelete'],

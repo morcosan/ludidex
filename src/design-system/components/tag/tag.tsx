@@ -1,22 +1,34 @@
 import { type CSSObject } from '@emotion/react'
 import { XIcon } from 'lucide-react'
-import { type CSSProperties } from 'react'
+import { type CSSProperties, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemeService } from '../../services/theme-service'
 
 export type TagSize = 'xs' | 'sm' | 'md'
 
 export interface TagProps extends ReactProps {
+  /**
+   * Props
+   */
   value: string
   size?: TagSize
   removable?: boolean
   className?: string
   style?: CSSProperties
+
+  /**
+   * Events
+   */
   onRemove?: () => void
+
+  /**
+   * Reference
+   */
+  ref?: Ref<HTMLSpanElement>
 }
 
 export const Tag = (props: TagProps) => {
-  const { value, size = 'sm', removable, className, style, onRemove } = props
+  const { value, size = 'sm', removable, className, style, onRemove, ref } = props
   const { t } = useTranslation()
   const { tokens } = useThemeService()
 
@@ -71,7 +83,7 @@ export const Tag = (props: TagProps) => {
   }
 
   return (
-    <span css={tagCss} className={className} style={style}>
+    <span ref={ref} css={tagCss} className={className} style={style}>
       <span css={valueCss}>{value}</span>
 
       {removable && (

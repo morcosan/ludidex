@@ -21,6 +21,7 @@ const meta: Meta = {
     },
     events: ['onClick'],
     inlineRadios: ['state', 'size', 'variant', 'linkType'],
+    hasRef: true,
   }),
 }
 

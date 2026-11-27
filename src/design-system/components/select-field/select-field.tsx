@@ -1,11 +1,13 @@
 import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRefHandle } from '../../utilities/react-utils'
 import { Popover } from '../popover/popover'
 import { type SelectFieldProps } from './_types'
 import { useEvents } from './_use-events'
 import { useStyles } from './_use-styles'
 
-export type { SelectFieldProps, SelectOption, SelectValue } from './_types'
+export type { SelectFieldHandle, SelectFieldProps, SelectOption, SelectValue } from './_types'
 
 export const SelectField = (props: SelectFieldProps) => {
   const {
@@ -25,8 +27,10 @@ export const SelectField = (props: SelectFieldProps) => {
     size = 'md',
     style,
     value,
+    ref,
   } = props
   const { t } = useTranslation()
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const styles = useStyles({ ...props, size })
   const {
     activeIndex,
@@ -46,6 +50,18 @@ export const SelectField = (props: SelectFieldProps) => {
   const selectedOption = options.find((option) => option.value === value)
   const canClear = clearable && !disabled && value !== null
 
+  useRefHandle(
+    ref,
+    wrapperRef,
+    {
+      getValue: () => value,
+      setValue: (nextValue: string | null) => props.onChange?.(nextValue),
+      focus: () => innerRef.current?.focus(),
+      blur: () => innerRef.current?.blur(),
+    },
+    [value, props.onChange],
+  )
+
   return (
     <Popover
       position="bottom-start"
@@ -64,6 +80,7 @@ export const SelectField = (props: SelectFieldProps) => {
       }}
       trigger={
         <div
+          ref={wrapperRef}
           css={styles.fieldCss}
           className={cx('a11y-outline-proxy', className)}
           style={style}

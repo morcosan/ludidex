@@ -13,7 +13,7 @@ const meta: Meta = {
   ...defineMeta(TrialsModal, {
     props: {
       opened: false,
-      title: 'Select trials',
+      title: 'Stellar Sandrone DPS',
       teamId: TEAM_ID,
     },
     events: ['onClose'],

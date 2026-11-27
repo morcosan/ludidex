@@ -12,7 +12,7 @@ const meta: Meta = {
   ...defineMeta(CharactersModal, {
     props: {
       opened: false,
-      title: 'Select characters',
+      title: 'Stellar Sandrone DPS',
       selection: {
         slots: [GENSHIN_CHARACTERS_BY_ID['sandrone'], null, GENSHIN_CHARACTERS_BY_ID['vodyanitsa'], null],
         index: 1,

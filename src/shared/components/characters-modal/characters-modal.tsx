@@ -1,4 +1,4 @@
-import { Modal } from '@design-system'
+import { Modal, ScrollArea } from '@design-system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type GenshinCharacter } from '../../data'
@@ -7,6 +7,7 @@ import { useUserSettingsStore } from '../../state/use-user-settings'
 import { useCharacterLabel } from '../../utils/use-character-label'
 import { useCharacterListing } from '../../utils/use-character-listing'
 import { countFilters } from '../../utils/various'
+import { ModalTitle } from '../_shared/modal-title'
 import { AppearanceSection } from '../appearance-section/appearance-section'
 import { CharacterItem } from '../character-item/character-item'
 import { FiltersSection, type Filters } from '../filters-section/filters-section'
@@ -60,10 +61,19 @@ export const CharactersModal = (props: CharactersModalProps) => {
     }
   }
 
+  const leftWidthClass = cx('w-character-card')
+
   return (
     <Modal
       opened={opened}
-      title={title}
+      title={
+        <ModalTitle
+          title={title}
+          subtitle={t('game.label.teamMembers')}
+          members={selection?.slots.flatMap((char) => char ?? [])}
+          className={leftWidthClass}
+        />
+      }
       width="xl"
       height="full"
       noFooter
@@ -72,7 +82,7 @@ export const CharactersModal = (props: CharactersModalProps) => {
       onClose={onClose}
     >
       {/* LEFT SIDE */}
-      <div className="gap-sm-0 w-character-card flex min-h-0 flex-col">
+      <div className={cx(leftWidthClass, 'gap-sm-0 flex min-h-0 flex-col')}>
         {selection && (
           <SelectionSlots
             selection={selection}
@@ -81,10 +91,10 @@ export const CharactersModal = (props: CharactersModalProps) => {
           />
         )}
 
-        <div className="pr-xs-0 gap-sm-2 flex min-h-0 flex-1 flex-col overflow-y-auto">
+        <ScrollArea className="gap-sm-2 flex flex-1 flex-col">
           <FiltersSection type="characters" filters={filters} surface="paper" onChange={setFilters} />
           <AppearanceSection type="characters" className="pb-xs-9" />
-        </div>
+        </ScrollArea>
       </div>
 
       {/* RIGHT SIDE */}
@@ -95,10 +105,10 @@ export const CharactersModal = (props: CharactersModalProps) => {
           filtersCount={countFilters(filters)}
           search={filters.search}
           surface="paper"
-          className="-top-xs-7 absolute left-0 z-10 -translate-y-full"
+          className="-top-xs-4 absolute left-0 z-10 -translate-y-full"
         />
 
-        <div className="size-full overflow-x-hidden overflow-y-auto">
+        <ScrollArea className="h-full">
           {listedCharacters.length === 0 ? (
             <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
           ) : (
@@ -113,7 +123,9 @@ export const CharactersModal = (props: CharactersModalProps) => {
                       selected={slotIndex > -1}
                       size={userSettings.charItemSize}
                       labelTop={userSettings.charLabelTop && getCharLabel(character, userSettings.charLabelTop)}
-                      labelBottom={userSettings.charLabelBottom && getCharLabel(character, userSettings.charLabelBottom)}
+                      labelBottom={
+                        userSettings.charLabelBottom && getCharLabel(character, userSettings.charLabelBottom)
+                      }
                       onClick={onClickOption}
                     >
                       {slotIndex > -1 && <SlotCorner digit={String(slotIndex + 1)} variant="item" />}
@@ -123,7 +135,7 @@ export const CharactersModal = (props: CharactersModalProps) => {
               })}
             </ul>
           )}
-        </div>
+        </ScrollArea>
       </div>
     </Modal>
   )

@@ -19,16 +19,13 @@ const meta: Meta = {
   title: 'Design System / Components / Text Field',
   ...defineMeta(TextField, {
     slots: {
-      value: '',
-      placeholder: 'Type some text',
-      ariaLabel: 'Example label',
-      ariaDescription: 'Example description',
-      ariaDescribedBy: '',
       prefix: '',
       suffix: '',
     },
     props: {
       id: 'example-id',
+      value: '',
+      placeholder: 'Type some text',
       size: 'md',
       maxLength: 0,
       multiline: false,
@@ -37,12 +34,15 @@ const meta: Meta = {
       readonly: false,
       disabled: false,
       invalid: false,
+      ariaLabel: 'Example label',
+      ariaDescription: 'Example description',
+      ariaDescribedBy: '',
       className: '',
       style: {},
     },
     events: ['onChange', 'onSubmit', 'onFocus', 'onBlur'],
     inlineRadios: ['size'],
-    hasMethods: true,
+    hasRef: true,
     shortcuts: [
       {
         keys: [Keyboard.ALT, Keyboard.DIGIT_1],

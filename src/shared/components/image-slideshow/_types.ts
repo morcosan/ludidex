@@ -19,7 +19,7 @@ export interface ImageSlideshowProps extends ReactProps {
   onLoading?: (loading: boolean) => void
 
   /**
-   * Methods
+   * Reference
    */
   /**
    * Reference object with imperative methods

@@ -11,16 +11,19 @@ import { MemberItem } from './member-item'
 import { type TeamDraft } from './use-draft-utils'
 
 interface MemberSelectorProps {
+  editing: boolean
   control: Control<TeamDraft>
   team: GenshinTeam
-  editing: boolean
+  getTeamName: () => string
 }
 
-export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) => {
+export const MemberSelector = (props: MemberSelectorProps) => {
+  const { editing, control, team, getTeamName } = props
   const { t } = useTranslation()
   const userData = useUserDataStore((state) => state.userData?.genshin)
   const [memberIndex, setMemberIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalTitle, setModalTitle] = useState('')
   const { field, fieldState } = useController({
     control,
     name: 'charIds',
@@ -45,6 +48,7 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
   }
 
   const handleClickMember = (index: number) => {
+    setModalTitle(getTeamName() || t('general.label.newTeam'))
     setMemberIndex(index)
     setIsModalOpen(true)
   }
@@ -89,7 +93,7 @@ export const MemberSelector = ({ control, team, editing }: MemberSelectorProps) 
 
       <CharactersModal
         opened={isModalOpen}
-        title={t('general.action.selectTeamMembers')}
+        title={modalTitle}
         selection={selection}
         onSelect={handleSelectMember}
         onChangeSlot={setMemberIndex}

@@ -6,6 +6,7 @@ import { useUserSettingsStore } from '@app-shared/state/use-user-settings'
 import { useCharacterLabel } from '@app-shared/utils/use-character-label'
 import { type ViewType } from '@app-shared/utils/use-view-options'
 import { formatInteger } from '@app-shared/utils/various'
+import { ScrollArea } from '@design-system'
 import { useTranslation } from 'react-i18next'
 import { RankingView } from '../../_shared/ranking-view'
 import { SortingView } from '../../_shared/sorting-view'
@@ -108,7 +109,7 @@ export const CharacterListing = (props: CharacterListingProps) => {
   )
 
   return (
-    <div className={cx('pr-xs-3 pb-xs-5 flex min-h-0 flex-1 overflow-y-auto', className)}>
+    <ScrollArea className={cx('flex flex-1', className)}>
       {characters.length === 0 ? (
         <p className="text-size-sm text-color-text-subtle">{t('general.notice.noCharacters')}</p>
       ) : isRankingView ? (
@@ -139,6 +140,6 @@ export const CharacterListing = (props: CharacterListingProps) => {
       ) : (
         <ul className={cx('m-0!', contentClass)}>{characters.map(renderItem)}</ul>
       )}
-    </div>
+    </ScrollArea>
   )
 }

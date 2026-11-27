@@ -1,7 +1,7 @@
-import { defineMeta, loremArray, loremFalse, loremFullName, SelectField } from '@storybook-docs'
+import { defineMeta, Keyboard, loremArray, loremFalse, loremFullName, SelectField } from '@storybook-docs'
 import { type Meta, type StoryObj } from '@storybook/react-vite'
-import { useEffect, useState } from 'react'
-import { type SelectFieldProps, type SelectOption } from './select-field'
+import { createRef, useEffect, useState } from 'react'
+import { type SelectFieldHandle, type SelectFieldProps, type SelectOption } from './select-field'
 
 const getOptionFn = (optionFn: SelectFieldProps['optionFn'] | string) => {
   if (typeof optionFn !== 'string') return optionFn
@@ -9,6 +9,7 @@ const getOptionFn = (optionFn: SelectFieldProps['optionFn'] | string) => {
   return eval(optionFn)
 }
 
+const storyRef = createRef<SelectFieldHandle | null>()
 const meta: Meta = {
   title: 'Design System / Components / Select Field',
   ...defineMeta(SelectField, {
@@ -35,6 +36,13 @@ const meta: Meta = {
     events: ['onChange'],
     inlineRadios: ['size'],
     clearDefaults: ['options', 'value'],
+    hasRef: true,
+    shortcuts: [
+      { keys: [Keyboard.ALT, Keyboard.DIGIT_1], label: "setValue('0')", fn: () => storyRef.current?.setValue('0') },
+      { keys: [Keyboard.ALT, Keyboard.DIGIT_2], label: 'getValue()', fn: () => alert(storyRef.current?.getValue()) },
+      { keys: [Keyboard.ALT, Keyboard.DIGIT_3], label: 'focus()', fn: () => storyRef.current?.focus() },
+      { keys: [Keyboard.ALT, Keyboard.DIGIT_4], label: 'blur()', fn: () => storyRef.current?.blur() },
+    ],
 
     render: (props: SelectFieldProps) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -45,7 +53,7 @@ const meta: Meta = {
         setValue(props.value)
       }, [props.value])
 
-      return <SelectField {...props} value={value} optionFn={getOptionFn(props.optionFn)} onChange={setValue} />
+      return <SelectField {...props} ref={storyRef} value={value} optionFn={getOptionFn(props.optionFn)} onChange={setValue} />
     },
   }),
 }

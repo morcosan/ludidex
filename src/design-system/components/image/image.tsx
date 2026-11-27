@@ -1,9 +1,17 @@
-import { useState } from 'react'
+import { type Ref, useState } from 'react'
 
-export interface ImageProps extends ReactProps<HTMLImageElement> {
+export interface ImageProps extends ReactProps {
+  /**
+   * Props
+   */
   srcs: string[]
   alt?: string
   loading?: 'lazy' | 'eager'
+
+  /**
+   * Reference
+   */
+  ref?: Ref<HTMLImageElement>
 }
 
 export const Image = (props: ImageProps) => {

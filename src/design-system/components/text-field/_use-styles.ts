@@ -97,6 +97,8 @@ export const useStyles = (props: Props) => {
     },
     '&::placeholder': {
       color: tokens.color['text-placeholder'],
+      fontStyle: 'italic',
+      fontWeight: tokens.fontWeight['xs'],
       opacity: 1,
     },
   }

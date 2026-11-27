@@ -1,14 +1,22 @@
-import { type CSSProperties } from 'react'
+import { type CSSProperties, type Ref } from 'react'
 
 interface TextHighlightProps extends ReactProps {
+  /**
+   * Props
+   */
   text: string
   keyword?: string
   className?: string
   style?: CSSProperties
+
+  /**
+   * Reference
+   */
+  ref?: Ref<HTMLSpanElement>
 }
 
 export const TextHighlight = (props: TextHighlightProps) => {
-  const { text, keyword, className, style } = props
+  const { text, keyword, className, style, ref } = props
   const trimmed = keyword?.trim()
 
   const content = (() => {
@@ -29,7 +37,7 @@ export const TextHighlight = (props: TextHighlightProps) => {
   })()
 
   return (
-    <span className={className} style={style}>
+    <span ref={ref} className={className} style={style}>
       {content}
     </span>
   )

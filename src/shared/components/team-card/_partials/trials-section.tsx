@@ -12,12 +12,15 @@ import { TrialsModal } from '../../trials-modal/trials-modal'
 
 interface TrialsSectionProps {
   team: GenshinTeam
+  unsaved: boolean
+  getTeamName: () => string
 }
 
 export const TrialsSection = (props: TrialsSectionProps) => {
-  const { team } = props
+  const { team, unsaved, getTeamName } = props
   const { t } = useTranslation()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalTitle, setModalTitle] = useState('')
   const trials = Object.values(team.trials ?? {})
   const completedTrials = trials.filter((time) => !isTimerFailed(time)).length
   const failedTrials = trials.filter(isTimerFailed).length
@@ -55,6 +58,11 @@ export const TrialsSection = (props: TrialsSectionProps) => {
     },
   ]
 
+  const handleClickEditTrials = () => {
+    setModalTitle(getTeamName())
+    setIsModalOpen(true)
+  }
+
   return (
     <>
       <CardSection
@@ -81,17 +89,12 @@ export const TrialsSection = (props: TrialsSectionProps) => {
             ))}
         </div>
 
-        <Button size="xs" onClick={() => setIsModalOpen(true)}>
-          {t('general.action.editTrials')}
+        <Button size="xs" state={unsaved ? 'disabled' : 'active'} onClick={handleClickEditTrials}>
+          {t('general.action.editDomainTrials')}
         </Button>
       </CardSection>
 
-      <TrialsModal
-        opened={isModalOpen}
-        title={t('general.action.editTrials')}
-        teamId={team.id}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <TrialsModal opened={isModalOpen} title={modalTitle} teamId={team.id} onClose={() => setIsModalOpen(false)} />
     </>
   )
 }

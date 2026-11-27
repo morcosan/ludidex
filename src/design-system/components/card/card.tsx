@@ -22,6 +22,7 @@ export const Card = (props: CardProps) => {
     linkType = 'internal',
     state = 'static',
     size = 'md',
+    ref,
   } = props
   const { tokens } = useThemeService()
   const buttonState: BaseButtonState = state === 'static' ? 'disabled' : state
@@ -154,15 +155,15 @@ export const Card = (props: CardProps) => {
   )
 
   return isStatic ? (
-    <div {...cardBindings} css={cardCss}>
+    <div ref={ref} {...cardBindings} css={cardCss}>
       {content}
     </div>
   ) : linkHref ? (
-    <a {...cardBindings} css={cardCss}>
+    <a ref={ref} {...cardBindings} css={cardCss}>
       {content}
     </a>
   ) : (
-    <button type="button" {...cardBindings} css={cardCss}>
+    <button ref={ref} type="button" {...cardBindings} css={cardCss}>
       {content}
     </button>
   )

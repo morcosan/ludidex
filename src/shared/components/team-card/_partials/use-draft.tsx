@@ -7,7 +7,7 @@ export const useDraft = (props: TeamCardProps) => {
   const { team, editing, onSave } = props
   const { createDraft, buildTeam } = useDraftUtils()
   const [isEditing, setIsEditing] = useState(Boolean(editing))
-  const { control, formState, handleSubmit, reset } = useForm<TeamDraft>({
+  const { control, formState, getValues, handleSubmit, reset } = useForm<TeamDraft>({
     defaultValues: createDraft(team),
     mode: 'onTouched',
   })
@@ -37,6 +37,7 @@ export const useDraft = (props: TeamCardProps) => {
 
   return {
     control,
+    getValues,
     hasChanges,
     isEditing,
     handleClickDiscard,

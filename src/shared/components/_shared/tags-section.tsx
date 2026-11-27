@@ -30,7 +30,7 @@ export const TagsSection = <T extends TagsControl>(props: TagsSectionProps<T>) =
               size="sm"
               value={field.value}
               options={tagOptions}
-              getTagStyle={getTagStyle}
+              tagStyleFn={getTagStyle}
               onChange={(tags) => field.onChange(tags.map(parseUserInput))}
             />
           )}

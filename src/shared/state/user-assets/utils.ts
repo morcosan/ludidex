@@ -2,7 +2,7 @@ import {
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
   GENSHIN_WEAPON_TYPES,
-  type GenshinDamageType,
+  type GenshinElementType,
   type GenshinNation,
   type GenshinWeaponType,
 } from '../../data'
@@ -62,11 +62,11 @@ const getGameBackgrounds = (userAssets?: UserAssets | null): string[] => {
   return getNestedAssetSrcs(userAssets?.genshin?.game, 'backgrounds' satisfies UserAssetsGameKey, 'default')
 }
 
-const getElementIcons = (userAssets?: UserAssets | null): Record<GenshinDamageType, string[]> => {
+const getElementIcons = (userAssets?: UserAssets | null): Record<GenshinElementType, string[]> => {
   const group = userAssets?.genshin?.elements
   return Object.fromEntries(
     GENSHIN_ELEMENTS.map((element) => [element, getAssetSrcs(group, element)]), //
-  ) as Record<GenshinDamageType, string[]>
+  ) as Record<GenshinElementType, string[]>
 }
 
 const getWeaponIcons = (userAssets?: UserAssets | null): Record<GenshinWeaponType, string[]> => {

@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import {
   GENSHIN_CHARACTER_IDS,
-  GENSHIN_DAMAGE_TYPES,
   GENSHIN_DOMAIN_IDS,
+  GENSHIN_ELEMENT_TYPES,
   GENSHIN_NATIONS,
   GENSHIN_WEAPON_TYPES,
   type GenshinNation,
@@ -33,7 +33,7 @@ const UserAssetsSchema_v0 = z.object({
     }),
     elements: z.object({
       hosts: HostsSchema_v0,
-      paths: z.record(z.enum(GENSHIN_DAMAGE_TYPES), PathsSchema_v0),
+      paths: z.record(z.enum(GENSHIN_ELEMENT_TYPES), PathsSchema_v0),
     }),
     weapons: z.object({
       hosts: HostsSchema_v0,

@@ -1,4 +1,4 @@
-import { type GenshinDamageType, type GenshinNation } from './_core'
+import { type GenshinElementType, type GenshinNation } from './_core'
 
 type DomainType = 'trounce' | 'blessing' | 'forgery' | 'mastery' | 'onetime'
 const DOMAIN_TYPES: DomainType[] = ['trounce', 'blessing', 'forgery', 'mastery', 'onetime']
@@ -19,8 +19,8 @@ interface GenshinDomainTrial {
 }
 interface GenshinDomainTrialEnemy {
   count: number
-  dmgTypes: GenshinDamageType[]
-  resTypes: GenshinDamageType[]
+  dmgTypes: GenshinElementType[]
+  resTypes: GenshinElementType[]
 }
 
 const toWeekday = (monThu: string, tueFri: string, wedSat: string): WeekdayName => {

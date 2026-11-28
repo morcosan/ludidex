@@ -1,9 +1,9 @@
-import { GENSHIN_ELEMENT_COLORS, type GenshinDamageType } from '@app-shared/data'
+import { GENSHIN_ELEMENT_COLORS, type GenshinElementType } from '@app-shared/data'
 import { useUserAssetsStore } from '@app-shared/state/use-user-assets'
 import { Image } from '@design-system'
 
 export interface ElementIconProps extends ReactProps {
-  type: GenshinDamageType
+  type: GenshinElementType
 }
 
 export const ElementIcon = ({ type, className, style }: ElementIconProps) => {

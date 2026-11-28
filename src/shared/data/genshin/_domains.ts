@@ -1,24 +1,29 @@
 import {
-  computeTrials,
   DOMAIN_TYPES,
   getTrialName,
   getTrialNames,
   toWeekday,
   type DomainType,
   type GenshinDomain,
-  type GenshinDomainConfig,
   type GenshinDomainTrial,
 } from './_domain-utils'
 
-const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
-  // -------------------------------------------------------------
+const GENSHIN_DOMAINS: GenshinDomain[] = [
   // TROUNCE
+  // -------------------------------------------------------------
   {
     id: 'stormterror',
     name: 'Confront Stormterror',
     nation: 'mondstadt',
     type: 'trounce',
-    trials: [{ levels: 6, name: 'Storming Terror' }],
+    trials: [
+      { id: 'stormterror_1', name: 'Storming Terror I', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+      { id: 'stormterror_2', name: 'Storming Terror II', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+      { id: 'stormterror_3', name: 'Storming Terror III', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+      { id: 'stormterror_4', name: 'Storming Terror IV', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+      { id: 'stormterror_5', name: 'Storming Terror V', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+      { id: 'stormterror_6', name: 'Storming Terror VI', enemy: { count: 1, dmgTypes: [], resTypes: [] } },
+    ],
   },
   {
     id: 'chessgame',
@@ -105,8 +110,8 @@ const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
     trials: [{ levels: 4, name: 'Twilight of the Heretic' }],
   },
 
-  // -------------------------------------------------------------
   // BLESSING
+  // -------------------------------------------------------------
   {
     id: 'midsummer',
     name: 'Midsummer Courtyard',
@@ -262,8 +267,8 @@ const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
     trials: [{ levels: 4, name: 'Sacred Vault' }],
   },
 
-  // -------------------------------------------------------------
   // FORGERY
+  // -------------------------------------------------------------
   {
     id: 'cecilia',
     name: 'Cecilia Garden',
@@ -321,8 +326,8 @@ const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
     trials: [{ levels: 4, name: toWeekday('Cast Iron', 'Chain Track', 'Severed Steel') }],
   },
 
-  // -------------------------------------------------------------
   // MASTERY
+  // -------------------------------------------------------------
   {
     id: 'forsakenrift',
     name: 'Forsaken Rift',
@@ -380,8 +385,8 @@ const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
     trials: [{ levels: 4, name: toWeekday('Contemplation', 'Hermitage', 'Shared Vision') }],
   },
 
-  // -------------------------------------------------------------
   // ONETIME
+  // -------------------------------------------------------------
   {
     id: 'templefalcon',
     name: 'Temple of the Falcon',
@@ -445,9 +450,6 @@ const GENSHIN_DOMAIN_CONFIGS: GenshinDomainConfig[] = [
   },
 ] as const
 
-const GENSHIN_DOMAINS = [
-  ...GENSHIN_DOMAIN_CONFIGS.map((config): GenshinDomain => ({ ...config, trials: computeTrials(config) })),
-] as const
 const GENSHIN_DOMAIN_IDS = [...new Set(GENSHIN_DOMAINS.map(({ id }) => id))] as const
 const GENSHIN_DOMAIN_TRIALS = [...GENSHIN_DOMAINS.flatMap(({ trials }) => trials)] as const
 const GENSHIN_DOMAIN_TRIAL_IDS = [...new Set(GENSHIN_DOMAIN_TRIALS.map(({ id }) => id))] as const

@@ -244,9 +244,9 @@ const GENSHIN_DOMAINS: GenshinDomain[] = [
     nation: 'liyue',
     type: 'blessing',
     trials: toTrials('clearpool', 'Stone Chamber', [
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
+      { count: 12, dmgTypes: ['physical'], resTypes: [] },
+      { count: 10, dmgTypes: ['physical'], resTypes: [] },
+      { count: 1, dmgTypes: ['physical'], resTypes: ['physical'] },
     ]),
   },
   {
@@ -255,10 +255,10 @@ const GENSHIN_DOMAINS: GenshinDomain[] = [
     nation: 'liyue',
     type: 'blessing',
     trials: toTrials('zhouformula', 'Roaring Fire', [
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
+      { count: 20, dmgTypes: ['pyro'], resTypes: ['pyro'] },
+      { count: 6, dmgTypes: ['pyro', 'physical'], resTypes: [] },
+      { count: 10, dmgTypes: ['pyro', 'physical'], resTypes: [] },
+      { count: 4, dmgTypes: ['pyro', 'physical', 'dendro'], resTypes: ['pyro'] },
     ]),
   },
   {

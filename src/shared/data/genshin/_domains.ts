@@ -393,7 +393,13 @@ const GENSHIN_DOMAINS: GenshinDomain[] = [
     name: 'Temple of the Falcon',
     nation: 'mondstadt',
     type: 'onetime',
-    trials: [{ key: 'windycliff', name: 'Windy Cliff' }],
+    trials: [
+      {
+        id: 'templefalcon_windycliff',
+        name: 'Windy Cliff',
+        enemy: { count: 0, dmgTypes: [], resTypes: [] },
+      },
+    ],
   },
   {
     id: 'templewolf',

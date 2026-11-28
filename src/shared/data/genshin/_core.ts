@@ -13,8 +13,8 @@ export const GENSHIN_NATIONS = [
 ] as const
 
 export type GenshinElement = (typeof GENSHIN_ELEMENTS)[number]
-export type GenshinDamageType = GenshinElement | 'physical'
-export type GenshinResistanceType = GenshinElement | 'physical' | 'none'
+export type GenshinDamageType = GenshinElement | 'physical' | 'dynamic'
+export type GenshinResistanceType = GenshinElement | 'physical' | 'dynamic' | 'none'
 export type GenshinWeaponType = (typeof GENSHIN_WEAPONS)[number]
 export type GenshinNation = (typeof GENSHIN_NATIONS)[number]
 

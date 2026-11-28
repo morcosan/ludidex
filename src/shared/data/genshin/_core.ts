@@ -1,7 +1,24 @@
-export const GENSHIN_ELEMENTS = ['anemo', 'geo', 'electro', 'dendro', 'hydro', 'pyro', 'cryo'] as const
-export const GENSHIN_ELEMENT_TYPES = [...GENSHIN_ELEMENTS, 'physical', 'dynamic'] as const
-export const GENSHIN_WEAPON_TYPES = ['sword', 'claymore', 'polearm', 'catalyst', 'bow'] as const
-export const GENSHIN_NATIONS = [
+export type GenshinElement = 'anemo' | 'geo' | 'electro' | 'dendro' | 'hydro' | 'pyro' | 'cryo'
+export const GENSHIN_ELEMENTS: GenshinElement[] = [
+  'anemo',
+  'geo',
+  'electro',
+  'dendro',
+  'hydro',
+  'pyro',
+  'cryo',
+] as const
+
+export type GenshinElementType =
+  'anemo' | 'geo' | 'electro' | 'dendro' | 'hydro' | 'pyro' | 'cryo' | 'physical' | 'dynamic'
+export const GENSHIN_ELEMENT_TYPES: GenshinElementType[] = [...GENSHIN_ELEMENTS, 'physical', 'dynamic'] as const
+
+export type GenshinWeaponType = 'sword' | 'claymore' | 'polearm' | 'catalyst' | 'bow'
+export const GENSHIN_WEAPON_TYPES: GenshinWeaponType[] = ['sword', 'claymore', 'polearm', 'catalyst', 'bow'] as const
+
+export type GenshinNation =
+  'mondstadt' | 'liyue' | 'inazuma' | 'sumeru' | 'fontaine' | 'natlan' | 'nodkrai' | 'snezhnaya' | 'other'
+export const GENSHIN_NATIONS: GenshinNation[] = [
   'mondstadt',
   'liyue',
   'inazuma',
@@ -12,11 +29,6 @@ export const GENSHIN_NATIONS = [
   'snezhnaya',
   'other',
 ] as const
-
-export type GenshinElement = (typeof GENSHIN_ELEMENTS)[number]
-export type GenshinElementType = (typeof GENSHIN_ELEMENT_TYPES)[number]
-export type GenshinWeaponType = (typeof GENSHIN_WEAPON_TYPES)[number]
-export type GenshinNation = (typeof GENSHIN_NATIONS)[number]
 
 export const GENSHIN_ELEMENT_COLORS: Record<GenshinElement, string> = {
   anemo: '#5CC6B0',

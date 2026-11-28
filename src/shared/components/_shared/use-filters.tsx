@@ -1,4 +1,4 @@
-import { Button, Tag } from '@design-system'
+import { Button, Image, Tag } from '@design-system'
 import {
   faBook,
   faDice,
@@ -20,7 +20,7 @@ import {
   DOMAIN_TYPES,
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
+  GENSHIN_WEAPON_TYPES,
   TEAM_SIZES,
   TRIAL_STATES,
   type CharacterStatus,
@@ -134,7 +134,7 @@ export const useFilters = (props: FiltersProps) => {
         surface={surface}
         ariaLabel={t('game.label.element')}
         renderLabel={(element) => t(`game.elements.${element}`)}
-        renderIcon={(element) => <img src={elementIcons[element][0]} alt="" className="h-xs-9 w-xs-9 mr-xs-1" />}
+        renderIcon={(element) => <Image srcs={elementIcons[element]} className="h-xs-9 w-xs-9 mr-xs-1" />}
         className={className}
         onToggle={(element) => onChange?.({ ...filters, elements: toggleFilter(filters.elements!, element) })}
       />
@@ -160,7 +160,7 @@ export const useFilters = (props: FiltersProps) => {
   const renderWeaponTypes = (order?: FilterGroupOrder, className?: string) => {
     return filters.weaponTypes ? (
       <FilterGroup
-        items={GENSHIN_WEAPONS}
+        items={GENSHIN_WEAPON_TYPES}
         selection={filters.weaponTypes}
         order={order}
         surface={surface}

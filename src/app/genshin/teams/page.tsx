@@ -3,7 +3,7 @@ import {
   GENSHIN_DOMAINS,
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
+  GENSHIN_WEAPON_TYPES,
   TEAM_SIZES,
   getTrialName,
 } from '@app-shared/data'
@@ -38,7 +38,7 @@ export default function Page() {
   const [filters, setFilters] = useUrlFilters({
     elements: GENSHIN_ELEMENTS,
     nations: GENSHIN_NATIONS,
-    weaponTypes: GENSHIN_WEAPONS,
+    weaponTypes: GENSHIN_WEAPON_TYPES,
     teamSizes: TEAM_SIZES,
     tags: tagOptions,
     search: '',

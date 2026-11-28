@@ -1,7 +1,7 @@
 import {
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
+  GENSHIN_WEAPON_TYPES,
   type GenshinElement,
   type GenshinNation,
   type GenshinWeaponType,
@@ -72,7 +72,7 @@ const getElementIcons = (userAssets?: UserAssets | null): Record<GenshinElement,
 const getWeaponIcons = (userAssets?: UserAssets | null): Record<GenshinWeaponType, string[]> => {
   const group = userAssets?.genshin?.weapons
   return Object.fromEntries(
-    GENSHIN_WEAPONS.map((weapon) => [weapon, getAssetSrcs(group, weapon)]), //
+    GENSHIN_WEAPON_TYPES.map((weapon) => [weapon, getAssetSrcs(group, weapon)]), //
   ) as Record<GenshinWeaponType, string[]>
 }
 

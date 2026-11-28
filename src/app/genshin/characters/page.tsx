@@ -3,7 +3,7 @@ import {
   CHARACTER_STATUSES,
   GENSHIN_ELEMENTS,
   GENSHIN_NATIONS,
-  GENSHIN_WEAPONS,
+  GENSHIN_WEAPON_TYPES,
   type GenshinCharacter,
 } from '@app-shared/data'
 import { type GenshinCharacterUserData } from '@app-shared/state/types'
@@ -33,7 +33,7 @@ export default function Page() {
     elements: GENSHIN_ELEMENTS,
     statuses: CHARACTER_STATUSES,
     nations: GENSHIN_NATIONS,
-    weaponTypes: GENSHIN_WEAPONS,
+    weaponTypes: GENSHIN_WEAPON_TYPES,
     tags: tagOptions,
     search: '',
   })

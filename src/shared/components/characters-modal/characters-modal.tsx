@@ -101,8 +101,8 @@ export const CharactersModal = (props: CharactersModalProps) => {
       <div className="relative flex-1">
         <ListHeader
           title={t('general.label.characters')}
-          itemsCount={listedCharacters.length}
-          filtersCount={countFilters(filters)}
+          itemCount={listedCharacters.length}
+          filterCount={countFilters(filters)}
           search={filters.search}
           surface="paper"
           className="-top-xs-4 absolute left-0 z-10 -translate-y-full"

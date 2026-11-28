@@ -42,7 +42,7 @@ export const TrialsModal = (props: TrialsModalProps) => {
     defaultValues: {},
     mode: 'onTouched',
   })
-  const filtersCount = countFilters(filters)
+  const filterCount = countFilters(filters)
   const teamMembers = unpackTeamId(teamId).flatMap((id) => GENSHIN_CHARACTERS_BY_ID[id] ?? [])
 
   const listedTrials = useMemo(() => {
@@ -158,8 +158,8 @@ export const TrialsModal = (props: TrialsModalProps) => {
       <div className="relative flex-1">
         <ListHeader
           title={t('game.label.trials')}
-          itemsCount={listedTrials.length}
-          filtersCount={filtersCount}
+          itemCount={listedTrials.length}
+          filterCount={filterCount}
           search={filters.search}
           surface="paper"
           className="-top-xs-4 absolute left-0 z-10 -translate-y-full"

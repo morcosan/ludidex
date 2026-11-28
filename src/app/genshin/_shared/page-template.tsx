@@ -7,8 +7,8 @@ import { SidePanel } from './side-panel'
 interface PageTemplateProps<T extends ViewType> extends ReactProps {
   type: 'characters' | 'teams' | 'domains'
   title: string
-  itemsCount: number
-  filtersCount: number
+  itemCount: number
+  filterCount: number
   topBarFilters: Filters
   sectionFilters: Filters
   search?: string
@@ -26,8 +26,8 @@ interface PageTemplateProps<T extends ViewType> extends ReactProps {
 
 export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) => {
   const {
-    filtersCount,
-    itemsCount,
+    filterCount,
+    itemCount,
     leftSide,
     rightSide,
     search,
@@ -57,9 +57,9 @@ export const PageTemplate = <T extends ViewType>(props: PageTemplateProps<T>) =>
 
         <ListHeader
           title={title}
-          itemsCount={itemsCount}
+          itemCount={itemCount}
           viewLabel={viewLabel}
-          filtersCount={filtersCount}
+          filterCount={filterCount}
           search={search}
         />
 

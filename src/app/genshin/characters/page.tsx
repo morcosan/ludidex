@@ -45,7 +45,7 @@ export default function Page() {
     callback: () => setIsPreviewOpen(false),
   })
 
-  const filtersCount = countFilters(filters)
+  const filterCount = countFilters(filters)
   const topBarFilters: Filters = {
     search: filters.search,
     elements: filters.elements,
@@ -78,8 +78,8 @@ export default function Page() {
     <PageTemplate
       type="characters"
       title={t('general.label.characters')}
-      itemsCount={listedCharacters.length}
-      filtersCount={filtersCount}
+      itemCount={listedCharacters.length}
+      filterCount={filterCount}
       topBarFilters={topBarFilters}
       sectionFilters={sectionFilters}
       search={filters.search}

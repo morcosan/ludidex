@@ -7,9 +7,9 @@ const meta: Meta = {
   ...defineMeta(ListHeader, {
     props: {
       title: 'Items',
-      itemsCount: 123,
+      itemCount: 123,
       viewLabel: '',
-      filtersCount: 2,
+      filterCount: 2,
       search: '',
       surface: 'glass',
       className: '',
@@ -22,11 +22,11 @@ const Default: StoryObj<typeof ListHeader> = {
 }
 
 const PaperEmpty: StoryObj<typeof ListHeader> = {
-  args: { itemsCount: 0, surface: 'paper' },
+  args: { itemCount: 0, surface: 'paper' },
 }
 
 const NoCount: StoryObj<typeof ListHeader> = {
-  args: { itemsCount: undefined },
+  args: { itemCount: undefined },
 }
 
 export default meta

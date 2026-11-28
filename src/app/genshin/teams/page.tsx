@@ -64,7 +64,7 @@ export default function Page() {
   const previewTeam = [...allTeams, ...emptyTeams].find((team) => team.id === previewTeamId)
   const isEmptyPreview = emptyTeams.some((team) => team.id === previewTeamId)
   const currTeams = [...listedTeams, ...emptyTeams]
-  const filtersCount = countFilters(filters)
+  const filterCount = countFilters(filters)
   const topBarFilters: Filters = { search: filters.search, elements: filters.elements }
   const sectionFilters: Filters = {
     statuses: filters.statuses,
@@ -123,8 +123,8 @@ export default function Page() {
     <PageTemplate
       type="teams"
       title={t('general.label.teams')}
-      itemsCount={currTeams.length}
-      filtersCount={filtersCount}
+      itemCount={currTeams.length}
+      filterCount={filterCount}
       topBarFilters={topBarFilters}
       sectionFilters={sectionFilters}
       search={filters.search}

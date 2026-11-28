@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { create } from 'zustand'
-import { type GenshinElement, type GenshinNation, type GenshinWeaponType } from '../data'
+import { type GenshinDamageType, type GenshinNation, type GenshinWeaponType } from '../data'
 import { type UserAssets } from './types'
 import { USER_ASSETS } from './user-assets/data'
 import {
@@ -22,7 +22,7 @@ interface UserAssetsStore {
   getGameBanners: () => string[]
   getGameIcons: () => string[]
   getGameBackgrounds: () => string[]
-  getElementIcons: () => Record<GenshinElement, string[]>
+  getElementIcons: () => Record<GenshinDamageType, string[]>
   getWeaponIcons: () => Record<GenshinWeaponType, string[]>
   getNationIcons: () => Record<GenshinNation, string[]>
   getCharacterIcons: (characterId: string) => string[]

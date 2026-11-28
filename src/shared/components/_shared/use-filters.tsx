@@ -1,4 +1,4 @@
-import { Button, Image, Tag } from '@design-system'
+import { Button, Tag } from '@design-system'
 import {
   faBook,
   faDice,
@@ -33,6 +33,7 @@ import {
 } from '../../data'
 import { useUserAssetsStore } from '../../state/use-user-assets'
 import { useUserTags } from '../../utils/use-user-tags'
+import { ElementIcon } from '../element-icon/element-icon'
 import { SearchField } from '../search-field/search-field'
 import { StatusIcon } from '../status-icon/status-icon'
 import { FilterGroup, type FilterGroupOrder } from './filter-group'
@@ -60,8 +61,7 @@ export interface FiltersProps extends ReactProps {
 export const useFilters = (props: FiltersProps) => {
   const { type, filters, otherFilters, surface = 'glass', onChange } = props
   const { t } = useTranslation()
-  const { getElementIcons, getWeaponIcons, getNationIcons } = useUserAssetsStore()
-  const elementIcons = getElementIcons()
+  const { getWeaponIcons, getNationIcons } = useUserAssetsStore()
   const weaponIcons = getWeaponIcons()
   const nationIcons = getNationIcons()
   const { getTagStyle, tagOptions, tagOptionsWithColor, tagOptionsWithoutColor } = useUserTags()
@@ -134,7 +134,7 @@ export const useFilters = (props: FiltersProps) => {
         surface={surface}
         ariaLabel={t('game.label.element')}
         renderLabel={(element) => t(`game.elements.${element}`)}
-        renderIcon={(element) => <Image srcs={elementIcons[element]} className="h-xs-9 w-xs-9 mr-xs-1" />}
+        renderIcon={(element) => <ElementIcon type={element} className="h-xs-9 w-xs-9 mr-xs-1" />}
         className={className}
         onToggle={(element) => onChange?.({ ...filters, elements: toggleFilter(filters.elements!, element) })}
       />

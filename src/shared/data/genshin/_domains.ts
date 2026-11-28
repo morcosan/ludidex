@@ -230,12 +230,12 @@ const GENSHIN_DOMAINS: GenshinDomain[] = [
     nation: 'liyue',
     type: 'blessing',
     trials: toTrials('guyun', 'Spring', [
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
-      { count: 0, dmgTypes: [], resTypes: [] },
+      { count: 28, dmgTypes: ['hydro'], resTypes: ['hydro'] },
+      { count: 22, dmgTypes: ['pyro'], resTypes: ['pyro'] },
+      { count: 20, dmgTypes: ['cryo', 'pyro', 'physical'], resTypes: ['cryo', 'pyro'] },
+      { count: 20, dmgTypes: ['hydro', 'physical'], resTypes: ['hydro'] },
+      { count: 1, dmgTypes: ['physical'], resTypes: ['physical'] },
+      { count: 3, dmgTypes: ['hydro', 'electro', 'physical'], resTypes: ['hydro', 'electro', 'physical'] },
     ]),
   },
   {
